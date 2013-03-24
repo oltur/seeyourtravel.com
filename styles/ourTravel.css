@@ -1,0 +1,18 @@
+        #map {
+            height: 600px;
+        }
+        .photo {
+            height: 200px;
+        }
+        .nullphoto {
+            height: 1px;
+            width: 1px;
+        }
+.visible {
+  visibility: visible;
+  opacity: 1;
+}
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
