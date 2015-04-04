@@ -77,7 +77,6 @@
        	tracksList.add(option,null);
        }
 
-<!-- test 0-->
        </script>
        </body>
        </html>
