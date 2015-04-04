@@ -16,11 +16,11 @@
 
     function showPhotos(track,p,tolerancy)
     {
-        if(!tolerancy)
-            tolerancy = track.photoLocationTolerancy
+        if (!tolerancy)
+            tolerancy = track.photoLocationTolerancy;
 
         var set = "full";//"public";
-        if(track.owner && track.owner!="public")
+        if(track.owner && track.owner!=="public")
             set = track.owner;
         var count = 0;
         var urlp = "http://www.panoramio.com/map/get_panoramas.php?set="+set+"&from=0&to=" + track.numOfPhotos.toString() + "&miny="

@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "seeyourtravel", "http://localhost/seeyourtravel", "{149A4CA0-A549-4DDA-B8CC-7E8F2FF4107F}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "false"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.1"
+		Debug.AspNetCompiler.VirtualPath = "/seeyourtravel"
+		Debug.AspNetCompiler.PhysicalPath = "C:\_GoogleDrive\_Projects\seeyourtravel\seeyourtravel.com\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\seeyourtravel\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/seeyourtravel"
+		Release.AspNetCompiler.PhysicalPath = "C:\_GoogleDrive\_Projects\seeyourtravel\seeyourtravel.com\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\seeyourtravel\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "C:\_GoogleDrive\_Projects\seeyourtravel\seeyourtravel.com\"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{149A4CA0-A549-4DDA-B8CC-7E8F2FF4107F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{149A4CA0-A549-4DDA-B8CC-7E8F2FF4107F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
