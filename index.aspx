@@ -16,30 +16,32 @@
            <link rel="stylesheet" href="styles/ourTravel.css"/>
        </head>
        <body>
-       <a href="editor.aspx">Editor page</a>
+       <input id="newTrackButton" type="button" value="New track" onclick="window.location='editor.aspx'" />
        &nbsp;
        Tracks:&nbsp;<select id="tracksList">
        </select>
        &nbsp;
-       <input id="startButton" type="button" value="Load and start" onclick="init('tracks/'+tracksList.options[tracksList.selectedIndex].innerHTML+'.js');start();pauseButton.disabled = false;continueButton.disabled = true;"/>
+       <input id="startButton" type="button" value="Load and start" onclick="init(getTrackPathByName(tracksList.options[tracksList.selectedIndex].innerHTML));start();pauseButton.disabled = false;continueButton.disabled = true;"/>
        &nbsp;
        <input id="pauseButton" type="button" value="Pause" onclick="stop();pauseButton.disabled = true;continueButton.disabled = false;"/>
        &nbsp;
        <input id="continueButton" type="button" value="Continue" onclick="start();pauseButton.disabled = false;continueButton.disabled = true;"/>
        &nbsp;
-       Track: <span id="lblTrack"></span>
+       <input id="editTrackButton" type="button" value="Edit" onclick="window.location='editor.aspx?filename='+tracksList.options[tracksList.selectedIndex].innerHTML"/>
        &nbsp;
-       Coord: <span id="lblCoord"></span>
+       Track&nbsp;name: <span id="lblTrack"></span>
+       &nbsp;
+       Current&nbsp;location: <span id="lblCoord"></span>
        <br/>
        <div id="map"></div>
-       <audio id="audio">
+       <audio id="audio" loop>
            <source src="" type="audio/mpeg">
            Your browser does not support the audio element.
        </audio>
        <br/>
 
        <div style="width:100%">
-       <div id="textToRead" style="background-color:#FFD700;width:25%;float:left;overflow:scroll;height:100%">
+       <div id="textToReadArea" style="background-color:#FFD700;width:25%;float:left;overflow:scroll;height:100%">
        </div>
        <div id="imageDiv" style="background-color:#EEEEEE;width:75%;float:left;overflow:scroll;height:100%">
        </div>
@@ -49,7 +51,7 @@
 
            var audio = document.getElementById("audio");
            var imageDiv = document.getElementById("imageDiv");
-           var textToRead = document.getElementById("textToRead");
+           var textToReadArea = document.getElementById("textToReadArea");
            var tracksList = document.getElementById("tracksList");
            var counter = 0;
            var markerSize = 50;

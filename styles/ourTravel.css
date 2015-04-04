@@ -1,5 +1,5 @@
         #map {
-            height: 600px;
+            height: 400px;
         }
         .photo {
             height: 200px;
@@ -16,3 +16,8 @@
   visibility: hidden;
   opacity: 0;
 }
+@font-face {
+  font-family: 'seeyourtravel';
+  src: url('traveldiaryfeb26.ttf');
+}
+body { font-family: 'seeyourtravel', 'Georgia', serif; }

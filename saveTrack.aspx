@@ -1,4 +1,4 @@
-<%@ Page Language="C#"%>
+<%@ Page Language="C#" Debug="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,47 +9,45 @@
 <body>
     <a href="index.aspx">Main page</a>
 &nbsp;
-<a href="editor.aspx">Editor page</a>
-&nbsp;Coord: <span id="lbl"></span>
+<!--span id="lbl"></span-->
 <%
-    //Response.Write(Request.QueryString.Count);
-    string filename = Request.QueryString["filename"];
-    string path = Server.MapPath(".") + "\\tracks\\" + filename + ".js";
-    Response.Write(path);
+    //Response.Write(Request.Form.Count);
+    string filenameFromServer = Request.Form["filename"];
+    string path = Server.MapPath(".") + "\\tracks\\" + filenameFromServer + ".js";
     using (System.IO.StreamWriter writer = new System.IO.StreamWriter(path, false))
     {
         writer.WriteLine("{");
 
-        writer.WriteLine("\"name\":\"" + Request.QueryString["name"] + "\"");
-        if (!string.IsNullOrEmpty(Request.QueryString["copyright"]))
+        writer.WriteLine("\"name\":\"" + Request.Form["name"] + "\"");
+        if (!string.IsNullOrEmpty(Request.Form["copyright"]))
         {
         writer.Write(",");
-        writer.WriteLine("\"copyright\":\"" + Request.QueryString["copyright"] + "\"");
+        writer.WriteLine("\"copyright\":\"" + Request.Form["copyright"] + "\"");
         }
-        if (!string.IsNullOrEmpty(Request.QueryString["defaultScale"]))
+        if (!string.IsNullOrEmpty(Request.Form["defaultScale"]))
         {
             writer.Write(",");
-            writer.WriteLine("\"defaultScale\":" + Request.QueryString["defaultScale"] + "");
+            writer.WriteLine("\"defaultScale\":" + Request.Form["defaultScale"] + "");
         }
-        if (!string.IsNullOrEmpty(Request.QueryString["photoLocationTolerancy"]))
+        if (!string.IsNullOrEmpty(Request.Form["photoLocationTolerancy"]))
         {
         writer.Write(",");
-        writer.WriteLine("\"photoLocationTolerancy\":" + Request.QueryString["photoLocationTolerancy"] + "");
+        writer.WriteLine("\"photoLocationTolerancy\":" + Request.Form["photoLocationTolerancy"] + "");
         }
-        if (!string.IsNullOrEmpty(Request.QueryString["stepsToRedraw"]))
+        if (!string.IsNullOrEmpty(Request.Form["stepsToRedraw"]))
         {
         writer.Write(",");
-        writer.WriteLine("\"stepsToRedraw\":" + Request.QueryString["stepsToRedraw"] + "");
+        writer.WriteLine("\"stepsToRedraw\":" + Request.Form["stepsToRedraw"] + "");
         }
-        if (!string.IsNullOrEmpty(Request.QueryString["stepsToShowPhoto"]))
+        if (!string.IsNullOrEmpty(Request.Form["stepsToShowPhoto"]))
         {
             writer.Write(",");
-            writer.WriteLine("\"stepsToShowPhoto\":" + Request.QueryString["stepsToShowPhoto"] + "");
+            writer.WriteLine("\"stepsToShowPhoto\":" + Request.Form["stepsToShowPhoto"] + "");
         }
-        if (!string.IsNullOrEmpty(Request.QueryString["numOfPhotos"]))
+        if (!string.IsNullOrEmpty(Request.Form["numOfPhotos"]))
         {
             writer.Write(",");
-            writer.WriteLine("\"numOfPhotos\":" + Request.QueryString["numOfPhotos"] + "");
+            writer.WriteLine("\"numOfPhotos\":" + Request.Form["numOfPhotos"] + "");
         }
         else
         {
@@ -57,51 +55,41 @@
             writer.WriteLine("\"numOfPhotos\":10");
         }
             
-        if (!string.IsNullOrEmpty(Request.QueryString["velocityMetersPerSec"]))
+        if (!string.IsNullOrEmpty(Request.Form["velocityMetersPerSec"]))
         {
         writer.Write(",");
-        writer.WriteLine("\"velocityMetersPerSec\":" + Request.QueryString["velocityMetersPerSec"] + "");
+        writer.WriteLine("\"velocityMetersPerSec\":" + Request.Form["velocityMetersPerSec"] + "");
         }
-        if (!string.IsNullOrEmpty(Request.QueryString["icon"]))
+        if (!string.IsNullOrEmpty(Request.Form["icon"]))
         {
         writer.Write(",");
-        writer.WriteLine("\"icon\":\"" + Request.QueryString["icon"] + "\"");
+        writer.WriteLine("\"icon\":\"" + Request.Form["icon"] + "\"");
         }
-        if (!string.IsNullOrEmpty(Request.QueryString["audioSrc"]))
+        if (!string.IsNullOrEmpty(Request.Form["audioSrc"]))
         {
         writer.Write(",");
-        writer.WriteLine("\"audioSrc\":\"" + Request.QueryString["audioSrc"] + "\"");
+        writer.WriteLine("\"audioSrc\":\"" + Request.Form["audioSrc"] + "\"");
         }
-        if (!string.IsNullOrEmpty(Request.QueryString["tracaudioVolumekGpx"]))
+        if (!string.IsNullOrEmpty(Request.Form["audioVolume"]))
         {
         writer.Write(",");
-        writer.WriteLine("\"audioVolume\":" + Request.QueryString["audioVolume"] + "");
+        writer.WriteLine("\"audioVolume\":" + Request.Form["audioVolume"] + "");
         }
-        if (!string.IsNullOrEmpty(Request.QueryString["textToRead"]))
+        if (!string.IsNullOrEmpty(Request.Form["textToRead"]))
         {
         writer.Write(",");
-        writer.WriteLine("\"textToRead\":\"" + Request.QueryString["textToRead"] + "\"");
+        writer.WriteLine("\"textToRead\":\"" + Request.Form["textToRead"] + "\"");
         }
-        if (!string.IsNullOrEmpty(Request.QueryString["trackGpx"]))
+        if (!string.IsNullOrEmpty(Request.Form["trackGpx"]))
         {
             writer.Write(",");
-            writer.WriteLine("\"trackGpx\":\"" + Request.QueryString["trackGpx"] + "\"");
+            writer.WriteLine("\"trackGpx\":\"" + Request.Form["trackGpx"] + "\"");
         }
         else
         {
             writer.Write(",");
-            writer.WriteLine("\"trackData\":[" + Request.QueryString["trackData"].Trim().TrimEnd(',') + "]");
+            writer.WriteLine("\"trackData\":[" + Request.Form["trackData"].Trim().TrimEnd(',') + "]");
         }
-            //    "": 0.0005,
-            //    "": 200,
-            //    "stepsToShowPhoto": 1,
-            //    "": 10,
-            //    "numOfPhotos": 10,
-            //"": "mybike.png",
-            //"": "k.mp3",
-            //"": 0.2,
-            //"": "tracks/k.txt",
-            //"":         
 
             writer.WriteLine("}");
         }
