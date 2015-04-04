@@ -18,7 +18,7 @@
        <body>
        <input id="newTrackButton" type="button" value="New track" onclick="window.location='editor.aspx'" />
        &nbsp;
-       Tracks:&nbsp;<select id="tracksList">
+       Tracks:&nbsp;<label for="tracksList"></label><select id="tracksList">
        </select>
        &nbsp;
        <input id="startButton" type="button" value="Load and start" onclick="init(getTrackPathByName(tracksList.options[tracksList.selectedIndex].innerHTML));start();pauseButton.disabled = false;continueButton.disabled = true;"/>
@@ -77,6 +77,7 @@
        	tracksList.add(option,null);
        }
 
+<!-- test 0-->
        </script>
        </body>
        </html>
