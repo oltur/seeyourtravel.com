@@ -8,5 +8,5 @@
 	        "numOfPhotos": 5,
 		"icon": "mybike.png",
 		"audioSrc": "Tirol.mp3",
-		"trackGpx": "tracks/Achen_Ku00f6ln_Railway.gpx"
+		"trackGpx": "Achen_Ku00f6ln_Railway.gpx"
 }

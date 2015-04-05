@@ -1,0 +1,36 @@
+﻿<%@ Master Language="C#" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css"/>
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css"/>
+    <![endif]-->
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <script src="libs/jquery.js"></script>
+    <script src="libs/jquery-ui.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+    <script src="js/AnimatedMarker.js"></script>
+    <link rel="stylesheet" href="css/jquery-ui.css">
+
+    <script src="js/OurTravel.js"></script>
+    <script type="text/javascript" src="js/get_text.js"></script>
+    <link rel="stylesheet" href="styles/ourTravel.css"/>
+
+    <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body onresize="onBodyResize()">
+<form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder2" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+</form>
+</body>
+</html>

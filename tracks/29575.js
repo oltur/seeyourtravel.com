@@ -8,5 +8,5 @@
 	        "numOfPhotos": 5,
 		"icon": "mybike.png",
 		"audioSrc": "Tirol.mp3",
-		"trackGpx": "tracks/29575.xml"
+		"trackGpx": "29575.xml"
 }

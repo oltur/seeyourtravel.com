@@ -1,15 +1,15 @@
 {
 		"name":"Kiev-Pechers`k",
 		"copyright":"AT",
-	        "photoLocationTolerancy": 1,
-        	"stepsToRedraw": 10,
-	        "stepsToShowPhoto": 1,
-        	"velocityMetersPerSec": 10,
+	        "photoLocationTolerancy": 0.01,
+        	"stepsToRedraw": 2,
+	        "stepsToShowPhoto": 2,
+        	"velocityMetersPerSec": 20,
 	        "numOfPhotos": 5,
 		"icon": "mybike.png",
 		"audioSrc": "k.mp3",
 		"audioVolume": 0.2,
-		"textToRead": "tracks/k.txt",
+		"textToRead": "k.txt",
 		"defaultScale": 15,
 		"trackData":         
 [

@@ -9,5 +9,5 @@
 ,"velocityMetersPerSec":300
 ,"icon":"mybike.png"
 ,"audioSrc":"Tirol.mp3"
-,"trackGpx":"tracks/RadtourWerneSendenhorstAhlen03-06-2011.gpx"
+,"trackGpx":"/RadtourWerneSendenhorstAhlen03-06-2011.gpx"
 }

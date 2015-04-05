@@ -1,7 +1,24 @@
-    function getTrackPathByName(name) {
-    	return 'tracks/'+name+'.js';
+    var tracksFolder = 'tracks/';
+
+    function translateTracksPath(path)
+    {
+        return tracksFolder+path;
     }
 
+/**
+ * getTrackPathByName
+ * @param name
+ * @returns {string}
+ */
+    function getTrackPathByName(name) {
+    	return translateTracksPath(name+'.js');
+    }
+
+    function onBodyResize() {
+        $("#map").height(window.innerHeight-50);
+    }
+
+$(function(){onBodyResize();});
 
     function stop() {
         animatedMarker.stop();
@@ -23,12 +40,15 @@
         if(track.owner && track.owner!=="public")
             set = track.owner;
         var count = 0;
-        var urlp = "http://www.panoramio.com/map/get_panoramas.php?set="+set+"&from=0&to=" + track.numOfPhotos.toString() + "&miny="
+        var urlp = "http://www.panoramio.com/map/get_panoramas.php?set="+set+"&from=0&to=10&miny="
+//        var urlp = "http://www.panoramio.com/map/get_panoramas.php?set="+set+"&from=0&to=" + track.numOfPhotos.toString() + "&miny="
             + (p.lat - tolerancy).toString()
             + "&minx=" + (p.lng - tolerancy).toString()
             + "&maxy=" + (p.lat + tolerancy).toString()
             + "&maxx=" + (p.lng + tolerancy).toString()
             + "&size=medium&mapfilter=true&order=popularity&callback=?";
+
+	var height = $("#imageDiv").height();
 
         $.ajax({
           dataType: "json",
@@ -94,15 +114,15 @@
             ).responseText);
         if(track.trackGpx)
         {
-            track.trackData = $.parseJSON(GPXtoLatLng(track.trackGpx));
+            track.trackData = $.parseJSON(GPXtoLatLng(tracksFolder + track.trackGpx));
         }
     if($("#textToReadArea").length > 0)
     {
         if("textToRead" in track)
         {
-            textToReadArea.innerHTML = $.ajax(
+            textToReadArea.innerText = $.ajax(
                 {
-                    url:track.textToRead+"?"+Math.random(),
+                    url:translateTracksPath(track.textToRead+"?"+Math.random()),
                     async:false
                 }
             ).responseText;
@@ -124,7 +144,7 @@
         var url = 'http://{s}.tile.cloudmade.com/5bcd2fc5d5714bd48096c7478324e0fe/997/256/{z}/{x}/{y}.png';
 
         var myIcon = L.icon({
-            iconUrl:track.icon,
+            iconUrl:translateTracksPath(track.icon),
             iconSize:[markerSize, markerSize],
             iconAnchor:[1, markerSize],
             shadowUrl:null
@@ -144,7 +164,7 @@
                 markerSize = 2+map.getZoom() * 5;
 
                 myIcon = L.icon({
-                    iconUrl:track.icon,
+                    iconUrl:translateTracksPath(track.icon),
                     iconSize:[markerSize, markerSize],
                     iconAnchor:[1, markerSize],
                     shadowUrl:null
@@ -182,7 +202,7 @@
 
         map.setView(track.trackData[0], track.defaultScale?track.defaultScale:8);
 
-        audio.src = track.audioSrc;
+        audio.src = translateTracksPath(track.audioSrc);
         audio.volume = track.audioVolume?track.audioVolume:0.8;
 
         line = L.polyline(track.trackData, {color:'red'}).addTo(map);

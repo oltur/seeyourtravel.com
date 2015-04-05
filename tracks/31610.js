@@ -9,5 +9,5 @@
 		"icon": "mycar.png",
 		"audioSrc": "Tirol.mp3",
 		"defaultScale": 8,
-		"trackGpx": "tracks/31610.xml"
+		"trackGpx": "31610.xml"
 }

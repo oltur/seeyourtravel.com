@@ -9,5 +9,5 @@
 	        "numOfPhotos": 5,
 		"icon": "mybike.png",
 		"audioSrc": "Josip_Batistic-Dolinom_Se_Stala-1922.mp3",
-		"trackGpx": "tracks/Split.xml"
+		"trackGpx": "Split.xml"
 }

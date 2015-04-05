@@ -9,5 +9,5 @@
 		"icon": "mybike.png",
 		"audioSrc": "Tirol.mp3",
 		"defaultScale": 10,
-		"trackGpx": "tracks/1581.xml"
+		"trackGpx": "1581.xml"
 }

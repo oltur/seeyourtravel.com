@@ -9,7 +9,7 @@
 		"icon": "mybike.png",
 		"audioSrc": "k.mp3",
 		"audioVolume": 0.2,
-		"textToRead": "tracks/k.txt",
+		"textToRead": "k.txt",
 		"defaultScale": 15,
 		"trackData":         
 [
