@@ -88,7 +88,7 @@
         else
         {
             writer.Write(",");
-            writer.WriteLine("\"trackData\":[" + Request.Form["trackData"].Trim().TrimEnd(',') + "]");
+            writer.WriteLine("\"trackData\":" + Request.Form["trackData"]);
         }
 
             writer.WriteLine("}");

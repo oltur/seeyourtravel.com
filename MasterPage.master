@@ -1,33 +1,35 @@
 ﻿<%@ Master Language="C#" %>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     
+    <LINK REL="SHORTCUT ICON" HREF="favicon.ico">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css"/>
+    <link rel="stylesheet" href="styles/leaflet.css"/>
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css"/>
+    <link rel="stylesheet" href="styles/leaflet.ie.css"/>
     <![endif]-->
-    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="styles/jquery-ui.css"/>
     <script src="libs/jquery.js"></script>
     <script src="libs/jquery-ui.js"></script>
-    <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+    <script src="libs/leaflet.js"></script>
     <script src="js/AnimatedMarker.js"></script>
-    <link rel="stylesheet" href="css/jquery-ui.css">
+
+    <!--script src="libs/maps.googleapis.js"></script-->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 
     <script src="js/OurTravel.js"></script>
     <script type="text/javascript" src="js/get_text.js"></script>
     <link rel="stylesheet" href="styles/ourTravel.css"/>
 
-    <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder id="HeadPlaceholder" runat="server"></asp:ContentPlaceHolder>
 </head>
 <body onresize="onBodyResize()">
 <form id="form1" runat="server">
     <div>
-        <asp:ContentPlaceHolder id="ContentPlaceHolder2" runat="server">
+        <asp:ContentPlaceHolder id="BodyPlaceholder" runat="server">
         
         </asp:ContentPlaceHolder>
     </div>

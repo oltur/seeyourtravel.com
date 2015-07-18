@@ -5,7 +5,7 @@
         	"stepsToRedraw": 2,
 	        "stepsToShowPhoto": 2,
         	"velocityMetersPerSec": 20,
-	        "numOfPhotos": 5,
+	        "numOfPhotos": 10,
 		"icon": "mybike.png",
 		"audioSrc": "k.mp3",
 		"audioVolume": 0.2,

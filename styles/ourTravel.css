@@ -1,3 +1,9 @@
+.mapheader {
+	height:50px;
+        background: url('../img/ua.png');
+	background-size: 100% 100%;
+    	background-repeat: no-repeat;
+	}
 
         #map {
             height: 900px;
@@ -5,7 +11,12 @@
 
         .photo {
 /*            height: 200px;*/
+/*            max-height: 100px;(*/
             height: 100%;
+            margin-top: 1px;
+            margin-bottom: 1px;
+            margin-right: 1px;
+            margin-left: 1px;
         }
         .nullphoto {
             height: 1px;
