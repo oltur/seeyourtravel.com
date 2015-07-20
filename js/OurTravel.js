@@ -15,10 +15,38 @@
     }
 
     function onBodyResize() {
-        $("#map").height(window.innerHeight-50);
+        if ($("#map").length) {
+            $("#map").height(window.innerHeight - 50);
+        }
     }
 
 $(function(){onBodyResize();});
+
+function showLocation() {
+    if (navigator.geolocation) {
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 10000
+        };
+        navigator.geolocation.getCurrentPosition(showPosition, errorPosition, options);
+        setTimeout(arguments.callee, 10000);
+    } else {
+        //x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+function errorPosition(err) {
+    console.warn('ERROR(' + err.code + '): ' + err.message);
+};
+function showPosition(position) {
+    if ($("#map").length) {
+        //x.innerHTML = "Latitude: " + position.coords.latitude +
+        //"<br>Longitude: " + position.coords.longitude;
+        var newLatLng = new L.LatLng(position.coords.latitude, position.coords.longitude);
+        //crd.accuracy
+        markerWhereIAm.setLatLng(newLatLng);;
+    }
+}
 
     function stop() {
         animatedMarker.stop();
@@ -255,6 +283,15 @@ $(function(){onBodyResize();});
             animatedMarker.setIcon(myIcon);
             map.addLayer(animatedMarker);
 
+            var icon2 = L.icon({
+                iconUrl: ("img/youarehere.png"),
+                iconSize: [30, 50],
+                iconAnchor: [15, 50],
+                //shadowUrl: null
+            });
+
+            markerWhereIAm = L.marker(new L.LatLng(1000, 1000), { icon: icon2 }).addTo(map);
+            showLocation();
         }
         else {
             try {

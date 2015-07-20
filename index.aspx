@@ -7,10 +7,11 @@
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
     <div class="mapheader">
-        &nbsp;
-       <a href="#">
-           <img src="img/logosmall.png" style="height: 24px; width: 24px; vertical-align: middle;"/></a>
-        &nbsp;
+        <span style="position: absolute; left: 0;">&nbsp;
+            <a href="#"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+        </span>
+        <span style="position: absolute; right: 0;"><a href="#"><img src="img/help.png" style="height:50px; width:50px" alt="Need assistance?"/></a>&nbsp;</span>
+        <span style="position: absolute; left: 70px;">
        <input id="newTrackButton" type="button" value="New" onclick="window.location = 'editor.aspx'" />
         &nbsp;
        <label for="tracksList"></label>
@@ -35,6 +36,7 @@
         <br />
         &nbsp;
        Current&nbsp;location: <span id="lblCoord"></span>
+        </span>
     </div>
     <!--Content-->
     <div id='pageContent' style='height: 100%'>

@@ -1,14 +1,27 @@
-<%@ Page Language="C#" Debug="true" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Our travels - Save track</title>
-    <script src="js/OurTravel.js"></script>
-    <link rel="stylesheet" href="styles/ourTravel.css"/>
-</head>
-<body>
-    <a href="index.aspx">Main page</a>
-&nbsp;
+<%@ Page Title="Track is saved" Language="C#" MasterPageFile="MasterPage.master" %>
+
+<asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
+
+    <script>
+        delayRedirect('.');
+        function delayRedirect(url) {
+            var Timeout = setTimeout("window.location='" + url + "'", 10000);
+        }
+    </script>
+
+</asp:Content>
+
+<asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
+
+    <div class="mapheader">
+        &nbsp;
+       <a href="#">
+           <img src="img/logosmall.png" style="height: 24px; width: 24px; vertical-align: middle;" /></a>
+        &nbsp;
+       Track is saved! You willl be back to <a href="index.aspx">Main page</a> in 10 seconds, or click the link.
+        &nbsp;
+    </div>
+
 <!--span id="lbl"></span-->
 <%
     //Response.Write(Request.Form.Count);
@@ -94,5 +107,4 @@
             writer.WriteLine("}");
         }
 %>
-</body>
-</html>
+</asp:Content>

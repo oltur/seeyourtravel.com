@@ -9,19 +9,20 @@
 
 
     <div class="mapheader">
-        &nbsp;
-       <a href="#">
-           <img src="img/logosmall.png" style="height: 24px; width: 24px; vertical-align: middle;" /></a>
-        &nbsp;
-       <a href="index.aspx">Main page</a>
-        &nbsp;
-       <input id="settingsCheckBox" type="checkbox" value="Settings" onclick="$('#settings').toggle('fold', 1000);" />
-        <label for="settingsCheckBox">Settings</label>
-        &nbsp;
-        <a href="./corporate" target="_blank">About us</a>
-        <br />
-        &nbsp;
-       Current&nbsp;location: <span id="lblCoord"></span>
+        <span style="position: absolute; left: 0;">&nbsp;
+            <a href="#"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+        </span>
+        <span style="position: absolute; right: 0;"><a href="#"><img src="img/help.png" style="height:50px; width:50px" alt="Need assistance?"/></a>&nbsp;</span>
+        <span style="position: absolute; left: 70px;">
+           <a href="index.aspx">Main page</a>
+            &nbsp;
+           <input id="settingsCheckBox" type="checkbox" value="Settings" onclick="$('#settings').toggle('fold', 1000);" />
+            <label for="settingsCheckBox">Settings</label>
+            &nbsp;
+            <a href="./corporate" target="_blank">About us</a>
+            <br />
+            Current&nbsp;location: <span id="lblCoord"></span>
+        </span>
     </div>
 
 
@@ -54,7 +55,7 @@
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="border-width: 2px; width: 40%; height: 55%; position: absolute; left: 5%; top: 30%">
+    <div id="textToReadArea0" class="ui-widget-content" style="border-width: 2px; width: 40%; height: 65%; position: absolute; left: 5%; top: 20%">
         File name:
         <input id="filename" name="filename" type="text" value="MyTrack" /><br />
         Track description:
