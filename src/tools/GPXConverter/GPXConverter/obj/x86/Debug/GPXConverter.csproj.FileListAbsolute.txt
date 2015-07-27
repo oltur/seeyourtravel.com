@@ -1,5 +1,0 @@
-C:\Users\Me\WebstormProjects\tools\GPXConverter\GPXConverter\bin\Debug\GPXConverter.exe
-C:\Users\Me\WebstormProjects\tools\GPXConverter\GPXConverter\bin\Debug\GPXConverter.pdb
-C:\Users\Me\WebstormProjects\tools\GPXConverter\GPXConverter\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\Me\WebstormProjects\tools\GPXConverter\GPXConverter\obj\x86\Debug\GPXConverter.exe
-C:\Users\Me\WebstormProjects\tools\GPXConverter\GPXConverter\obj\x86\Debug\GPXConverter.pdb

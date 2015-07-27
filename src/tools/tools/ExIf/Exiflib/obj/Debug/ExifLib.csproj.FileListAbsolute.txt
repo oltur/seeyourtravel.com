@@ -1,5 +1,0 @@
-C:\Users\oleksandr.turevskyi\Google Drive\_Projects\seeyourtravel\tools\ExIf\ExifLib\bin\Debug\ExifLib.dll
-C:\Users\oleksandr.turevskyi\Google Drive\_Projects\seeyourtravel\tools\ExIf\ExifLib\bin\Debug\ExifLib.pdb
-C:\Users\oleksandr.turevskyi\Google Drive\_Projects\seeyourtravel\tools\ExIf\ExifLib\obj\Debug\ExifLib.csprojResolveAssemblyReference.cache
-C:\Users\oleksandr.turevskyi\Google Drive\_Projects\seeyourtravel\tools\ExIf\ExifLib\obj\Debug\ExifLib.dll
-C:\Users\oleksandr.turevskyi\Google Drive\_Projects\seeyourtravel\tools\ExIf\ExifLib\obj\Debug\ExifLib.pdb
