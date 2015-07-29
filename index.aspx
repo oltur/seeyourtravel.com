@@ -30,10 +30,17 @@
 </script>
 
     <div class="mapheader">
-        <span style="position: absolute; left: 0;">&nbsp;
+        <span style="position: absolute; left: 0;">
             <a href="#"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
         </span>
-        <span style="position: absolute; right: 0;"><a href="#"><img src="img/help.png" style="height:50px; width:50px" alt="Need assistance?" onclick="$('#helpPanel').toggle('fold', 1000);" /></a>&nbsp;</span>
+        <span style="position: absolute; right: 70px;">
+            <span style="vertical-align:top">
+                Hello, <%=Context.User.Identity.Name%>&nbsp;<a href="Logout.aspx">Logout</a>
+            </span>
+        </span>
+        <span style="position: absolute; right: 0px;">
+            <a href="#"><img src="img/help.png" style="height:50px; width:50px" alt="Need assistance?" onclick="$('#helpPanel').toggle('fold', 1000);" /></a>&nbsp;
+        </span>
         <span style="position: absolute; left: 70px;">
        <input id="newTrackButton" type="button" value="New" onclick="window.location = 'editor.aspx'" />
         &nbsp;
@@ -63,10 +70,10 @@
     </div>
     <!--Content-->
     <div id='pageContent' style='height: 100%'>
-        <!--Map-->
         <div id="helpPanel" style="display: none; position: absolute; z-index: 100; left: 69%; width: 30%; height: 90%; background: #eee; border: 1px solid #000;">
 		Here will be help...
-	</div>
+    	</div>
+        <!--Map-->
         <div id="settings" style="display: none; position: absolute; z-index: 100; left: 50px; width: 300px; height: 200px; background: #ccc; border: 1px solid #000;">
             <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Description" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
             <label for="scriptTextCheckBox">Description</label>
@@ -135,8 +142,8 @@
       }
     });
   });  
-
 </script>
+
 <div id="dialog" title="Welcome to SeeYourTravel.com">
   <p>SeeYourTravel.com is a travel experience site...</p>
   <p>See more at <a href="https://www.youtube.com/channel/UCfSj_WKVFx0DrI5qmhLjo_A">YouTube</a></p>

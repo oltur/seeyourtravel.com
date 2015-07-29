@@ -9,7 +9,7 @@
 
 
     <div class="mapheader">
-        <span style="position: absolute; left: 0;">&nbsp;
+        <span style="position: absolute; left: 0;">
             <a href="#"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
         </span>
         <span style="position: absolute; right: 0;"><a href="#"><img src="img/help.png" style="height:50px; width:50px" alt="Need assistance?"/></a>&nbsp;</span>
