@@ -1,4 +1,12 @@
 <%@ Page Title="Track is saved" Language="C#" MasterPageFile="MasterPage.master" %>
+<!--
+SeeYourTravel.com - Travel Experience Site
+Copyright (c) 2014-2015, Oleksandr Turevskiy
+All rights reserved.
+
+GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007.
+Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+-->
 
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
 
