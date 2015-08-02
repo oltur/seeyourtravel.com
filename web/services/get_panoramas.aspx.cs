@@ -46,13 +46,13 @@ public partial class services_get_panoramas : System.Web.UI.Page
 
 //     /**/jQuery111206939764672424644_1428245949396({"count":13077,"has_more":true,"map_location":{"lat":48.475934500000001,"lon":29.627099594436846,"panoramio_zoom":11},"photos":[{"height":375,"latitude":46.638703999999997,"longitude":30.78603,"owner_id":13058,"owner_name":"Cyrill","owner_url":"http://www.panoramio.com/user/13058","photo_file_url":"http://mw2.google.com/mw-panoramio/photos/medium/97671.jpg","photo_id":97671,"photo_title":"kin-dza-dza","photo_url":"http://www.panoramio.com/photo/97671","upload_date":"09 December 2006","width":500},{"height":500,"latitude":48.292124000000001,"longitude":25.938113999999999,"owner_id":6389390,"owner_name":"EdwardTurJ","owner_url":"http://www.panoramio.com/user/6389390","photo_file_url":"http://mw2.google.com/mw-panoramio/photos/medium/65444724.jpg","photo_id":65444724,"photo_title":"Frosty Morning","photo_url":"http://www.panoramio.com/photo/65444724","place_id":"8042a62ade08f75fbf6e9f9902a802a90433d409","upload_date":"23 January 2012","width":375},{"height":333,"latitude":50.750559000000003,"longitude":26.043975,"owner_id":5639933,"owner_name":"Kostia Semytskyi","owner_url":"http://www.panoramio.com/user/5639933","photo_file_url":"http://mw2.google.com/mw-panoramio/photos/medium/77706532.jpg","photo_id":77706532,"photo_title":"\u0422\u0443\u043d\u0435\u043b\u044c \u043a\u043e\u0445\u0430\u043d\u043d\u044f / \u0422unnel of love","photo_url":"http://www.panoramio.com/photo/77706532","upload_date":"25 August 2012","width":500},{"height":497,"latitude":48.095083000000002,"longitude":35.021774000000001,"owner_id":4353734,"owner_name":"Buts_YV","owner_url":"http://www.panoramio.com/user/4353734","photo_file_url":"http://mw2.google.com/mw-panoramio/photos/medium/75587981.jpg","photo_id":75587981,"photo_title":"Dnieper. Sunset. \u0414\u043d\u0435\u043f\u0440. \u0417\u0430\u043a\u0430\u0442 ","photo_url":"http://www.panoramio.com/photo/75587981","upload_date":"18 July 2012","width":500}]})
 
-        Response.Cache.SetNoStore();
-        Response.Cache.SetNoServerCaching();
-        Response.Cache.SetMaxAge(new TimeSpan(0));
-        Response.Cache.SetCacheability(HttpCacheability.NoCache);
-        Response.Cache.AppendCacheExtension("no-store, must-revalidate");
-        Response.AppendHeader("Pragma", "no-cache");
-        Response.AppendHeader("Expires", "0");
+        //Response.Cache.SetNoStore();
+        //Response.Cache.SetNoServerCaching();
+        //Response.Cache.SetMaxAge(new TimeSpan(0));
+        //Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        //Response.Cache.AppendCacheExtension("no-store, must-revalidate");
+        //Response.AppendHeader("Pragma", "no-cache");
+        //Response.AppendHeader("Expires", "0");
 
         Response.ContentType = "application/javascript; charset=utf-8";
         Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");

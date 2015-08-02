@@ -60,13 +60,13 @@ public partial class services_get_places : System.Web.UI.Page
 }
  )";
  
-        Response.Cache.SetNoStore();
-        Response.Cache.SetNoServerCaching();
-        Response.Cache.SetMaxAge(new TimeSpan(0));
-        Response.Cache.SetCacheability(HttpCacheability.NoCache);
-        Response.Cache.AppendCacheExtension("no-store, must-revalidate");
-        Response.AppendHeader("Pragma", "no-cache");
-        Response.AppendHeader("Expires", "0");
+        //Response.Cache.SetNoStore();
+        //Response.Cache.SetNoServerCaching();
+        //Response.Cache.SetMaxAge(new TimeSpan(0));
+        //Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        //Response.Cache.AppendCacheExtension("no-store, must-revalidate");
+        //Response.AppendHeader("Pragma", "no-cache");
+        //Response.AppendHeader("Expires", "0");
 
         Response.ContentType = "application/javascript; charset=utf-8";
         Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");

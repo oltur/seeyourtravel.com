@@ -267,6 +267,13 @@
 
         var track;
         var markerPosition;
+        var map2 = document.getElementById("map2");
+        var animatedMarker;
+        var tileLayer;
+        var markers;
+        var line;
+        var markerStart;
+        var markerFinish;
 
         function onMapClick(e) {
             updateTrackData(e);

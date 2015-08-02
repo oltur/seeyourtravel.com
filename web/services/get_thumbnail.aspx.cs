@@ -86,15 +86,15 @@ public partial class services_get_thumbnail : System.Web.UI.Page
                         }
                     }
                     // Setup caching
-                    HttpCachePolicy cachePolicy = context.Response.Cache;
-                    cachePolicy.SetCacheability(HttpCacheability.Public);
-                    cachePolicy.VaryByParams["p"] = true;
-                    cachePolicy.VaryByParams["cq"] = true;
-                    cachePolicy.VaryByParams["im"] = true;
-                    cachePolicy.SetOmitVaryStar(true);
-                    cachePolicy.SetExpires(DateTime.Now + TimeSpan.FromDays(365));
-                    cachePolicy.SetValidUntilExpires(true);
-                    cachePolicy.SetLastModified(lastModified);
+                    //HttpCachePolicy cachePolicy = context.Response.Cache;
+                    //cachePolicy.SetCacheability(HttpCacheability.Public);
+                    //cachePolicy.VaryByParams["p"] = true;
+                    //cachePolicy.VaryByParams["cq"] = true;
+                    //cachePolicy.VaryByParams["im"] = true;
+                    //cachePolicy.SetOmitVaryStar(true);
+                    //cachePolicy.SetExpires(DateTime.Now + TimeSpan.FromDays(365));
+                    //cachePolicy.SetValidUntilExpires(true);
+                    //cachePolicy.SetLastModified(lastModified);
                     // Content-type
                     context.Response.ContentType = "image/png";
                     // Send the contents (need to use a searchable intermediary stream for png

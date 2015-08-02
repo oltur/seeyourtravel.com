@@ -47,19 +47,33 @@ function showPosition(position) {
         markerWhereIAm.setLatLng(newLatLng);
         if(typeof track == "undefined")
             map.setView(newLatLng, 8);
+
+        var urlp = "services/user_locations.aspx?action=senduserlocation&userId=" + globalUserId + "&lat=" + position.coords.latitude.toString() + "&lng=" + position.coords.longitude.toString()
+        $.ajax({
+            dataType: "jsonp",
+            url: urlp,
+            success: function (data) {
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("SendUserLocation error status: " + textStatus); console.log("Error: " + errorThrown);
+            }
+        });
+        
     }
 }
 
-function stop() {
+function dostop() {
     animatedMarker.stop();
     audio.pause();
 }
 
-function start() {
-    stop();
-    animatedMarker.start();
-    if (track.audioSrc && track.audioSrc.length > 0)
-        audio.play();
+function dostart() {
+    dostop();
+    setTimeout(function () {
+        animatedMarker.start();
+        if (track.audioSrc && track.audioSrc.length > 0)
+            audio.play();
+    }, 1000);
 }
 
 function showPhotos(track,p,tolerancy) {
@@ -197,6 +211,17 @@ function GPXtoLatLng(urlGPX) {
     return result;
 }
 
+function fixTrackData(track)
+{
+    var newTrackData = [];
+    for (var i = 0; i < track.trackData.length; i++) {
+        var told = track.trackData[i];
+        var tnew = new L.LatLng(told[0], told[1]);
+        newTrackData.push(tnew);
+    }
+    track.trackData = newTrackData;
+}
+
 function loadTrackSync(path) {
     var url = path + "?" + Math.random();
     var txt = $.ajax(
@@ -211,6 +236,9 @@ function loadTrackSync(path) {
     if (track.trackGpx) {
         track.trackData = $.parseJSON(GPXtoLatLng(tracksFolder + track.trackGpx));
     }
+
+    fixTrackData(track);
+
     if ($("#textToReadArea").length > 0) {
         if ("textToRead" in track) {
             textToReadArea.innerText = $.ajax(
@@ -229,32 +257,55 @@ function loadTrackSync(path) {
     return track;
 }
 
+function clearMap(m) {
+    for (i in m._layers) {
+//        if (m._layers[i]._path != undefined) {
+            try {
+                m.removeLayer(m._layers[i]);
+            }
+            catch (e) {
+                console.log("problem with " + e + m._layers[i]);
+            }
+//        }
+    }
+}
 function init(filename) {
 
-    if (typeof map == "undefined") {
-        map = L.map('map');
-        var url = 'http://{s}.tile.cloudmade.com/5bcd2fc5d5714bd48096c7478324e0fe/997/256/{z}/{x}/{y}.png';
-        L.tileLayer(url, {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
-            maxZoom: 18
-        }).addTo(map);
+    if (typeof map != "undefined") {
+        var mapNode = document.getElementById("map");
+        var mapContainerParent = mapNode.parentNode;
+        mapContainerParent.removeChild(mapNode);
 
-        var icon2 = L.icon({
-            iconUrl: ("img/youarehere.png"),
-            iconSize: [30, 50],
-            iconAnchor: [15, 50],
-            //shadowUrl: null
-        });
+        mapNode = document.createElement('div');
+        mapNode.id = "map";
+        mapNode.style.zIndex = 10;
+        mapContainerParent.appendChild(mapNode);
+        map.removeLayer(tileLayer);
+        markers.clearLayers();
+        map.removeLayer(markers);
+        clearMap(map);
+        map = null;
+    }
 
-        markerWhereIAm = L.marker(new L.LatLng(1000, 1000), { icon: icon2 }).addTo(map);
-    }
-    else {
-        try {
-        }
-        catch (err) {
-            console.log(err.message);
-        }
-    }
+    var url = 'http://{s}.tile.cloudmade.com/5bcd2fc5d5714bd48096c7478324e0fe/997/256/{z}/{x}/{y}.png';
+    map = L.map('map');
+    tileLayer = L.tileLayer(url, {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+        maxZoom: 18
+    });
+    tileLayer.addTo(map);
+    markers = new L.FeatureGroup();
+    map.addLayer(markers);
+
+    var icon2 = L.icon({
+        iconUrl: ("img/youarehere.png"),
+        iconSize: [30, 50],
+        iconAnchor: [15, 50],
+        //shadowUrl: null
+    });
+
+    markerWhereIAm = L.marker(new L.LatLng(1000, 1000), { icon: icon2 });
+    markers.addLayer(markerWhereIAm);
 
     showLocation();
 
@@ -278,7 +329,7 @@ function init(filename) {
             icon: myIcon, // icon
             autoStart: false,
             onEnd: function () {
-                stop();
+                dostop();
             },
             onStep: function (p) {
                 counter++;
@@ -292,19 +343,18 @@ function init(filename) {
             }
         };
 
-        if (typeof animatedMarker == "undefined") {
-            animatedMarker = L.animatedMarker(track.trackData, amOptions);
-            animatedMarker.setIcon(myIcon);
-            map.addLayer(animatedMarker);
+        animatedMarker = L.animatedMarker(track.trackData, amOptions);
+        animatedMarker.setIcon(myIcon);
+        markers.addLayer(animatedMarker);
 
-            line = L.polyline(track.trackData, { color: 'green' }).addTo(map);
+        line = L.polyline(track.trackData, { color: 'green' });
+        markers.addLayer(line);
 
-            markerFinish = L.marker(track.trackData[0]).addTo(map).bindPopup("Finish");
-            markerFinish = L.marker(track.trackData[track.trackData.length - 1]).addTo(map).bindPopup("Finish");
-        }
-        else {
-            animatedMarker.resetAM(track.trackData, amOptions);
-        }
+        markerStart = L.marker(track.trackData[0]).bindPopup("Start");
+        markers.addLayer(markerStart);
+
+        markerFinish = L.marker(track.trackData[track.trackData.length - 1]).bindPopup("Finish");
+        markers.addLayer(markerFinish);
 
         map.setView(track.trackData[0], track.defaultScale ? track.defaultScale : 8);
 
@@ -450,8 +500,10 @@ function createPhotoMarker(place, isGoogle) {
     var marker = L.marker(new L.LatLng(
         isGoogle ? place.geometry.location.G : place.geometry.location.lat,
         isGoogle ? place.geometry.location.K : place.geometry.location.lng),
-        { icon: icon }).addTo(map).bindPopup(domelem);
+        { icon: icon }).bindPopup(domelem);
     myMarkers.push(marker);
+
+    markers.addLayer(marker);
 
     //  var marker = new google.maps.Marker({
     //    map: map,

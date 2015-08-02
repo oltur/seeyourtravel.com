@@ -28,11 +28,11 @@
             <select id="tracksList">
             </select>
             &nbsp;
-       <input id="startButton" type="button" value="Load" onclick="init(tracksList.options[tracksList.selectedIndex].innerHTML); start(); pauseButton.disabled = false; continueButton.disabled = true;" />
+       <input id="startButton" type="button" value="Load" onclick="init(tracksList.options[tracksList.selectedIndex].innerHTML); dostart(); pauseButton.disabled = false; continueButton.disabled = true;" />
             &nbsp;
-       <input id="pauseButton" type="button" value="Pause" onclick="stop(); pauseButton.disabled = true; continueButton.disabled = false;" />
+       <input id="pauseButton" type="button" value="Pause" onclick="dostop(); pauseButton.disabled = true; continueButton.disabled = false;" />
             &nbsp;
-       <input id="continueButton" type="button" value="Continue" onclick="start(); pauseButton.disabled = false; continueButton.disabled = true;" />
+       <input id="continueButton" type="button" value="Continue" onclick="dostart(); pauseButton.disabled = false; continueButton.disabled = true;" />
             &nbsp;
        <input id="editTrackButton" type="button" value="Edit" onclick="window.location = 'editor.aspx?filename=' + tracksList.options[tracksList.selectedIndex].innerHTML" />
             <!--       &nbsp;
@@ -97,12 +97,12 @@
             Your browser does not support the audio element.
         </audio>
 
-        <div id="textToReadArea0" class="ui-widget-content" style="border-width: 2px; width: 25%; height: 25%; position: absolute; left: 2%; top: 70%">
+        <div id="textToReadArea0" class="ui-widget-content" style="z-index: 100; border-width: 2px; width: 25%; height: 25%; position: absolute; left: 2%; top: 70%">
             <br />
             <textarea id="textToReadArea" disabled="disabled" style="top: 25%; width: 99%; height: 88%; resize: none;"></textarea>
         </div>
 
-        <div id="imageDiv0" class="ui-widget-content" style="border-width: 2px; width: 68%; height: 25%; position: absolute; left: 30%; top: 70%; overflow-x: hidden; overflow-y: hidden;">
+        <div id="imageDiv0" class="ui-widget-content" style="z-index: 100; border-width: 2px; width: 68%; height: 25%; position: absolute; left: 30%; top: 70%; overflow-x: hidden; overflow-y: hidden;">
             <div id="imageDiv" style="width: 100%; height: 100%"></div>
         </div>
     </div>
@@ -191,9 +191,11 @@
         var map;
         var map2 = document.getElementById("map2");
         var animatedMarker;
+        var tileLayer;
+        var markers;
         var line;
-        //        var markerStart;
-        //        var markerFinish;
+        var markerStart;
+        var markerFinish;
 
         var fileListString = $.ajax(
                     {

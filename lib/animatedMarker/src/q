@@ -1,0 +1,133 @@
+Comparing files AnimatedMarker.js and MYANIMATEDMARKER.JS
+***** AnimatedMarker.js
+        // callback onend
+        onEnd: function () { },
+        clickable: false
+***** MYANIMATEDMARKER.JS
+        // callback onend
+        onEnd: function () {
+        },
+        onStep: function (p) {
+        },
+        clickable: false
+*****
+
+***** AnimatedMarker.js
+    initialize: function (latlngs, options) {
+        this.setLine(latlngs);
+        L.Marker.prototype.initialize.call(this, latlngs[0], options);
+***** MYANIMATEDMARKER.JS
+    initialize: function (latlngs, options) {
+        if (L.DomUtil.TRANSITION) {
+            // No need to to check up the line if we can animate using CSS3
+            this._latlngs = latlngs;
+        } else {
+            // Chunk up the lines into options.distance bits
+            this._latlngs = this._chunk(latlngs);
+            this.options.distance = 10;
+            this.options.interval = 30;
+        }
+
+        L.Marker.prototype.initialize.call(this, latlngs[0], options);
+*****
+
+***** AnimatedMarker.js
+        }
+        chunkedLatLngs.push(latlngs[len - 1]);
+
+***** MYANIMATEDMARKER.JS
+        }
+
+*****
+
+***** AnimatedMarker.js
+
+    animate: function () {
+***** MYANIMATEDMARKER.JS
+
+    resetAM: function (trackData, options) {
+        this._latlngs = trackData;
+        this._i = 0;
+        this.options = options;
+    },
+
+    animate: function () {
+*****
+
+***** AnimatedMarker.js
+        if (L.DomUtil.TRANSITION) {
+            if (this._icon) { this._icon.style[L.DomUtil.TRANSITION] = ('all ' + speed + 'ms linear'); }
+            if (this._shadow) { this._shadow.style[L.DomUtil.TRANSITION] = 'all ' + speed + 'ms linear'; }
+        }
+***** MYANIMATEDMARKER.JS
+        if (L.DomUtil.TRANSITION) {
+            if (this._icon) {
+                this._icon.style[L.DomUtil.TRANSITION] = ('all ' + speed + 'ms linear');
+            }
+            if (this._shadow) {
+                this._shadow.style[L.DomUtil.TRANSITION] = 'all ' + speed + 'ms linear';
+            }
+        }
+*****
+
+***** AnimatedMarker.js
+        // Move to the next vertex
+        this.setLatLng(this._latlngs[this._i]);
+        this._i++;
+***** MYANIMATEDMARKER.JS
+        // Move to the next vertex
+        var t = this._latlngs[this._i];
+        this.setLatLng(t);
+        this._i++;
+*****
+
+***** AnimatedMarker.js
+
+        // Queue up the animation to the next next vertex
+***** MYANIMATEDMARKER.JS
+
+        // Fire onStep if requested
+        if (self.options.onStep)
+            setTimeout(function () {
+                self.options.onStep(t)
+            }, 1);
+
+        // Queue up the animation to the next next vertex
+*****
+
+***** AnimatedMarker.js
+    start: function () {
+        this.animate();
+***** MYANIMATEDMARKER.JS
+    start: function () {
+        if (!this._i) {
+            this._i = 1;
+        }
+
+        this.animate();
+*****
+
+***** AnimatedMarker.js
+        }
+    },
+
+    setLine: function (latlngs) {
+        if (L.DomUtil.TRANSITION) {
+            // No need to to check up the line if we can animate using CSS3
+            this._latlngs = latlngs;
+        } else {
+            // Chunk up the lines into options.distance bits
+            this._latlngs = this._chunk(latlngs);
+            this.options.distance = 10;
+            this.options.interval = 30;
+        }
+        this._i = 1;
+    }
+
+});
+***** MYANIMATEDMARKER.JS
+        }
+    }
+});
+*****
+
