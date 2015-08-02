@@ -1,0 +1,8 @@
+C:\_GoogleDrive\_Projects\seeyourtravel\tools\ExIf\MassExtract\obj\Debug\MassExtract.csprojResolveAssemblyReference.cache
+C:\_GoogleDrive\_Projects\seeyourtravel\tools\ExIf\MassExtract\bin\Debug\MassExtract.exe.config
+C:\_GoogleDrive\_Projects\seeyourtravel\tools\ExIf\MassExtract\bin\Debug\MassExtract.exe
+C:\_GoogleDrive\_Projects\seeyourtravel\tools\ExIf\MassExtract\bin\Debug\MassExtract.pdb
+C:\_GoogleDrive\_Projects\seeyourtravel\tools\ExIf\MassExtract\bin\Debug\ExifLib.dll
+C:\_GoogleDrive\_Projects\seeyourtravel\tools\ExIf\MassExtract\bin\Debug\ExifLib.pdb
+C:\_GoogleDrive\_Projects\seeyourtravel\tools\ExIf\MassExtract\obj\Debug\MassExtract.exe
+C:\_GoogleDrive\_Projects\seeyourtravel\tools\ExIf\MassExtract\obj\Debug\MassExtract.pdb
