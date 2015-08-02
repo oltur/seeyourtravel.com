@@ -28,7 +28,7 @@
             <select id="tracksList">
             </select>
             &nbsp;
-       <input id="startButton" type="button" value="Load" onclick="init(tracksList.options[tracksList.selectedIndex].innerHTML); dostart(); pauseButton.disabled = false; continueButton.disabled = true;" />
+       <input id="startButton" type="button" value="Load" onclick="dostop(); init(tracksList.options[tracksList.selectedIndex].innerHTML); dostart(); pauseButton.disabled = false; continueButton.disabled = true;" />
             &nbsp;
        <input id="pauseButton" type="button" value="Pause" onclick="dostop(); pauseButton.disabled = true; continueButton.disabled = false;" />
             &nbsp;

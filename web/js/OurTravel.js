@@ -63,17 +63,15 @@ function showPosition(position) {
 }
 
 function dostop() {
-    animatedMarker.stop();
+    if (typeof animatedMarker != "undefined")
+        animatedMarker.stop();
     audio.pause();
 }
 
 function dostart() {
-    dostop();
-    setTimeout(function () {
-        animatedMarker.start();
-        if (track.audioSrc && track.audioSrc.length > 0)
-            audio.play();
-    }, 1000);
+    animatedMarker.start();
+    if (track.audioSrc && track.audioSrc.length > 0)
+        audio.play();
 }
 
 function showPhotos(track,p,tolerancy) {
@@ -257,43 +255,46 @@ function loadTrackSync(path) {
     return track;
 }
 
-function clearMap(m) {
-    for (i in m._layers) {
-//        if (m._layers[i]._path != undefined) {
-            try {
-                m.removeLayer(m._layers[i]);
-            }
-            catch (e) {
-                console.log("problem with " + e + m._layers[i]);
-            }
-//        }
-    }
-}
+//function clearMap(m) {
+//    for (i in m._layers) {
+////        if (m._layers[i]._path != undefined) {
+//            try {
+//                m.removeLayer(m._layers[i]);
+//            }
+//            catch (e) {
+//                console.log("problem with " + e + m._layers[i]);
+//            }
+////        }
+//    }
+//}
+
 function init(filename) {
 
     if (typeof map != "undefined") {
-        var mapNode = document.getElementById("map");
-        var mapContainerParent = mapNode.parentNode;
-        mapContainerParent.removeChild(mapNode);
+        //var mapNode = document.getElementById("map");
+        //var mapContainerParent = mapNode.parentNode;
+        //mapContainerParent.removeChild(mapNode);
 
-        mapNode = document.createElement('div');
-        mapNode.id = "map";
-        mapNode.style.zIndex = 10;
-        mapContainerParent.appendChild(mapNode);
-        map.removeLayer(tileLayer);
+        //mapNode = document.createElement('div');
+        //mapNode.id = "map";
+        //mapNode.style.zIndex = 10;
+        //mapContainerParent.appendChild(mapNode);
+        //map.removeLayer(tileLayer);
         markers.clearLayers();
         map.removeLayer(markers);
-        clearMap(map);
-        map = null;
+        //clearMap(map);
+        //map = null;
+    }
+    else {
+        var url = 'http://{s}.tile.cloudmade.com/5bcd2fc5d5714bd48096c7478324e0fe/997/256/{z}/{x}/{y}.png';
+        map = L.map('map');
+        tileLayer = L.tileLayer(url, {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+            maxZoom: 18
+        });
+        tileLayer.addTo(map);
     }
 
-    var url = 'http://{s}.tile.cloudmade.com/5bcd2fc5d5714bd48096c7478324e0fe/997/256/{z}/{x}/{y}.png';
-    map = L.map('map');
-    tileLayer = L.tileLayer(url, {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
-        maxZoom: 18
-    });
-    tileLayer.addTo(map);
     markers = new L.FeatureGroup();
     map.addLayer(markers);
 
