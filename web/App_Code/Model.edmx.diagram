@@ -12,6 +12,8 @@
         <AssociationConnector Association="SeeYourTravelModel.FK_UserRole_Role" ManuallyRouted="false" />
         <AssociationConnector Association="SeeYourTravelModel.FK_UserLocation_User" ManuallyRouted="false" />
         <AssociationConnector Association="SeeYourTravelModel.FK_UserRole_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.UserLogin" Width="1.5" PointX="3" PointY="6.875" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_UserLogin_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

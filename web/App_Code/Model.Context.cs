@@ -27,4 +27,5 @@ public partial class SeeYourTravelEntities : DbContext
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<UserLocation> UserLocations { get; set; }
     public virtual DbSet<UserRole> UserRoles { get; set; }
+    public virtual DbSet<UserLogin> UserLogins { get; set; }
 }

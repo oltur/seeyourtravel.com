@@ -32,17 +32,21 @@ public partial class User
     {
         this.UserLocations = new HashSet<UserLocation>();
         this.UserRoles = new HashSet<UserRole>();
+        this.UserLogins = new HashSet<UserLogin>();
     }
 
     public System.Guid UserID { get; set; }
     public string UserName { get; set; }
     public string UserPassword { get; set; }
-    public string FacebookToken { get; set; }
+    public Nullable<bool> Disabled { get; set; }
+    public string FacebookId { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<UserLocation> UserLocations { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<UserRole> UserRoles { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<UserLogin> UserLogins { get; set; }
 }
 
 public partial class UserLocation
@@ -52,6 +56,19 @@ public partial class UserLocation
     public double Lat { get; set; }
     public double Lng { get; set; }
     public System.DateTime Time { get; set; }
+
+    public virtual User User { get; set; }
+}
+
+public partial class UserLogin
+{
+    public System.Guid UserLoginID { get; set; }
+    public System.Guid UserID { get; set; }
+    public System.DateTime Time { get; set; }
+    public string LoginType { get; set; }
+    public string CallerIp { get; set; }
+    public string CallerAgent { get; set; }
+    public string CalledUrl { get; set; }
 
     public virtual User User { get; set; }
 }

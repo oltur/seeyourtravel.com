@@ -24,13 +24,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "seeyourtravel", "http://loc
 		SlnRelativePath = "..\web\"
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{285C2692-90C3-458A-BAEE-2D5EE55239DE}"
-	ProjectSection(SolutionItems) = preProject
-		..\lib\animatedMarker\src\AnimatedMarker.js = ..\lib\animatedMarker\src\AnimatedMarker.js
-		..\turevskiy.com\form.html = ..\turevskiy.com\form.html
-		..\lib\animatedMarker\src\MyAnimatedMarker.js = ..\lib\animatedMarker\src\MyAnimatedMarker.js
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

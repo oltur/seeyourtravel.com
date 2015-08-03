@@ -14,3 +14,19 @@
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
+function fblogout() {
+    if (typeof FB === "undefined") {
+        setTimeout(function () { fblogout(); }, 300); // Retry after timeout
+        return false;
+    } else {
+        FB.getLoginStatus(function (response) {
+            try {
+                FB.logout(function (response) {
+                    window.location = "index.aspx";
+                });
+            }
+            catch (err) { }
+            window.location = "index.aspx";
+        });
+    }
+}

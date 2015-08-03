@@ -39,7 +39,6 @@ public partial class services_user_locations : System.Web.UI.Page
         }
         else if (string.Compare(action, "senduserlocation", true) == 0)
         {
-            var SeeYourTravelEntities
 
             string userId = Request.QueryString["userId"];
             string lat = Request.QueryString["lat"];

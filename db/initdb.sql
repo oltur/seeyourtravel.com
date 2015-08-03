@@ -1,15 +1,15 @@
 USE [master]
 GO
-CREATE LOGIN [SeeYourTravel] WITH PASSWORD=N'SeeYourTravel', DEFAULT_DATABASE=[SeeYourTravel], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF
-GO
+--CREATE LOGIN [SeeYourTravel] WITH PASSWORD=N'SeeYourTravel', DEFAULT_DATABASE=[SeeYourTravel], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF
+--GO
 CREATE DATABASE [SeeYourTravel]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'SeeYourTravel', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\SeeYourTravel.mdf' , SIZE = 4096KB , FILEGROWTH = 1024KB )
+( NAME = N'SeeYourTravel', FILENAME = N'D:\DATA\SeeYourTravel.mdf' , SIZE = 4096KB , FILEGROWTH = 1024KB )
  LOG ON 
-( NAME = N'SeeYourTravel_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\SeeYourTravel_log.ldf' , SIZE = 1024KB , FILEGROWTH = 10%)
+( NAME = N'SeeYourTravel_log', FILENAME = N'D:\DATA\SeeYourTravel_log.ldf' , SIZE = 1024KB , FILEGROWTH = 10%)
 GO
-ALTER DATABASE [SeeYourTravel] SET COMPATIBILITY_LEVEL = 120
+ALTER DATABASE [SeeYourTravel] SET COMPATIBILITY_LEVEL = 110
 GO
 ALTER DATABASE [SeeYourTravel] SET ANSI_NULL_DEFAULT OFF 
 GO
@@ -60,8 +60,8 @@ GO
 ALTER DATABASE [SeeYourTravel] SET PAGE_VERIFY CHECKSUM  
 GO
 ALTER DATABASE [SeeYourTravel] SET TARGET_RECOVERY_TIME = 0 SECONDS 
-GO
-ALTER DATABASE [SeeYourTravel] SET DELAYED_DURABILITY = DISABLED 
+--GO
+--ALTER DATABASE [SeeYourTravel] SET DELAYED_DURABILITY = DISABLED 
 GO
 USE [SeeYourTravel]
 GO
@@ -77,13 +77,29 @@ GO
 ALTER ROLE [db_owner] ADD MEMBER [SeeYourTravel]
 GO
 
-USE [SeeYourTravel]
-GO
 
 USE [SeeYourTravel]
 GO
 
-USE [SeeYourTravel]
+/****** Object:  Table [dbo].[User]    Script Date: 8/3/2015 12:29:07 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[User](
+	[UserID] [uniqueidentifier] NOT NULL CONSTRAINT [DF_User_UserID]  DEFAULT (newid()),
+	[UserName] [nvarchar](100) NOT NULL,
+	[UserPassword] [nvarchar](100) NOT NULL,
+	[FacebookToken] [nvarchar](50) NULL,
+	[Disabled] [bit] NULL,
+ CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 GO
 
 /****** Object:  Table [dbo].[UserLocation]    Script Date: 8/3/2015 12:29:18 PM ******/
@@ -145,29 +161,6 @@ GO
 ALTER TABLE [dbo].[Role] ADD  CONSTRAINT [DF_Role_RoleID]  DEFAULT (newid()) FOR [RoleID]
 GO
 
-
-USE [SeeYourTravel]
-GO
-
-/****** Object:  Table [dbo].[User]    Script Date: 8/3/2015 12:29:07 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [dbo].[User](
-	[UserID] [uniqueidentifier] NOT NULL CONSTRAINT [DF_User_UserID]  DEFAULT (newid()),
-	[UserName] [nvarchar](100) NOT NULL,
-	[UserPassword] [nvarchar](100) NOT NULL,
-	[FacebookToken] [nvarchar](50) NULL,
- CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
-(
-	[UserID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
 
 
 USE [SeeYourTravel]
