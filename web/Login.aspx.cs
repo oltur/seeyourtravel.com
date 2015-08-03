@@ -4,8 +4,9 @@ using System.Web.Security;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
-using System.Web.Helpers;
+//using System.Web.Helpers;
 using System.Diagnostics;
+using System.Web.Script.Serialization;
 
 public partial class Login : System.Web.UI.Page
 {
@@ -19,10 +20,12 @@ public partial class Login : System.Web.UI.Page
         string data = this.Data.Value;
         if (!string.IsNullOrWhiteSpace(token))
         {
-            FacebookData facebookdata = new FacebookData();
-            dynamic o = Json.Decode(data);
-            facebookdata.id = o.id;
-            facebookdata.name = o.name;
+
+            var serializer = new JavaScriptSerializer();
+            FacebookData facebookdata = serializer.Deserialize<FacebookData>(data);
+
+            //facebookdata.id = o.id;
+            //facebookdata.name = o.name;
             Session["FacebookData"] = facebookdata;
             Session["FacebookToken"] = token;
             DoRedirect(facebookdata.id, facebookdata.name);
@@ -111,7 +114,7 @@ public partial class Login : System.Web.UI.Page
             conn.Open();
 
             // Create SqlCommand to select pwd field from users table given supplied userName.
-            cmd = new SqlCommand("Select [UserId] from [User] where UserName=@userName and [Password]=@userPassword", conn);
+            cmd = new SqlCommand("Select [UserId] from [User] where UserName=@userName and UserPassword=@userPassword", conn);
             cmd.Parameters.Add("@userName", SqlDbType.VarChar, 100);
             cmd.Parameters["@userName"].Value = userName;
             cmd.Parameters.Add("@userPassword", SqlDbType.VarChar, 100);
