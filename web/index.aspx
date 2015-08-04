@@ -143,12 +143,14 @@ Share your experience with the World!
                 autoOpen: false,
                 show: {
                     effect: "blind",
-                    duration: 1000
+                    duration: 500
                 },
                 hide: {
                     effect: "explode",
-                    duration: 1000
+                    duration: 500
                 },
+                width: 300,
+                height: 200,
                 modal: true,
                 buttons: {
                     Ok: function () {
@@ -179,8 +181,11 @@ Share your experience with the World!
 
             var visited = $.cookie('visited'); // create cookie 'visited' with no value
             if (visited != 'yes') {
-                $("#dialog").dialog("option", "width", 600);
-                $("#dialog").dialog("option", "height", 400);
+                $("#dialog").dialog("option", "width", 450);
+                $("#dialog").dialog("option", "height", 300);
+                $("#dialog").dialog("option", "minwidth", 450);
+                $("#dialog").dialog("option", "minheight", 300);
+                $("#dialog").dialog("option", "resizable", false);
                 $("#dialog").dialog("open");
             }
             init();
