@@ -38,6 +38,7 @@ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
 
     <script>
         var globalUserId = '<%=Context.User.Identity.Name%>';
+        var globalUserName = '<%=Session["UserName"]%>';
     </script>
 
     <asp:ContentPlaceHolder id="HeadPlaceholder" runat="server">

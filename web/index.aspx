@@ -193,6 +193,7 @@
         var animatedMarker;
         var tileLayer;
         var markers;
+        var markersFriends;
         var line;
         var markerStart;
         var markerFinish;

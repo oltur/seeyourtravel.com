@@ -64,7 +64,6 @@ public partial class Login : System.Web.UI.Page
 
         try
         {
-
             User user = (from u in db.Users
                       where u.FacebookId == facebookdata.id
                       select u).FirstOrDefault();

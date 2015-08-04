@@ -82,3 +82,12 @@ public partial class UserRole
     public virtual Role Role { get; set; }
     public virtual User User { get; set; }
 }
+
+public partial class GetFriendsLocations_Result
+{
+    public System.Guid UserID { get; set; }
+    public string UserName { get; set; }
+    public double Lat { get; set; }
+    public double Lng { get; set; }
+    public System.DateTime Time { get; set; }
+}

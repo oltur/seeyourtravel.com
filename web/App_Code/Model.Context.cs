@@ -10,6 +10,8 @@
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Core.Objects;
+using System.Linq;
 
 public partial class SeeYourTravelEntities : DbContext
 {
@@ -28,4 +30,13 @@ public partial class SeeYourTravelEntities : DbContext
     public virtual DbSet<UserLocation> UserLocations { get; set; }
     public virtual DbSet<UserRole> UserRoles { get; set; }
     public virtual DbSet<UserLogin> UserLogins { get; set; }
+
+    public virtual ObjectResult<GetFriendsLocations_Result> GetFriendsLocations(Nullable<System.Guid> userID)
+    {
+        var userIDParameter = userID.HasValue ?
+            new ObjectParameter("UserID", userID) :
+            new ObjectParameter("UserID", typeof(System.Guid));
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFriendsLocations_Result>("GetFriendsLocations", userIDParameter);
+    }
 }

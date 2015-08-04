@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
+using System.Linq;
 
 public partial class services_user_locations : System.Web.UI.Page
 {
@@ -20,22 +21,40 @@ public partial class services_user_locations : System.Web.UI.Page
         //Response.AppendHeader("Pragma", "no-cache");
         //Response.AppendHeader("Expires", "0");
 
+        SeeYourTravelEntities db = new SeeYourTravelEntities();
+
         Response.ContentType = "application/javascript; charset=utf-8";
         Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
         Response.Headers.Add("Content-Disposition", "Attachment");
 
         if (string.Compare(action, "getfriendslocations", true) == 0)
         {
+            string userId = Request.QueryString["userId"];
 
-            string resultgetfriendslocations = @"/**/" + callback + @"( [{
+            string resultgetfriendslocations = @"/**/" + callback + @"( [{0}] )";
+            string userTemplate = @"{{
 'userId' : '{0}',
 'userName' : '{1}',
 'lat' : {2},
-'lng' : {3}
-}]
- )";
+'lng' : {3},
+'time' : '{4}'
+}}";
+
+            var lastLocations = db.GetFriendsLocations(Guid.Parse(userId)).ToList();
+            var strLocs = new List<string>(lastLocations.Count);
+            foreach (var location in lastLocations)
+            {
+                string t = string.Format(userTemplate,
+                location.UserID,
+                location.UserName,
+                location.Lat,
+                location.Lng,
+                location.Time);
+                strLocs.Add(t);
+            }
             Response.Clear();
-            Response.Write(resultgetfriendslocations);//TODO: Fix
+            string s = string.Format(resultgetfriendslocations, string.Join(", ", strLocs.ToArray()));
+            Response.Write(s);//TODO: Fix
         }
         else if (string.Compare(action, "senduserlocation", true) == 0)
         {
@@ -60,7 +79,6 @@ public partial class services_user_locations : System.Web.UI.Page
 
             this.Application["UserLocations"] = locations;
 
-            var db = new SeeYourTravelEntities();
             UserLocation userLocation = new UserLocation();
             userLocation.UserLocationID = Guid.NewGuid();
             userLocation.UserID = Guid.Parse(userId);

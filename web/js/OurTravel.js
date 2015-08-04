@@ -1,5 +1,19 @@
 var tracksFolder = 'tracks/';
 
+var iconWhereIAm = L.icon({
+    iconUrl: ("img/youarehere.png"),
+    iconSize: [30, 50],
+    iconAnchor: [15, 50],
+    //shadowUrl: null
+});
+
+var iconFriend = L.icon({
+    iconUrl: ("img/friendlocation.png"),
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+    //shadowUrl: null
+});
+
 function translateTracksPath(path)
 {
     return tracksFolder+path;
@@ -26,7 +40,7 @@ function showLocation() {
     if (navigator.geolocation) {
         var options = {
             enableHighAccuracy: true,
-            timeout: 5000,
+            timeout: 30000,
             maximumAge: 60000
         };
         navigator.geolocation.getCurrentPosition(showPosition, errorPosition, options);
@@ -55,9 +69,28 @@ function showPosition(position) {
             success: function (data) {
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("SendUserLocation error status: " + textStatus); console.log("Error: " + errorThrown);
+                console.log("senduserlocation error status: " + textStatus); console.log("Error: " + errorThrown);
             }
         });
+
+        var urlp = "services/user_locations.aspx?action=getfriendslocations&userId=" + globalUserId
+
+        markersFriends.clearLayers();
+
+        $.ajax({
+            dataType: "jsonp",
+            url: urlp,
+            success: function (data) {
+                for (var i in data) {
+                    var markerFriend = L.marker(new L.LatLng(data[i].lat - 0.0002 + Math.random() * 0.0004, data[i].lng - 0.0002 + Math.random() * 0.0004), { icon: iconFriend }).bindPopup(data[i].userName);
+                    markersFriends.addLayer(markerFriend);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("getfriendslocations error status: " + textStatus); console.log("Error: " + errorThrown);
+            }
+        });
+
         
     }
 }
@@ -293,19 +326,15 @@ function init(filename) {
             maxZoom: 18
         });
         tileLayer.addTo(map);
+        L.control.scale().addTo(map);
     }
 
     markers = new L.FeatureGroup();
     map.addLayer(markers);
+    markersFriends = new L.FeatureGroup();
+    markers.addLayer(markersFriends);
 
-    var icon2 = L.icon({
-        iconUrl: ("img/youarehere.png"),
-        iconSize: [30, 50],
-        iconAnchor: [15, 50],
-        //shadowUrl: null
-    });
-
-    markerWhereIAm = L.marker(new L.LatLng(1000, 1000), { icon: icon2 });
+    markerWhereIAm = L.marker(new L.LatLng(1000, 1000), { icon: iconWhereIAm, zIndexOffset: 100 }).bindPopup(globalUserName);
     markers.addLayer(markerWhereIAm);
 
     showLocation();
