@@ -41,10 +41,10 @@ function showLocation() {
         var options = {
             enableHighAccuracy: true,
             timeout: 30000,
-            maximumAge: 60000
+            maximumAge: 300000
         };
         navigator.geolocation.getCurrentPosition(showPosition, errorPosition, options);
-        setTimeout(arguments.callee, 60000);
+        setTimeout(arguments.callee, 300000);
     } else {
         //x.innerHTML = "Geolocation is not supported by this browser.";
     }

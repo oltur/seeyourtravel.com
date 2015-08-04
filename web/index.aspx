@@ -3,6 +3,9 @@
 <%@ Import Namespace="System.IO" %>
 
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
+<script>
+    var trackParam = '<%=Request["trackname"]%>';
+</script>
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
@@ -10,7 +13,7 @@
 
     <div class="mapheader">
         <span style="position: absolute; left: 0;">
-            <a href="#">
+            <a href="/">
                 <img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
         </span>
         <span style="position: absolute; right: 70px;">
@@ -28,7 +31,7 @@
             <select id="tracksList">
             </select>
             &nbsp;
-       <input id="startButton" type="button" value="Load" onclick="dostop(); init(tracksList.options[tracksList.selectedIndex].innerHTML); dostart(); pauseButton.disabled = false; continueButton.disabled = true;" />
+       <input id="startButton" type="button" value="Load" />
             &nbsp;
        <input id="pauseButton" type="button" value="Pause" onclick="dostop(); pauseButton.disabled = true; continueButton.disabled = false;" />
             &nbsp;
@@ -60,7 +63,23 @@
                 data-show-faces="true">
             </div>
             <br />
-            Here will be help...
+            <br />
+<h2>Welcome to the travel experience world! </h2>
+<p>SeeYourTravel.com is a community where you can share, refresh and plan your paths and memories with your friends and with access to the images and information all over the World.
+</p>
+<ul>
+<li>
+Login with Facebook or SeeYourTravel account to be a part of our community
+</li><li>
+Review the tracks of yourself and your friends
+</li><li>
+Create your own by uploading the data from navigator devices or recording your journey
+</li><li>
+Edit and setup tracks with few mouse clicks
+</li><li>
+Share your experience with the World!
+</li>
+</ul>
         </div>
         <!--Map-->
         <div id="settings" style="display: none; position: absolute; z-index: 100; left: 50px; width: 300px; height: 200px; background: #ccc; border: 1px solid #000;">
@@ -109,6 +128,16 @@
 
     <!-- Welcome splash -->
     <script>
+
+        $(function () {
+            $("#startButton").click(function () {
+                window.location = 'index.aspx?trackname=' + tracksList.options[tracksList.selectedIndex].innerHTML;
+            });
+        });
+        function doStartButtonClick() {
+            dostop(); init(tracksList.options[tracksList.selectedIndex].innerHTML); dostart(); pauseButton.disabled = false; continueButton.disabled = true;
+        }
+
         $(function () {
             $("#dialog").dialog({
                 autoOpen: false,
@@ -209,9 +238,17 @@
         for (var i = 0; i < fileList.length; i++) {
             var option = document.createElement("option");
             option.text = fileList[i];
+            option.value = fileList[i];
             tracksList.add(option, null);
         }
 
+        $(function () {
+            if (trackParam != '') {
+                $('select[id="tracksList"] option[value="' + trackParam + '"]').attr('selected', 'selected');
+
+                setTimeout(function () { doStartButtonClick() }, 100);
+            }
+        });
     </script>
 
 </asp:Content>

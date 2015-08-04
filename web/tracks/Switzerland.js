@@ -4,7 +4,7 @@
 		"defaultScale":10,
 	        "photoLocationTolerancy": 0.05,
         	"stepsToRedraw": 2,
-	        "stepsToShowPhoto": 1,
+	        "stepsToShowPhoto": 2,
         	"velocityMetersPerSec": 2000,
 	        "numOfPhotos": 5,
 		"icon": "mycar.png",
