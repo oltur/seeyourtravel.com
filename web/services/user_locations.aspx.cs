@@ -60,6 +60,16 @@ public partial class services_user_locations : System.Web.UI.Page
 
             this.Application["UserLocations"] = locations;
 
+            var db = new SeeYourTravelEntities();
+            UserLocation userLocation = new UserLocation();
+            userLocation.UserLocationID = Guid.NewGuid();
+            userLocation.UserID = Guid.Parse(userId);
+            userLocation.Lat = double.Parse(lat);
+            userLocation.Lng = double.Parse(lng);
+            userLocation.Time = DateTime.UtcNow;
+            db.UserLocations.Add(userLocation);
+            db.SaveChanges();
+
             string resultsenduserlocation = @"/**/" + callback + @"( {} )";
 
             Response.Clear();
