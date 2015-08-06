@@ -117,7 +117,7 @@ function showPhotos(track,p,tolerancy) {
         //var set = "7459025";//"full";//"public";
         var set = "full";
         var count = 0;
-        var urlp = "http://www.panoramio.com/map/get_panoramas.php?set=" + set + "&from=0&to=" + track.numOfPhotos.toString() + "&miny="
+        var urlp = "https://www.panoramio.com/map/get_panoramas.php?set=" + set + "&from=0&to=" + track.numOfPhotos.toString() + "&miny="
             + (p.lat - tolerancy).toString()
             + "&minx=" + (p.lng - tolerancy).toString()
             + "&maxy=" + (p.lat + tolerancy).toString()
@@ -319,12 +319,14 @@ function init(filename) {
         //map = null;
     }
     else {
-        var url = 'http://{s}.tile.cloudmade.com/5bcd2fc5d5714bd48096c7478324e0fe/997/256/{z}/{x}/{y}.png';
-        map = L.map('map');
+//        var url = 'http://{s}.tile.cloudmade.com/5bcd2fc5d5714bd48096c7478324e0fe/997/256/{z}/{x}/{y}.png';
+        var url = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ';      
+	map = L.map('map');
         tileLayer = L.tileLayer(url, {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
-            maxZoom: 18
-        });
+            maxZoom: 18,
+            id: 'mapbox.streets'
+	});
         tileLayer.addTo(map);
         L.control.scale().addTo(map);
     }
