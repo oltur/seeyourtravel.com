@@ -18,7 +18,7 @@
        <a href="#">
            <img src="img/logosmall.png" style="height: 24px; width: 24px; vertical-align: middle;" /></a>
         &nbsp;
-       Track is saved! You willl be back to <a href="index.aspx">Main page</a> in 10 seconds, or click the link.
+       Track is saved! You will be back to <a href="index.aspx">Main page</a> in 10 seconds, or click the link.
         &nbsp;
     </div>
 

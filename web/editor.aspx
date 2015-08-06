@@ -14,8 +14,7 @@
             <a href="/"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
         </span>
         <span style="position: absolute; right: 70px;">
-            <span style="vertical-align:top">
-                Hello, <a href="./profile/"><%=Context.User.Identity.Name%></a>&nbsp;<a href="Logout.aspx">Logout</a>
+            <span style="vertical-align: top">Hello, <a href="./profile/"><%=Session["UserName"]%></a>&nbsp;<a href="Logout.aspx">Logout</a>
             </span>
         </span>
         <span style="position: absolute; right: 0;"><a href="#"><img src="img/help.png" style="height:50px; width:50px" alt="Need assistance?"/></a>&nbsp;</span>
@@ -54,6 +53,22 @@
         <input id="pictureMaxHeight" type="number" value="100" />
         <label for="pictureHeight">Maximum Picture Height</label>
         <br />
+            <select id="mapStyle" onchange="selectMapStyle()">
+<option>mapbox.streets</option>
+<option>mapbox.light</option>
+<option>mapbox.dark</option>
+<option>mapbox.satellite</option>
+<option>mapbox.streets-satellite</option>
+<option>mapbox.wheatpaste</option>
+<option>mapbox.streets-basic</option>
+<option>mapbox.comic</option>
+<option>mapbox.outdoors</option>
+<option>mapbox.run-bike-hike</option>
+<option>mapbox.pencil</option>
+<option>mapbox.pirates</option>
+<option>mapbox.emerald</option>
+<option>mapbox.high-contrast</option>
+            </select>
         Volume:
             <br />
         <div id="slider" style="left: 10%; width: 80%; vertical-align: top"></div>
@@ -104,6 +119,8 @@
         &nbsp;
     <input type="button" value="Delete selected" id="buttonDeleteSelected" />
         &nbsp;
+    <input type="button" value="Cancel" id="gotoMain" onclick="window.location = 'index.aspx?trackname=' + trackname" />
+        &nbsp;
     <!--input type="button" value="Undo last"/-->
         <div id="fileOperations">
             <br />
@@ -120,15 +137,15 @@
     </div>
 
     <script lang="JavaScript">
-        var filenameFromServer;
+        var trackname;
     </script>
     <%
-        string trackfilename = Request.QueryString["filename"];
-        if (!string.IsNullOrEmpty(trackfilename))
+        string trackname = Request.QueryString["trackname"];
+        if (!string.IsNullOrEmpty(trackname))
         {
             Response.Write(string.Format(@"<script language='javascript'>
-    filenameFromServer = '{0}';
-    </script>", trackfilename));
+    trackname = '{0}';
+    </script>", trackname));
         }
 
     %>
@@ -156,9 +173,7 @@
                 var optionSelected = $("option:selected", this);
                 var valueSelected = this.value;
                 var point = JSON.parse(valueSelected);
-                var lat = point[0];
-                var lng = point[1];
-                var newLatLng = new L.LatLng(lat, lng);
+                var newLatLng = pointToLatLng(point);
                 markerPosition.setLatLng(newLatLng);
 
                 track = { numOfPhotos: parseInt(numOfPhotos.value), photoLocationTolerancy: parseInt(photoLocationTolerancy.value) };
@@ -179,10 +194,13 @@
                 $("#fileOperations").hide();
             }
 
-            L.tileLayer(url, {
-                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-                maxZoom: 18
-            }).addTo(map);
+            tileLayer = L.tileLayer(mapTileUrl, {
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+                maxZoom: 18,
+                id: "mapbox.streets"
+            });
+            tileLayer.addTo(map);
+            L.control.scale().addTo(map);
 
             var icon = L.icon({
                 iconUrl: ("tracks/mycar.png"),
@@ -195,10 +213,10 @@
 
             map.on('click', onMapClick);
 
-            if (filenameFromServer) {
-                var initialTrack = loadTrackSync(getTrackPathByName(filenameFromServer));
+            if (trackname) {
+                var initialTrack = loadTrackSync(getTrackPathByName(trackname));
 
-                $("#filename").val(filenameFromServer);
+                $("#filename").val(trackname);
                 $("#name").val(initialTrack.name);
                 $("#copyright").val(initialTrack.copyright);
                 $("#photoLocationTolerancy").val(initialTrack.photoLocationTolerancy);
@@ -310,8 +328,6 @@
             else {
             }
         }
-
-        var url = 'http://{s}.tile.cloudmade.com/5bcd2fc5d5714bd48096c7478324e0fe/997/256/{z}/{x}/{y}.png';
 
         var map = L.map('map').setView([50.430981, 30.539267], 8);
         var imageDiv = document.getElementById("imageDiv");

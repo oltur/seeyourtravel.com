@@ -37,7 +37,7 @@
             &nbsp;
        <input id="continueButton" type="button" value="Continue" onclick="dostart(); pauseButton.disabled = false; continueButton.disabled = true;" />
             &nbsp;
-       <input id="editTrackButton" type="button" value="Edit" onclick="window.location = 'editor.aspx?filename=' + tracksList.options[tracksList.selectedIndex].innerHTML" />
+       <input id="editTrackButton" type="button" value="Edit" onclick="window.location = 'editor.aspx?trackname=' + tracksList.options[tracksList.selectedIndex].innerHTML" />
             <!--       &nbsp;
 	<img src="img\poweredbygoolge\desktop\powered-by-google-on-non-white.png"/>
 -->
@@ -101,8 +101,25 @@ Share your experience with the World!
             <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel places" />
             <label for="useSYTPlacesCheckBox">Use SeeYourTravel places</label>
             <br />
+            <label for="pictureHeight">Max Picture Height</label>
             <input id="pictureMaxHeight" type="number" value="100" />
-            <label for="pictureHeight">Maximum Picture Height</label>
+            <br />
+            <select id="mapStyle" onchange="selectMapStyle()">
+<option>mapbox.streets</option>
+<option>mapbox.light</option>
+<option>mapbox.dark</option>
+<option>mapbox.satellite</option>
+<option>mapbox.streets-satellite</option>
+<option>mapbox.wheatpaste</option>
+<option>mapbox.streets-basic</option>
+<option>mapbox.comic</option>
+<option>mapbox.outdoors</option>
+<option>mapbox.run-bike-hike</option>
+<option>mapbox.pencil</option>
+<option>mapbox.pirates</option>
+<option>mapbox.emerald</option>
+<option>mapbox.high-contrast</option>
+            </select>
             <br />
             Volume:
             <br />
