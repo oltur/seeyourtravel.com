@@ -54,6 +54,7 @@
     <!--Content-->
     <div id='pageContent' style='height: 100%'>
         <div id="helpPanel" style="display: none; position: absolute; z-index: 100; left: 69%; width: 30%; height: 90%; background: #eee; border: 1px solid #000;">
+<span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=hLfbdeAuTQVxRe4IZmMtr1Gf0jrMv1XSJ0S6JNnyohWiDdJm3EUMtIJuf0LN"></script></span>
             <br />
             <br />
             <div
