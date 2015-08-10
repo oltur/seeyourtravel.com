@@ -53,6 +53,7 @@
         <input id="pictureMaxHeight" type="number" value="100" />
         <label for="pictureHeight">Maximum Picture Height</label>
         <br />
+            <label for="mapStyle">Map style</label>
             <select id="mapStyle" onchange="selectMapStyle()">
 <option>mapbox.streets</option>
 <option>mapbox.light</option>
