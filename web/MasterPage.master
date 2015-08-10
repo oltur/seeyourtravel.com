@@ -35,6 +35,10 @@ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
     <script src="js/get_text.js"></script>
     <link rel="stylesheet" href="styles/ourTravel.css"/>
 	<!--link rel="stylesheet" href="styles/jquerysamplestyle.css"-->
+  <script src="https://apis.google.com/js/client:platform.js?onload=startApp" async defer></script>
+  <!-- JavaScript specific to this application that is not related to API
+     calls -->
+  <meta name="google-signin-client_id" content="179651162952-alrnetid5672ki6fqb7qh8b8ptu9aspk.apps.googleusercontent.com" />
 
     <script>
         var globalUserId = '<%=Context.User.Identity.Name%>';
