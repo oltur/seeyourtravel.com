@@ -8,51 +8,48 @@
 
         function clickStart() {
             if (tracksList[0].selectedIndex > 0) {
-                window.location = 'index.aspx?trackname=' + tracksList.options[tracksList[0].selectedIndex].innerHTML;
+                window.location = 'index.aspx?trackname=' + tracksList.val();
             }
         }
-    </script>
-
-    <style>
-        .headerButton {
-            width: 30px;
-            height: 30px;
-            background-repeat: no-repeat;
-            background-size: 24px 24px;
-            margin: 2px;
-            border-radius: 24px;
+        function clickEdit() {
+            if (tracksList[0].selectedIndex > 0) {
+                window.location = 'editor.aspx?trackname=' + tracksList.val();
+            }
         }
-    </style>
+        function clickHelp()
+        {
+            $('#helpPanel').toggle('fold', 1000);
+        }
+    </script>
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
-    <!--Section Visitor Engage integration -->
 
     <div class="mapheader">
         <div style="position: absolute; left: 0;">
             <a href="./">
                 <img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
         </div>
-        <div style="position: absolute; right: 70px;">
-            <span style="vertical-align: top">Hello, <a href="./profile/"><%=Session["UserName"]%></a>&nbsp;<a href="Logout.aspx">Logout</a>
-            </span>
-        </div>
         <div style="position: absolute; right: 0px;">
-            <a href="#">
-                <img src="img/help.png" style="height: 50px; width: 50px" alt="Need assistance?" onclick="$('#helpPanel').toggle('fold', 1000);" /></a>&nbsp;
+            <button type="button" id="profile" title="Hello, <%=Session["UserName"]%>" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'" />
+            <button type="button" id="logout" title="Logout"  class="headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" />
+            <button type="button" id="helpButton" style="background-image: url(img/help.png);" class="headerButton" title="Need help?" onclick="clickHelp()"></button>
         </div>
-        <div style="position: absolute; left: 70px;">
-            <select style="vertical-align:super" id="tracksList"></select>
+        <div style="position: absolute; left: 50px;">
             <button type="button" id="newTrackButton" title="New" class="headerButton" style="background-image: url(img/new.png );" onclick="window.location = 'editor.aspx'"/>
+        </div>
+        <div style="position: absolute; left: 80px;">
+            <select style="vertical-align:super" id="tracksList"></select>
+        </div>
+        <div style="position: absolute; left: 80px; top:20px;">
             <button type="button" id="startButton" title="Load" class="headerButton" style="background-image: url(img/load.png );" onclick="clickStart()"/>
             <button type="button" id="pauseButton" title="Pause" class="headerButton" style="background-image: url(img/pause.png );" onclick="dostop(); pauseButton.disabled = true; continueButton.disabled = false;" />
             <button type="button" id="continueButton" title="Continue" class="headerButton" style="background-image: url(img/play.png );" onclick="dostart(); pauseButton.disabled = false; continueButton.disabled = true;" />
-            <button type="button" id="editTrackButton" title="Edit" class="headerButton" style="background-image: url(img/edit.png );" onclick="if(tracksList[0].selectedIndex>0) { window.location = 'editor.aspx?trackname=' + tracksList.val()}" />
-<%--            <input id="settingsCheckBox" type="checkbox" value="Settings" onclick="$('#settings').toggle('fold', 1000);" />--%>
+            <button type="button" id="editTrackButton" title="Edit" class="headerButton" style="background-image: url(img/edit.png );" onclick="clickEdit()" />
             <button type="button" id="settingsCheckBox" title="Settings" class="headerButton" style="background-image: url(img/settings1.png );" onclick="$('#settings').toggle('fold', 1000);"></button>
             <button type="button" id="corporateSite" title="Corporate site"  class="headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" />
         </div>
-        <div style="position: absolute; left: 500px;">
+        <div style="position: absolute; left: 300px;">
             <img class="headerButton" src="img/location.png" /><span style="vertical-align:top" id="lblCoord"></span>
         </div>
     </div>
@@ -108,9 +105,9 @@
             <br />
             <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel places" />
             <label for="useSYTPlacesCheckBox">Use SeeYourTravel places</label>
-            <br />
+<%--            <br />
             <label for="pictureHeight">Max Picture Height</label>
-            <input id="pictureMaxHeight" type="number" value="100" />
+            <input id="pictureMaxHeight" type="number" value="100" />--%>
             <br />
             <label for="mapStyle">Map style</label>
             <select id="mapStyle" onchange="selectMapStyle()">
@@ -147,8 +144,9 @@
             <textarea id="textToReadArea" disabled="disabled" style="top: 25%; width: 99%; height: 88%; resize: none;"></textarea>
         </div>
 
-        <div id="imageDiv0" class="ui-widget-content" style="z-index: 100; border-width: 2px; width: 68%; height: 25%; position: absolute; left: 30%; top: 70%; overflow-x: hidden; overflow-y: hidden;">
+        <div id="imageDiv0" class="ui-widget-content">
             <div id="imageDiv" style="width: 100%; height: 100%"></div>
+<%--            <div id="imageDiv" class="owl-carousel" style="width: 100%; height: 100%"></div>--%>
         </div>
     </div>
 
@@ -214,8 +212,7 @@
             init();
 
             $("#imageDiv0").draggable().resizable();
-            $("#textToReadArea0").draggable().resizable();
-            //            $("#settingsCheckBox").button();
+            $("#textToReadArea0").draggable().resizable().hide();
             //$("#scriptTextCheckBox").button();
             //$("#imagesCheckBox").button();
             //$("#usePanoramioImagesCheckBox").button();
@@ -232,6 +229,29 @@
                 }
             });
             audio.volume = $("#slider").slider("value");
+
+            //$('.owl-carousel').owlCarousel({
+            //    autoWidth:true,
+            //    loop: true,
+            //    margin: 10,
+            //    responsiveClass: true,
+            //    responsive: {
+            //        0: {
+            //            items: 1,
+            //            nav: true
+            //        },
+            //        600: {
+            //            items: 3,
+            //            nav: false
+            //        },
+            //        1000: {
+            //            items: 5,
+            //            nav: true,
+            //            loop: false
+            //        }
+            //    }
+            //});
+
         });
     </script>
 
@@ -239,7 +259,7 @@
     <script lang="JavaScript">
 
         var audio = document.getElementById("audio");
-        var imageDiv = document.getElementById("imageDiv");
+        var imageDiv = $("#imageDiv");
         var textToReadArea = document.getElementById("textToReadArea");
         var tracksList = $("#tracksList");
         var counter = 0;
@@ -267,7 +287,7 @@
             .find('option')
             .remove()
             .end()
-            .append('<option></option>').val("Choose a track").html("Choose a track");
+        tracksList.append('<option value="Choose a track:">Choose a track:</option>');
         for (var i = 0; i < fileList.length; i++) {
             tracksList.append('<option value="'+fileList[i]+'">'+fileList[i]+'</option>');
         }

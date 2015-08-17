@@ -49,9 +49,9 @@
         <br />
         <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel places" />
         <label for="useSYTPlacesCheckBox">Use SeeYourTravel places</label>
-        <br />
+<%--        <br />
         <input id="pictureMaxHeight" type="number" value="100" />
-        <label for="pictureHeight">Maximum Picture Height</label>
+        <label for="pictureHeight">Maximum Picture Height</label>--%>
         <br />
             <label for="mapStyle">Map style</label>
             <select id="mapStyle" onchange="selectMapStyle()">
