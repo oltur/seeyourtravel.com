@@ -45,3 +45,7 @@ html, body, form {
 input, select, #map {
       font-family: 'seeyourtravel', 'Georgia', serif; 
 }
+
+.ui-wp-icon {
+	background-image: url(http://jqueryui.com/jquery-wp-content/themes/jquery/images/logo-wordpress.png) !important;
+}

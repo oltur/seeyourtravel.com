@@ -23,6 +23,10 @@ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
     <script src="libs/jquery.js"></script>
     <script src="libs/jquery-ui.js"></script>
     <script src="libs/jquery.cookie.js"></script>
+    
+    <script type="text/javascript" src="libs//slick/slick.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/slick/slick.css"/>
+
     <script src="libs/leaflet-src.js"></script>
     <script src="js/AnimatedMarker.js"></script>
     <script src="js/facebook.js"></script>
