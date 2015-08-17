@@ -146,7 +146,6 @@
 
         <div id="imageDiv0" class="ui-widget-content">
             <div id="imageDiv" style="width: 100%; height: 100%"></div>
-<%--            <div id="imageDiv" class="owl-carousel" style="width: 100%; height: 100%"></div>--%>
         </div>
     </div>
 
@@ -260,8 +259,8 @@
 
         var audio = document.getElementById("audio");
         var imageDiv = $("#imageDiv");
-        var textToReadArea = document.getElementById("textToReadArea");
         var tracksList = $("#tracksList");
+        var textToReadArea = document.getElementById("textToReadArea");
         var counter = 0;
         var markerSize = 50;
         var track;

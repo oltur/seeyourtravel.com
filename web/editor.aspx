@@ -4,32 +4,32 @@
 <%@ Import Namespace="System.IO" %>
 
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
+    <script>
+        function clickCancel() {
+            window.location = "window.location = 'index.aspx?trackname=' + trackname";
+        }
+    </script>
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
-
-
-    <div class="mapheader">
-        <span style="position: absolute; left: 0;">
-            <a href="/"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
-        </span>
-        <span style="position: absolute; right: 70px;">
-            <span style="vertical-align: top">Hello, <a href="./profile/"><%=Session["UserName"]%></a>&nbsp;<a href="Logout.aspx">Logout</a>
-            </span>
-        </span>
-        <span style="position: absolute; right: 0;"><a href="#"><img src="img/help.png" style="height:50px; width:50px" alt="Need assistance?"/></a>&nbsp;</span>
-        <span style="position: absolute; left: 70px;">
-           <a href="index.aspx">Main page</a>
-            &nbsp;
-           <input id="settingsCheckBox" type="checkbox" value="Settings" onclick="$('#settings').toggle('fold', 1000);" />
-            <label for="settingsCheckBox">Settings</label>
-            &nbsp;
-            <a href="./corporate" target="_blank">About us</a>
-            <br />
-            Current&nbsp;location: <span id="lblCoord"></span>
-        </span>
+        <div class="mapheader">
+        <div style="position: absolute; left: 0;">
+            <a href="./">
+                <img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+        </div>
+        <div style="position: absolute; right: 0px;">
+            <button type="button" id="profile" title="Hello, <%=Session["UserName"]%>" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'" />
+            <button type="button" id="logout" title="Logout"  class="headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" />
+            <button type="button" id="helpButton" style="background-image: url(img/help.png);" class="headerButton" title="Need help?" onclick="clickHelp()"></button>
+        </div>
+        <div style="position: absolute; left: 80px;">
+            <button type="button" id="cancelButton" title="Cancel changes" class="headerButton" style="background-image: url(img/cancel.png );" onclick="clickCancel()"/>
+            <button type="button" id="settingsCheckBox" title="Settings" class="headerButton" style="background-image: url(img/settings1.png );" onclick="$('#settings').toggle('fold', 1000);"></button>
+        </div>
+        <div style="position: absolute; left: 150px;">
+            <img class="headerButton" src="img/location.png" /><span style="vertical-align:top" id="lblCoord"></span>
+        </div>
     </div>
-
 
     <div id="settings" style="display: none; position: absolute; z-index: 100; left: 50px; width: 300px; height: 200px; background: #ccc; border: 1px solid #000;">
         <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Description" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
@@ -77,7 +77,7 @@
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="border-width: 2px; width: 40%; height: 65%; position: absolute; left: 5%; top: 20%">
+    <div id="textToReadArea0" class="ui-widget-content" style="z-index:101; border-width: 2px; width: 400px; height: 550px; position: absolute; left: 4%; top: 10%">
         File name:
         <input id="filename" name="filename" type="text" value="MyTrack" /><br />
         Track description:
@@ -133,7 +133,7 @@
         </div>
     </div>
 
-    <div id="imageDiv0" class="ui-widget-content" style="border-width: 2px; width: 40%; height: 20%; position: absolute; left: 55%; top: 75%; overflow-x: hidden; overflow-y: hidden; white-space: nowrap;">
+    <div id="imageDiv0" class="ui-widget-content">
         <div id="imageDiv" style="width: 100%; height: 100%"></div>
     </div>
 
@@ -159,7 +159,12 @@
             });
 
             $("#imageDiv0").draggable().resizable();
-            $("#textToReadArea0").draggable().resizable();
+            //$("#textToReadArea0").draggable().resizable({
+            //    maxHeight: 250,
+            //    maxWidth: 350,
+            //    minHeight: 150,
+            //    minWidth: 200
+            //});
             $("#slider").slider({
                 value: 0.8,
                 min: 0,
@@ -331,7 +336,8 @@
         }
 
         var map = L.map('map').setView([50.430981, 30.539267], 8);
-        var imageDiv = document.getElementById("imageDiv");
+
+        var imageDiv = $("#imageDiv");
 
     </script>
 
