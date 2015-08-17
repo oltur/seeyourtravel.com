@@ -218,7 +218,7 @@ function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
     shuffle(data.photos);
     var photos = data2.photos.concat(data.photos);
     count = photos.length;
-    lblCoord.innerText = p.lat + " " + p.lng;
+    lblCoord.title = p.lat + " " + p.lng;
     imageDiv.empty();
     for (var i = 0; i < photos.length; i++) {
 

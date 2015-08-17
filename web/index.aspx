@@ -39,7 +39,7 @@
             <button type="button" id="newTrackButton" title="New" class="headerButton" style="background-image: url(img/new.png );" onclick="window.location = 'editor.aspx'"/>
         </div>
         <div style="position: absolute; left: 80px;">
-            <select style="vertical-align:super" id="tracksList"></select>
+            <select style="vertical-align:super; width:150px;" id="tracksList"></select>
         </div>
         <div style="position: absolute; left: 80px; top:20px;">
             <button type="button" id="startButton" title="Load" class="headerButton" style="background-image: url(img/load.png );" onclick="clickStart()"/>
@@ -49,8 +49,8 @@
             <button type="button" id="settingsCheckBox" title="Settings" class="headerButton" style="background-image: url(img/settings1.png );" onclick="$('#settings').toggle('fold', 1000);"></button>
             <button type="button" id="corporateSite" title="Corporate site"  class="headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" />
         </div>
-        <div style="position: absolute; left: 300px;">
-            <img class="headerButton" src="img/location.png" /><span style="vertical-align:top" id="lblCoord"></span>
+        <div style="position: absolute; left: 250px;">
+            <img class="headerButton" src="img/location.png" id="lblCoord" alt="" />
         </div>
     </div>
     <!--Content-->
@@ -264,7 +264,7 @@
         var counter = 0;
         var markerSize = 50;
         var track;
-        var map;
+        var map = undefined;
         var map2 = document.getElementById("map2");
         var animatedMarker;
         var tileLayer;

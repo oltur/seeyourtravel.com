@@ -45,7 +45,7 @@ input, select, #map {
       font-family: 'seeyourtravel', 'Georgia', serif; 
 }
 
-@media all and (orientation:portrait) { 
+/*@media all and (orientation:portrait) { 
     #imageDiv0 {
         z-index: 100; border-width: 2px; height: 90%; width: 30%; position: absolute; top: 50px; left: 68%; overflow-x: hidden; overflow-y: hidden;
     }
@@ -57,7 +57,7 @@ input, select, #map {
             margin-left: 1px;
         }
 }
-@media all and (orientation:landscape) {
+@media all and (orientation:landscape) {*/
     #imageDiv0 {
         z-index: 100; border-width: 2px; width: 96%; height: 30%; position: absolute; left: 2%; top: 66%; overflow-x: hidden; overflow-y: hidden;
     }
@@ -68,4 +68,4 @@ input, select, #map {
             margin-right: 1px;
             margin-left: 1px;
         }
-}
+/*}*/
