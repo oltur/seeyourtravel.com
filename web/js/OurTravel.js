@@ -35,6 +35,20 @@ function translateTracksPath(path)
     return tracksFolder+path;
 }
 
+function clickHelp() {
+    $("#menuPanel").hide('slide', 500);
+    $('#helpPanel').show('slide', { direction: "right" }, 500);
+}
+function clickSettings() {
+    $("#menuPanel").hide('slide', 500);
+    $('#settingsPanel').show('slide', { direction: "up" }, 500);
+}
+function clickMenu() {
+    $("#helpPanel").hide('slide', { direction: "right" }, 500);
+    $('#settingsPanel').hide('slide', { direction: "up" }, 500);
+    $('#menuPanel').toggle('slide', 500);
+}
+
 /**
  * getTrackPathByName
  * @param name
@@ -46,7 +60,7 @@ function getTrackPathByName(name) {
 
 function onBodyResize() {
     if ($("#map").length) {
-        $("#map").height(window.innerHeight - 50);
+        $("#map").height(window.innerHeight);
     }
 }
 
@@ -218,7 +232,7 @@ function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
     shuffle(data.photos);
     var photos = data2.photos.concat(data.photos);
     count = photos.length;
-    lblCoord.title = p.lat + " " + p.lng;
+    $("#lblCoord").text(p.lat + " " + p.lng);
     imageDiv.empty();
     for (var i = 0; i < photos.length; i++) {
 
@@ -353,7 +367,7 @@ function loadTrackSync(path) {
 
 function init(filename) {
 
-    if (typeof map != "undefined") {
+     if (typeof map != "undefined") {
         //var mapNode = document.getElementById("map");
         //var mapContainerParent = mapNode.parentNode;
         //mapContainerParent.removeChild(mapNode);
@@ -369,14 +383,15 @@ function init(filename) {
         //map = null;
     }
     else {
-	map = L.map('map');
-	tileLayer = L.tileLayer(mapTileUrl, {
+        map = L.map('map', { zoomControl: false });
+	    tileLayer = L.tileLayer(mapTileUrl, {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
             maxZoom: 18,
             id: "mapbox.streets"
 	});
         tileLayer.addTo(map);
-        L.control.scale().addTo(map);
+        L.control.scale({ position: 'bottomleft' }).addTo(map);
+        L.control.zoom({ position: 'topright' }).addTo(map);
     }
 
     markers = new L.FeatureGroup();

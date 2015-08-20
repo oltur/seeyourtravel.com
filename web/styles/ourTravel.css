@@ -5,9 +5,9 @@
     	background-repeat: no-repeat;
 	}
 
-        #map {
+        /*#map {
             height: 900px;
-        }
+        }*/
 
         .nullphoto {
             height: 1px;
@@ -24,25 +24,65 @@
 /*@font-face {
   font-family: 'seeyourtravel';
   src: url('../content/traveldiaryfeb26.ttf');
-} */
+}*/
 html, body, form {
-    font-family: 'seeyourtravel', 'Georgia', serif;
     height: 100%;
     width: 100%;
     padding: 0px;
     margin: 0px;
 }
 .headerButton {
-    width: 24px;
-    height: 24px;
+    width: 240px;
+    height: 36px;
+    background-color: rgba(100,100,100,0.8);
     background-repeat: no-repeat;
-    background-size: 16px 16px;
-    background-position: center; 
+    background-size: 24px 24px;
+    background-position: left; 
+    background-position-x: 10px;
     margin: 2px;
-    border-radius: 24px;
+    border-radius: 12px;
+    border-width: 0;
+    padding-left: 50px;
+    text-align: left;
+    color:rgba(255,255,255,0.9)
 }
-input, select, #map {
+input, select, #map, .headerButton, html, body, form {
       font-family: 'seeyourtravel', 'Georgia', serif; 
+}
+
+#wrapper #lblCoord {
+position:relative;
+top:0px;
+left:0px;
+visibility:hidden;
+}
+
+#wrapper:hover #lblCoord {
+visibility:visible;
+}
+
+#tracksList {
+    background: rgba(100,100,100,0.8);
+    color:rgba(255,255,255,0.9);
+    border-radius: 12px;
+}
+
+#tracksList option {
+    background: rgba(100,100,100,0.8);
+    color:rgba(255,255,255,0.9);
+    border-radius: 12px;
+}
+
+#tracksList option:nth-child(odd) {
+    background: rgba(100,100,100,0.6);
+}
+
+#tracksList option:nth-child(even) {
+    background: rgba(100,100,100,0.8);
+}
+
+p.big {
+    line-height: 150%; padding:0px; margin:0px;
 }
 
 /*@media all and (orientation:portrait) { 

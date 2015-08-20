@@ -10,52 +10,68 @@
             if (tracksList[0].selectedIndex > 0) {
                 window.location = 'index.aspx?trackname=' + tracksList.val();
             }
+            else {
+                window.location = 'index.aspx';
+            }
         }
         function clickEdit() {
             if (tracksList[0].selectedIndex > 0) {
                 window.location = 'editor.aspx?trackname=' + tracksList.val();
             }
         }
-        function clickHelp()
-        {
-            $('#helpPanel').toggle('fold', 1000);
+        function clickNew() {
+            window.location = 'editor.aspx';
         }
+
+        $(document).click(function (e) {
+            if ((e.target.id != 'alogo' && !$('#alogo').find(e.target).length)
+                && (e.target.id != 'menuPanel' && !$('#menuPanel').find(e.target).length)){
+                $("#menuPanel").hide('slide', 500);
+
+                if (e.target.id != 'helpPanel' && !$('#helpPanel').find(e.target).length) {
+                    $("#helpPanel").hide('slide', { direction: "right" }, 500);
+                }
+
+                if (e.target.id != 'helpPanel' && !$('#settingsPanel').find(e.target).length) {
+                    $("#settingsPanel").hide('slide', { direction: "up" }, 500);
+                }
+            }
+        });
     </script>
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
 
-    <div class="mapheader">
-        <div style="position: absolute; left: 0;">
-            <a href="./">
-                <img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
-        </div>
-        <div style="position: absolute; right: 0px;">
-            <button type="button" id="profile" title="Hello, <%=Session["UserName"]%>" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'" />
-            <button type="button" id="logout" title="Logout"  class="headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" />
-            <button type="button" id="helpButton" style="background-image: url(img/help.png);" class="headerButton" title="Need help?" onclick="clickHelp()"></button>
-        </div>
-        <div style="position: absolute; left: 50px;">
-            <button type="button" id="newTrackButton" title="New" class="headerButton" style="background-image: url(img/new.png );" onclick="window.location = 'editor.aspx'"/>
-        </div>
-        <div style="position: absolute; left: 80px;">
-            <select style="vertical-align:super; width:150px;" id="tracksList"></select>
-        </div>
-        <div style="position: absolute; left: 80px; top:20px;">
-            <button type="button" id="startButton" title="Load" class="headerButton" style="background-image: url(img/load.png );" onclick="clickStart()"/>
-            <button type="button" id="pauseButton" title="Pause" class="headerButton" style="background-image: url(img/pause.png );" onclick="dostop(); pauseButton.disabled = true; continueButton.disabled = false;" />
-            <button type="button" id="continueButton" title="Continue" class="headerButton" style="background-image: url(img/play.png );" onclick="dostart(); pauseButton.disabled = false; continueButton.disabled = true;" />
-            <button type="button" id="editTrackButton" title="Edit" class="headerButton" style="background-image: url(img/edit.png );" onclick="clickEdit()" />
-            <button type="button" id="settingsCheckBox" title="Settings" class="headerButton" style="background-image: url(img/settings1.png );" onclick="$('#settings').toggle('fold', 1000);"></button>
-            <button type="button" id="corporateSite" title="Corporate site"  class="headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" />
-        </div>
-        <div style="position: absolute; left: 250px;">
-            <img class="headerButton" src="img/location.png" id="lblCoord" alt="" />
-        </div>
-    </div>
     <!--Content-->
     <div id='pageContent' style='height: 100%'>
-        <div id="helpPanel" style="display: none; position: absolute; z-index: 100; left: 69%; width: 30%; height: 90%; background: #eee; border: 1px solid #000;">
+        <div style="position: absolute; left: 5px; top:5px; z-index:1001">
+            <a id="alogo" href="javascript:clickMenu()"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+            <select style="vertical-align:super; width:190px;height:25px" id="tracksList" onchange="clickStart()"></select>
+        </div>
+        <div style="position: absolute; left: 260px; top:10px; z-index:1001">
+            <div id="wrapper">
+                <img id="imgCoord" src="img/location.png" />
+                <span id="lblCoord" style="vertical-align:super; text-shadow: 1px 1px #ffffff;"></span>
+            </div>
+        </div>
+        <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
+            <div style="position: absolute; left: 10px; top: 50px;">
+                <button type="button" id="newTrackButton" title="New" class="headerButton" style="background-image: url(img/new.png );" onclick="clickNew()">New</button>
+                <button type="button" id="pauseButton" title="Pause" class="headerButton" style="background-image: url(img/pause.png );" onclick="dostop(); pauseButton.disabled = true; continueButton.disabled = false;" >Pause</button>
+                <button type="button" id="continueButton" title="Continue" class="headerButton" style="background-image: url(img/play.png );" onclick="dostart(); pauseButton.disabled = false; continueButton.disabled = true;" >Continue</button>
+                <button type="button" id="editTrackButton" title="Edit" class="headerButton" style="background-image: url(img/edit.png );" onclick="clickEdit()" >Edit</button>
+            </div>
+            <div style="position: absolute; left: 10px; top: 220px;">
+                <button type="button" id="settingsCheckBox" title="Settings" class="headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
+                <button type="button" id="corporateSite" title="Corporate site"  class="headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" >About SeeYourTravel</button>
+            </div>
+            <div style="position: absolute; left: 10px; top: 315px;">
+                <button type="button" id="profile" title="Hello, <%=Session["UserName"]%>" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'" >Profile</button>
+                <button type="button" id="logout" title="Logout"  class="headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" >Logout</button>
+                <button type="button" id="helpButton" style="background-image: url(img/help.png);" class="headerButton" title="Need help?" onclick="clickHelp()">Help</button>
+            </div>
+        </div>
+        <div id="helpPanel" style="display: none; padding:10px; position: absolute; z-index: 1000; right: 0px; width: 400px; height: 90%; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
             <span id="siteseal">
                 <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=hLfbdeAuTQVxRe4IZmMtr1Gf0jrMv1XSJ0S6JNnyohWiDdJm3EUMtIJuf0LN"></script>
             </span>
@@ -86,8 +102,7 @@
                 </li>
             </ul>
         </div>
-        <!--Map-->
-        <div id="settings" style="display: none; position: absolute; z-index: 100; left: 50px; width: 300px; height: 200px; background: #ccc; border: 1px solid #000;">
+        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 45px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
             <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Description" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
             <label for="scriptTextCheckBox">Description</label>
             <br />
@@ -131,6 +146,8 @@
             <br />
             <div id="slider" style="left: 10%; width: 80%; vertical-align: top"></div>
         </div>
+
+        <!--Map-->
         <div id="map"></div>
         <div id="map2"></div>
 
@@ -139,12 +156,12 @@
             Your browser does not support the audio element.
         </audio>
 
-        <div id="textToReadArea0" class="ui-widget-content" style="z-index: 100; border-width: 2px; width: 25%; height: 25%; position: absolute; left: 2%; top: 70%">
+        <div id="textToReadArea0" class="ui-widget-content" style="z-index: 100; background: rgba(100,100,100,0.2); border-width: 0px; width: 25%; height: 25%; position: absolute; left: 2%; top: 70%">
             <br />
             <textarea id="textToReadArea" disabled="disabled" style="top: 25%; width: 99%; height: 88%; resize: none;"></textarea>
         </div>
 
-        <div id="imageDiv0" class="ui-widget-content">
+        <div id="imageDiv0" class="ui-widget-content" style="background: rgba(100,100,100,0.2); border-width: 0px; ">
             <div id="imageDiv" style="width: 100%; height: 100%"></div>
         </div>
     </div>
