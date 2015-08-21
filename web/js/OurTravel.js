@@ -35,6 +35,20 @@ function translateTracksPath(path)
     return tracksFolder+path;
 }
 
+function clickHelp() {
+    $("#menuPanel").hide('slide', 500);
+    $('#helpPanel').show('slide', { direction: "right" }, 500);
+}
+function clickSettings() {
+    $("#menuPanel").hide('slide', 500);
+    $('#settingsPanel').show('slide', { direction: "up" }, 500);
+}
+function clickMenu() {
+    $("#helpPanel").hide('slide', { direction: "right" }, 500);
+    $('#settingsPanel').hide('slide', { direction: "up" }, 500);
+    $('#menuPanel').toggle('slide', 500);
+}
+
 /**
  * getTrackPathByName
  * @param name
@@ -46,7 +60,7 @@ function getTrackPathByName(name) {
 
 function onBodyResize() {
     if ($("#map").length) {
-        $("#map").height(window.innerHeight - 50);
+        $("#map").height(window.innerHeight);
     }
 }
 
@@ -75,6 +89,9 @@ function showPosition(position) {
         var newLatLng = new L.LatLng(position.coords.latitude, position.coords.longitude);
         //crd.accuracy
         markerWhereIAm.setLatLng(newLatLng);
+//        markerWhereIAmCircle.setLatLng(newLatLng);
+//        markerWhereIAmCircle.setRadius(position.coord.accuracy);
+
         if(typeof track == "undefined")
             map.setView(newLatLng, 8);
 
@@ -138,10 +155,7 @@ function showPhotos(track,p,tolerancy) {
             + "&minx=" + (p.lng - tolerancy).toString()
             + "&maxy=" + (p.lat + tolerancy).toString()
             + "&maxx=" + (p.lng + tolerancy).toString()
-            + "&size=medium&mapfilter=true&order=popularity&callback=?";
-
-        // remove?
-        var height = $("#imageDiv").height();
+            + "&size=small&mapfilter=true&order=popularity&callback=?";
 
         $.ajax({
             dataType: "jsonp",
@@ -179,9 +193,6 @@ function get_panoramas_panoramio_success(data, p, tolerancy) {
             + "&maxx=" + (p.lng + tolerancy).toString()
             + "&size=medium&mapfilter=true&order=popularity&callback=?";
 
-        // remove?
-        var height = $("#imageDiv").height();
-
         $.ajax({
             dataType: "jsonp",
             url: urlp,
@@ -202,35 +213,60 @@ function get_panoramas_panoramio_success(data, p, tolerancy) {
     }
 }
 
+function isPortrait()
+{
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    return w<h;
+}
+
 function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
             
-    for (var t = 0; t < data2.photos.length;t++)
-    {
-        //console.log(data2.photos[t].photo_url);
-    }
 
+    // remove?
+    var divHeight = $("#imageDiv").height();
+    var divWidth = $("#imageDiv").width();
+
+
+    shuffle(data2.photos);
+    shuffle(data.photos);
     var photos = data2.photos.concat(data.photos);
     count = photos.length;
-    //if (count < track.numOfPhotos && tolerancy < 10) {
-    //    showPhotos(track, p, tolerancy * 2);
-    //}
-    //else {
-    lblCoord.innerText = p.lat + " " + p.lng;
-    var t = document.createElement("div");
+    $("#lblCoord").text(p.lat + " " + p.lng);
+    imageDiv.empty();
     for (var i = 0; i < photos.length; i++) {
-        var nextImage = document.createElement("img");
+
         var nextLink = document.createElement("a");
+        var nextImage = document.createElement("img");
         nextLink.href = photos[i].photo_url;
         nextLink.target = "_blank";
         nextImage.src = photos[i].photo_file_url;
-        nextImage.style.maxHeight = $("#pictureMaxHeight").val()+"px";
+        if (isPortrait())
+            nextImage.style.maxWidth = divWidth;
+        else
+            nextImage.style.maxHeight = divHeight;
+        //nextImage.style.maxHeight = $("#pictureMaxHeight").val() + "px";
         nextImage.title = "Photo from Panoramio(c): " + photos[i].photo_title + " by " + photos[i].owner_name + ". Click to open the source.";
         nextImage.classList.add("photo");
         nextLink.appendChild(nextImage);
-        t.appendChild(nextLink);
+
+        imageDiv[0].appendChild(nextLink);
     }
-    setTimeout(function () { imageDiv.innerHTML = t.innerHTML; }, 500);
+    //var t = document.createElement("div");
+    //for (var i = 0; i < photos.length; i++) {
+    //    var nextImage = document.createElement("img");
+    //    var nextLink = document.createElement("a");
+    //    nextLink.href = photos[i].photo_url;
+    //    nextLink.target = "_blank";
+    //    nextImage.src = photos[i].photo_file_url;
+    //    nextImage.style.maxHeight = $("#pictureMaxHeight").val()+"px";
+    //    nextImage.title = "Photo from Panoramio(c): " + photos[i].photo_title + " by " + photos[i].owner_name + ". Click to open the source.";
+    //    nextImage.classList.add("photo");
+    //    nextLink.appendChild(nextImage);
+    //    t.appendChild(nextLink);
     //}
+    //setTimeout(function () { imageDiv.innerHTML = t.innerHTML; }, 500);
+
 }
 
 function GPXtoLatLng(urlGPX) {
@@ -331,7 +367,7 @@ function loadTrackSync(path) {
 
 function init(filename) {
 
-    if (typeof map != "undefined") {
+     if (typeof map != "undefined") {
         //var mapNode = document.getElementById("map");
         //var mapContainerParent = mapNode.parentNode;
         //mapContainerParent.removeChild(mapNode);
@@ -347,14 +383,15 @@ function init(filename) {
         //map = null;
     }
     else {
-	map = L.map('map');
-	tileLayer = L.tileLayer(mapTileUrl, {
+        map = L.map('map', { zoomControl: false });
+	    tileLayer = L.tileLayer(mapTileUrl, {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
             maxZoom: 18,
             id: "mapbox.streets"
 	});
         tileLayer.addTo(map);
-        L.control.scale().addTo(map);
+        L.control.scale({ position: 'bottomleft' }).addTo(map);
+        L.control.zoom({ position: 'topright' }).addTo(map);
     }
 
     markers = new L.FeatureGroup();
@@ -364,6 +401,18 @@ function init(filename) {
 
     markerWhereIAm = L.marker(new L.LatLng(1000, 1000), { icon: iconWhereIAm, zIndexOffset: 100 }).bindPopup(globalUserName);
     markers.addLayer(markerWhereIAm);
+
+    //markerWhereIAmCircle = L.circleMarker(new L.LatLng(1000, 1000),
+    //    {
+    //        radius: 50,
+    //        fillColor: "#ff7800",
+    //        color: "#000",
+    //        weight: 1,
+    //        opacity: 1,
+    //        fillOpacity: 0.8,
+    //        title: "test"
+    //    });
+    //markers.addLayer(markerWhereIAmCircle);
 
     showLocation();
 
@@ -397,7 +446,9 @@ function init(filename) {
                 }
                 if (counter % track.stepsToShowPhoto == 1) {
                     showPhotos(track, p);
-                }
+//                    animatedMarker.bindPopup("".concat(p.lat, ",", p.lng)).openPopup();
+                    }
+
             }
         };
 
@@ -521,6 +572,24 @@ function get_SYT_getplaces_success(data, data2) {
     }
 }
 
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
 
 function createPhotoMarker(place, isGoogle) {
 
@@ -563,12 +632,6 @@ function createPhotoMarker(place, isGoogle) {
 
     markers.addLayer(marker);
 
-    //  var marker = new google.maps.Marker({
-    //    map: map,
-    //    position: place.geometry.location,
-    //    title: place.name,
-    //    icon: photos[0].getUrl({'maxWidth': 35, 'maxHeight': 35})
-    //  });
 }
 
 //function createMarker(place) {
