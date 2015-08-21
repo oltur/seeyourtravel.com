@@ -4,112 +4,153 @@
 <%@ Import Namespace="System.IO" %>
 
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
+    <script>
+        function clickCancel() {
+            window.location = 'index.aspx';
+        }
+    </script>
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
 
-
-    <div class="mapheader">
-        <span style="position: absolute; left: 0;">
-            <a href="/"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
-        </span>
-        <span style="position: absolute; right: 70px;">
-            <span style="vertical-align: top">Hello, <a href="./profile/"><%=Session["UserName"]%></a>&nbsp;<a href="Logout.aspx">Logout</a>
+    <!--Content-->
+    <div id='pageContent' style='height: 100%'>
+        <div style="position: absolute; left: 5px; top:5px; z-index:1001">
+            <a id="alogo" href="javascript:clickMenu()"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+        </div>
+        <div style="position: absolute; left: 60px; top:10px; z-index:1001">
+            <div id="wrapper">
+                <img id="imgCoord" src="img/location.png" />
+                <span id="lblCoord" style="vertical-align:super; text-shadow: 1px 1px #ffffff;"></span>
+            </div>
+            </div>
+                <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
+            <div style="position: absolute; left: 10px; top: 50px;">
+                <button type="button" id="cancelButton" title="Cancel changes" class="headerButton" style="background-image: url(img/cancel.png );" onclick="clickCancel()">Cancel</button>
+            </div>
+            <div style="position: absolute; left: 10px; top: 100px;">
+                <button type="button" id="settingsCheckBox" title="Settings" class="headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
+                <button type="button" id="corporateSite" title="Corporate site"  class="headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" >About SeeYourTravel</button>
+            </div>
+            <div style="position: absolute; left: 10px; top:195px;">
+                <button type="button" id="profile" title="Hello, <%=Session["UserName"]%>" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'" >Profile</button>
+                <button type="button" id="logout" title="Logout"  class="headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" >Logout</button>
+                <button type="button" id="helpButton" style="background-image: url(img/help.png);" class="headerButton" title="Need help?" onclick="clickHelp()">Help</button>
+            </div>
+        </div>
+        </div>
+        <div id="helpPanel" style="display: none; padding:10px; position: absolute; z-index: 1000; right: 0px; width: 400px; height: 90%; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+            <span id="siteseal">
+                <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=hLfbdeAuTQVxRe4IZmMtr1Gf0jrMv1XSJ0S6JNnyohWiDdJm3EUMtIJuf0LN"></script>
             </span>
-        </span>
-        <span style="position: absolute; right: 0;"><a href="#"><img src="img/help.png" style="height:50px; width:50px" alt="Need assistance?"/></a>&nbsp;</span>
-        <span style="position: absolute; left: 70px;">
-           <a href="index.aspx">Main page</a>
-            &nbsp;
-           <input id="settingsCheckBox" type="checkbox" value="Settings" onclick="$('#settings').toggle('fold', 1000);" />
-            <label for="settingsCheckBox">Settings</label>
-            &nbsp;
-            <a href="./corporate" target="_blank">About us</a>
             <br />
-            Current&nbsp;location: <span id="lblCoord"></span>
-        </span>
-    </div>
-
-
-    <div id="settings" style="display: none; position: absolute; z-index: 100; left: 50px; width: 300px; height: 200px; background: #ccc; border: 1px solid #000;">
-        <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Description" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
-        <label for="scriptTextCheckBox">Description</label>
-        <br />
-        <input id="imagesCheckBox" type="checkbox" checked="checked" value="Images" onclick="$('#imageDiv0').toggle('fold', 1000);" />
-        <label for="imagesCheckBox">Images</label>
-        <br />
-        <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" value="Use Panoramio images" />
-        <label for="usePanoramioImagesCheckBox">Use Panoramio images</label>
-        <br />
-        <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel images" />
-        <label for="useSYTImagesCheckBox">Use SeeYourTravel images</label>
-        <br />
-        <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" value="Use Google Places" />
-        <label for="useGooglePlacesCheckBox">Use Google Places</label>
-        <br />
-        <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel places" />
-        <label for="useSYTPlacesCheckBox">Use SeeYourTravel places</label>
-        <br />
-        <input id="pictureMaxHeight" type="number" value="100" />
-        <label for="pictureHeight">Maximum Picture Height</label>
-        <br />
+            <br />
+            <div
+                class="fb-like"
+                data-share="true"
+                data-width="450"
+                data-show-faces="true">
+            </div>
+            <br />
+            <br />
+            <h2>Welcome to the travel experience world! </h2>
+            <p>
+                SeeYourTravel.com is a community where you can share, refresh and plan your paths and memories with your friends and with access to the images and information all over the World.
+            </p>
+            <ul>
+                <li>Login with Facebook or SeeYourTravel account to be a part of our community
+                </li>
+                <li>Review the tracks of yourself and your friends
+                </li>
+                <li>Create your own by uploading the data from navigator devices or recording your journey
+                </li>
+                <li>Edit and setup tracks with few mouse clicks
+                </li>
+                <li>Share your experience with the World!
+                </li>
+            </ul>
+        </div>
+        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 45px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+            <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Description" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
+            <label for="scriptTextCheckBox">Description</label>
+            <br />
+            <input id="imagesCheckBox" type="checkbox" checked="checked" value="Images" onclick="$('#imageDiv0').toggle('fold', 1000);" />
+            <label for="imagesCheckBox">Images</label>
+            <br />
+            <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" value="Use Panoramio images" />
+            <label for="usePanoramioImagesCheckBox">Use Panoramio images</label>
+            <br />
+            <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel images" />
+            <label for="useSYTImagesCheckBox">Use SeeYourTravel images</label>
+            <br />
+            <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" value="Use Google Places" />
+            <label for="useGooglePlacesCheckBox">Use Google Places</label>
+            <br />
+            <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel places" />
+            <label for="useSYTPlacesCheckBox">Use SeeYourTravel places</label>
+<%--            <br />
+            <label for="pictureHeight">Max Picture Height</label>
+            <input id="pictureMaxHeight" type="number" value="100" />--%>
+            <br />
+            <label for="mapStyle">Map style</label>
             <select id="mapStyle" onchange="selectMapStyle()">
-<option>mapbox.streets</option>
-<option>mapbox.light</option>
-<option>mapbox.dark</option>
-<option>mapbox.satellite</option>
-<option>mapbox.streets-satellite</option>
-<option>mapbox.wheatpaste</option>
-<option>mapbox.streets-basic</option>
-<option>mapbox.comic</option>
-<option>mapbox.outdoors</option>
-<option>mapbox.run-bike-hike</option>
-<option>mapbox.pencil</option>
-<option>mapbox.pirates</option>
-<option>mapbox.emerald</option>
-<option>mapbox.high-contrast</option>
+                <option>mapbox.streets</option>
+                <option>mapbox.light</option>
+                <option>mapbox.dark</option>
+                <option>mapbox.satellite</option>
+                <option>mapbox.streets-satellite</option>
+                <option>mapbox.wheatpaste</option>
+                <option>mapbox.streets-basic</option>
+                <option>mapbox.comic</option>
+                <option>mapbox.outdoors</option>
+                <option>mapbox.run-bike-hike</option>
+                <option>mapbox.pencil</option>
+                <option>mapbox.pirates</option>
+                <option>mapbox.emerald</option>
+                <option>mapbox.high-contrast</option>
             </select>
-        Volume:
             <br />
-        <div id="slider" style="left: 10%; width: 80%; vertical-align: top"></div>
-    </div>
+            Volume:
+            <br />
+            <div id="slider" style="left: 10%; width: 80%; vertical-align: top"></div>
+        </div>
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="border-width: 2px; width: 40%; height: 65%; position: absolute; left: 5%; top: 20%">
-        File name:
-        <input id="filename" name="filename" type="text" value="MyTrack" /><br />
-        Track description:
-        <input id="name" name="name" type="text" value="New Track" /><br />
-        copyright:
-        <input id="copyright" name="copyright" type="text" value="(c)" /><br />
-        photoLocationTolerancy:
-        <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="text" value="0.1" /><br />
-        stepsToRedraw:
-        <input id="stepsToRedraw" name="stepsToRedraw" type="text" value="100" /><br />
-        stepsToShowPhoto:
-        <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="text" value="10" /><br />
-        velocityMetersPerSec:
-        <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="text" value="100" /><br />
-        numOfPhotos:
-        <input id="numOfPhotos" name="numOfPhotos" type="text" value="10" /><br />
-        icon:
-        <input id="icon" name="icon" type="text" value="mybike.png" /><br />
-        audioSrc:
-        <input id="audioSrc" name="audioSrc" type="text" value="" /><br />
-        audioVolume:
-        <input id="audioVolume" name="audioVolume" type="text" value="0.5" /><br />
-        textToRead:
-        <input id="textToRead" name="textToRead" type="text" value="" /><br />
-        defaultScale:
-        <input id="defaultScale" name="defaultScale" type="text" value="8" /><br />
-        trackGpx:
-        <input id="trackGpx" name="trackGpx" type="text" value="" /><br />
-        <input name="trackData" id="trackData" type="hidden" />
-        <select id="points" name="points" size="10" style="width: 400px" multiple="multiple">
+    <div id="textToReadArea0" class="ui-widget-content" style="position:absolute; padding: 10px; z-index: 1001; top: 10px; right: 50px; width: 340px; height: 590px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+        <p class="big">File name:
+        <input id="filename" name="filename" type="text" value="MyTrack" /></p>
+        <p class="big">Track description:
+        <input id="name" name="name" type="text" value="New Track" /></p>
+        <p class="big">copyright:
+        <input id="copyright" name="copyright" type="text" value="(c)" /></p>
+        <p class="big">photoLocationTolerancy:
+        <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="text" value="0.1" /></p>
+        <p class="big">stepsToRedraw:
+        <input id="stepsToRedraw" name="stepsToRedraw" type="text" value="100" /></p>
+        <p class="big">stepsToShowPhoto:
+        <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="text" value="10" /></p>
+        <p class="big">velocityMetersPerSec:
+        <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="text" value="100" /></p>
+        <p class="big">numOfPhotos:
+        <input id="numOfPhotos" name="numOfPhotos" type="text" value="10" /></p>
+        <p class="big">icon:
+        <input id="icon" name="icon" type="text" value="mybike.png" /></p>
+        <p class="big">audioSrc:
+        <input id="audioSrc" name="audioSrc" type="text" value="" /></p>
+        <p class="big">audioVolume:
+        <input id="audioVolume" name="audioVolume" type="text" value="0.5" /></p>
+        <p class="big">textToRead:
+        <input id="textToRead" name="textToRead" type="text" value="" /></p>
+        <p class="big">defaultScale:
+        <input id="defaultScale" name="defaultScale" type="text" value="8" /></p>
+        <p class="big">trackGpx:
+        <input id="trackGpx" name="trackGpx" type="text" value="" /></p>
+        <p class="big"><input name="trackData" id="trackData" type="hidden" /></p>
+        <p class="big"><select id="points" name="points" size="10" style="width: 320px" multiple="multiple">
         </select>
-        <br />
-        <asp:Button
+        </p>
+        <p class="big"><asp:Button
             ID="Button1"
             PostBackUrl="saveTrack.aspx"
             runat="server"
@@ -120,19 +161,20 @@
     <input type="button" value="Delete selected" id="buttonDeleteSelected" />
         &nbsp;
     <input type="button" value="Cancel" id="gotoMain" onclick="window.location = 'index.aspx?trackname=' + trackname" />
-        &nbsp;
     <!--input type="button" value="Undo last"/-->
-        <div id="fileOperations">
-            <br />
+    </p>
+    <p class="big">
+            <div id="fileOperations">
             <br />
             <label for="fileGpx">Import Gpx file:</label>
             <input type="file" accept=".gpx" id="filesGpx" />
             <%--multiple="multiple"--%>
             <!--input type="button" value="Import data" id="importGpx"/-->
         </div>
+        </p>
     </div>
 
-    <div id="imageDiv0" class="ui-widget-content" style="border-width: 2px; width: 40%; height: 20%; position: absolute; left: 55%; top: 75%; overflow-x: hidden; overflow-y: hidden; white-space: nowrap;">
+    <div id="imageDiv0" class="ui-widget-content" style="background: rgba(100,100,100,0.2); border-width: 0px;" >
         <div id="imageDiv" style="width: 100%; height: 100%"></div>
     </div>
 
@@ -150,15 +192,43 @@
 
     %>
     <script lang="JavaScript">
+        
         $(function () {
+
             $('form').submit(function () {
                 var t = JSON.stringify(getTrackPoints());
                 $("#trackData").val(t);
                 return true;
             });
 
+            var icon = L.icon({
+                iconUrl: ("tracks/mycar.png"),
+                iconSize: [50, 50],
+                iconAnchor: [1, 50],
+                shadowUrl: null
+            });
+
+            map = L.map('map', { zoomControl: false }).setView([50.430981, 30.539267], 8);
+            L.control.zoom({ position: 'topright' }).addTo(map);
+            L.control.scale({ position: 'bottomleft' }).addTo(map);
+            tileLayer = L.tileLayer(mapTileUrl, {
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+                maxZoom: 18,
+                id: "mapbox.streets"
+            });
+
+            tileLayer.addTo(map);
+            markerPosition = L.marker(new L.LatLng(1000, 1000), { icon: icon }).addTo(map);
+
+            map.on('click', onMapClick);
+
             $("#imageDiv0").draggable().resizable();
-            $("#textToReadArea0").draggable().resizable();
+            //$("#textToReadArea0").draggable().resizable({
+            //    maxHeight: 250,
+            //    maxWidth: 350,
+            //    minHeight: 150,
+            //    minWidth: 200
+            //});
             $("#slider").slider({
                 value: 0.8,
                 min: 0,
@@ -193,25 +263,6 @@
             } else {
                 $("#fileOperations").hide();
             }
-
-            tileLayer = L.tileLayer(mapTileUrl, {
-                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
-                maxZoom: 18,
-                id: "mapbox.streets"
-            });
-            tileLayer.addTo(map);
-            L.control.scale().addTo(map);
-
-            var icon = L.icon({
-                iconUrl: ("tracks/mycar.png"),
-                iconSize: [50, 50],
-                iconAnchor: [1, 50],
-                shadowUrl: null
-            });
-
-            markerPosition = L.marker(new L.LatLng(1000, 1000), { icon: icon }).addTo(map);
-
-            map.on('click', onMapClick);
 
             if (trackname) {
                 var initialTrack = loadTrackSync(getTrackPathByName(trackname));
@@ -263,7 +314,6 @@
             }
         });
 
-        var polyline;
 
         function drawTrack() {
             var points = getTrackPoints();
@@ -284,6 +334,9 @@
             return points;
         }
 
+        var imageDiv = $("#imageDiv");
+        var polyline;
+        var map;
         var track;
         var markerPosition;
         var map2 = document.getElementById("map2");
@@ -328,9 +381,6 @@
             else {
             }
         }
-
-        var map = L.map('map').setView([50.430981, 30.539267], 8);
-        var imageDiv = document.getElementById("imageDiv");
 
     </script>
 

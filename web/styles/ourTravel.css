@@ -5,19 +5,10 @@
     	background-repeat: no-repeat;
 	}
 
-        #map {
+        /*#map {
             height: 900px;
-        }
+        }*/
 
-        .photo {
-/*            height: 200px;*/
-/*            max-height: 100px;(*/
-            height: 100%;
-            margin-top: 1px;
-            margin-bottom: 1px;
-            margin-right: 1px;
-            margin-left: 1px;
-        }
         .nullphoto {
             height: 1px;
             width: 1px;
@@ -33,15 +24,88 @@
 /*@font-face {
   font-family: 'seeyourtravel';
   src: url('../content/traveldiaryfeb26.ttf');
-} */
+}*/
 html, body, form {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+.headerButton {
+    width: 240px;
+    height: 36px;
+    background-color: rgba(100,100,100,0.8);
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: left; 
+    background-position-x: 10px;
+    margin: 2px;
+    border-radius: 12px;
+    border-width: 0;
+    padding-left: 50px;
+    text-align: left;
+    color:rgba(255,255,255,0.9)
+}
+input, select, #map, .headerButton, html, body, form {
       font-family: 'seeyourtravel', 'Georgia', serif; 
-      height:100%;
-      width:100%;
-      padding:0px;
-      margin:0px;
 }
 
-input, select, #map {
-      font-family: 'seeyourtravel', 'Georgia', serif; 
+#wrapper #lblCoord {
+position:relative;
+top:0px;
+left:0px;
+visibility:hidden;
 }
+
+#wrapper:hover #lblCoord {
+visibility:visible;
+}
+
+#tracksList {
+    background: rgba(100,100,100,0.8);
+    color:rgba(255,255,255,0.9);
+    border-radius: 12px;
+}
+
+#tracksList option {
+    background: rgba(100,100,100,0.8);
+    color:rgba(255,255,255,0.9);
+    border-radius: 12px;
+}
+
+#tracksList option:nth-child(odd) {
+    background: rgba(100,100,100,0.6);
+}
+
+#tracksList option:nth-child(even) {
+    background: rgba(100,100,100,0.8);
+}
+
+p.big {
+    line-height: 150%; padding:0px; margin:0px;
+}
+
+/*@media all and (orientation:portrait) { 
+    #imageDiv0 {
+        z-index: 100; border-width: 2px; height: 90%; width: 30%; position: absolute; top: 50px; left: 68%; overflow-x: hidden; overflow-y: hidden;
+    }
+        .photo {
+            width: 100%;
+            margin-top: 1px;
+            margin-bottom: 1px;
+            margin-right: 1px;
+            margin-left: 1px;
+        }
+}
+@media all and (orientation:landscape) {*/
+    #imageDiv0 {
+        z-index: 100; border-width: 2px; width: 96%; height: 30%; position: absolute; left: 2%; top: 66%; overflow-x: hidden; overflow-y: hidden;
+    }
+        .photo {
+            height: 100%;
+            margin-top: 1px;
+            margin-bottom: 1px;
+            margin-right: 1px;
+            margin-left: 1px;
+        }
+/*}*/

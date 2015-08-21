@@ -150,12 +150,15 @@ function showPhotos(track,p,tolerancy) {
         //var set = "7459025";//"full";//"public";
         var set = "full";
         var count = 0;
+	
+	var divHeight = $("#imageDiv").height();
+	var size = divHeight>150?"medium":"small";
         var urlp = panoramioUrl + set + "&from=0&to=" + track.numOfPhotos.toString() + "&miny="
             + (p.lat - tolerancy).toString()
             + "&minx=" + (p.lng - tolerancy).toString()
             + "&maxy=" + (p.lat + tolerancy).toString()
             + "&maxx=" + (p.lng + tolerancy).toString()
-            + "&size=small&mapfilter=true&order=popularity&callback=?";
+            + "&size="+size+"&mapfilter=true&order=popularity&callback=?";
 
         $.ajax({
             dataType: "jsonp",

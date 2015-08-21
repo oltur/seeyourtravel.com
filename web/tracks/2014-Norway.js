@@ -6,7 +6,7 @@
         	"stepsToRedraw": 400,
 	        "stepsToShowPhoto": 50,
         	"velocityMetersPerSec": 5000,
-	        "numOfPhotos": 10,
+	        "numOfPhotos": 20,
 		"icon": "mycar.png",
 		"audioSrc": "Norge1.mp3",
 		"textToRead": "hamlet.txt",

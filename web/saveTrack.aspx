@@ -3,9 +3,9 @@
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
 
     <script>
-        delayRedirect('.');
+        delayRedirect('./index.aspx?trackname=<%=Request.Form["filename"]%>');
         function delayRedirect(url) {
-            var Timeout = setTimeout("window.location='" + url + "'", 10000);
+            var Timeout = setTimeout("window.location='" + url + "'", 1000);
         }
     </script>
 
@@ -18,7 +18,7 @@
        <a href="#">
            <img src="img/logosmall.png" style="height: 24px; width: 24px; vertical-align: middle;" /></a>
         &nbsp;
-       Track is saved! You will be back to <a href="index.aspx">Main page</a> in 10 seconds, or click the link.
+       Track is saved! You will be back to <a href="index.aspx">Main page</a> in one seconds, or click the link.
         &nbsp;
     </div>
 
