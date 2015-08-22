@@ -19,6 +19,45 @@ var iconFriend = L.icon({
     //shadowUrl: null
 });
 
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
+}
+
+function translateAll()
+{
+    $(".i").i18n();
+    $("option.i").i18n();
+}
+
+function selectLang() {
+    var val = getLanguage();
+    $.i18n.setLng(val,
+        function (err, t)
+        {
+            translateAll();
+        });
+}
+
+function getLanguage() {
+    var sel = $("#langList");
+    return sel.val();
+}
+
+
 function pointToLatLng(point) {
     if (point.hasOwnProperty("lat")) {
         return new L.LatLng(point.lat, point.lng);
@@ -189,12 +228,15 @@ function get_panoramas_panoramio_success(data, p, tolerancy) {
         //var set = "7459025";//"full";//"public";
         var set = "full";
         var count = 0;
+
+        var divHeight = $("#imageDiv").height();
+        var size = divHeight > 150 ? "medium" : "small";
         var urlp = "services/get_panoramas.aspx?set=" + set + "&from=0&to=" + track.numOfPhotos.toString() + "&miny="
             + (p.lat - tolerancy).toString()
             + "&minx=" + (p.lng - tolerancy).toString()
             + "&maxy=" + (p.lat + tolerancy).toString()
             + "&maxx=" + (p.lng + tolerancy).toString()
-            + "&size=medium&mapfilter=true&order=popularity&callback=?";
+            + "&size="+size+"&mapfilter=true&order=popularity&callback=?";
 
         $.ajax({
             dataType: "jsonp",

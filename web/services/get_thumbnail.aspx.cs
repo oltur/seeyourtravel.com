@@ -17,14 +17,15 @@ using System.Drawing.Imaging;
 
 public partial class services_get_thumbnail : System.Web.UI.Page
 {
- private Regex validChars = new Regex("[^a-zA-Z0-9_ ]");
+    private Regex validChars = new Regex("[^a-zA-Z0-9_ ]");
 
-    private int _maximumDimension = 300;
+    private int _maximumDimensionSmall = 100;
+    private int _maximumDimensionMedium = 300;
 
-        private static object _timingLock = new Object();
+    private static object _timingLock = new Object();
 
-       
-        protected void Page_Load(object sender, EventArgs e)
+
+    protected void Page_Load(object sender, EventArgs e)
     {
         DoWork(HttpContext.Current);
     }
@@ -32,83 +33,97 @@ public partial class services_get_thumbnail : System.Web.UI.Page
 
     public void DoWork(HttpContext context)
     {
-            var request = context.Request;
-            var photo = request.QueryString["P"] ?? String.Empty;
-            CompositingQuality compositingQuality = CompositingQuality.Default;
-            InterpolationMode interpolationMode = InterpolationMode.Default;
-            try {
-                compositingQuality =
-                    (CompositingQuality)Enum.Parse(typeof(CompositingQuality), request.QueryString["cq"], true);
-                interpolationMode =
-                    (InterpolationMode)Enum.Parse(typeof(InterpolationMode), request.QueryString["im"], true);
-            }
-            catch (ArgumentException) {
-            }
-            if (validChars.IsMatch(photo)) {
-                throw new HttpException("Invalid photo name.");
-            }
-            string physicalPath = context.Server.MapPath("../data/images/" + photo + ".jpg");
-            if (!File.Exists(physicalPath)) {
-                throw new HttpException(404, "Photo not found");
-            }
-            var lastModified = File.GetLastWriteTime(physicalPath);
-            // Build the thumbnail and send it to the output stream
-            using (var stream = new FileStream(physicalPath, FileMode.Open, FileAccess.Read)) {
-                Bitmap target = null;
-                try {
-                    using (var bitmap = new Bitmap(stream)) {
-                        var size = bitmap.PhysicalDimension;
-                        var isWide = size.Width > size.Height;
-                        var smallestDimension = isWide ? size.Height : size.Width;
-                        var targetSize = new SizeF(
-                            _maximumDimension * size.Width / smallestDimension,
-                            _maximumDimension * size.Height / smallestDimension);
-                        target = new Bitmap(_maximumDimension, _maximumDimension);
-                        // Introducing a lock for more reliable timing. Don't do this at home
-                        //lock (_timingLock) {
-                            //DateTime before = DateTime.Now;
-                            //for (int i = 0; i < 100; i++) {
-                                using (var graphics = Graphics.FromImage(target)) {
-                                    graphics.CompositingQuality = compositingQuality;
-                                    graphics.InterpolationMode = interpolationMode;
-                                    graphics.CompositingMode = CompositingMode.SourceCopy;
-                                    graphics.DrawImage(bitmap,
-                                        (_maximumDimension - targetSize.Width) / 2,
-                                        (_maximumDimension - targetSize.Height) / 2,
-                                        targetSize.Width, targetSize.Height);
-                                //}
-                            //}
-                            //DateTime after = DateTime.Now;
-                            // Ticks are 100ns each, we did the job 100 time so we get milliseconds by dividing by 1000000,
-                            //double timeTaken = (after.Ticks - before.Ticks) / 1000000.0;
-                            //context.Application["PhotoThumbnail_" + photo + compositingQuality + interpolationMode] =
-                              //  timeTaken;
-                        }
-                    }
-                    // Setup caching
-                    //HttpCachePolicy cachePolicy = context.Response.Cache;
-                    //cachePolicy.SetCacheability(HttpCacheability.Public);
-                    //cachePolicy.VaryByParams["p"] = true;
-                    //cachePolicy.VaryByParams["cq"] = true;
-                    //cachePolicy.VaryByParams["im"] = true;
-                    //cachePolicy.SetOmitVaryStar(true);
-                    //cachePolicy.SetExpires(DateTime.Now + TimeSpan.FromDays(365));
-                    //cachePolicy.SetValidUntilExpires(true);
-                    //cachePolicy.SetLastModified(lastModified);
-                    // Content-type
-                    context.Response.ContentType = "image/png";
-                    // Send the contents (need to use a searchable intermediary stream for png
-                    using (MemoryStream memoryStream = new MemoryStream()) {
-                        target.Save(memoryStream, ImageFormat.Png);
-                        memoryStream.WriteTo(context.Response.OutputStream);
+        var request = context.Request;
+        var sizeParam = request.QueryString["size"] ?? "medium";
+        int _maximumDimension = sizeParam != "medium" ? _maximumDimensionSmall : _maximumDimensionMedium;
+
+        var photo = request.QueryString["P"] ?? String.Empty;
+        CompositingQuality compositingQuality = CompositingQuality.Default;
+        InterpolationMode interpolationMode = InterpolationMode.Default;
+        try
+        {
+            compositingQuality =
+                (CompositingQuality)Enum.Parse(typeof(CompositingQuality), request.QueryString["cq"], true);
+            interpolationMode =
+                (InterpolationMode)Enum.Parse(typeof(InterpolationMode), request.QueryString["im"], true);
+        }
+        catch (ArgumentException)
+        {
+        }
+        if (validChars.IsMatch(photo))
+        {
+            throw new HttpException("Invalid photo name.");
+        }
+        string physicalPath = context.Server.MapPath("../data/images/" + photo + ".jpg");
+        if (!File.Exists(physicalPath))
+        {
+            throw new HttpException(404, "Photo not found");
+        }
+        var lastModified = File.GetLastWriteTime(physicalPath);
+        // Build the thumbnail and send it to the output stream
+        using (var stream = new FileStream(physicalPath, FileMode.Open, FileAccess.Read))
+        {
+            Bitmap target = null;
+            try
+            {
+                using (var bitmap = new Bitmap(stream))
+                {
+                    var size = bitmap.PhysicalDimension;
+                    var isWide = size.Width > size.Height;
+                    var smallestDimension = isWide ? size.Height : size.Width;
+                    var targetSize = new SizeF(
+                        _maximumDimension * size.Width / smallestDimension,
+                        _maximumDimension * size.Height / smallestDimension);
+                    target = new Bitmap(_maximumDimension, _maximumDimension);
+                    // Introducing a lock for more reliable timing. Don't do this at home
+                    //lock (_timingLock) {
+                    //DateTime before = DateTime.Now;
+                    //for (int i = 0; i < 100; i++) {
+                    using (var graphics = Graphics.FromImage(target))
+                    {
+                        graphics.CompositingQuality = compositingQuality;
+                        graphics.InterpolationMode = interpolationMode;
+                        graphics.CompositingMode = CompositingMode.SourceCopy;
+                        graphics.DrawImage(bitmap,
+                            (_maximumDimension - targetSize.Width) / 2,
+                            (_maximumDimension - targetSize.Height) / 2,
+                            targetSize.Width, targetSize.Height);
+                        //}
+                        //}
+                        //DateTime after = DateTime.Now;
+                        // Ticks are 100ns each, we did the job 100 time so we get milliseconds by dividing by 1000000,
+                        //double timeTaken = (after.Ticks - before.Ticks) / 1000000.0;
+                        //context.Application["PhotoThumbnail_" + photo + compositingQuality + interpolationMode] =
+                        //  timeTaken;
                     }
                 }
-                finally {
-                    if (target != null) {
-                        target.Dispose();
-                    }
+                // Setup caching
+                //HttpCachePolicy cachePolicy = context.Response.Cache;
+                //cachePolicy.SetCacheability(HttpCacheability.Public);
+                //cachePolicy.VaryByParams["p"] = true;
+                //cachePolicy.VaryByParams["cq"] = true;
+                //cachePolicy.VaryByParams["im"] = true;
+                //cachePolicy.SetOmitVaryStar(true);
+                //cachePolicy.SetExpires(DateTime.Now + TimeSpan.FromDays(365));
+                //cachePolicy.SetValidUntilExpires(true);
+                //cachePolicy.SetLastModified(lastModified);
+                // Content-type
+                context.Response.ContentType = "image/png";
+                // Send the contents (need to use a searchable intermediary stream for png
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    target.Save(memoryStream, ImageFormat.Png);
+                    memoryStream.WriteTo(context.Response.OutputStream);
                 }
-            }    
+            }
+            finally
+            {
+                if (target != null)
+                {
+                    target.Dispose();
+                }
+            }
+        }
     }
 }
 

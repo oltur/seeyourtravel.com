@@ -61,28 +61,34 @@ visibility:hidden;
 visibility:visible;
 }
 
-#tracksList {
+.graySelect {
     background: rgba(100,100,100,0.8);
     color:rgba(255,255,255,0.9);
     border-radius: 12px;
 }
 
-#tracksList option {
+.graySelect option {
     background: rgba(100,100,100,0.8);
     color:rgba(255,255,255,0.9);
     border-radius: 12px;
 }
 
-#tracksList option:nth-child(odd) {
+.graySelect option:nth-child(odd) {
     background: rgba(100,100,100,0.6);
 }
 
-#tracksList option:nth-child(even) {
+.graySelect option:nth-child(even) {
     background: rgba(100,100,100,0.8);
 }
 
 p.big {
     line-height: 150%; padding:0px; margin:0px;
+}
+
+button.headerButton:disabled
+{
+    background-color: rgba(150,150,150,0.8);
+    color:rgba(255,255,255,0.6)
 }
 
 /*@media all and (orientation:portrait) { 

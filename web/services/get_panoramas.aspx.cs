@@ -10,6 +10,9 @@ public partial class services_get_panoramas : System.Web.UI.Page
     {
         string callback = Request.QueryString["callback"];
         string set = Request.QueryString["set"];
+        string size = Request.QueryString["size"];
+        if (string.IsNullOrWhiteSpace(size))
+            size = "medium";
         int from = int.Parse(Request.QueryString["from"]);
         int to = int.Parse(Request.QueryString["to"]);
         decimal minx = decimal.Parse(Request.QueryString["minx"]);
@@ -30,7 +33,7 @@ public partial class services_get_panoramas : System.Web.UI.Page
         foreach (XmlElement elem in list)
         {
             string url = "./data/images/"+Path.GetFileName(elem.ChildNodes[0].InnerText);
-            string urlThumbnail = "services/get_thumbnail.aspx?p=" + Path.GetFileNameWithoutExtension(elem.ChildNodes[0].InnerText);
+            string urlThumbnail = "services/get_thumbnail.aspx?size="+size+"&p=" + Path.GetFileNameWithoutExtension(elem.ChildNodes[0].InnerText);
 
 
             string localPath = Server.MapPath("../data/images/" + Path.GetFileName(elem.ChildNodes[0].InnerText));

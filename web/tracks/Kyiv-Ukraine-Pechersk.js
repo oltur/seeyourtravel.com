@@ -7,7 +7,7 @@
 ,"stepsToShowPhoto":2
 ,"numOfPhotos":10
 ,"velocityMetersPerSec":20
-,"icon":"mybike.png"
+,"icon":"aman.gif"
 ,"audioSrc":"k.mp3"
 ,"audioVolume":0.2
 ,"textToRead":"k.txt"

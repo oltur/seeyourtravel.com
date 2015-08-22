@@ -216,7 +216,7 @@ public partial class Login : System.Web.UI.Page
                 DateTime.Now,                        // issue time is now
                 DateTime.Now.AddMinutes(10),         // expires in 10 minutes
                 RememberMe.Checked,      // cookie is not persistent
-                name == "a" ? "admins" : ""                              // role assignment is stored
+                name == "admin" ? "admins" : ""                              // role assignment is stored
                                                                          // in userData
                 );
         HttpCookie cookie1 = new HttpCookie(

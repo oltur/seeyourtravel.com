@@ -46,7 +46,7 @@
     <div id='pageContent' style='height: 100%'>
         <div style="position: absolute; left: 5px; top:5px; z-index:1001">
             <a id="alogo" href="javascript:clickMenu()"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
-            <select style="vertical-align:super; width:190px;height:25px" id="tracksList" onchange="clickStart()"></select>
+            <select style="vertical-align:central; width:190px;height:35px" id="tracksList" class="i graySelect" onchange="clickStart()"></select>
         </div>
         <div style="position: absolute; left: 260px; top:10px; z-index:1001">
             <div id="wrapper">
@@ -125,7 +125,7 @@
             <input id="pictureMaxHeight" type="number" value="100" />--%>
             <br />
             <label for="mapStyle">Map style</label>
-            <select id="mapStyle" onchange="selectMapStyle()">
+            <select id="mapStyle" class="graySelect" onchange="selectMapStyle()">
                 <option>mapbox.streets</option>
                 <option>mapbox.light</option>
                 <option>mapbox.dark</option>
@@ -216,6 +216,14 @@
     <script>
         $(function () {
 
+            if ("True" != "<%=User.IsInRole("admins")%>") {
+                $("#newTrackButton").attr("disabled", "disabled");
+            }
+
+            if (trackParam == "" || "True" != "<%=User.IsInRole("admins")%>") {
+                $("#editTrackButton").attr("disabled", "disabled");
+            }
+
             var visited = $.cookie('visited'); // create cookie 'visited' with no value
             //if (visited != 'yes') {
             //    $("#dialog").dialog("option", "width", 450);
@@ -268,6 +276,30 @@
             //    }
             //});
 
+            var fileListString = $.ajax(
+            {
+                url: translateTracksPath('filelist.aspx' + "?" + Math.random()),
+                async: false,
+                dataType: 'json'
+            }
+        ).responseText;
+            var fileList = fileListString.split('\n');
+            tracksList
+                .find('option')
+                .remove()
+                .end()
+            tracksList.append('<option value="Choose a track" data-i18n="Chooseatrack"></option>');
+            for (var i = 0; i < fileList.length; i++) {
+                tracksList.append('<option value="' + fileList[i] + '">' + fileList[i] + '</option>');
+            }
+
+            if (trackParam != '') {
+                tracksList.val(trackParam);
+                //    $('select[id="tracksList"] option[value="' + trackParam + '"]').attr('selected', 'selected');
+
+                setTimeout(function () { doStartButtonClick() }, 100);
+            }
+
         });
     </script>
 
@@ -290,32 +322,7 @@
         var line;
         var markerStart;
         var markerFinish;
-
-        var fileListString = $.ajax(
-                    {
-                        url: translateTracksPath('filelist.aspx' + "?" + Math.random()),
-                        async: false,
-                        dataType: 'json'
-                    }
-                ).responseText;
-        var fileList = fileListString.split('\n');
-        tracksList
-            .find('option')
-            .remove()
-            .end()
-        tracksList.append('<option value="Choose a track:">Choose a track:</option>');
-        for (var i = 0; i < fileList.length; i++) {
-            tracksList.append('<option value="'+fileList[i]+'">'+fileList[i]+'</option>');
-        }
-
-        $(function () {
-            if (trackParam != '') {
-                tracksList.val(trackParam);
-            //    $('select[id="tracksList"] option[value="' + trackParam + '"]').attr('selected', 'selected');
-
-                setTimeout(function () { doStartButtonClick() }, 100);
-            }
-        });
+     
     </script>
 
 </asp:Content>

@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" %>
+
 <!DOCTYPE html>
 <%/*
 SeeYourTravel.com - Travel Experience Site
@@ -11,54 +12,82 @@ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    
-    <LINK REL="SHORTCUT ICON" HREF="favicon.ico">
+
+    <link rel="SHORTCUT ICON" href="favicon.ico">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
-    <link rel="stylesheet" href="styles/leaflet.css"/>
+    <link rel="stylesheet" href="styles/leaflet.css" />
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="styles/leaflet.ie.css"/>
     <![endif]-->
-    <link rel="stylesheet" href="styles/jquery-ui.css"/>
+    <link rel="stylesheet" href="styles/jquery-ui.css" />
     <script src="libs/jquery.js"></script>
     <script src="libs/jquery-ui.js"></script>
     <script src="libs/jquery.cookie.js"></script>
-    
+
     <script type="text/javascript" src="libs/owl.carousel.js"></script>
-    <link rel="stylesheet" type="text/css" href="styles/owl.carousel.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/owl.carousel.css" />
 
     <script src="libs/leaflet-src.js"></script>
     <script src="js/AnimatedMarker.js"></script>
     <script src="js/facebook.js"></script>
     <script src="js/yourtrack.js"></script>
 
-    <!--script src="libs/maps.googleapis.js"></script-->
+    <script type="text/javascript" src="libs/i18next.js" ></script>
+
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 
     <script src="js/OurTravel.js"></script>
     <script src="js/get_text.js"></script>
-    <link rel="stylesheet" href="styles/ourTravel.css"/>
-	<!--link rel="stylesheet" href="styles/jquerysamplestyle.css"-->
-  <script src="https://apis.google.com/js/client:platform.js?onload=startApp" async defer></script>
-  <!-- JavaScript specific to this application that is not related to API
+    <link rel="stylesheet" href="styles/ourTravel.css" />
+    <!--link rel="stylesheet" href="styles/jquerysamplestyle.css"-->
+    <script src="https://apis.google.com/js/client:platform.js?onload=startApp" async defer></script>
+    <!-- JavaScript specific to this application that is not related to API
      calls -->
-  <meta name="google-signin-client_id" content="179651162952-alrnetid5672ki6fqb7qh8b8ptu9aspk.apps.googleusercontent.com" />
+    <meta name="google-signin-client_id" content="179651162952-alrnetid5672ki6fqb7qh8b8ptu9aspk.apps.googleusercontent.com" />
 
     <script>
         var globalUserId = '<%=Context.User.Identity.Name%>';
         var globalUserName = '<%=Session["UserName"]%>';
+
+        $(function() {
+            var sel = $("#langList");
+            sel.empty();
+            sel.append('<option value="en-US">English</option>');
+            sel.append('<option value="ua-UA">Українська</option>');
+
+            var c = getCookie("i18next");
+            if(typeof c != "undefined" && c != null && c != "")
+                sel.val(c);
+
+        });
     </script>
 
-    <asp:ContentPlaceHolder id="HeadPlaceholder" runat="server">
+    <asp:ContentPlaceHolder ID="HeadPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body onresize="onBodyResize()">
-<form id="form1" runat="server">
-    <div>
-        <asp:ContentPlaceHolder id="BodyPlaceholder" runat="server">
-        
-        </asp:ContentPlaceHolder>
-    </div>
-</form>
+    <form id="form1" runat="server">
+        <div>
+            <div style="position: absolute; right: 80px; top: 5px; z-index: 1001">
+                <select style="vertical-align:top; width: 100px; height: 20px" id="langList" class="graySelect" onchange="selectLang()"></select>
+            </div>
+            <asp:ContentPlaceHolder ID="BodyPlaceholder" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+<script>
+    $(function () {
+        $.i18n.init({
+            fallbackLng: "en"
+            , debug: true
+            //,useLocalStorage: true | false,
+            //,localStorageExpirationTime: 86400000 // in ms, default 1 week
+        },
+        function (err, t) {
+            translateAll();
+        });
+    });
+</script>
+    </form>
 </body>
 </html>

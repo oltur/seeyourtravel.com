@@ -91,6 +91,23 @@
             //    });
             //}
         </script>
+
+    <style>
+        #loginform {
+        width: 300px;
+        height: 250px;
+
+        position:absolute; /*it can be fixed too*/
+        left:0; right:0;
+        top:0; bottom:0;
+        margin:auto;
+
+        /*this to solve "the content will not be cut when the window is smaller than the content": */
+        max-width:100%;
+        max-height:100%;
+        overflow:auto;
+    }
+    </style>
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
@@ -98,61 +115,97 @@
 
     <div class="mapheader">
         <span style="position: absolute; left: 0;">
-            <a href="#"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+            <a href="./corporate" target="_blank"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
         </span>
         <span style="position: absolute; right: 0;"><a href="#"><img src="img/help.png" style="height:50px; width:50px" alt="Need assistance?" onclick="$('#helpPanel').toggle('fold', 1000);" /></a>&nbsp;</span>
         <span style="position: absolute; left: 70px;">
-        <a href="./corporate" target="_blank">About us</a>
         </span>
     </div>
     <div id='pageContent' style='height: 100%'>
-        <div id="helpPanel" style="display: none; position: absolute; z-index: 100; left: 69%; width: 30%; height: 90%; background: #eee; border: 1px solid #000;">
-	    Here will be help...
-    </div>
+        <div id="helpPanel" style="display: none; padding:10px; position: absolute; z-index: 1000; right: 0px; width: 400px; height: 90%; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+            <span id="siteseal">
+                <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=hLfbdeAuTQVxRe4IZmMtr1Gf0jrMv1XSJ0S6JNnyohWiDdJm3EUMtIJuf0LN"></script>
+            </span>
+            <br />
+            <br />
+            <div
+                class="fb-like"
+                data-share="true"
+                data-width="450"
+                data-show-faces="true">
+            </div>
+            <br />
+            <br />
+            <h2>Welcome to the travel experience world! </h2>
+            <p>
+                SeeYourTravel.com is a community where you can share, refresh and plan your paths and memories with your friends and with access to the images and information all over the World.
+            </p>
+            <ul>
+                <li>Login with Facebook or SeeYourTravel account to be a part of our community
+                </li>
+                <li>Review the tracks of yourself and your friends
+                </li>
+                <li>Create your own by uploading the data from navigator devices or recording your journey
+                </li>
+                <li>Edit and setup tracks with few mouse clicks
+                </li>
+                <li>Share your experience with the World!
+                </li>
+            </ul>
+        </div>
     </div>
 
-<%--    <script>
-        $(function () {
-            $("#dialog-form").dialog({
-                resizable: false,
- //               autoOpen: false,
-//                height: 140,
-//                modal: true,
-                closeOnEscape: false,
-                open: function(event, ui) { $(".ui-dialog-titlebar-close", ui.dialog | ui).hide(); }
-//                ,buttons: {
-//                    "Login":
-//                        function () {
-//                            //var t = $("#<%=LoginButton.UniqueID%>");
-//                            $(this).dialog("close");
-//                            __doPostBack('<%= LoginButton.UniqueID %>', "");
-//        }
-//        
-                },
-            });
-            $("#dialog-form").dialog("show");
-        });
-  </script>--%>
+<div id="loginform" title="Login" >
 
-<div id="dialog-form" title="Login" >
-
-    <p>
-        Username:
-        <asp:TextBox ID="UserName" runat="server"></asp:TextBox></p>
-    <p>
-        Password:
-        <asp:TextBox ID="Password" runat="server" TextMode="Password"></asp:TextBox></p>
-    <p>
-        <asp:CheckBox ID="RememberMe" runat="server" Text="Remember Me" /> </p>
-    <p>
-        <asp:HiddenField ID="Token" runat="server"/>
-        <asp:HiddenField ID="Data" runat="server"/>
-        <asp:Button ID="LoginButton"  runat="server" Text="Login" OnClick="LoginButton_Click" /> <%--OnClientClick="$('#dialog-form').dialog('close');"--%>
-        &nbsp;
-        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-        </fb:login-button>
-    </p>
-    <p>
-        <asp:Label ID="Message" runat="server" ForeColor="Red" Text=""></asp:Label> </p>
-    </div>
+    <table>
+        <tr>
+            <td class="i" data-i18n="Username_">
+                Username:
+            </td>
+            <td>
+                <asp:TextBox ID="UserName" runat="server" class="i" data-i18n></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="i" data-i18n="Password_">
+                Password:
+            </td>
+            <td>
+                <asp:TextBox ID="Password" runat="server" TextMode="Password" class="i" data-i18n></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <asp:CheckBox ID="RememberMe" runat="server"/>
+                <span class="i" data-i18n="RememberMe">Remember Me</span>
+                <asp:HiddenField ID="Token" runat="server"/>
+                <asp:HiddenField ID="Data" runat="server"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Button ID="LoginButton"  runat="server" Text="Login" OnClick="LoginButton_Click" class="i" data-i18n="[value]Login;"/> 
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                </fb:login-button>
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="99">
+                <asp:Label ID="Message" runat="server" ForeColor="Red" Text="" class="i" data-i18n></asp:Label> </p>
+            </td>
+            <td>
+            </td>
+        </tr>
+    </table>
+</div>
 </asp:Content>

@@ -35,40 +35,8 @@
             <div style="position: absolute; left: 10px; top:195px;">
                 <button type="button" id="profile" title="Hello, <%=Session["UserName"]%>" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'" >Profile</button>
                 <button type="button" id="logout" title="Logout"  class="headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" >Logout</button>
-                <button type="button" id="helpButton" style="background-image: url(img/help.png);" class="headerButton" title="Need help?" onclick="clickHelp()">Help</button>
             </div>
         </div>
-        </div>
-        <div id="helpPanel" style="display: none; padding:10px; position: absolute; z-index: 1000; right: 0px; width: 400px; height: 90%; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
-            <span id="siteseal">
-                <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=hLfbdeAuTQVxRe4IZmMtr1Gf0jrMv1XSJ0S6JNnyohWiDdJm3EUMtIJuf0LN"></script>
-            </span>
-            <br />
-            <br />
-            <div
-                class="fb-like"
-                data-share="true"
-                data-width="450"
-                data-show-faces="true">
-            </div>
-            <br />
-            <br />
-            <h2>Welcome to the travel experience world! </h2>
-            <p>
-                SeeYourTravel.com is a community where you can share, refresh and plan your paths and memories with your friends and with access to the images and information all over the World.
-            </p>
-            <ul>
-                <li>Login with Facebook or SeeYourTravel account to be a part of our community
-                </li>
-                <li>Review the tracks of yourself and your friends
-                </li>
-                <li>Create your own by uploading the data from navigator devices or recording your journey
-                </li>
-                <li>Edit and setup tracks with few mouse clicks
-                </li>
-                <li>Share your experience with the World!
-                </li>
-            </ul>
         </div>
         <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 45px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
             <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Description" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
@@ -93,7 +61,7 @@
             <input id="pictureMaxHeight" type="number" value="100" />--%>
             <br />
             <label for="mapStyle">Map style</label>
-            <select id="mapStyle" onchange="selectMapStyle()">
+            <select id="mapStyle" class="graySelect" onchange="selectMapStyle()">
                 <option>mapbox.streets</option>
                 <option>mapbox.light</option>
                 <option>mapbox.dark</option>
@@ -298,16 +266,6 @@
                     }
 
                 }
-                //var t = JSON.stringify(initialTrack.trackData);
-                //$("#trackData").val(t.substring(1, t.length - 1));
-
-                //$('#points')
-                //    .find('option')
-                //    .remove()
-                //    .end()
-                //    .append('<option value="whatever">text</option>')
-                //    .append('<option value="whatever2">text2</option>')
-                //    .val('whatever2');
 
                 drawTrack();
 

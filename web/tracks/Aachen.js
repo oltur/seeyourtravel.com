@@ -9,5 +9,5 @@
 	        "numOfPhotos": 10,
 		"icon": "mybike.png",
 		"audioSrc": "",
-		"trackGpx": "Aachen_Koeln_Railway.gpx"
+		"trackGpx": "Aachen_Koeln_Railway.xml"
 }
