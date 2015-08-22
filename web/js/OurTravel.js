@@ -272,47 +272,89 @@ function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
     var divHeight = $("#imageDiv").height();
     var divWidth = $("#imageDiv").width();
 
-
-    shuffle(data2.photos);
-    shuffle(data.photos);
     var photos = data2.photos.concat(data.photos);
+    shuffle(photos);
     count = photos.length;
     $("#lblCoord").text(p.lat + " " + p.lng);
-    imageDiv.empty();
+    var imageUl = imageDiv.children();
+    imageUl.fadeOut(100);
+    imageUl.empty();
     for (var i = 0; i < photos.length; i++) {
-
+        var nextLi = document.createElement("li");
         var nextLink = document.createElement("a");
         var nextImage = document.createElement("img");
         nextLink.href = photos[i].photo_url;
         nextLink.target = "_blank";
         nextImage.src = photos[i].photo_file_url;
         if (isPortrait())
-            nextImage.style.maxWidth = divWidth;
+            nextImage.width = divWidth;
         else
-            nextImage.style.maxHeight = divHeight;
+            nextImage.height = divHeight;
         //nextImage.style.maxHeight = $("#pictureMaxHeight").val() + "px";
         nextImage.title = "Photo from Panoramio(c): " + photos[i].photo_title + " by " + photos[i].owner_name + ". Click to open the source.";
         nextImage.classList.add("photo");
         nextLink.appendChild(nextImage);
+        nextLi.appendChild(nextLink);
 
-        imageDiv[0].appendChild(nextLink);
+        imageUl[0].appendChild(nextLi);
     }
-    //var t = document.createElement("div");
-    //for (var i = 0; i < photos.length; i++) {
-    //    var nextImage = document.createElement("img");
-    //    var nextLink = document.createElement("a");
-    //    nextLink.href = photos[i].photo_url;
-    //    nextLink.target = "_blank";
-    //    nextImage.src = photos[i].photo_file_url;
-    //    nextImage.style.maxHeight = $("#pictureMaxHeight").val()+"px";
-    //    nextImage.title = "Photo from Panoramio(c): " + photos[i].photo_title + " by " + photos[i].owner_name + ". Click to open the source.";
-    //    nextImage.classList.add("photo");
-    //    nextLink.appendChild(nextImage);
-    //    t.appendChild(nextLink);
-    //}
-    //setTimeout(function () { imageDiv.innerHTML = t.innerHTML; }, 500);
 
+    setTimeout(function () {
+        curX = 0;
+        //    scrollerContent.children().clone().appendTo(scrollerContent);
+        scrollerContent.children().each(function () {
+            var $this = $(this);
+            $this.css('left', curX);
+            curX += $this.outerWidth(true);
+        });
+        fullW = curX / 2;
+        viewportW = scroller.width();
+        imageUl.fadeIn(100);
+    }, 100);
 }
+
+var scroller;
+var scrollerContent;
+var curX;
+var fullW;
+var viewportW;
+
+$(function () {
+    scroller = $('#imageDiv0 div.innerScrollArea');
+    scrollerContent = scroller.children('ul');
+    curX = 0;
+    fullW = 1;
+
+    // extracted...
+
+    // Scrolling speed management
+    var controller = { curSpeed: 0, fullSpeed: 2 };
+    var $controller = $(controller);
+    var tweenToNewSpeed = function (newSpeed, duration) {
+        if (duration === undefined)
+            duration = 600;
+        $controller.stop(true).animate({ curSpeed: newSpeed }, duration);
+    };
+
+    // Pause on hover
+    scroller.hover(function () {
+        tweenToNewSpeed(0);
+    }, function () {
+        tweenToNewSpeed(controller.fullSpeed);
+    });
+
+    // Scrolling management; start the automatical scrolling
+    var doScroll = function () {
+        var curX = scroller.scrollLeft();
+        var newX = curX + controller.curSpeed;
+        if (newX > fullW * 2 - scroller.width())
+            newX -= fullW;
+        scroller.scrollLeft(newX);
+    };
+    setInterval(doScroll, 20);
+    tweenToNewSpeed(controller.fullSpeed);
+});
+
 
 function GPXtoLatLng(urlGPX) {
     var result = "";

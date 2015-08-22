@@ -29,15 +29,16 @@
             </div>
                 <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
             <div style="position: absolute; left: 10px; top: 50px;">
-                <button type="button" id="cancelButton" title="Cancel changes" class="headerButton" style="background-image: url(img/cancel.png );" onclick="clickCancel()">Cancel</button>
+                <button type="button" data-i18n="[title]Cancel;Cancel" id="cancelButton" title="Cancel changes" class="i headerButton" style="background-image: url(img/cancel.png );" onclick="clickCancel()">Cancel</button>
             </div>
             <div style="position: absolute; left: 10px; top: 100px;">
-                <button type="button" id="settingsCheckBox" title="Settings" class="headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
-                <button type="button" id="corporateSite" title="Corporate site"  class="headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" >About SeeYourTravel</button>
+                <button type="button" data-i18n="[title]Settings;Settings" id="settingsCheckBox" title="Settings" class="i headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
+                <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site"  class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" >About SeeYourTravel</button>
             </div>
             <div style="position: absolute; left: 10px; top:195px;">
-                <button type="button" id="profile" title="Hello, <%=Session["UserName"]%>" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'" >Profile</button>
-                <button type="button" id="logout" title="Logout"  class="headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" >Logout</button>
+                <button type="button" data-i18n="[title]Profile;Profile" id="profile" title="Profile" class="i headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'" >Profile</button>
+                <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout"  class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" >Logout</button>
+                <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>
             </div>
         </div>
         </div>
@@ -145,9 +146,11 @@
         </p>
     </div>
 
-    <div id="imageDiv0" class="ui-widget-content" style="background: rgba(100,100,100,0.2); border-width: 0px;" >
-        <div id="imageDiv" style="width: 100%; height: 100%"></div>
-    </div>
+        <div id="imageDiv0" class="ui-widget-content">
+            <div id="imageDiv" class="innerScrollArea">
+                <ul></ul>
+            </div>
+        </div>
 
     <script lang="JavaScript">
         var trackname;

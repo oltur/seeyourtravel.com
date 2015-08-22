@@ -56,19 +56,19 @@
         </div>
         <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
             <div style="position: absolute; left: 10px; top: 50px;">
-                <button type="button" id="newTrackButton" title="New" class="headerButton" style="background-image: url(img/new.png );" onclick="clickNew()">New</button>
-                <button type="button" id="pauseButton" title="Pause" class="headerButton" style="background-image: url(img/pause.png );" onclick="dostop(); pauseButton.disabled = true; continueButton.disabled = false;" >Pause</button>
-                <button type="button" id="continueButton" title="Continue" class="headerButton" style="background-image: url(img/play.png );" onclick="dostart(); pauseButton.disabled = false; continueButton.disabled = true;" >Continue</button>
-                <button type="button" id="editTrackButton" title="Edit" class="headerButton" style="background-image: url(img/edit.png );" onclick="clickEdit()" >Edit</button>
+                <button type="button" data-i18n="[title]New;New" id="newTrackButton" title="New" class="i headerButton" style="background-image: url(img/new.png );" onclick="clickNew()">New</button>
+                <button type="button" data-i18n="[title]Pause;Pause" id="pauseButton" title="Pause" class="i headerButton" style="background-image: url(img/pause.png );" onclick="dostop(); pauseButton.disabled = true; continueButton.disabled = false;" >Pause</button>
+                <button type="button" data-i18n="[title]Continue;Continue" id="continueButton" title="Continue" class="i headerButton" style="background-image: url(img/play.png );" onclick="dostart(); pauseButton.disabled = false; continueButton.disabled = true;" >Continue</button>
+                <button type="button" data-i18n="[title]Edit;Edit" id="editTrackButton" title="Edit" class="i headerButton" style="background-image: url(img/edit.png );" onclick="clickEdit()" >Edit</button>
             </div>
             <div style="position: absolute; left: 10px; top: 220px;">
-                <button type="button" id="settingsCheckBox" title="Settings" class="headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
-                <button type="button" id="corporateSite" title="Corporate site"  class="headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" >About SeeYourTravel</button>
+                <button type="button" data-i18n="[title]Settings;Settings" id="settingsCheckBox" title="Settings" class="i headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
+                <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site"  class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" >About SeeYourTravel</button>
             </div>
             <div style="position: absolute; left: 10px; top: 315px;">
-                <button type="button" id="profile" title="Hello, <%=Session["UserName"]%>" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'" >Profile</button>
-                <button type="button" id="logout" title="Logout"  class="headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" >Logout</button>
-                <button type="button" id="helpButton" style="background-image: url(img/help.png);" class="headerButton" title="Need help?" onclick="clickHelp()">Help</button>
+                <button type="button" data-i18n="[title]Profile;Profile" id="profile" title="Profile" class="i headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'" >Profile</button>
+                <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout"  class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" >Logout</button>
+                <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>
             </div>
         </div>
         <div id="helpPanel" style="display: none; padding:10px; position: absolute; z-index: 1000; right: 0px; width: 400px; height: 90%; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
@@ -83,24 +83,8 @@
                 data-width="450"
                 data-show-faces="true">
             </div>
-            <br />
-            <br />
-            <h2>Welcome to the travel experience world! </h2>
-            <p>
-                SeeYourTravel.com is a community where you can share, refresh and plan your paths and memories with your friends and with access to the images and information all over the World.
-            </p>
-            <ul>
-                <li>Login with Facebook or SeeYourTravel account to be a part of our community
-                </li>
-                <li>Review the tracks of yourself and your friends
-                </li>
-                <li>Create your own by uploading the data from navigator devices or recording your journey
-                </li>
-                <li>Edit and setup tracks with few mouse clicks
-                </li>
-                <li>Share your experience with the World!
-                </li>
-            </ul>
+            <div class="i" data-i18n="[html]help_content"> 
+            </div>
         </div>
         <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 45px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
             <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Description" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
@@ -161,8 +145,10 @@
             <textarea id="textToReadArea" disabled="disabled" style="top: 25%; width: 99%; height: 88%; resize: none;"></textarea>
         </div>
 
-        <div id="imageDiv0" class="ui-widget-content" style="background: rgba(100,100,100,0.2); border-width: 0px; ">
-            <div id="imageDiv" style="width: 100%; height: 100%"></div>
+        <div id="imageDiv0" class="ui-widget-content">
+            <div id="imageDiv" class="innerScrollArea">
+                <ul></ul>
+            </div>
         </div>
     </div>
 

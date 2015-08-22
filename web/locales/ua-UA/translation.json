@@ -1,7 +1,19 @@
 ﻿{
-  "Username_": "Користувач:"
-  ,"Password_": "Пароль:"
-  ,"Login": "Увійти"
-  ,"RememberMe":  "Запам'ятати мене"
-  ,"Chooseatrack":  "Виберіть трек:"
+  "Username_": "Користувач:",
+  "Password_": "Пароль:",
+  "Login": "Увійти",
+  "RememberMe": "Запам'ятати мене",
+  "Chooseatrack": "Виберіть трек:",
+  "New": "Створити",
+  "Pause": "Пауза",
+  "Continue": "Продовжити",
+  "Edit": "Реагувати",
+  "Cancel": "Відмінити",
+  "Settings": "Налаштування",
+  "AboutSeeYourTravel": "Про SeeYourTravel",
+  "Profile": "Профіль", 
+  "Logout": "Вихід", 
+  "Help": "Допомога",
+  "help_content": "<br /><br /><h2>Вітаємо у світі задоволення від подорожей! </h2><p>SeeYourTravel.com is a community where you can share, refresh and plan your paths and memories with your friends and with access to the images and information all over the World.</p><ul><li>Login with Facebook or SeeYourTravel account to be a part of our community</li><li>Review the tracks of yourself and your friends</li><li>Create your own by uploading the data from navigator devices or recording your journey</li><li>Edit and setup tracks with few mouse clicks</li><li>Share your experience with the World!</li></ul>"
+
 }

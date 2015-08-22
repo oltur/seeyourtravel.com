@@ -105,13 +105,34 @@ button.headerButton:disabled
 }
 @media all and (orientation:landscape) {*/
     #imageDiv0 {
-        z-index: 100; border-width: 2px; width: 96%; height: 30%; position: absolute; left: 2%; top: 66%; overflow-x: hidden; overflow-y: hidden;
+        background: rgba(100,100,100,0.2); border-width: 0px; margin: 0 auto; z-index: 100; border-width: 2px; width: 96%; height: 30%; position: absolute; left: 2%; bottom: 30px; overflow-x: hidden; overflow-y: hidden;
     }
+    #imageDiv0 .innerScrollArea {
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+    #imageDiv0 ul {
+        padding: 0;
+        margin: 0;
+        position: relative;
+    }
+    #imageDiv0 li {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        position: absolute;
+    }
+
+
         .photo {
-            height: 100%;
-            margin-top: 1px;
-            margin-bottom: 1px;
-            margin-right: 1px;
-            margin-left: 1px;
+            /*height: 100%;*/
+            margin-top: 0px;
+            margin-bottom: 0px;
+            margin-right: 0px;
+            margin-left: 0px;
         }
 /*}*/

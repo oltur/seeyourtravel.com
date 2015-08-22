@@ -25,7 +25,10 @@ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
     <script src="libs/jquery-ui.js"></script>
     <script src="libs/jquery.cookie.js"></script>
 
-    <script type="text/javascript" src="libs/owl.carousel.js"></script>
+    <script src="libs/jquery.dd.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/dd.css"/>
+
+    <script src="libs/owl.carousel.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/owl.carousel.css" />
 
     <script src="libs/leaflet-src.js"></script>
@@ -62,16 +65,20 @@ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
 
         ga('set', '&uid', globalUserId); // Set the user ID using signed-in user_id.
 
-        $(function() {
+        $(function () {
+
             var sel = $("#langList");
             sel.empty();
-            sel.append('<option value="en-US">English</option>');
-            sel.append('<option value="ua-UA">Українська</option>');
+            sel.append('<option value="en-US" title="img/en-US.png"></option>');
+            sel.append('<option value="ua-UA" title="img/ua-UA.png"></option>');
+
+            sel.msDropDown();
 
             var c = getCookie("i18next");
-            if(typeof c != "undefined" && c != null && c != "")
+            if (typeof c != "undefined" && c != null && c != "") {
                 sel.val(c);
-
+                document.getElementById("langList").refresh();
+            }
         });
     </script>
 
@@ -81,8 +88,8 @@ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
 <body onresize="onBodyResize()">
     <form id="form1" runat="server">
         <div>
-            <div style="position: absolute; right: 80px; top: 5px; z-index: 1001">
-                <select style="vertical-align:top; width: 100px; height: 20px" id="langList" class="graySelect" onchange="selectLang()"></select>
+            <div style="position: absolute; right: 45px; top: 5px; z-index: 1003">
+                <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
             </div>
             <asp:ContentPlaceHolder ID="BodyPlaceholder" runat="server">
             </asp:ContentPlaceHolder>
