@@ -69,7 +69,7 @@
       $('.wrapper').css({'marginTop':negative_margin+'px'});
     });
 	
-	function scrolldown() {
+	function fscrolldown() {
     var header_h = $('header').height();
     var scrolldown = $('.jasm-scroll-down');
 
@@ -83,7 +83,7 @@
 
 
     
-    scrolldown();
+    fscrolldown();
 
     
     (function($) {
@@ -103,7 +103,7 @@
 
   // Scroll down button show/hide function re-init on window resize
   $(window).on('resize', function(){
-      scrolldown();
+      fscrolldown();
   });
 
   // Preloader

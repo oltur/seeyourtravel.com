@@ -4,6 +4,9 @@
 <%@ Import Namespace="System.IO" %>
 
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
+
+<% if(!User.IsInRole("admins")) Response.Redirect("./"); %>
+
     <script>
         function clickCancel() {
             window.location = 'index.aspx';
@@ -85,7 +88,7 @@
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="position:absolute; padding: 10px; z-index: 1001; top: 10px; right: 50px; width: 340px; height: 590px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="position:absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 340px; height: 590px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
         <p class="big">File name:
         <input id="filename" name="filename" type="text" value="MyTrack" /></p>
         <p class="big">Track description:

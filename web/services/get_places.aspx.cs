@@ -40,10 +40,10 @@ public partial class services_get_places : System.Web.UI.Page
             {
                'height' : 500,
                'html_attributions' : [
-                  '\u003ca href=\'http://asset1.mapia.ua/assets/photos/000/016/367/photos/large/________.jpg\'\u003eBusiness Center Forum, Kyiv\u003c/a\u003e'
+                  '\u003ca href=\'https://seeyourtravel.com/data/places/forum.jpg\'\u003eBusiness Center Forum, Kyiv\u003c/a\u003e'
                ],
                'raw_reference' : {
-                  'fife_url' : 'http://asset1.mapia.ua/assets/photos/000/016/367/photos/large/________.jpg'
+                  'fife_url' : 'https://seeyourtravel.com/data/places/forum.jpg'
                },
                'width' : 375
             }
