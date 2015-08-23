@@ -6,6 +6,11 @@
     <script>
         var trackParam = '<%=Request["trackname"]%>';
 
+        function translateAll(err, t) {
+            $(".i").i18n();
+            $("option.i").i18n();
+        }
+
         function clickStart() {
             if (tracksList[0].selectedIndex > 0) {
                 window.location = 'index.aspx?trackname=' + tracksList.val();
@@ -87,28 +92,28 @@
             </div>
         </div>
         <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 45px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
-            <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Description" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
-            <label for="scriptTextCheckBox">Description</label>
+            <input id="scriptTextCheckBox" type="checkbox" value="Description" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
+            <label for="scriptTextCheckBox" class="i" data-i18n="Description">Description</label>
             <br />
             <input id="imagesCheckBox" type="checkbox" checked="checked" value="Images" onclick="$('#imageDiv0').toggle('fold', 1000);" />
-            <label for="imagesCheckBox">Images</label>
+            <label for="imagesCheckBox" class="i" data-i18n="Images">Images</label>
             <br />
             <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" value="Use Panoramio images" />
-            <label for="usePanoramioImagesCheckBox">Use Panoramio images</label>
+            <label for="usePanoramioImagesCheckBox" class="i" data-i18n="UsePanoramioImages">Use Panoramio images</label>
             <br />
             <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel images" />
-            <label for="useSYTImagesCheckBox">Use SeeYourTravel images</label>
+            <label for="useSYTImagesCheckBox" class="i" data-i18n="UseCYTImages">Use SeeYourTravel images</label>
             <br />
             <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" value="Use Google Places" />
-            <label for="useGooglePlacesCheckBox">Use Google Places</label>
+            <label for="useGooglePlacesCheckBox" class="i" data-i18n="UseGooglePlaces">Use Google Places</label>
             <br />
             <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel places" />
-            <label for="useSYTPlacesCheckBox">Use SeeYourTravel places</label>
+            <label for="useSYTPlacesCheckBox" class="i" data-i18n="UseCYTPlaces">Use SeeYourTravel places</label>
 <%--            <br />
             <label for="pictureHeight">Max Picture Height</label>
             <input id="pictureMaxHeight" type="number" value="100" />--%>
             <br />
-            <label for="mapStyle">Map style</label>
+            <label for="mapStyle" class="i" data-i18n="MapStyle">Map style</label>
             <select id="mapStyle" class="graySelect" onchange="selectMapStyle()">
                 <option>mapbox.streets</option>
                 <option>mapbox.light</option>
@@ -126,10 +131,11 @@
                 <option>mapbox.high-contrast</option>
             </select>
             <br />
-            Volume:
+            <span class="i" data-i18n="Volume">Volume:</span>
             <br />
             <div id="slider" style="left: 10%; width: 80%; vertical-align: top"></div>
         </div>
+
 
         <!--Map-->
         <div id="map"></div>
@@ -140,7 +146,7 @@
             Your browser does not support the audio element.
         </audio>
 
-        <div id="textToReadArea0" class="ui-widget-content" style="z-index: 100; background: rgba(100,100,100,0.2); border-width: 0px; width: 25%; height: 25%; position: absolute; left: 2%; top: 70%">
+        <div id="textToReadArea0" class="ui-widget-content" style="z-index: 100; background: rgba(100,100,100,0.2); border-width: 0px; width: 25%; height: 25%; position: absolute; left: 2%; top: 35%">
             <br />
             <textarea id="textToReadArea" disabled="disabled" style="top: 25%; width: 99%; height: 88%; resize: none;"></textarea>
         </div>
@@ -161,43 +167,8 @@
             }
         }
 
-        //$(function () {
-        //    $("#dialog").dialog({
-        //        autoOpen: false,
-        //        show: {
-        //            effect: "blind",
-        //            duration: 500
-        //        },
-        //        hide: {
-        //            effect: "explode",
-        //            duration: 500
-        //        },
-        //        width: 300,
-        //        height: 200,
-        //        modal: true,
-        //        buttons: {
-        //            Ok: function () {
-        //                if ($("#doNotShowIntroCheckbox").is(':checked')) {
-        //                    $.cookie('visited', 'yes', { expires: 365 }); // set value='yes' and expiration in 365 days
-        //                }
-        //                $(this).dialog("close");
-        //            },
-        //        }
-        //    });
-        //});
+  
     </script>
-
-    <%--    <div id="dialog" title="Welcome to SeeYourTravel.com">
-        <p>SeeYourTravel.com is a travel experience site...</p>
-        <p>See more at <a href="https://www.youtube.com/channel/UCfSj_WKVFx0DrI5qmhLjo_A">YouTube</a></p>
-        <div style="position: absolute; bottom: 0px; left: 10px;">
-            <p>
-                <input type="checkbox" id="doNotShowIntroCheckbox" />
-                <label for="doNotShowIntroCheckbox">Do not show this again</label>
-
-            </p>
-        </div>
-    </div>--%>
 
     <script>
         $(function () {

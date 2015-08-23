@@ -11,6 +11,12 @@
         function clickCancel() {
             window.location = 'index.aspx';
         }
+
+        function translateAll(err, t) {
+            $(".i").i18n();
+            $("option.i").i18n();
+        }
+
     </script>
 </asp:Content>
 
@@ -42,29 +48,29 @@
             </div>
         </div>
         </div>
-        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 45px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+       <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 45px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
             <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Description" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
-            <label for="scriptTextCheckBox">Description</label>
+            <label for="scriptTextCheckBox" class="i" data-i18n="Description">Description</label>
             <br />
             <input id="imagesCheckBox" type="checkbox" checked="checked" value="Images" onclick="$('#imageDiv0').toggle('fold', 1000);" />
-            <label for="imagesCheckBox">Images</label>
+            <label for="imagesCheckBox" class="i" data-i18n="Images">Images</label>
             <br />
             <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" value="Use Panoramio images" />
-            <label for="usePanoramioImagesCheckBox">Use Panoramio images</label>
+            <label for="usePanoramioImagesCheckBox" class="i" data-i18n="UsePanoramioImages">Use Panoramio images</label>
             <br />
             <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel images" />
-            <label for="useSYTImagesCheckBox">Use SeeYourTravel images</label>
+            <label for="useSYTImagesCheckBox" class="i" data-i18n="UseCYTImages">Use SeeYourTravel images</label>
             <br />
             <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" value="Use Google Places" />
-            <label for="useGooglePlacesCheckBox">Use Google Places</label>
+            <label for="useGooglePlacesCheckBox" class="i" data-i18n="UseGooglePlaces">Use Google Places</label>
             <br />
             <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel places" />
-            <label for="useSYTPlacesCheckBox">Use SeeYourTravel places</label>
+            <label for="useSYTPlacesCheckBox" class="i" data-i18n="UseCYTPlaces">Use SeeYourTravel places</label>
 <%--            <br />
             <label for="pictureHeight">Max Picture Height</label>
             <input id="pictureMaxHeight" type="number" value="100" />--%>
             <br />
-            <label for="mapStyle">Map style</label>
+            <label for="mapStyle" class="i" data-i18n="MapStyle">Map style</label>
             <select id="mapStyle" class="graySelect" onchange="selectMapStyle()">
                 <option>mapbox.streets</option>
                 <option>mapbox.light</option>
@@ -82,7 +88,7 @@
                 <option>mapbox.high-contrast</option>
             </select>
             <br />
-            Volume:
+            <span class="i" data-i18n="Volume">Volume:</span>
             <br />
             <div id="slider" style="left: 10%; width: 80%; vertical-align: top"></div>
         </div>

@@ -90,6 +90,12 @@
             //          'Thanks for logging in, ' + response.name + '!';
             //    });
             //}
+
+            function translateAll(err, t) {
+                $(".i").i18n();
+                $("option.i").i18n();
+            }
+
         </script>
 
     <style>
@@ -134,24 +140,8 @@
                 data-width="450"
                 data-show-faces="true">
             </div>
-            <br />
-            <br />
-            <h2>Welcome to the travel experience world! </h2>
-            <p>
-                SeeYourTravel.com is a community where you can share, refresh and plan your paths and memories with your friends and with access to the images and information all over the World.
-            </p>
-            <ul>
-                <li>Login with Facebook or SeeYourTravel account to be a part of our community
-                </li>
-                <li>Review the tracks of yourself and your friends
-                </li>
-                <li>Create your own by uploading the data from navigator devices or recording your journey
-                </li>
-                <li>Edit and setup tracks with few mouse clicks
-                </li>
-                <li>Share your experience with the World!
-                </li>
-            </ul>
+            <div class="i" data-i18n="[html]help_content"> 
+            </div>
         </div>
     </div>
 

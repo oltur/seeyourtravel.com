@@ -52,8 +52,12 @@
       var Datetoend = "Sept 28, 2015 00:00:00";
       $('.jasm-countdown .row').countdown({
         date: Datetoend,
-        render: function(data) {
-          $(this.el).html('<div><div><span>' + (parseInt(this.leadingZeros(data.years, 2)*365) + parseInt(this.leadingZeros(data.days, 2))) + '</span><span>days</span></div><div><span>' + this.leadingZeros(data.hours, 2) + '</span><span>hours</span></div></div><div class="lj-countdown-ms"><div><span>' + this.leadingZeros(data.min, 2) + '</span><span>minutes</span></div><div><span>' + this.leadingZeros(data.sec, 2) + '</span><span>seconds</span></div></div>');
+        render: function (data) {
+            var idays = $.t("idays");
+            var ihours = $.t("ihours");
+            var iminutes = $.t("iminutes");
+            var iseconds = $.t("iseconds");
+            $(this.el).html('<div><div><span>' + (parseInt(this.leadingZeros(data.years, 2) * 365) + parseInt(this.leadingZeros(data.days, 2))) + '</span><span>' + idays + '</span></div><div><span>' + this.leadingZeros(data.hours, 2) + '</span><span>' + ihours + '</span></div></div><div class="lj-countdown-ms"><div><span>' + this.leadingZeros(data.min, 2) + '</span><span>' + iminutes + '</span></div><div><span>' + this.leadingZeros(data.sec, 2) + '</span><span>' + iseconds + '</span></div></div>');
         }
       });
     });
