@@ -1,7 +1,7 @@
 ﻿{
   "Username_": "Benutzername:",
   "Password_": "Passwort:",
-  "Login": "Login",
+  "Login": "Einloggen",
   "RememberMe": "Erinnere an mich",
   "Chooseatrack": "Wählen einen Titel:",
   "New": "Neu",
@@ -24,7 +24,7 @@
   "Corporate_Global1": "Globale Abdeckung ohne zusätzlichen Aufwand",
   "Corporate_Configurable": "Konfigurierbare",
   "Corporate_Configurable1": "Einstellbar für Ihre Bedürfnisse",
-  "Corporate_Friendly": "Friendly",
+  "Corporate_Friendly": "Freundlich",
   "Corporate_Friendly1": "Einfach zu bedienen und angenehm, wieder zu kommen",
   "Corporate_YouCanSee": "Sie können bei uns zu sehen",
   "Corporate_MoreToCore": "Mehr Informationen zu kommen!",
@@ -46,5 +46,6 @@
   "UseGooglePlaces": "Benutzen Google Places",
   "UseCYTPlaces": "Benutzen SeeYourTravel Orte",
   "MapStyle": "Map-Stil",
-  "Volume": "Volumen"
+  "Volume": "Volumen",
+  "Corporate_GETINTOUCH": "NEHMEN SIE KONTAKT"
 }
