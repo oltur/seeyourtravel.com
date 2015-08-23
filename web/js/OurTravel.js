@@ -4,6 +4,10 @@ var tracksFolder = 'tracks/';
 //        var url = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ';      
 var mapTileUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib2x0dXJ1YSIsImEiOiJlODQ4ZTI2MWI4OGZkZjUyNDRiNjY4MDFkZGI0ODc4NyJ9.iiCb_tZgs_ipvEv3s6Zx0A';
 var panoramioUrl = "https://ssl.panoramio.com/map/get_panoramas.php?set=";
+var MAX_GOOGLE_PLACES = 10;
+var MAX_HERE_PLACES = 50;
+var MAX_GOOGLE_RADIUS = 10000;
+var GOOGLE_TYPES = ['lodging', 'restaurant']
 
 var iconWhereIAm = L.icon({
     iconUrl: ("img/youarehere.png"),
@@ -30,9 +34,8 @@ function pointToLatLng(point) {
     }
 }
 
-function translateTracksPath(path)
-{
-    return tracksFolder+path;
+function translateTracksPath(path) {
+    return tracksFolder + path;
 }
 
 function clickHelp() {
@@ -55,7 +58,7 @@ function clickMenu() {
  * @returns {string}
  */
 function getTrackPathByName(name) {
-    return translateTracksPath(name+'.js');
+    return translateTracksPath(name + '.js');
 }
 
 function onBodyResize() {
@@ -64,7 +67,7 @@ function onBodyResize() {
     }
 }
 
-$(function(){onBodyResize();});
+$(function () { onBodyResize(); });
 
 function showLocation() {
     if (navigator.geolocation) {
@@ -89,10 +92,10 @@ function showPosition(position) {
         var newLatLng = new L.LatLng(position.coords.latitude, position.coords.longitude);
         //crd.accuracy
         markerWhereIAm.setLatLng(newLatLng);
-//        markerWhereIAmCircle.setLatLng(newLatLng);
-//        markerWhereIAmCircle.setRadius(position.coord.accuracy);
+        //        markerWhereIAmCircle.setLatLng(newLatLng);
+        //        markerWhereIAmCircle.setRadius(position.coord.accuracy);
 
-        if(typeof track == "undefined")
+        if (typeof track == "undefined")
             map.setView(newLatLng, 8);
 
         var urlp = "services/user_locations.aspx?action=senduserlocation&userId=" + globalUserId + "&lat=" + position.coords.latitude.toString() + "&lng=" + position.coords.longitude.toString()
@@ -124,7 +127,7 @@ function showPosition(position) {
             }
         });
 
-        
+
     }
 }
 
@@ -140,7 +143,7 @@ function dostart() {
         audio.play();
 }
 
-function showPhotos(track,p,tolerancy) {
+function showPhotos(track, p, tolerancy) {
     if (!tolerancy)
         tolerancy = track.photoLocationTolerancy;
     if (!tolerancy)
@@ -150,15 +153,15 @@ function showPhotos(track,p,tolerancy) {
         //var set = "7459025";//"full";//"public";
         var set = "full";
         var count = 0;
-	
-	var divHeight = $("#imageDiv").height();
-	var size = divHeight>150?"medium":"small";
+
+        var divHeight = $("#imageDiv").height();
+        var size = divHeight > 150 ? "medium" : "small";
         var urlp = panoramioUrl + set + "&from=0&to=" + track.numOfPhotos.toString() + "&miny="
             + (p.lat - tolerancy).toString()
             + "&minx=" + (p.lng - tolerancy).toString()
             + "&maxy=" + (p.lat + tolerancy).toString()
             + "&maxx=" + (p.lng + tolerancy).toString()
-            + "&size="+size+"&mapfilter=true&order=popularity&callback=?";
+            + "&size=" + size + "&mapfilter=true&order=popularity&callback=?";
 
         $.ajax({
             dataType: "jsonp",
@@ -197,7 +200,7 @@ function get_panoramas_panoramio_success(data, p, tolerancy) {
             + "&minx=" + (p.lng - tolerancy).toString()
             + "&maxy=" + (p.lat + tolerancy).toString()
             + "&maxx=" + (p.lng + tolerancy).toString()
-            + "&size="+size+"&mapfilter=true&order=popularity&callback=?";
+            + "&size=" + size + "&mapfilter=true&order=popularity&callback=?";
 
         $.ajax({
             dataType: "jsonp",
@@ -219,11 +222,10 @@ function get_panoramas_panoramio_success(data, p, tolerancy) {
     }
 }
 
-function isPortrait()
-{
+function isPortrait() {
     var w = window.innerWidth;
     var h = window.innerHeight;
-    return w<h;
+    return w < h;
 }
 
 function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
@@ -266,19 +268,17 @@ function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
         imageUl[0].appendChild(nextLi);
     }
 
-    setTimeout(function () {
-        curX = 0;
-        //    scrollerContent.children().clone().appendTo(scrollerContent);
-        scrollerContent.children().each(function () {
-            var $this = $(this);
-            $this.css('left', curX);
-            var img = $this.children().children()[0];
-            curX += img.width;//$this.outerWidth(true);
-        });
-        fullW = curX / 2;
-        viewportW = scroller.width();
-        imageUl.fadeIn(100);
-    }, 100);
+    curX = 0;
+    scrollerContent.children().clone().appendTo(scrollerContent);
+    scrollerContent.children().each(function () {
+        var $this = $(this);
+        $this.css('left', curX);
+        var img = $this.children().children()[0];
+        curX += img.width;//$this.outerWidth(true);
+    });
+    fullW = curX / 2;
+    viewportW = scroller.width();
+    imageUl.fadeIn(100);
 }
 
 var scrollerEnabled = false;
@@ -327,26 +327,23 @@ $(function () {
 
 function GPXtoLatLng(urlGPX) {
     var result = "";
-    if (window.XMLHttpRequest)
-    {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
+    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
     }
-    else
-    {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    else {// code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    xmlhttp.open("GET",urlGPX+"?"+Math.random(),false);
+    xmlhttp.open("GET", urlGPX + "?" + Math.random(), false);
     xmlhttp.send();
-    xmlDoc=xmlhttp.responseXML;
+    xmlDoc = xmlhttp.responseXML;
 
-    var nodes=xmlDoc.getElementsByTagName("trkpt");
-    for(var i=0; i<nodes.length; i++)
-    {
-        if(result.length > 0)
-            result +=",";
+    var nodes = xmlDoc.getElementsByTagName("trkpt");
+    for (var i = 0; i < nodes.length; i++) {
+        if (result.length > 0)
+            result += ",";
         result += "[" + nodes[i].getAttribute("lat").toString() + "," + nodes[i].getAttribute("lon").toString() + "]";
     }
-    result = "[" + result +"]";
+    result = "[" + result + "]";
     return result;
 }
 
@@ -362,8 +359,7 @@ function selectMapStyle() {
     tileLayer.addTo(map);
 
 }
-function fixTrackData(track)
-{
+function fixTrackData(track) {
     var newTrackData = [];
     for (var i = 0; i < track.trackData.length; i++) {
         var told = track.trackData[i];
@@ -423,7 +419,7 @@ function loadTrackSync(path) {
 
 function init(filename) {
 
-     if (typeof map != "undefined") {
+    if (typeof map != "undefined") {
         //var mapNode = document.getElementById("map");
         //var mapContainerParent = mapNode.parentNode;
         //mapContainerParent.removeChild(mapNode);
@@ -440,11 +436,11 @@ function init(filename) {
     }
     else {
         map = L.map('map', { zoomControl: false });
-	    tileLayer = L.tileLayer(mapTileUrl, {
+        tileLayer = L.tileLayer(mapTileUrl, {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
             maxZoom: 18,
             id: "mapbox.streets"
-	});
+        });
         tileLayer.addTo(map);
         L.control.scale({ position: 'bottomleft' }).addTo(map);
         L.control.zoom({ position: 'topright' }).addTo(map);
@@ -502,8 +498,8 @@ function init(filename) {
                 }
                 if (counter % track.stepsToShowPhoto == 1) {
                     showPhotos(track, p);
-//                    animatedMarker.bindPopup("".concat(p.lat, ",", p.lng)).openPopup();
-                    }
+                    //                    animatedMarker.bindPopup("".concat(p.lat, ",", p.lng)).openPopup();
+                }
 
             }
         };
@@ -531,68 +527,102 @@ function init(filename) {
             }
         }
 
-        addMarkersNearAll(track.trackData, ['lodging', 'restaurant']);
+        addMarkersNearAll(track.trackData, GOOGLE_TYPES);
     }
 }
 
-var myMarkers=[];
+var myMarkers = [];
 
 //Google places search
 function addMarkersNearAll(allData, types) {
 
     var i;
 
-    for(i=0;i<myMarkers.length;i++) {
+    for (i = 0; i < myMarkers.length; i++) {
         var marker = myMarkers[i];
         map.removeLayer(marker)
     }
     myMarkers = [];
     allMarkers = [];
 
+    var pieces = 3;
 
-    for(i=0;i<allData.length;i+=Math.round(allData.length/9)) {
-
-        var x = allData[i];
-
-        //console.log(x.lat +" "+ x.lng)
-
-        addMarkersNear(x.lat, x.lng, types);
-        //		if(i>100)
-        //			break;
+    for (var i = 0; i < pieces; i++) {
+        var from = Math.round(allData.length * i / 3);
+        var to = Math.round(allData.length * (i + 1) / 3);
+        var step = Math.round(allData.length / (10 * pieces));
+        doSetTimeout(allData, types, from, to, step, i);
     }
 }
 
-function addMarkersNear(nearLat, nearLng, types) {
+function doSetTimeout(allData, types, from, to, step, i)
+{
+    setTimeout(function () { addMarkersNearRange(allData, types, from, to, step, (i % 2) == 1) }, i * 5000 + 1);
+}
+
+function addMarkersNearRange(allData, types, from1, to1, step1, odd) {
+    for (i = from1; i < to1; i += step1) {
+        var x = allData[i];
+        addMarkersNear(x.lat, x.lng, types, odd);
+    }
+}
+
+function addMarkersNear(nearLat, nearLng, types, odd) {
     var here = new google.maps.LatLng(nearLat, nearLng);
 
     var request = {
         location: here,
-        radius: 5000,
+        radius: MAX_GOOGLE_RADIUS,
         types: types
     };
 
-    if ($('#useGooglePlacesCheckBox').is(':checked')) {
+    //if (odd) {
+    //    $.ajax({
+    //        dataType: "jsonp",
+    //        url: "http://places.cit.api.here.com/places/v1/discover/explore?app_code=uEO7B5HdlYKIGSKmelLEtw&app_id=qiqSlXY6ilurDyZnKplJ&at=50.430837,30.539654&cat=accommodation, eat-drink&pretty=true&tf=html",
+    //        success: function (data2) {
+    //            console.log(data2);
+    //            callbackHerePlacesSearch(data2);
+    //        },
+    //        error: function (XMLHttpRequest, textStatus, errorThrown) {
+    //            console.log("Status: " + textStatus); console.log("Error: " + errorThrown);
+    //            get_places_googlehere_success([]);
+    //        }
+    //    });
+    //}
+    //else {
+        if ($('#useGooglePlacesCheckBox').is(':checked')) {
 
-        var service = new google.maps.places.PlacesService(map2);
-        service.nearbySearch(request, callbackGoodlePlacesSearch);
-    }
-    else
-    {
-        get_places_google_success([]);
-    }
+            var service = new google.maps.places.PlacesService(map2);
+
+            service.nearbySearch(request, callbackGoodlePlacesSearch);
+        }
+        else {
+            get_places_googlehere_success([]);
+        }
+//    }
 }
 
 function callbackGoodlePlacesSearch(results, status) {
+    console.log(status);
     if (status == google.maps.places.PlacesServiceStatus.OK) {
-        get_places_google_success(results);
+        if (results.length > MAX_GOOGLE_PLACES)
+            results = results.slice(0, MAX_GOOGLE_PLACES);
+        get_places_googlehere_success(results);
     }
     else {
-        get_places_google_success([]);
+        get_places_googlehere_success([]);
     }
 }
 
+function callbackHerePlacesSearch(results) {
+        if (results.length > MAX_HERE_PLACES)
+            results = results.slice(0, MAX_HERE_PLACES);
+        get_places_googlehere_success(results);
+}
 
-function get_places_google_success(data) {
+
+function get_places_googlehere_success(data) {
 
     if ($('#useSYTPlacesCheckBox').is(':checked')) {
         var urlp = "services/get_places.aspx?callback=?";
@@ -619,7 +649,7 @@ function get_SYT_getplaces_success(data, data2) {
 
     var i;
 
-    for (i = 0; i < Math.min(data.length, 100); i++) {
+    for (i = 0; i < Math.min(data.length, 100) ; i++) {
         createPhotoMarker(data[i], true);
     }
 
@@ -649,7 +679,7 @@ function shuffle(array) {
 
 function createPhotoMarker(place, isGoogle) {
 
-    if(allMarkers.indexOf(place.id) < 0)
+    if (allMarkers.indexOf(place.id) < 0)
         allMarkers.push(place.id);
     else
         return;
@@ -662,10 +692,10 @@ function createPhotoMarker(place, isGoogle) {
     }
 
     var icon = L.icon({
-        iconUrl: (place.types.indexOf("lodging")>=0?"img/lodging.png":place.types.indexOf("restaurant")>=0?"img/restaurant1.png":"img/something.png"),
+        iconUrl: (place.types.indexOf("lodging") >= 0 ? "img/lodging.png" : place.types.indexOf("restaurant") >= 0 ? "img/restaurant1.png" : "img/something.png"),
         //    shadowUrl: 'leaf-shadow.png',
 
-        iconSize:     [26, 35] // size of the icon
+        iconSize: [26, 35] // size of the icon
         //    shadowSize:   [50, 64], // size of the shadow
         //    iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
         //    shadowAnchor: [4, 62],  // the same for the shadow
@@ -676,8 +706,8 @@ function createPhotoMarker(place, isGoogle) {
     //domelem.href = place.name;
     domelem.innerHTML = "<p>" + place.name + "</p><img height='100px' width='100px' src='" + (isGoogle ? photos[0].getUrl({ 'maxWidth': 100, 'maxHeight': 100 }) : photos[0].raw_reference.fife_url) + "'/>";
     domelem.alt = place.name;
-    domelem.onclick = function() {
-        window.open("https://www.google.com.ua/search?q=" + place.name,"_blank");
+    domelem.onclick = function () {
+        window.open("https://www.google.com.ua/search?q=" + place.name, "_blank");
         // do whatever else you want to do - open accordion etc
     };
     var marker = L.marker(new L.LatLng(

@@ -51,7 +51,7 @@
     <div id='pageContent' style='height: 100%'>
         <div style="position: absolute; left: 5px; top:5px; z-index:1001">
             <a id="alogo" href="javascript:clickMenu()"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
-            <select style="vertical-align:central; width:190px;height:35px" id="tracksList" class="i graySelect" onchange="clickStart()"></select>
+            <select style="vertical-align:central; width:150px;height:35px" id="tracksList" class="i graySelect" onchange="clickStart()"></select>
         </div>
         <div style="position: absolute; left: 260px; top:10px; z-index:1001">
             <div id="wrapper">

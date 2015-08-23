@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using System.Xml;
 
 public partial class services_get_places : System.Web.UI.Page
 {
@@ -14,7 +15,14 @@ public partial class services_get_places : System.Web.UI.Page
         string miny = Request.QueryString["miny"];
         string maxx = Request.QueryString["maxx"];
         string maxy = Request.QueryString["maxy"];
+
         string order = Request.QueryString["order"];
+
+        //XmlDocument doc = new XmlDocument();
+        //doc.Load(Server.MapPath(@"..\data\places.xml"));
+
+        //string query = string.Format("//r[b>={2} and b<={3} and c>={0} and c<={1}][position() >= {4} and position() <= {5}]", minx, maxx, miny, maxy, from, to);
+        //XmlNodeList list = doc.SelectNodes(query);
 
         // http://localhost:88/seeyourtravel/services/get_places.aspx?types=restaurant%2Clodging&set=full&from=0&to=10&miny=47.955776&minx=10.096568999999999&maxy=48.055775999999994&maxx=10.196569&callback=abc
 
