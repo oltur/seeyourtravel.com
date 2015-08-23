@@ -227,8 +227,6 @@ function isPortrait()
 }
 
 function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
-            
-
     // remove?
     var divHeight = $("#imageDiv").height();
     var divWidth = $("#imageDiv").width();
@@ -246,11 +244,19 @@ function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
         var nextImage = document.createElement("img");
         nextLink.href = photos[i].photo_url;
         nextLink.target = "_blank";
-        nextImage.src = photos[i].photo_file_url;
-        if (isPortrait())
+
+        //var n = getNatural(nextImage);
+
+        if (isPortrait()) {
+            nextImage.height = photos[i].height * (divWidth / photos[i].width);
             nextImage.width = divWidth;
-        else
+        }
+        else {
+            nextImage.width = photos[i].width * (divHeight / photos[i].height);
             nextImage.height = divHeight;
+        }
+        nextImage.src = photos[i].photo_file_url;
+
         //nextImage.style.maxHeight = $("#pictureMaxHeight").val() + "px";
         nextImage.title = "Photo from Panoramio(c): " + photos[i].photo_title + " by " + photos[i].owner_name + ". Click to open the source.";
         nextImage.classList.add("photo");
@@ -266,7 +272,8 @@ function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
         scrollerContent.children().each(function () {
             var $this = $(this);
             $this.css('left', curX);
-            curX += $this.outerWidth(true);
+            var img = $this.children().children()[0];
+            curX += img.width;//$this.outerWidth(true);
         });
         fullW = curX / 2;
         viewportW = scroller.width();
@@ -274,6 +281,7 @@ function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
     }, 100);
 }
 
+var scrollerEnabled = false;
 var scroller;
 var scrollerContent;
 var curX;

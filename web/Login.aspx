@@ -190,7 +190,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="99">
+            <td colspan="2">
                 <asp:Label ID="Message" runat="server" ForeColor="Red" Text="" class="i" data-i18n></asp:Label> </p>
             </td>
             <td>
