@@ -6,7 +6,7 @@
 ,"stepsToRedraw":5
 ,"stepsToShowPhoto":3
 ,"numOfPhotos":10
-,"velocityMetersPerSec":10
+,"velocityMetersPerSec":100
 ,"icon":"aman.gif"
 ,"audioSrc":"k.mp3"
 ,"audioVolume":0.2

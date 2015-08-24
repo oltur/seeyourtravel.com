@@ -62,15 +62,11 @@
         <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
             <div style="position: absolute; left: 10px; top: 50px;">
                 <button type="button" data-i18n="[title]New;New" id="newTrackButton" title="New" class="i headerButton" style="background-image: url(img/new.png );" onclick="clickNew()">New</button>
-                <button type="button" data-i18n="[title]Pause;Pause" id="pauseButton" title="Pause" class="i headerButton" style="background-image: url(img/pause.png );" onclick="dostop(); pauseButton.disabled = true; continueButton.disabled = false;" >Pause</button>
-                <button type="button" data-i18n="[title]Continue;Continue" id="continueButton" title="Continue" class="i headerButton" style="background-image: url(img/play.png );" onclick="dostart(); pauseButton.disabled = false; continueButton.disabled = true;" >Continue</button>
+                <button type="button" data-i18n="[title]Pause;Pause" id="pauseButton" title="Pause" disabled="disabled" class="i headerButton" style="background-image: url(img/pause.png );" onclick="dostop();" >Pause</button>
+                <button type="button" data-i18n="[title]Continue;Continue" id="continueButton" title="Continue" disabled="disabled" class="i headerButton" style="background-image: url(img/play.png );" onclick="dostart();" >Continue</button>
                 <button type="button" data-i18n="[title]Edit;Edit" id="editTrackButton" title="Edit" class="i headerButton" style="background-image: url(img/edit.png );" onclick="clickEdit()" >Edit</button>
-            </div>
-            <div style="position: absolute; left: 10px; top: 220px;">
                 <button type="button" data-i18n="[title]Settings;Settings" id="settingsCheckBox" title="Settings" class="i headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
                 <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site"  class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" >About SeeYourTravel</button>
-            </div>
-            <div style="position: absolute; left: 10px; top: 315px;">
                 <button type="button" data-i18n="[title]Profile;Profile" id="profile" title="Profile" class="i headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'" >Profile</button>
                 <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout"  class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" >Logout</button>
                 <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>
@@ -161,9 +157,10 @@
     <!-- Welcome splash -->
     <script>
 
-        function doStartButtonClick() {
+        function loadTrackOnPageLoad() {
             if (tracksList[0].selectedIndex > 0) {
-                dostop(); init(tracksList.val()); dostart(); pauseButton.disabled = false; continueButton.disabled = true;
+                //dostop();
+                init(tracksList.val()); dostart();
             }
         }
 
@@ -254,7 +251,7 @@
                 tracksList.val(trackParam);
                 //    $('select[id="tracksList"] option[value="' + trackParam + '"]').attr('selected', 'selected');
 
-                setTimeout(function () { doStartButtonClick() }, 100);
+                setTimeout(function () { loadTrackOnPageLoad() }, 100);
             }
 
         });

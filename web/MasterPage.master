@@ -96,7 +96,7 @@ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
             , debug: true
             //,useLocalStorage: true | false,
             //,localStorageExpirationTime: 86400000 // in ms, default 1 week
-        }, translateAll
+        }, function () { if (typeof translateAll != "undefined") translateAll(); }
         );
     });
 </script>

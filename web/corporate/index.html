@@ -62,7 +62,7 @@
                 //,useLocalStorage: true | false,
                 //,localStorageExpirationTime: 86400000 // in ms, default 1 week
             },
-            translateAll
+             function () { if (typeof translateAll != "undefined") translateAll(); }
             );
 
         });

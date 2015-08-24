@@ -18,7 +18,7 @@ function getCookie(cname) {
 
 function selectLang() {
     var val = getLanguage();
-    $.i18n.setLng(val,translateAll);
+    $.i18n.setLng(val, function () { if (typeof translateAll != "undefined") translateAll(); });
 }
 
 function getLanguage() {
