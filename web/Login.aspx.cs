@@ -18,6 +18,12 @@ public partial class Login : System.Web.UI.Page
         db = new SeeYourTravelEntities();
 
     }
+    protected void DemoButton_Click(object sender, EventArgs e)
+    {
+        this.UserName.Text="demo";
+        this.Password.Text="demo";
+	LoginButton_Click(sender, e);
+    }    
     protected void LoginButton_Click(object sender, EventArgs e)
     {
         string token = this.Token.Value;
