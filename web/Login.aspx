@@ -190,7 +190,14 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td>
+                <asp:Button ID="DemoButton"  runat="server" Text="Try it now!" OnClick="DemoButton_Click" class="i" data-i18n="[value]Demo;"/> 
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="99">
                 <asp:Label ID="Message" runat="server" ForeColor="Red" Text="" class="i" data-i18n></asp:Label> </p>
             </td>
             <td>
