@@ -3,10 +3,10 @@
 ,"copyright":"AT"
 ,"defaultScale":15
 ,"photoLocationTolerancy":0.02
-,"stepsToRedraw":5
-,"stepsToShowPhoto":3
-,"numOfPhotos":10
-,"velocityMetersPerSec":10
+,"stepsToRedraw":10
+,"stepsToShowPhoto":10
+,"numOfPhotos":50
+,"velocityMetersPerSec":15
 ,"icon":"aman.gif"
 ,"audioSrc":"k.mp3"
 ,"audioVolume":0.2

@@ -142,6 +142,8 @@ function dostop() {
 
     pauseButton.disabled = true;
     continueButton.disabled = false;
+    if ($("#showGoesOn").length > 0)
+        $("#showGoesOn").val("0");
 }
 
 function dostart() {
@@ -153,6 +155,8 @@ function dostart() {
 
     pauseButton.disabled = false;
     continueButton.disabled = true;
+    if ($("#showGoesOn").length > 0)
+        $("#showGoesOn").val("1");
 }
 
 function showPhotos(track, p, tolerancy) {
