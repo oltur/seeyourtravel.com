@@ -17,6 +17,10 @@ public partial class Login : System.Web.UI.Page
     {
         db = new SeeYourTravelEntities();
 
+        if(Request["action"] == "demo")
+        {
+            DemoButton_Click(null, null);
+        }
     }
     protected void DemoButton_Click(object sender, EventArgs e)
     {
