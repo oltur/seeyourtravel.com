@@ -63,7 +63,7 @@
     });
 
     // backstretch
-    $("header").backstretch("../img/sunset.jpg");
+    $("header").backstretch("../img/IMG_7219.jpg");
 
     
     

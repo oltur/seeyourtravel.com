@@ -160,8 +160,8 @@ background:rgba(0,0,0,0.5);
 /*Logo*/
 .jasm-logo a,
 	.jasm-logo img {
-		width: 100px;
-		height: 100px;
+		width: 300px;
+		height: 235px;
 	}
 	
 	.jasm-logo a {
