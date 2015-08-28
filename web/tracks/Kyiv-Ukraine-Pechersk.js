@@ -2,11 +2,11 @@
 "name":"Kiev-Pechers`k"
 ,"copyright":"AT"
 ,"defaultScale":15
-,"photoLocationTolerancy":0.1
-,"stepsToRedraw":2
-,"stepsToShowPhoto":2
-,"numOfPhotos":10
-,"velocityMetersPerSec":20
+,"photoLocationTolerancy":0.02
+,"stepsToRedraw":10
+,"stepsToShowPhoto":10
+,"numOfPhotos":50
+,"velocityMetersPerSec":15
 ,"icon":"aman.gif"
 ,"audioSrc":"k.mp3"
 ,"audioVolume":0.2

@@ -190,17 +190,13 @@
             </td>
         </tr>
         <tr>
-            <td>
-                <asp:Button ID="DemoButton"  runat="server" Text="Try it now!" OnClick="DemoButton_Click" class="i" data-i18n="[value]Demo;"/> 
-            </td>
-            <td>
+            <td colspan="2" style="text-align:center; padding-top:30px;">
+                <asp:Button ID="DemoButton"  runat="server" Text="Try it now!" OnClick="DemoButton_Click" style="width:200px; height: 70px; font-size:large" class="i" data-i18n="[value]Demo;"/> 
             </td>
         </tr>
         <tr>
-            <td colspan="99">
+            <td colspan="2">
                 <asp:Label ID="Message" runat="server" ForeColor="Red" Text="" class="i" data-i18n></asp:Label> </p>
-            </td>
-            <td>
             </td>
         </tr>
     </table>

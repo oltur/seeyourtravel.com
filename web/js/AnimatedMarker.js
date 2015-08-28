@@ -76,6 +76,14 @@ L.AnimatedMarker = L.Marker.extend({
         this.options = options;
     },
 
+    resetAM: function () {
+        this._i = 0;
+    },
+
+    isFinished:function() {
+        return (this._i === this._latlngs.length);
+    },
+
     animate:function () {
         var self = this,
             len = this._latlngs.length,
@@ -104,13 +112,14 @@ L.AnimatedMarker = L.Marker.extend({
         // Fire onStep if requested
         if (self.options.onStep)
             setTimeout(function () {
-                self.options.onStep(t)
+                self.options.onStep(t);
             }, 1);
 
         // Queue up the animation to the next next vertex
         this._tid = setTimeout(function () {
-            if (self._i === len) {
+            if ((self._i === len)) {
                 self.options.onEnd.apply(self, Array.prototype.slice.call(arguments));
+                
             } else {
                 self.animate();
             }
@@ -119,6 +128,10 @@ L.AnimatedMarker = L.Marker.extend({
 
     // Start the animation
     start:function () {
+        if (this.isFinished()) {
+            this.resetAM();
+        }
+
         if (!this._i) {
             this._i = 1;
         }

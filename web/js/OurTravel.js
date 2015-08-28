@@ -65,6 +65,9 @@ function onBodyResize() {
     if ($("#map").length) {
         $("#map").height(window.innerHeight);
     }
+    if ($("#menuPanel").length) {
+        $("#menuPanel").height(window.innerHeight - 100);
+    }
 }
 
 $(function () { onBodyResize(); });
@@ -135,12 +138,25 @@ function dostop() {
     if (typeof animatedMarker != "undefined")
         animatedMarker.stop();
     audio.pause();
+    scrollerEnabled = false;
+
+    pauseButton.disabled = true;
+    continueButton.disabled = false;
+    if ($("#showGoesOn").length > 0)
+        $("#showGoesOn").val("0");
 }
 
 function dostart() {
-    animatedMarker.start();
+    if (typeof animatedMarker != "undefined")
+        animatedMarker.start();
     if (track.audioSrc && track.audioSrc.length > 0)
         audio.play();
+    scrollerEnabled = true;
+
+    pauseButton.disabled = false;
+    continueButton.disabled = true;
+    if ($("#showGoesOn").length > 0)
+        $("#showGoesOn").val("1");
 }
 
 function showPhotos(track, p, tolerancy) {
@@ -305,20 +321,22 @@ $(function () {
         $controller.stop(true).animate({ curSpeed: newSpeed }, duration);
     };
 
-    // Pause on hover
-    scroller.hover(function () {
-        tweenToNewSpeed(0);
-    }, function () {
-        tweenToNewSpeed(controller.fullSpeed);
-    });
+    //// Pause on hover
+    //scroller.hover(function () {
+    //    tweenToNewSpeed(0);
+    //}, function () {
+    //    tweenToNewSpeed(controller.fullSpeed);
+    //});
 
     // Scrolling management; start the automatical scrolling
     var doScroll = function () {
-        var curX = scroller.scrollLeft();
-        var newX = curX + controller.curSpeed;
-        if (newX > fullW * 2 - scroller.width())
-            newX -= fullW;
-        scroller.scrollLeft(newX);
+        if (scrollerEnabled) {
+            var curX = scroller.scrollLeft();
+            var newX = curX + controller.curSpeed;
+            if (newX > fullW * 2 - scroller.width())
+                newX -= fullW;
+            scroller.scrollLeft(newX);
+        }
     };
     setInterval(doScroll, 20);
     tweenToNewSpeed(controller.fullSpeed);
@@ -500,7 +518,6 @@ function init(filename) {
                     showPhotos(track, p);
                     //                    animatedMarker.bindPopup("".concat(p.lat, ",", p.lng)).openPopup();
                 }
-
             }
         };
 
