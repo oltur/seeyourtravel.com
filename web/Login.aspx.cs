@@ -13,9 +13,20 @@ using System.Linq;
 public partial class Login : System.Web.UI.Page
 {
     SeeYourTravelEntities db;
+    String returnUrl1;
     protected void Page_Load(object sender, EventArgs e)
     {
         db = new SeeYourTravelEntities();
+
+        // the login is successful
+        if (Request.QueryString["ReturnUrl"] == null)
+        {
+            returnUrl1 = "index.html";
+        }
+        else
+        {
+            returnUrl1 = Request.QueryString["ReturnUrl"];
+        }
 
         if(Request["action"] == "demo")
         {
@@ -26,6 +37,7 @@ public partial class Login : System.Web.UI.Page
     {
         this.UserName.Text="demo";
         this.Password.Text="demo";
+        returnUrl1 = "index.aspx?trackname=2014-Germany";
 	LoginButton_Click(sender, e);
     }    
     protected void LoginButton_Click(object sender, EventArgs e)
@@ -234,16 +246,6 @@ public partial class Login : System.Web.UI.Page
           FormsAuthentication.Encrypt(ticket1));
         Response.Cookies.Add(cookie1);
 
-        String returnUrl1;
-        // the login is successful
-        if (Request.QueryString["ReturnUrl"] == null)
-        {
-            returnUrl1 = "index.html";
-        }
-        else
-        {
-            returnUrl1 = Request.QueryString["ReturnUrl"];
-        }
         Message.Text = "";
         Response.Redirect(returnUrl1);
     }
