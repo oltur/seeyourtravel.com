@@ -49,17 +49,18 @@
 
     <!--Content-->
     <div id='pageContent' style='height: 100%'>
-        <div style="position: absolute; left: 5px; top:5px; z-index:1001">
+        <div style="position: absolute; left: 5px; top:15px; z-index:1001">
             <a id="alogo" href="javascript:clickMenu()"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
             <select style="vertical-align:central; width:150px;height:35px" id="tracksList" class="i graySelect" onchange="clickStart()"></select>
         </div>
-        <div style="position: absolute; left: 260px; top:10px; z-index:1001">
+        <div style="position: absolute; left: 220px; top:20px; z-index:1001">
             <div id="wrapper">
+                <button type="button" id="mute" style="width:15px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute()"></button>
                 <img id="imgCoord" src="img/location.png" />
                 <span id="lblCoord" style="vertical-align:super; text-shadow: 1px 1px #ffffff;"></span>
             </div>
         </div>
-        <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
+        <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; top: 10px; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
             <div style="position: absolute; left: 10px; top: 50px;">
                 <button type="button" data-i18n="[title]New;New" id="newTrackButton" title="New" class="i headerButton" style="background-image: url(img/new.png );" onclick="clickNew()">New</button>
                 <button type="button" data-i18n="[title]Pause;Pause" id="pauseButton" title="Pause" disabled="disabled" class="i headerButton" style="background-image: url(img/pause.png );" onclick="dostop();" >Pause</button>
@@ -164,7 +165,18 @@
             }
         }
 
-  
+        function clickMute() {
+            if (audio.muted) {
+                audio.muted = false;
+                $('#mute').css('background-image', 'url(img/unmute.png )');
+            }
+            else {
+                audio.muted = true;
+                $('#mute').css('background-image', 'url(img/mute.png )');
+            }
+        }
+
+
     </script>
 
     <script>
