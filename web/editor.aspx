@@ -384,8 +384,8 @@
                         var point = [$this.attr('lat'), $this.attr('lon')];
                         $(points)
                             .append($("<option></option>")
-                            .attr("value", point)
-                            .text(point));
+                            .attr("value", "["+point[0]+","+point[1]+"]")
+                            .text("["+point[0]+","+point[1]+"]"));
                         //                        console.log(t);
                         t = t + 1;
                     });

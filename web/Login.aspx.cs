@@ -37,8 +37,9 @@ public partial class Login : System.Web.UI.Page
     {
         this.UserName.Text="demo";
         this.Password.Text="demo";
-        returnUrl1 = "index.aspx?trackname=2014-Germany";
-	LoginButton_Click(sender, e);
+	    if(returnUrl1 == "index.html")
+        	    returnUrl1 = "index.aspx?trackname=2014-Germany";
+	    LoginButton_Click(sender, e);
     }    
     protected void LoginButton_Click(object sender, EventArgs e)
     {

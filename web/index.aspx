@@ -37,7 +37,7 @@
                     $("#helpPanel").hide('slide', { direction: "right" }, 500);
                 }
 
-                if (e.target.id != 'helpPanel' && !$('#settingsPanel').find(e.target).length) {
+                if (e.target.id != 'settingsPanel' && !$('#settingsPanel').find(e.target).length) {
                     $("#settingsPanel").hide('slide', { direction: "up" }, 500);
                 }
             }
@@ -46,7 +46,6 @@
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
-
     <!--Content-->
     <div id='pageContent' style='height: 100%'>
         <div style="position: absolute; left: 5px; top:15px; z-index:1001">
@@ -55,7 +54,6 @@
         </div>
         <div style="position: absolute; left: 220px; top:20px; z-index:1001">
             <div id="wrapper">
-                <button type="button" id="mute" style="width:15px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute()"></button>
                 <img id="imgCoord" src="img/location.png" />
                 <span id="lblCoord" style="vertical-align:super; text-shadow: 1px 1px #ffffff;"></span>
             </div>
@@ -63,8 +61,6 @@
         <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; top: 10px; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
             <div style="position: absolute; left: 10px; top: 50px;">
                 <button type="button" data-i18n="[title]New;New" id="newTrackButton" title="New" class="i headerButton" style="background-image: url(img/new.png );" onclick="clickNew()">New</button>
-                <button type="button" data-i18n="[title]Pause;Pause" id="pauseButton" title="Pause" disabled="disabled" class="i headerButton" style="background-image: url(img/pause.png );" onclick="dostop();" >Pause</button>
-                <button type="button" data-i18n="[title]Continue;Continue" id="continueButton" title="Continue" disabled="disabled" class="i headerButton" style="background-image: url(img/play.png );" onclick="dostart();" >Continue</button>
                 <button type="button" data-i18n="[title]Edit;Edit" id="editTrackButton" title="Edit" class="i headerButton" style="background-image: url(img/edit.png );" onclick="clickEdit()" >Edit</button>
                 <button type="button" data-i18n="[title]Settings;Settings" id="settingsCheckBox" title="Settings" class="i headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
                 <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site"  class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" >About SeeYourTravel</button>
@@ -88,30 +84,30 @@
             <div class="i" data-i18n="[html]help_content"> 
             </div>
         </div>
-        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 45px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
-            <input id="scriptTextCheckBox" type="checkbox" value="Description" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
-            <label for="scriptTextCheckBox" class="i" data-i18n="Description">Description</label>
+        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 60px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+            <input id="scriptTextCheckBox" type="checkbox" value="Description" onchange="SaveSettings();$('#textToReadArea0').toggle('fold', 1000);" />
+            <label for="scriptTextCheckBox" class="i" data-i18n="Description" onchange="SaveSettings();">Description</label>
             <br />
-            <input id="imagesCheckBox" type="checkbox" checked="checked" value="Images" onclick="$('#imageDiv0').toggle('fold', 1000);" />
+            <input id="imagesCheckBox" type="checkbox" checked="checked" value="Images" onchange="SaveSettings(); $('#imageDiv0').toggle('fold', 1000);" />
             <label for="imagesCheckBox" class="i" data-i18n="Images">Images</label>
             <br />
-            <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" value="Use Panoramio images" />
+            <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" value="Use Panoramio images"  onchange="SaveSettings();"/>
             <label for="usePanoramioImagesCheckBox" class="i" data-i18n="UsePanoramioImages">Use Panoramio images</label>
             <br />
-            <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel images" />
+            <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel images"  onchange="SaveSettings();"/>
             <label for="useSYTImagesCheckBox" class="i" data-i18n="UseCYTImages">Use SeeYourTravel images</label>
             <br />
-            <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" value="Use Google Places" />
+            <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" value="Use Google Places"  onchange="SaveSettings();"/>
             <label for="useGooglePlacesCheckBox" class="i" data-i18n="UseGooglePlaces">Use Google Places</label>
             <br />
-            <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel places" />
+            <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel places"  onchange="SaveSettings();"/>
             <label for="useSYTPlacesCheckBox" class="i" data-i18n="UseCYTPlaces">Use SeeYourTravel places</label>
 <%--            <br />
             <label for="pictureHeight">Max Picture Height</label>
             <input id="pictureMaxHeight" type="number" value="100" />--%>
             <br />
             <label for="mapStyle" class="i" data-i18n="MapStyle">Map style</label>
-            <select id="mapStyle" class="graySelect" onchange="selectMapStyle()">
+            <select id="mapStyle" class="graySelect" onchange="SaveSettings();selectMapStyle()">
                 <option>mapbox.streets</option>
                 <option>mapbox.light</option>
                 <option>mapbox.dark</option>
@@ -130,7 +126,19 @@
             <br />
             <span class="i" data-i18n="Volume">Volume:</span>
             <br />
-            <div id="slider" style="left: 10%; width: 80%; vertical-align: top"></div>
+            <div id="slider" style="left: 10%; width: 80%; vertical-align: top" ></div>
+            <script>
+                $("#slider").on("slidestop", function (event, ui) {
+                    SaveSettings();
+                });
+            </script>
+        </div>
+         <div style="position: absolute; right: 5px; top:75px; z-index:1001">
+            <div>
+                <button type="button" id="mute" style="width:15px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute()"></button>
+                <br />
+                <button type="button" id="continuePauseButton" disabled="disabled" class="headerButton" style="width:15px; background-image: url(img/play.png );" onclick="doStartStop();" ></button>
+            </div>
         </div>
 
 
@@ -160,22 +168,9 @@
 
         function loadTrackOnPageLoad() {
             if (tracksList[0].selectedIndex > 0) {
-                //dostop();
-                init(tracksList.val()); dostart();
+                init(tracksList.val()); doStartStop();
             }
         }
-
-        function clickMute() {
-            if (audio.muted) {
-                audio.muted = false;
-                $('#mute').css('background-image', 'url(img/unmute.png )');
-            }
-            else {
-                audio.muted = true;
-                $('#mute').css('background-image', 'url(img/mute.png )');
-            }
-        }
-
 
     </script>
 
@@ -219,6 +214,9 @@
                 }
             });
             audio.volume = $("#slider").slider("value");
+
+            LoadSettings();
+
 
             //$('.owl-carousel').owlCarousel({
             //    autoWidth:true,
@@ -288,7 +286,7 @@
         var line;
         var markerStart;
         var markerFinish;
-     
+
     </script>
 
 </asp:Content>

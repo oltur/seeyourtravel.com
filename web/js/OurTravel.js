@@ -134,29 +134,87 @@ function showPosition(position) {
     }
 }
 
-function dostop() {
-    if (typeof animatedMarker != "undefined")
-        animatedMarker.stop();
-    audio.pause();
-    scrollerEnabled = false;
+function SaveSettings() {
+    $.cookie("settings_scriptTextCheckBox", $("#scriptTextCheckBox").is(':checked'));
+    $.cookie("settings_imagesCheckBox", $("#imagesCheckBox").is(':checked'));
+    $.cookie("settings_usePanoramioImagesCheckBox", $("#usePanoramioImagesCheckBox").is(':checked'));
+    $.cookie("settings_useSYTImagesCheckBox", $("#useSYTImagesCheckBox").is(':checked'));
+    $.cookie("settings_useGooglePlacesCheckBox", $("#useGooglePlacesCheckBox").is(':checked'));
+    $.cookie("settings_useSYTPlacesCheckBox", $("#useSYTPlacesCheckBox").is(':checked'));
 
-    pauseButton.disabled = true;
-    continueButton.disabled = false;
-    if ($("#showGoesOn").length > 0)
-        $("#showGoesOn").val("0");
-}
+    $.cookie("settings_mapStyle", $('#mapStyle option:selected').val());
+    $.cookie("settings_volume", $('#slider').slider("value"));
+    $.cookie("settings_mute", audio.muted);
+};
 
-function dostart() {
-    if (typeof animatedMarker != "undefined")
-        animatedMarker.start();
-    if (track.audioSrc && track.audioSrc.length > 0)
-        audio.play();
-    scrollerEnabled = true;
+function LoadSettings() {
 
-    pauseButton.disabled = false;
-    continueButton.disabled = true;
-    if ($("#showGoesOn").length > 0)
-        $("#showGoesOn").val("1");
+    var a = $.cookie("settings_scriptTextCheckBox") == "true";
+    var b = $.cookie("settings_imagesCheckBox") == "true";
+    var c = $.cookie("settings_mute") == "true";
+    $("#scriptTextCheckBox").prop("checked", a);
+    $("#imagesCheckBox").prop("checked", b);
+    $("#usePanoramioImagesCheckBox").prop("checked", $.cookie("settings_usePanoramioImagesCheckBox") == "true");
+    $("#useSYTImagesCheckBox").prop("checked", $.cookie("settings_useSYTImagesCheckBox") == "true");
+    $("#useGooglePlacesCheckBox").prop("checked", $.cookie("settings_useGooglePlacesCheckBox") == "true");
+    $("#useSYTPlacesCheckBox").prop("checked", $.cookie("settings_useSYTPlacesCheckBox") == "true");
+
+    if (a)
+        $('#textToReadArea0').toggle('fold', 1000);
+    if (!b)
+        $('#imageDiv0').toggle('fold', 1000);
+    if (c)
+        clickMute();
+    $('#mapStyle').val($.cookie("settings_mapStyle"));
+    selectMapStyle();
+    $('#slider').slider("value", $.cookie("settings_volume"));
+};
+
+function clickMute() {
+    if (audio.muted) {
+        audio.muted = false;
+        $('#mute').css('background-image', 'url(img/unmute.png )');
+    }
+    else {
+        audio.muted = true;
+        $('#mute').css('background-image', 'url(img/mute.png )');
+    }
+    SaveSettings();
+};
+
+var isTrackLoaded = false;
+var isTrackPaused = true;
+
+function doStartStop() {
+    if (isTrackLoaded) {
+        $('#continuePauseButton').removeAttr('disabled');
+        if (isTrackPaused) {
+            isTrackPaused = !isTrackPaused;
+            if (typeof animatedMarker != "undefined")
+                animatedMarker.start();
+            if (track.audioSrc && track.audioSrc.length > 0)
+                audio.play();
+            scrollerEnabled = true;
+
+            $('#continuePauseButton').css('background-image', 'url(img/pause.png )');
+            if ($("#showGoesOn").length > 0)
+                $("#showGoesOn").val("1");
+        }
+        else {
+            isTrackPaused = !isTrackPaused;
+            if (typeof animatedMarker != "undefined")
+                animatedMarker.stop();
+            audio.pause();
+            scrollerEnabled = false;
+
+            $('#continuePauseButton').css('background-image', 'url(img/play.png )');
+            if ($("#showGoesOn").length > 0)
+                $("#showGoesOn").val("0");
+        }
+    }
+    else {
+        $('#continuePauseButton').attr('disabled', 'disabled');
+    }
 }
 
 function showPhotos(track, p, tolerancy) {
@@ -245,6 +303,7 @@ function isPortrait() {
 }
 
 function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
+
     // remove?
     var divHeight = $("#imageDiv").height();
     var divWidth = $("#imageDiv").width();
@@ -276,7 +335,8 @@ function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
         nextImage.src = photos[i].photo_file_url;
 
         //nextImage.style.maxHeight = $("#pictureMaxHeight").val() + "px";
-        nextImage.title = "Photo from Panoramio(c): " + photos[i].photo_title + " by " + photos[i].owner_name + ". Click to open the source.";
+        //TODO: translate
+        nextImage.title = "Photo from: " + photos[i].photo_title + " by " + photos[i].owner_name + ". Click to open the source.";
         nextImage.classList.add("photo");
         nextLink.appendChild(nextImage);
         nextLi.appendChild(nextLink);
@@ -366,7 +426,7 @@ function GPXtoLatLng(urlGPX) {
 }
 
 function selectMapStyle() {
-    var id = $('#mapStyle option:selected').val()
+    var id = $('#mapStyle option:selected').val();
 
     map.removeLayer(tileLayer);
     tileLayer = L.tileLayer(mapTileUrl, {
@@ -545,6 +605,7 @@ function init(filename) {
         }
 
         addMarkersNearAll(track.trackData, GOOGLE_TYPES);
+        isTrackLoaded = true;
     }
 }
 
