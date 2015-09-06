@@ -595,6 +595,10 @@ function init(filename) {
             },
             onStep: function (p) {
                 counter++;
+                if (p.hasOwnProperty("syt_text")) {
+                    toastr["success"](p["syt_text"]);
+                }
+                
                 if (p.hasOwnProperty("syt_audio")) {
                     audio.src = translateTracksPath(p["syt_audio"]);
                     audio.play();
