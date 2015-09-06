@@ -24,13 +24,28 @@ var iconFriend = L.icon({
 });
 
 function pointToLatLng(point) {
+    var result;
     if (point.hasOwnProperty("lat")) {
-        return new L.LatLng(point.lat, point.lng);
+        result = new L.LatLng(point.lat, point.lng);
+        if (point.hasOwnProperty("text")) {
+            result["syt_text"] = point["text"];
+        }
+        if (point.hasOwnProperty("audio")) {
+            result["syt_audio"] = point["audio"];
+        }
+        return result;
     }
     else {
         var lat = point[0];
         var lng = point[1];
-        return new L.LatLng(lat, lng);
+        result = new L.LatLng(lat, lng);
+        if (point.length > 2) {
+            result["syt_text"] = point[2];
+            if (point.length > 3) {
+                result["syt_audio"] = point[3];
+            }
+        }
+        return result;
     }
 }
 
@@ -580,6 +595,10 @@ function init(filename) {
             },
             onStep: function (p) {
                 counter++;
+                if (p.hasOwnProperty("syt_audio")) {
+                    audio.src = translateTracksPath(p["syt_audio"]);
+                    audio.play();
+                }
                 markerSize = 2 + map.getZoom() * 5;
                 if (counter % track.stepsToRedraw == 0) {
                     map.setView([p.lat, p.lng], map.getZoom());
@@ -591,6 +610,35 @@ function init(filename) {
             }
         };
 
+        for (var i = 0; i < track.trackData.length; i++) {
+            var point = track.trackData[i];
+            if (point.hasOwnProperty("syt_text")) {
+
+                var icon = L.icon({
+                    iconUrl: "img/info.png",
+                    //    shadowUrl: 'leaf-shadow.png',
+
+                    iconSize: [25, 25] // size of the icon
+                    //    shadowSize:   [50, 64], // size of the shadow
+                        , iconAnchor: [13, 25] // point of the icon which will correspond to marker's location
+                    //    shadowAnchor: [4, 62],  // the same for the shadow
+                    //    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+                });
+
+                var text = point["syt_text"].toString();
+                var domelem = document.createElement('a');
+                //domelem.href = place.name;
+                domelem.innerHTML = "<p>" + text + "</p>";//<img height='100px' width='100px' src='" + (isGoogle ? photos[0].getUrl({ 'maxWidth': 100, 'maxHeight': 100 }) : photos[0].raw_reference.fife_url) + "'/>";
+                domelem.alt = text;
+                //domelem.onclick = function () {
+                //    window.open("https://www.google.com.ua/search?q=" + place.name, "_blank");
+                //};
+                var marker = L.marker(new L.LatLng(point.lat, point.lng),
+                    { icon: icon }).bindPopup(domelem);
+                markers.addLayer(marker);
+                //    myMarkers.push(marker);
+            }
+        }
         animatedMarker = L.animatedMarker(track.trackData, amOptions);
         animatedMarker.setIcon(myIcon);
         markers.addLayer(animatedMarker);
