@@ -137,6 +137,7 @@ function showPosition(position) {
 function SaveSettings() {
     $.cookie("settings_scriptTextCheckBox", $("#scriptTextCheckBox").is(':checked'));
     $.cookie("settings_imagesCheckBox", $("#imagesCheckBox").is(':checked'));
+    $.cookie("settings_loopTrackCheckBox", $("#loopTrackCheckBox").is(':checked'));
     $.cookie("settings_usePanoramioImagesCheckBox", $("#usePanoramioImagesCheckBox").is(':checked'));
     $.cookie("settings_useSYTImagesCheckBox", $("#useSYTImagesCheckBox").is(':checked'));
     $.cookie("settings_useGooglePlacesCheckBox", $("#useGooglePlacesCheckBox").is(':checked'));
@@ -148,26 +149,33 @@ function SaveSettings() {
 };
 
 function LoadSettings() {
+    if (typeof $.cookie("settings_scriptTextCheckBox") != "undefined") {
+        var a = $.cookie("settings_scriptTextCheckBox") == "true";
+        var b = $.cookie("settings_imagesCheckBox") == "true";
+        var c = $.cookie("settings_mute") == "true";
+        var d = $.cookie("settings_loopTrackCheckBox") == "true";
+        $("#scriptTextCheckBox").prop("checked", a);
+        $("#imagesCheckBox").prop("checked", b);
+        $("#loopTrackCheckBox").prop("checked", d);
+        $("#usePanoramioImagesCheckBox").prop("checked", $.cookie("settings_usePanoramioImagesCheckBox") == "true");
+        $("#useSYTImagesCheckBox").prop("checked", $.cookie("settings_useSYTImagesCheckBox") == "true");
+        $("#useGooglePlacesCheckBox").prop("checked", $.cookie("settings_useGooglePlacesCheckBox") == "true");
+        $("#useSYTPlacesCheckBox").prop("checked", $.cookie("settings_useSYTPlacesCheckBox") == "true");
 
-    var a = $.cookie("settings_scriptTextCheckBox") == "true";
-    var b = $.cookie("settings_imagesCheckBox") == "true";
-    var c = $.cookie("settings_mute") == "true";
-    $("#scriptTextCheckBox").prop("checked", a);
-    $("#imagesCheckBox").prop("checked", b);
-    $("#usePanoramioImagesCheckBox").prop("checked", $.cookie("settings_usePanoramioImagesCheckBox") == "true");
-    $("#useSYTImagesCheckBox").prop("checked", $.cookie("settings_useSYTImagesCheckBox") == "true");
-    $("#useGooglePlacesCheckBox").prop("checked", $.cookie("settings_useGooglePlacesCheckBox") == "true");
-    $("#useSYTPlacesCheckBox").prop("checked", $.cookie("settings_useSYTPlacesCheckBox") == "true");
-
-    if (a)
-        $('#textToReadArea0').toggle('fold', 1000);
-    if (!b)
-        $('#imageDiv0').toggle('fold', 1000);
-    if (c)
-        clickMute();
-    $('#mapStyle').val($.cookie("settings_mapStyle"));
-    selectMapStyle();
-    $('#slider').slider("value", $.cookie("settings_volume"));
+        if (a)
+            $('#textToReadArea0').toggle('fold', 1000);
+        if (!b)
+            $('#imageDiv0').toggle('fold', 1000);
+        if (c)
+            clickMute();
+    }
+    if (typeof $.cookie("settings_mapStyle") != "undefined") {
+        $('#mapStyle').val($.cookie("settings_mapStyle"));
+        selectMapStyle();
+    }
+    if (typeof $.cookie("settings_volume") != "undefined") {
+        $('#slider').slider("value", $.cookie("settings_volume"));
+    }
 };
 
 function clickMute() {
@@ -179,7 +187,6 @@ function clickMute() {
         audio.muted = true;
         $('#mute').css('background-image', 'url(img/mute.png )');
     }
-    SaveSettings();
 };
 
 var isTrackLoaded = false;
@@ -566,7 +573,10 @@ function init(filename) {
             icon: myIcon, // icon
             autoStart: false,
             onEnd: function () {
-                dostop();
+                if ($("#loopTrackCheckBox").is(':checked')) {
+                    animatedMarker.resetAM();
+                    animatedMarker.start();
+                }
             },
             onStep: function (p) {
                 counter++;

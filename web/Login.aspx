@@ -98,7 +98,7 @@
 
         </script>
 
-    <style>
+    <style type="text/css">
         #loginform {
         width: 300px;
         height: 250px;
@@ -111,7 +111,7 @@
         /*this to solve "the content will not be cut when the window is smaller than the content": */
         max-width:100%;
         max-height:100%;
-        overflow:auto;
+        overflow:hidden;
     }
     </style>
 </asp:Content>
@@ -182,12 +182,13 @@
             </td>
         </tr>
         <tr>
-            <td>
-                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-                </fb:login-button>
+            <td colspan="2">
+                <div style="width:100px;">
+                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                    </fb:login-button>
+                </div>
             </td>
-            <td>
-            </td>
+            
         </tr>
         <tr>
             <td colspan="2" style="text-align:center; padding-top:30px;">

@@ -85,22 +85,25 @@
             </div>
         </div>
         <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 60px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
-            <input id="scriptTextCheckBox" type="checkbox" value="Description" onchange="SaveSettings();$('#textToReadArea0').toggle('fold', 1000);" />
-            <label for="scriptTextCheckBox" class="i" data-i18n="Description" onchange="SaveSettings();">Description</label>
+            <input id="scriptTextCheckBox" type="checkbox" title="Description" onchange="SaveSettings();$('#textToReadArea0').toggle('fold', 1000);" />
+            <label for="scriptTextCheckBox" class="i" data-i18n="Description">Description</label>
             <br />
-            <input id="imagesCheckBox" type="checkbox" checked="checked" value="Images" onchange="SaveSettings(); $('#imageDiv0').toggle('fold', 1000);" />
+            <input id="imagesCheckBox" type="checkbox" checked="checked" title="Images" onchange="SaveSettings(); $('#imageDiv0').toggle('fold', 1000);" />
             <label for="imagesCheckBox" class="i" data-i18n="Images">Images</label>
             <br />
-            <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" value="Use Panoramio images"  onchange="SaveSettings();"/>
+            <input id="loopTrackCheckBox" type="checkbox" checked="checked" title="Loop track infinitely"  onchange="SaveSettings();"/>
+            <label for="loopTrackCheckBox" class="i" data-i18n="LoopTrack">Loop track infinitely</label>
+            <br />
+            <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" title="Use Panoramio images"  onchange="SaveSettings();"/>
             <label for="usePanoramioImagesCheckBox" class="i" data-i18n="UsePanoramioImages">Use Panoramio images</label>
             <br />
-            <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel images"  onchange="SaveSettings();"/>
+            <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" title="Use SeeYourTravel images"  onchange="SaveSettings();"/>
             <label for="useSYTImagesCheckBox" class="i" data-i18n="UseCYTImages">Use SeeYourTravel images</label>
             <br />
-            <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" value="Use Google Places"  onchange="SaveSettings();"/>
+            <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" title="Use Google Places"  onchange="SaveSettings();"/>
             <label for="useGooglePlacesCheckBox" class="i" data-i18n="UseGooglePlaces">Use Google Places</label>
             <br />
-            <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel places"  onchange="SaveSettings();"/>
+            <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" title="Use SeeYourTravel places"  onchange="SaveSettings();"/>
             <label for="useSYTPlacesCheckBox" class="i" data-i18n="UseCYTPlaces">Use SeeYourTravel places</label>
 <%--            <br />
             <label for="pictureHeight">Max Picture Height</label>
@@ -135,7 +138,7 @@
         </div>
          <div style="position: absolute; right: 5px; top:75px; z-index:1001">
             <div>
-                <button type="button" id="mute" style="width:15px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute()"></button>
+                <button type="button" id="mute" style="width:15px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute();SaveSettings();"></button>
                 <br />
                 <button type="button" id="continuePauseButton" disabled="disabled" class="headerButton" style="width:15px; background-image: url(img/play.png );" onclick="doStartStop();" ></button>
             </div>
