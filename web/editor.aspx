@@ -49,8 +49,8 @@
         </div>
         </div>
        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 45px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
-            <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Description" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
-            <label for="scriptTextCheckBox" class="i" data-i18n="Description">Description</label>
+            <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Editor" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
+            <label for="scriptTextCheckBox" class="i" data-i18n="Editor">Editor</label>
             <br />
             <input id="imagesCheckBox" type="checkbox" checked="checked" value="Images" onclick="$('#imageDiv0').toggle('fold', 1000);" />
             <label for="imagesCheckBox" class="i" data-i18n="Images">Images</label>
@@ -98,13 +98,13 @@
     <div id="textToReadArea0" class="ui-widget-content" style="position:absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 340px; height: 590px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
         <p class="big">File name:
         <input id="filename" name="filename" type="text" value="MyTrack" /></p>
-        <p class="big">Track description:
-        <input id="name" name="name" type="text" value="New Track" /></p>
-        <p class="big">copyright:
+<%--        <p class="big">Track description:
+        <input id="name" name="name" type="text" value="New Track" /></p>--%>
+        <p class="big">Copyright:
         <input id="copyright" name="copyright" type="text" value="(c)" /></p>
-        <p class="big">photoLocationTolerancy:
+        <p class="big">Photo tolerance:
         <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="text" value="0.1" /></p>
-        <p class="big">stepsToRedraw:
+        <p class="big">Steps to Redraw:
         <input id="stepsToRedraw" name="stepsToRedraw" type="text" value="100" /></p>
         <p class="big">stepsToShowPhoto:
         <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="text" value="10" /></p>
@@ -116,8 +116,8 @@
         <input id="icon" name="icon" type="text" value="mybike.png" /></p>
         <p class="big">audioSrc:
         <input id="audioSrc" name="audioSrc" type="text" value="" /></p>
-        <p class="big">audioVolume:
-        <input id="audioVolume" name="audioVolume" type="text" value="0.5" /></p>
+        <%--<p class="big">audioVolume:
+        <input id="audioVolume" name="audioVolume" type="text" value="0.5" /></p>--%>
         <p class="big">textToRead:
         <input id="textToRead" name="textToRead" type="text" value="" /></p>
         <p class="big">defaultScale:
@@ -243,6 +243,12 @@
             } else {
                 $("#fileOperations").hide();
             }
+
+            $("#stepsToRedraw").spinner({
+                min: 1,
+                max: 1000,
+                step: 1
+            });
 
             if (trackname) {
                 var initialTrack = loadTrackSync(getTrackPathByName(trackname));

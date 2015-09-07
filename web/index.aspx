@@ -154,7 +154,7 @@
             Your browser does not support the audio element.
         </audio>
 
-        <div id="textToReadArea0" class="ui-widget-content" style="z-index: 100; background: rgba(100,100,100,0.2); border-width: 0px; width: 25%; height: 25%; position: absolute; left: 2%; top: 35%">
+        <div id="textToReadArea0" class="ui-widget-content" style="visibility:hidden; z-index: 100; background: rgba(100,100,100,0.2); border-width: 0px; width: 25%; height: 25%; position: absolute; left: 2%; top: 35%">
             <br />
             <textarea id="textToReadArea" disabled="disabled" style="top: 25%; width: 99%; height: 88%; resize: none;"></textarea>
         </div>
@@ -200,7 +200,7 @@
             init();
 
             $("#imageDiv0").draggable().resizable();
-            $("#textToReadArea0").draggable().resizable().hide();
+            $("#textToReadArea0").draggable().resizable();
             //$("#scriptTextCheckBox").button();
             //$("#imagesCheckBox").button();
             //$("#usePanoramioImagesCheckBox").button();
