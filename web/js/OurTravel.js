@@ -596,7 +596,7 @@ function init(filename) {
             onStep: function (p) {
                 counter++;
                 if (p.hasOwnProperty("syt_text")) {
-                    toastr["success"](p["syt_text"]);
+                    toastr.info(p["syt_text"], "", { timeOut: 0, extendedTimeOut: 0 });
                 }
                 
                 if (p.hasOwnProperty("syt_audio")) {
