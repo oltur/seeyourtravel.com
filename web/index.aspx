@@ -5,6 +5,7 @@
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
     <script>
         var trackParam = '<%=Request["trackname"]%>';
+        var showSidePanel = '<%=Request["showSidePanel"]%>';
 
         function translateAll(err, t) {
             $(".i").i18n();
@@ -42,12 +43,72 @@
                 }
             }
         });
-    </script>
+
+        function switchSidePanel() {
+            switchSidePanel(null);
+        }
+
+        var sidePanelWidth = 200;
+        function switchSidePanel(on)
+        {
+            if (on == null) {
+                on = $("#sidePanel").css("display") == "none";
+            }
+
+            if (on) {
+                $("#sidePanel").css("display", "inline");
+                $("#sidePanel").css("width", "".concat(sidePanelWidth,"px"));
+                $("#pageContent").css("margin-left", "".concat(sidePanelWidth, "px"));
+            }
+            else {
+                $("#sidePanel").css("display", "none");
+                $("#sidePanel").css("width", "0%");
+                $("#pageContent").css("margin-left", "0px");
+            }
+        }
+
+        var slider1;
+		$(document).ready(function()
+		{
+		    if (showSidePanel == "yes") {
+		        switchSidePanel(true);
+		    }
+
+		    $('#slider1').tinycarousel({
+		        axis: 'y'
+		        //,interval: true
+		        ,infinite: false
+		    });
+		    slider1 = $("#slider1").data("plugin_tinycarousel");
+		    slider1.start();
+		});
+
+		function prependToSidePanel(html) {
+		    $('.overview').prepend('<li style="overflow:auto; width:' + (sidePanelWidth - 30) + 'px; height:' + (sidePanelWidth - 30) / 4 * 3 + 'px;">' + html + '</li>');
+		    slider1.update();
+		}
+		function clearSidePanel() {
+		    $('.overview').empty();
+		    slider1.update();
+		}
+	</script>
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
     <!--Content-->
-    <div id='pageContent' style='height: 100%'>
+<div id="splitterContainer">
+    <div id='sidePanel' style='display:none; height: 100%; width:0%; float: left;'>
+<div id="slider1">
+		<a class="prev" href="#">Up</a>
+    <div class="viewport">
+			<ul class="overview">
+			</ul>
+		</div>
+		<a class="next" href="#">Down</a>
+    <br />
+    <button type="button" data-i18n="[title]Clear;Clear" id="clearSidePanelButton" title="Clear" class="i headerButton" style="width:100px; background-image: url(img/clear.png );" onclick="clearSidePanel()">Clear</button>
+	</div>    </div>
+    <div id='pageContent' style='height: 100%; position: relative;margin-left: 0%;'>
         <div style="position: absolute; left: 5px; top:15px; z-index:1001">
             <a id="alogo" href="javascript:clickMenu()"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
             <select style="vertical-align:central; width:150px;height:35px" id="tracksList" class="i graySelect" onchange="clickStart()"></select>
@@ -84,13 +145,16 @@
             <div class="i" data-i18n="[html]help_content"> 
             </div>
         </div>
-        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 60px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 60px; left: 60px; width: 300px; height: 250px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
             <input id="scriptTextCheckBox" type="checkbox" title="Description" onchange="SaveSettings();$('#textToReadArea0').toggle('fold', 1000);" />
             <label for="scriptTextCheckBox" class="i" data-i18n="Description">Description</label>
             <br />
             <input id="imagesCheckBox" type="checkbox" checked="checked" title="Images" onchange="SaveSettings(); $('#imageDiv0').toggle('fold', 1000);" />
             <label for="imagesCheckBox" class="i" data-i18n="Images">Images</label>
             <br />
+<%--            <input id="sidePanelCheckBox" type="checkbox" title="Show Side Panel" onchange="switchSidePanel();" />
+            <label for="sidePanelCheckBox" class="i" data-i18n="ShowSidePanel">Show Side Panel</label>
+            <br />--%>
             <input id="loopTrackCheckBox" type="checkbox" checked="checked" title="Loop track infinitely"  onchange="SaveSettings();"/>
             <label for="loopTrackCheckBox" class="i" data-i18n="LoopTrack">Loop track infinitely</label>
             <br />
@@ -165,6 +229,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <!-- Welcome splash -->
     <script>
@@ -291,6 +356,5 @@
         var markerFinish;
 
     </script>
-
 </asp:Content>
 

@@ -23,6 +23,9 @@ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
     <script src="libs/jquery.js"></script>
     <script src="libs/jquery-ui.js"></script>
     <script src="libs/jquery.cookie.js"></script>
+ 
+    <script type="text/javascript" src="libs/jquery.tinycarousel.js" ></script>
+    <link rel="stylesheet" href="styles/tinycarousel.css" />
 
     <script type="text/javascript" src="libs/toastr.min.js" ></script>
     <link rel="stylesheet" href="styles/toastr.min.css" />

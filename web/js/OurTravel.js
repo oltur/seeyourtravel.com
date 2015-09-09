@@ -83,6 +83,9 @@ function onBodyResize() {
     if ($("#menuPanel").length) {
         $("#menuPanel").height(window.innerHeight - 100);
     }
+    if ($(".viewport").length) {
+        $(".viewport").height(window.innerHeight - 120);
+    }
 }
 
 $(function () { onBodyResize(); });
@@ -596,7 +599,8 @@ function init(filename) {
             onStep: function (p) {
                 counter++;
                 if (p.hasOwnProperty("syt_text")) {
-                    toastr.info(p["syt_text"], "", { timeOut: 0, extendedTimeOut: 0 });
+                    toastr.info(p["syt_text"], "", { timeOut: 5000, extendedTimeOut: 10000 });
+                    prependToSidePanel(p["syt_text"]);
                 }
                 
                 if (p.hasOwnProperty("syt_audio")) {

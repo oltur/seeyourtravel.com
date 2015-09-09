@@ -1,0 +1,38 @@
+/* Tiny Carousel */
+#slider1 {
+    height: 1%;
+    margin: 10px 0 0;
+    overflow: hidden;
+    position: relative;
+    padding: 0 10px 10px;
+}
+
+#slider1 .viewport {
+    overflow: hidden;
+    position: relative;
+}
+
+#slider1 .disable {
+    visibility: hidden;
+}
+
+#slider1 .overview {
+    list-style: none;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    width: 240px;
+    left: 0;
+    top: 0;
+}
+
+#slider1 .overview li {
+    float: left;
+    margin: 0 0px 0 0;
+    padding: 3px;
+    margin:3px;
+    border: 1px solid #dcdcdc;
+    background-color: rgba(200,200,200,0.8);
+    /*height: 121px;
+    width: 236px;*/
+ }
