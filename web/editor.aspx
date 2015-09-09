@@ -202,13 +202,8 @@
 
             map.on('click', onMapClick);
 
-            $("#imageDiv0").draggable().resizable();
-            //$("#textToReadArea0").draggable().resizable({
-            //    maxHeight: 250,
-            //    maxWidth: 350,
-            //    minHeight: 150,
-            //    minWidth: 200
-            //});
+            $("#imageDiv0").draggable().resizable({ minHeight: 50, minWidth: 50 });
+            $("#textToReadArea0").draggable();
             $("#slider").slider({
                 value: 0.8,
                 min: 0,

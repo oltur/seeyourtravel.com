@@ -488,7 +488,7 @@ function loadTrackSync(path) {
 
     if ($("#textToReadArea").length > 0) {
         if ("textToRead" in track) {
-            textToReadArea.innerText = $.ajax(
+            textToReadArea.innerHTML = $.ajax(
                 {
                     url: translateTracksPath(track.textToRead + "?" + Math.random()),
                     async: false

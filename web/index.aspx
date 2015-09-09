@@ -154,9 +154,9 @@
             Your browser does not support the audio element.
         </audio>
 
-        <div id="textToReadArea0" class="ui-widget-content" style="visibility:hidden; z-index: 100; background: rgba(100,100,100,0.2); border-width: 0px; width: 25%; height: 25%; position: absolute; left: 2%; top: 35%">
-            <br />
-            <textarea id="textToReadArea" disabled="disabled" style="top: 25%; width: 99%; height: 88%; resize: none;"></textarea>
+        <div id="textToReadArea0" class="ui-widget-content" style="z-index: 100; min-height:50px; min-width:50px; background: rgba(100,100,100,0.2); border-width: 0px; width: 25%; height: 25%; position: absolute; left: 2%; top: 35%">
+           <%-- <br />--%>
+            <div id="textToReadArea" disabled="disabled" style="position:absolute; overflow:scroll; background: rgba(240,240,240,0.9); padding: 0; top: 2px; bottom:2px; left:2px; right:2px; margin: 0 auto; resize: none;" ></div>
         </div>
 
         <div id="imageDiv0" class="ui-widget-content">
@@ -199,8 +199,8 @@
             //}
             init();
 
-            $("#imageDiv0").draggable().resizable();
-            $("#textToReadArea0").draggable().resizable();
+            $("#imageDiv0").draggable().resizable({ minHeight: 50, minWidth: 50 });
+            $("#textToReadArea0").draggable().resizable({ minHeight: 50, minWidth: 50 }).hide();
             //$("#scriptTextCheckBox").button();
             //$("#imagesCheckBox").button();
             //$("#usePanoramioImagesCheckBox").button();
