@@ -112,9 +112,9 @@
     <div id='pageContent' style='height: 100%; position: relative;margin-left: 0%;'>
         <div style="position: absolute; left: 5px; top:15px; z-index:1001">
             <a id="alogo" href="javascript:clickMenu()"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
-            <select style="vertical-align:central; width:150px;height:35px" id="tracksList" class="i graySelect" onchange="clickStart()"></select>
+            <select style="vertical-align:central; width:200px;height:35px" id="tracksList" class="i graySelect" onchange="clickStart()"></select>
         </div>
-        <div style="position: absolute; left: 220px; top:20px; z-index:1001">
+        <div style="position: absolute; left: 270px; top:20px; z-index:1001">
             <div id="wrapper">
                 <img id="imgCoord" src="img/location.png" />
                 <span id="lblCoord" style="vertical-align:super; text-shadow: 1px 1px #ffffff;"></span>

@@ -87,18 +87,15 @@ button.headerButton:disabled
     color:rgba(255,255,255,0.6)
 }
 
-input[type=text].glow,
-input[type=password].glow 
+input.glow
 {
   padding: 5px;
   border: solid 1px #dcdcdc;
   transition: box-shadow 0.3s, border 0.3s;
 }
 
-input[type=text].glow:focus,
-input[type=text].glow.focus, 
-input[type=password].glow:focus,
-input[type=password].glow.focus 
+input.glow:focus,
+input.glow.focus 
 {
   border: solid 1px #707070;
   box-shadow: 0 0 5px 1px #969696;
