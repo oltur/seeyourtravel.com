@@ -87,6 +87,23 @@ button.headerButton:disabled
     color:rgba(255,255,255,0.6)
 }
 
+input[type=text].glow,
+input[type=password].glow 
+{
+  padding: 5px;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+
+input[type=text].glow:focus,
+input[type=text].glow.focus, 
+input[type=password].glow:focus,
+input[type=password].glow.focus 
+{
+  border: solid 1px #707070;
+  box-shadow: 0 0 5px 1px #969696;
+}
+
 /*@media all and (orientation:portrait) { 
     #imageDiv0 {
         z-index: 100; border-width: 2px; height: 90%; width: 30%; position: absolute; top: 50px; left: 68%; overflow-x: hidden; overflow-y: hidden;
