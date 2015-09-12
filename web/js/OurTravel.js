@@ -599,7 +599,7 @@ function init(filename) {
             },
             onStep: function (p) {
                 counter++;
-                if (p.hasOwnProperty("syt_text")) {
+                if (p.hasOwnProperty("syt_text") && p["syt_text"] != "") {
                     toastr.info(p["syt_text"], "", { timeOut: 5000, extendedTimeOut: 10000 });
                     prependToSidePanel(p["syt_text"]);
                 }
@@ -621,7 +621,7 @@ function init(filename) {
 
         for (var i = 0; i < track.trackData.length; i++) {
             var point = track.trackData[i];
-            if (point.hasOwnProperty("syt_text")) {
+            if (point.hasOwnProperty("syt_text") && point["syt_text"] != "") {
 
                 var icon = L.icon({
                     iconUrl: "img/info.png",

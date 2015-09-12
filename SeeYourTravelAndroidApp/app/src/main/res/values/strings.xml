@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">SeeYourTravel.com Android</string>
+
+    <string name="title_section1">Map View</string>
+    <string name="title_section2">Track Recording</string>
+    <string name="title_section3">About</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
