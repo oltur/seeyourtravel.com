@@ -153,22 +153,22 @@
                 Username:
             </td>
             <td>
-                <asp:TextBox ID="UserName" runat="server" class="i" data-i18n></asp:TextBox>
+                <asp:TextBox ID="UserName" runat="server" class="i glow" data-i18n></asp:TextBox>
             </td>
         </tr>
         <tr>
-            <td class="i" data-i18n="Password_">
+            <td class="i glow" data-i18n="Password_">
                 Password:
             </td>
             <td>
-                <asp:TextBox ID="Password" runat="server" TextMode="Password" class="i" data-i18n></asp:TextBox>
+                <asp:TextBox ID="Password" runat="server" TextMode="Password" class="i glow" data-i18n></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td>
             </td>
             <td>
-                <asp:CheckBox ID="RememberMe" runat="server"/>
+                <asp:CheckBox ID="RememberMe" class="glow" runat="server"/>
                 <span class="i" data-i18n="RememberMe">Remember Me</span>
                 <asp:HiddenField ID="Token" runat="server"/>
                 <asp:HiddenField ID="Data" runat="server"/>

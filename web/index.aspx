@@ -99,12 +99,12 @@
 <div id="splitterContainer">
     <div id='sidePanel' style='display:none; height: 100%; width:0%; float: left;'>
 <div id="slider1">
-		<a class="prev" href="#">Up</a>
+		<a class="prev" href="#"><img alt="Up" src="img/up.png" /></a>
     <div class="viewport">
 			<ul class="overview">
 			</ul>
 		</div>
-		<a class="next" href="#">Down</a>
+		<a class="next" href="#"><img alt="Down" src="img/down.png" /></a>
     <br />
 <%--    <button type="button" data-i18n="[title]Clear;Clear" id="clearSidePanelButton" title="Clear" class="i headerButton" style="width:100px; background-image: url(img/clear.png );" onclick="clearSidePanel()">Clear</button>--%>
 	</div>
@@ -112,9 +112,9 @@
     <div id='pageContent' style='height: 100%; position: relative;margin-left: 0%;'>
         <div style="position: absolute; left: 5px; top:15px; z-index:1001">
             <a id="alogo" href="javascript:clickMenu()"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
-            <select style="vertical-align:central; width:150px;height:35px" id="tracksList" class="i graySelect" onchange="clickStart()"></select>
+            <select style="vertical-align:central; width:200px;height:35px" id="tracksList" class="i graySelect" onchange="clickStart()"></select>
         </div>
-        <div style="position: absolute; left: 220px; top:20px; z-index:1001">
+        <div style="position: absolute; left: 270px; top:20px; z-index:1001">
             <div id="wrapper">
                 <img id="imgCoord" src="img/location.png" />
                 <span id="lblCoord" style="vertical-align:super; text-shadow: 1px 1px #ffffff;"></span>

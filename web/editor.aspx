@@ -96,34 +96,36 @@
     <div id="map"></div>
 
     <div id="textToReadArea0" class="ui-widget-content" style="position:absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 340px; height: 590px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
-        <p class="big">File name:
-        <input id="filename" name="filename" type="text" value="MyTrack" /></p>
-<%--        <p class="big">Track description:
-        <input id="name" name="name" type="text" value="New Track" /></p>--%>
-        <p class="big">Copyright:
-        <input id="copyright" name="copyright" type="text" value="(c)" /></p>
-        <p class="big">Photo tolerance:
-        <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="text" value="0.1" /></p>
-        <p class="big">Steps to Redraw:
-        <input id="stepsToRedraw" name="stepsToRedraw" type="text" value="100" /></p>
-        <p class="big">stepsToShowPhoto:
-        <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="text" value="10" /></p>
-        <p class="big">velocityMetersPerSec:
-        <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="text" value="100" /></p>
-        <p class="big">numOfPhotos:
-        <input id="numOfPhotos" name="numOfPhotos" type="text" value="10" /></p>
-        <p class="big">icon:
-        <input id="icon" name="icon" type="text" value="mybike.png" /></p>
-        <p class="big">audioSrc:
-        <input id="audioSrc" name="audioSrc" type="text" value="" /></p>
-        <%--<p class="big">audioVolume:
-        <input id="audioVolume" name="audioVolume" type="text" value="0.5" /></p>--%>
-        <p class="big">textToRead:
-        <input id="textToRead" name="textToRead" type="text" value="" /></p>
-        <p class="big">defaultScale:
-        <input id="defaultScale" name="defaultScale" type="text" value="8" /></p>
-        <p class="big">trackGpx:
-        <input id="trackGpx" name="trackGpx" type="text" value="" /></p>
+        <table border="0">
+        <tr><td class="big">File name:</td><td>
+        <input id="filename" name="filename" type="text" value="MyTrack" /></td></tr>
+<%--        <tr><td class="big">Track description:</td><td>
+        <input id="name" name="name" type="text" value="New Track" /></td></tr>--%>
+        <tr><td class="big">Copyright:</td><td>
+        <input id="copyright" name="copyright" type="text" value="(c)" /></td></tr>
+        <tr><td class="big">Photo tolerance:</td><td>
+        <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="number" value="0.1" /></td></tr>
+        <tr><td class="big">Steps to Redraw:</td><td>
+        <input id="stepsToRedraw" name="stepsToRedraw" type="number" value="100" style="width:100px;" /></td></tr>
+        <tr><td class="big">stepsToShowPhoto:</td><td>
+        <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="number" value="10" /></td></tr>
+        <tr><td class="big">velocityMetersPerSec:</td><td>
+        <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="number" value="100" /></td></tr>
+        <tr><td class="big">numOfPhotos:</td><td>
+        <input id="numOfPhotos" name="numOfPhotos" type="number" value="10" /></td></tr>
+        <tr><td class="big">icon:</td><td>
+        <input id="icon" name="icon" type="text" value="mybike.png" /></td></tr>
+        <tr><td class="big">audioSrc:</td><td>
+        <input id="audioSrc" name="audioSrc" type="text" value="" /></td></tr>
+        <%--<tr><td class="big">audioVolume:</td><td>
+        <input id="audioVolume" name="audioVolume" type="text" value="0.5" /></td></tr>--%>
+        <tr><td class="big">textToRead:</td><td>
+        <input id="textToRead" name="textToRead" type="text" value="" /></td></tr>
+        <tr><td class="big">defaultScale:</td><td>
+        <input id="defaultScale" name="defaultScale" type="text" value="8" /></td></tr>
+<%--        <tr><td class="big">trackGpx:</td><td>
+        <input id="trackGpx" name="trackGpx" type="text" value="" /></td></tr>--%>
+        </table>
         <p class="big"><input name="trackData" id="trackData" type="hidden" /></p>
         <p class="big"><select id="points" name="points" size="10" style="width: 320px" multiple="multiple">
         </select>
@@ -239,11 +241,22 @@
                 $("#fileOperations").hide();
             }
 
-            $("#stepsToRedraw").spinner({
-                min: 1,
-                max: 1000,
-                step: 1
-            });
+            //$("#stepsToRedraw").spinner({
+            //    min: 1,
+            //    max: 1000,
+            //    step: 1,
+            //    height: 30
+            //}).on('input', function () {
+            //    if ($(this).data('onInputPrevented')) return;
+            //    var val = this.value,
+            //        $this = $(this),
+            //        max = $this.spinner('option', 'max'),
+            //        min = $this.spinner('option', 'min');
+            //    if (!val.match(/^\d+$/)) val = min; //we want only number, no alpha
+            //    this.value = val > max ? max : val < min ? min : val;
+            //}).on('keydown', function (e) { // to allow 'Backspace' key behaviour
+            //    $(this).data('onInputPrevented', e.which === 8 ? true : false);
+            //});
 
             if (trackname) {
                 var initialTrack = loadTrackSync(getTrackPathByName(trackname));

@@ -85,7 +85,7 @@ function onBodyResize() {
         $("#menuPanel").height(window.innerHeight - 100);
     }
     if ($(".viewport").length) {
-        $(".viewport").height(window.innerHeight - 50);
+        $(".viewport").height(window.innerHeight - 150);
     }
 }
 

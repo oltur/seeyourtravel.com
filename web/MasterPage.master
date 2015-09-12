@@ -1,5 +1,5 @@
 ﻿<%@ Master Language="C#" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <%/*
 SeeYourTravel.com - Travel Experience Site
 Copyright (c) 2014-2015, Oleksandr Turevskiy
@@ -43,7 +43,6 @@ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
     <script src="js/get_text.js"></script>
     <link rel="stylesheet" href="styles/ourTravel.common.css" />
     <link rel="stylesheet" href="styles/ourTravel.css" />
-    <!--link rel="stylesheet" href="styles/jquerysamplestyle.css"-->
     <script src="https://apis.google.com/js/client:platform.js?onload=startApp" async defer></script>
     <!-- JavaScript specific to this application that is not related to API
      calls -->
