@@ -8,6 +8,7 @@ var MAX_GOOGLE_PLACES = 10;
 var MAX_HERE_PLACES = 50;
 var MAX_GOOGLE_RADIUS = 10000;
 var GOOGLE_TYPES = ['lodging', 'restaurant']
+var sidePanelWidth = 200;
 
 var iconWhereIAm = L.icon({
     iconUrl: ("img/youarehere.png"),
@@ -84,7 +85,7 @@ function onBodyResize() {
         $("#menuPanel").height(window.innerHeight - 100);
     }
     if ($(".viewport").length) {
-        $(".viewport").height(window.innerHeight - 120);
+        $(".viewport").height(window.innerHeight - 50);
     }
 }
 
