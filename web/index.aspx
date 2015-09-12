@@ -120,6 +120,12 @@
                 <span id="lblCoord" style="vertical-align:super; text-shadow: 1px 1px #ffffff;"></span>
             </div>
         </div>
+            <div style="position: absolute; right: 20px; bottom:30px; z-index:1001">
+                <div class="fb-like" data-width="50" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-via="turevskiy">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+
         <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; top: 10px; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
             <div style="position: absolute; left: 10px; top: 50px;">
                 <button type="button" data-i18n="[title]New;New" id="newTrackButton" title="New" class="i headerButton" style="background-image: url(img/new.png );" onclick="clickNew()">New</button>
@@ -137,12 +143,6 @@
             </span>
             <br />
             <br />
-            <div
-                class="fb-like"
-                data-share="true"
-                data-width="450"
-                data-show-faces="true">
-            </div>
             <div class="i" data-i18n="[html]help_content"> 
             </div>
         </div>

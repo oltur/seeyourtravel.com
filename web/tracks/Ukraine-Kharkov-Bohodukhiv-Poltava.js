@@ -2,7 +2,7 @@
 "name":""
 ,"copyright":"(c)"
 ,"defaultScale":10
-,"photoLocationTolerancy":0.1
+,"photoLocationTolerancy":100
 ,"stepsToRedraw":77
 ,"stepsToShowPhoto":50
 ,"numOfPhotos":20

@@ -2,7 +2,7 @@
 "name":"N10"
 ,"copyright":"AT"
 ,"defaultScale":9
-,"photoLocationTolerancy":0.3
+,"photoLocationTolerancy":300
 ,"stepsToRedraw":500
 ,"stepsToShowPhoto":200
 ,"numOfPhotos":20

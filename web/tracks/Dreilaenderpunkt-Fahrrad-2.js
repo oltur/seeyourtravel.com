@@ -2,7 +2,7 @@
 "name":"New Track"
 ,"copyright":"(c)"
 ,"defaultScale":12
-,"photoLocationTolerancy":0.01
+,"photoLocationTolerancy":10
 ,"stepsToRedraw":100
 ,"stepsToShowPhoto":30
 ,"numOfPhotos":10

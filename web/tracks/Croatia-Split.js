@@ -1,7 +1,7 @@
 {
 		"name":"Split",
 		"copyright":"AT",
-	        "photoLocationTolerancy": 0.02,
+	        "photoLocationTolerancy": 20,
 		"defaultScale":12,
         	"stepsToRedraw": 1000,
 	        "stepsToShowPhoto": 600,

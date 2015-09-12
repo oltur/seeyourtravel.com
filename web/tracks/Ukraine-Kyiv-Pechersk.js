@@ -2,7 +2,7 @@
 "name":"Kiev-Pechers`k"
 ,"copyright":"AT"
 ,"defaultScale":15
-,"photoLocationTolerancy":0.02
+,"photoLocationTolerancy":20
 ,"stepsToRedraw":10
 ,"stepsToShowPhoto":10
 ,"numOfPhotos":50

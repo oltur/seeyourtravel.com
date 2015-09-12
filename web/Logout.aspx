@@ -3,7 +3,7 @@
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
     <script>    
         $(function () {
-            setTimeout(function () { fblogout(); }, 1000);
+            setTimeout(function () { fblogout(); }, 1);
         });
 </script>
 </asp:Content>

@@ -5,7 +5,7 @@
 
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
 
-<% if(!User.IsInRole("admins")) Response.Redirect("./"); %>
+    <% if (!User.IsInRole("admins")) Response.Redirect("./"); %>
 
     <script>
         function clickCancel() {
@@ -24,141 +24,190 @@
 
     <!--Content-->
     <div id='pageContent' style='height: 100%'>
-        <div style="position: absolute; left: 5px; top:5px; z-index:1001">
-            <a id="alogo" href="javascript:clickMenu()"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+        <div style="position: absolute; left: 5px; top: 5px; z-index: 1001">
+            <a id="alogo" href="javascript:clickMenu()">
+                <img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
         </div>
-        <div style="position: absolute; left: 60px; top:10px; z-index:1001">
+        <div style="position: absolute; left: 60px; top: 10px; z-index: 1001">
             <div id="wrapper">
                 <img id="imgCoord" src="img/location.png" />
-                <span id="lblCoord" style="vertical-align:super; text-shadow: 1px 1px #ffffff;"></span>
+                <span id="lblCoord" style="vertical-align: super; text-shadow: 1px 1px #ffffff;"></span>
             </div>
-            </div>
-                <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
+        </div>
+        <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
             <div style="position: absolute; left: 10px; top: 50px;">
                 <button type="button" data-i18n="[title]Cancel;Cancel" id="cancelButton" title="Cancel changes" class="i headerButton" style="background-image: url(img/cancel.png );" onclick="clickCancel()">Cancel</button>
             </div>
             <div style="position: absolute; left: 10px; top: 100px;">
                 <button type="button" data-i18n="[title]Settings;Settings" id="settingsCheckBox" title="Settings" class="i headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
-                <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site"  class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" >About SeeYourTravel</button>
+                <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site" class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')">About SeeYourTravel</button>
             </div>
-            <div style="position: absolute; left: 10px; top:195px;">
-                <button type="button" data-i18n="[title]Profile;Profile" id="profile" title="Profile" class="i headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'" >Profile</button>
-                <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout"  class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" >Logout</button>
+            <div style="position: absolute; left: 10px; top: 195px;">
+                <button type="button" data-i18n="[title]Profile;Profile" id="profile" title="Profile" class="i headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'">Profile</button>
+                <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout" class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'">Logout</button>
                 <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>
             </div>
         </div>
-        </div>
-       <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 45px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
-            <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Editor" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
-            <label for="scriptTextCheckBox" class="i" data-i18n="Editor">Editor</label>
-            <br />
-            <input id="imagesCheckBox" type="checkbox" checked="checked" value="Images" onclick="$('#imageDiv0').toggle('fold', 1000);" />
-            <label for="imagesCheckBox" class="i" data-i18n="Images">Images</label>
-            <br />
-            <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" value="Use Panoramio images" />
-            <label for="usePanoramioImagesCheckBox" class="i" data-i18n="UsePanoramioImages">Use Panoramio images</label>
-            <br />
-            <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel images" />
-            <label for="useSYTImagesCheckBox" class="i" data-i18n="UseCYTImages">Use SeeYourTravel images</label>
-            <br />
-            <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" value="Use Google Places" />
-            <label for="useGooglePlacesCheckBox" class="i" data-i18n="UseGooglePlaces">Use Google Places</label>
-            <br />
-            <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel places" />
-            <label for="useSYTPlacesCheckBox" class="i" data-i18n="UseCYTPlaces">Use SeeYourTravel places</label>
-<%--            <br />
+    </div>
+    <div id="settingsPanel" style="display: none; position: absolute; padding: 10px; z-index: 100; top: 45px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+        <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Editor" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
+        <label for="scriptTextCheckBox" class="i" data-i18n="Editor">Editor</label>
+        <br />
+        <input id="imagesCheckBox" type="checkbox" checked="checked" value="Images" onclick="$('#imageDiv0').toggle('fold', 1000);" />
+        <label for="imagesCheckBox" class="i" data-i18n="Images">Images</label>
+        <br />
+        <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" value="Use Panoramio images" />
+        <label for="usePanoramioImagesCheckBox" class="i" data-i18n="UsePanoramioImages">Use Panoramio images</label>
+        <br />
+        <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel images" />
+        <label for="useSYTImagesCheckBox" class="i" data-i18n="UseCYTImages">Use SeeYourTravel images</label>
+        <br />
+        <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" value="Use Google Places" />
+        <label for="useGooglePlacesCheckBox" class="i" data-i18n="UseGooglePlaces">Use Google Places</label>
+        <br />
+        <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel places" />
+        <label for="useSYTPlacesCheckBox" class="i" data-i18n="UseCYTPlaces">Use SeeYourTravel places</label>
+        <%--            <br />
             <label for="pictureHeight">Max Picture Height</label>
             <input id="pictureMaxHeight" type="number" value="100" />--%>
-            <br />
-            <label for="mapStyle" class="i" data-i18n="MapStyle">Map style</label>
-            <select id="mapStyle" class="graySelect" onchange="selectMapStyle()">
-                <option>mapbox.streets</option>
-                <option>mapbox.light</option>
-                <option>mapbox.dark</option>
-                <option>mapbox.satellite</option>
-                <option>mapbox.streets-satellite</option>
-                <option>mapbox.wheatpaste</option>
-                <option>mapbox.streets-basic</option>
-                <option>mapbox.comic</option>
-                <option>mapbox.outdoors</option>
-                <option>mapbox.run-bike-hike</option>
-                <option>mapbox.pencil</option>
-                <option>mapbox.pirates</option>
-                <option>mapbox.emerald</option>
-                <option>mapbox.high-contrast</option>
-            </select>
-            <br />
-            <span class="i" data-i18n="Volume">Volume:</span>
-            <br />
-            <div id="slider" style="left: 10%; width: 80%; vertical-align: top"></div>
-        </div>
+        <br />
+        <label for="mapStyle" class="i" data-i18n="MapStyle">Map style</label>
+        <select id="mapStyle" class="graySelect" onchange="selectMapStyle()">
+            <option>mapbox.streets</option>
+            <option>mapbox.light</option>
+            <option>mapbox.dark</option>
+            <option>mapbox.satellite</option>
+            <option>mapbox.streets-satellite</option>
+            <option>mapbox.wheatpaste</option>
+            <option>mapbox.streets-basic</option>
+            <option>mapbox.comic</option>
+            <option>mapbox.outdoors</option>
+            <option>mapbox.run-bike-hike</option>
+            <option>mapbox.pencil</option>
+            <option>mapbox.pirates</option>
+            <option>mapbox.emerald</option>
+            <option>mapbox.high-contrast</option>
+        </select>
+        <br />
+        <span class="i" data-i18n="Volume">Volume:</span>
+        <br />
+        <div id="slider" style="left: 10%; width: 80%; vertical-align: top"></div>
+    </div>
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="position:absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 340px; height: 590px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 340px; height: 670px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
         <table border="0">
-        <tr><td class="big">File name:</td><td>
-        <input id="filename" name="filename" type="text" value="MyTrack" /></td></tr>
-<%--        <tr><td class="big">Track description:</td><td>
-        <input id="name" name="name" type="text" value="New Track" /></td></tr>--%>
-        <tr><td class="big">Copyright:</td><td>
-        <input id="copyright" name="copyright" type="text" value="(c)" /></td></tr>
-        <tr><td class="big">Photo tolerance:</td><td>
-        <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="number" value="0.1" /></td></tr>
-        <tr><td class="big">Steps to Redraw:</td><td>
-        <input id="stepsToRedraw" name="stepsToRedraw" type="number" value="100" style="width:100px;" /></td></tr>
-        <tr><td class="big">stepsToShowPhoto:</td><td>
-        <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="number" value="10" /></td></tr>
-        <tr><td class="big">velocityMetersPerSec:</td><td>
-        <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="number" value="100" /></td></tr>
-        <tr><td class="big">numOfPhotos:</td><td>
-        <input id="numOfPhotos" name="numOfPhotos" type="number" value="10" /></td></tr>
-        <tr><td class="big">icon:</td><td>
-        <input id="icon" name="icon" type="text" value="mybike.png" /></td></tr>
-        <tr><td class="big">audioSrc:</td><td>
-        <input id="audioSrc" name="audioSrc" type="text" value="" /></td></tr>
-        <%--<tr><td class="big">audioVolume:</td><td>
+            <tr>
+                <td class="big">Track name:</td>
+                <td>
+                    <input id="name" name="name" type="text" value="New Track" /></td>
+            </tr>
+            <tr>
+                <td class="big">Copyright:</td>
+                <td>
+                    <input id="copyright" name="copyright" type="text" value="(c)" /></td>
+            </tr>
+            <tr>
+                <td class="big">Photo location distance:<br />
+                    degree/1000, 2..1000</td>
+                <td>
+                    <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="range" max="1000" min="2" step="1" value="100" style="width: 95%;" /></td>
+            </tr>
+            <tr>
+                <td class="big">Steps to redraw:<br />
+                    2..1000</td>
+                <td>
+                    <input id="stepsToRedraw" name="stepsToRedraw" type="range" max="1000" min="2" step="1" value="100" style="width: 95%;" /></td>
+            </tr>
+            <tr>
+                <td class="big">Steps to show photos:<br />
+                    2..1000</td>
+                <td>
+                    <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="range" max="1000" min="2" step="1" value="10" style="width: 95%;" /></td>
+            </tr>
+            <tr>
+                <td class="big">Velocity:<br />
+                    meters/sec, 1..10000</td>
+                <td>
+                    <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="range" max="10000" min="1" step="1" value="100" style="width: 95%;" /></td>
+            </tr>
+            <tr>
+                <td class="big"># of photos to load:<br />
+                    1..50</td>
+                <td>
+                    <input id="numOfPhotos" name="numOfPhotos" type="range" max="50" min="1" step="1" value="10" style="width: 95%;" /></td>
+            </tr>
+            <tr>
+                <td class="big">Animated marker icon:</td>
+                <td>
+                    <input id="icon" name="icon" type="text" value="mybike.png" /></td>
+            </tr>
+            <tr>
+                <td class="big">Audio file path:</td>
+                <td>
+                    <input id="audioSrc" name="audioSrc" type="text" value="" /></td>
+            </tr>
+            <tr>
+                <td class="big">Track image path:</td>
+                <td>
+                    <input id="trackImage" name="trackImage" type="text" value="" /></td>
+            </tr>
+            <%--<tr><td class="big">audioVolume:</td><td>
         <input id="audioVolume" name="audioVolume" type="text" value="0.5" /></td></tr>--%>
-        <tr><td class="big">textToRead:</td><td>
-        <input id="textToRead" name="textToRead" type="text" value="" /></td></tr>
-        <tr><td class="big">defaultScale:</td><td>
-        <input id="defaultScale" name="defaultScale" type="text" value="8" /></td></tr>
-<%--        <tr><td class="big">trackGpx:</td><td>
+            <tr>
+                <td class="big">Text description:</td>
+                <td>
+                    <input id="textToRead" name="textToRead" type="text" value="" /></td>
+            </tr>
+            <tr>
+                <td class="big">Default scale:<br />
+                    1(largest).20(smallest)</td>
+                <td>
+                    <input id="defaultScale" name="defaultScale" type="range" max="20" min="1" step="1" value="8" style="width: 95%;" /></td>
+            </tr>
+            <%--        <tr><td class="big">trackGpx:</td><td>
         <input id="trackGpx" name="trackGpx" type="text" value="" /></td></tr>--%>
         </table>
-        <p class="big"><input name="trackData" id="trackData" type="hidden" /></p>
-        <p class="big"><select id="points" name="points" size="10" style="width: 320px" multiple="multiple">
-        </select>
+        <p class="big">
+            <input name="trackData" id="trackData" type="hidden" />
         </p>
-        <p class="big"><asp:Button
-            ID="Button1"
-            PostBackUrl="saveTrack.aspx"
-            runat="server"
-            Text="Submit" />
-        &nbsp;
+        <p class="big">
+            <select id="points" name="points" size="10" style="width: 300px" multiple="multiple">
+            </select>
+        </p>
+        <p class="big">
+            <span>Point description (optional):</span><input id="pointDescr" name="pointDescr" type="text" value="" style="width: 100px" />
+        </p>
+        <p class="big">
+            <asp:Button
+                ID="Button1"
+                PostBackUrl="saveTrack.aspx"
+                runat="server"
+                Text="Submit" />
+            &nbsp;
     <input type="reset" value="Reset" />
-        &nbsp;
+            &nbsp;
     <input type="button" value="Delete selected" id="buttonDeleteSelected" />
-        &nbsp;
+            &nbsp;
     <input type="button" value="Cancel" id="gotoMain" onclick="window.location = 'index.aspx?trackname=' + trackname" />
-    <!--input type="button" value="Undo last"/-->
-    </p>
-    <p class="big">
+            <!--input type="button" value="Undo last"/-->
+        </p>
+        <p class="big">
             <div id="fileOperations">
-            <br />
-            <label for="fileGpx">Import Gpx file:</label>
-            <input type="file" accept=".gpx" id="filesGpx" />
-            <%--multiple="multiple"--%>
-            <!--input type="button" value="Import data" id="importGpx"/-->
-        </div>
+                <label for="fileGpx">Import Gpx file:</label>
+                <input type="file" accept=".gpx" id="filesGpx" />
+                <%--multiple="multiple"--%>
+                <!--input type="button" value="Import data" id="importGpx"/-->
+            </div>
         </p>
     </div>
 
-        <div id="imageDiv0" class="ui-widget-content">
-            <div id="imageDiv" class="innerScrollArea">
-                <ul></ul>
-            </div>
+    <div id="imageDiv0" class="ui-widget-content">
+        <div id="imageDiv" class="innerScrollArea">
+            <ul></ul>
         </div>
+    </div>
 
     <script lang="JavaScript">
         var trackname;
@@ -216,86 +265,112 @@
                 }
             });
 
-            $('#points').on('change', function (e) {
-                var optionSelected = $("option:selected", this);
-                var valueSelected = this.value;
-                var point = JSON.parse(valueSelected);
-                var newLatLng = pointToLatLng(point);
-                markerPosition.setLatLng(newLatLng);
+            $('#points')
+                .data("lastIndex", this.selectedIndex)
+                .on('change', function(event){
+                    var idx = this.selectedIndex;
+                    var prevIdx = $(this).data("lastIndex");
 
-                track = { numOfPhotos: parseInt(numOfPhotos.value), photoLocationTolerancy: parseInt(photoLocationTolerancy.value) };
-                showPhotos(track, newLatLng);
-
-            });
-
-            document.getElementById('filesGpx').addEventListener('change', handleFileSelect, false);
-            $('#buttonDeleteSelected').click(function () {
-                $('#points option:selected').remove();
-                updateMap();
-            });
-
-            // Check for the various File API support.
-            if (window.File && window.FileReader && window.FileList && window.Blob) {
-                // Great success! All the File APIs are supported.
-            } else {
-                $("#fileOperations").hide();
-            }
-
-            //$("#stepsToRedraw").spinner({
-            //    min: 1,
-            //    max: 1000,
-            //    step: 1,
-            //    height: 30
-            //}).on('input', function () {
-            //    if ($(this).data('onInputPrevented')) return;
-            //    var val = this.value,
-            //        $this = $(this),
-            //        max = $this.spinner('option', 'max'),
-            //        min = $this.spinner('option', 'min');
-            //    if (!val.match(/^\d+$/)) val = min; //we want only number, no alpha
-            //    this.value = val > max ? max : val < min ? min : val;
-            //}).on('keydown', function (e) { // to allow 'Backspace' key behaviour
-            //    $(this).data('onInputPrevented', e.which === 8 ? true : false);
-            //});
-
-            if (trackname) {
-                var initialTrack = loadTrackSync(getTrackPathByName(trackname));
-
-                $("#filename").val(trackname);
-                $("#name").val(initialTrack.name);
-                $("#copyright").val(initialTrack.copyright);
-                $("#photoLocationTolerancy").val(initialTrack.photoLocationTolerancy);
-                $("#stepsToRedraw").val(initialTrack.stepsToRedraw);
-                $("#stepsToShowPhoto").val(initialTrack.stepsToShowPhoto);
-                $("#velocityMetersPerSec").val(initialTrack.velocityMetersPerSec);
-                $("#numOfPhotos").val(initialTrack.numOfPhotos);
-                $("#icon").val(initialTrack.icon);
-                $("#audioSrc").val(initialTrack.audioSrc);
-                $("#audioVolume").val(initialTrack.audioVolume);
-                $("#textToRead").val(initialTrack.textToRead);
-                $("#defaultScale").val(initialTrack.defaultScale);
-                if (initialTrack.trackGpx) {
-                    $("#trackGpx").val(initialTrack.trackGpx);
-                }
-                else {
-
-                    initialTrack.trackData.forEach(function (point) {
-                        var t = JSON.stringify(point);
-                        $('#points')
-                            .append($("<option></option>")
-                            .attr("value", t)
-                            .text(t));
-                    });
-
-                    if (initialTrack.trackData.length > 0) {
-                        map.setView(initialTrack.trackData[0], 8);
+                    if(prevIdx != null && typeof prevIdx != "undefined") {
+                        var oldOptionSelected = $("option", this).eq(prevIdx);
+                        var oldValueSelected = oldOptionSelected.val();
+                        var oldPoint = JSON.parse(oldValueSelected);
+                        if(oldPoint.hasOwnProperty("lat"))
+                            oldPoint["syt_text"] = $("#pointDescr").val();
+                        else
+                            oldPoint[2] = $("#pointDescr").val();
+                        oldOptionSelected.val(JSON.stringify(oldPoint));
                     }
 
+                    var optionSelected = $("option:selected", this);
+                    var valueSelected = this.value;
+                    var point = JSON.parse(valueSelected);
+                    var newLatLng = pointToLatLng(point);
+                    markerPosition.setLatLng(newLatLng);
+                    $("#pointDescr").val(point.hasOwnProperty("syt_text")?point["syt_text"]:(point.length>2?point[2]:""));
+                    track = { numOfPhotos: parseInt(numOfPhotos.value), photoLocationTolerancy: parseInt(photoLocationTolerancy.value) };
+                    showPhotos(track, newLatLng);
+
+                    // Set new index as old index
+                    $(this).data("lastIndex", idx);
+                });
+
+        document.getElementById('filesGpx').addEventListener('change', handleFileSelect, false);
+        $('#buttonDeleteSelected').click(function () {
+            $('#points option:selected').remove();
+            updateMap();
+        });
+
+        // Check for the various File API support.
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            // Great success! All the File APIs are supported.
+        } else {
+            $("#fileOperations").hide();
+        }
+
+        map.on('zoomend', function () {
+            $("#defaultScale").val(map.getZoom());
+        });
+
+        //$("#stepsToRedraw").spinner({
+        //    min: 1,
+        //    max: 1000,
+        //    step: 1,
+        //    height: 30
+        //}).on('input', function () {
+        //    if ($(this).data('onInputPrevented')) return;
+        //    var val = this.value,
+        //        $this = $(this),
+        //        max = $this.spinner('option', 'max'),
+        //        min = $this.spinner('option', 'min');
+        //    if (!val.match(/^\d+$/)) val = min; //we want only number, no alpha
+        //    this.value = val > max ? max : val < min ? min : val;
+        //}).on('keydown', function (e) { // to allow 'Backspace' key behaviour
+        //    $(this).data('onInputPrevented', e.which === 8 ? true : false);
+        //});
+
+        if (trackname) {
+            var initialTrack = loadTrackSync(getTrackPathByName(trackname));
+
+            $("#name").val(initialTrack.name);
+            $("#copyright").val(initialTrack.copyright);
+            $("#photoLocationTolerancy").val(initialTrack.photoLocationTolerancy);
+            $("#stepsToRedraw").val(initialTrack.stepsToRedraw);
+            $("#stepsToShowPhoto").val(initialTrack.stepsToShowPhoto);
+            $("#velocityMetersPerSec").val(initialTrack.velocityMetersPerSec);
+            $("#numOfPhotos").val(initialTrack.numOfPhotos);
+            $("#icon").val(initialTrack.icon);
+            $("#trackImage").val(initialTrack.trackImage);
+            $("#audioSrc").val(initialTrack.audioSrc);
+            $("#audioVolume").val(initialTrack.audioVolume);
+            $("#textToRead").val(initialTrack.textToRead);
+            $("#defaultScale").val(initialTrack.defaultScale);
+            if (initialTrack.trackGpx) {
+                $("#trackGpx").val(initialTrack.trackGpx);
+            }
+            else {
+
+                initialTrack.trackData.forEach(function (point) {
+                    if(point.hasOwnProperty("lat") && (point.hasOwnProperty("syt_text") == null ||point.hasOwnProperty("syt_text") == ""))
+                        point["syt_text"] = "";
+                    if (!point.hasOwnProperty("lat") && point.length < 3)
+                        point[2] = "";
+                    var t = JSON.stringify(point);
+                    $('#points')
+                        .append($("<option></option>")
+                        .attr("value", t)
+                        .text(t));
+                });
+
+                if (initialTrack.trackData.length > 0) {
+                    map.setView(initialTrack.trackData[0], 8);
                 }
 
-                drawTrack();
-
             }
+
+            drawTrack();
+
+        }
         });
 
 
@@ -313,6 +388,8 @@
             var points = [];
             $("#points > option").each(function () {
                 var point = JSON.parse(this.value);
+                if (point.length < 3)
+                    point[2] = "";
                 points.push(point);
             });
             return points;
@@ -345,7 +422,7 @@
             if (!e) {
             }
             else if (e.latlng) {
-                var point = JSON.stringify([e.latlng.lat, e.latlng.lng]);
+                var point = JSON.stringify([e.latlng.lat, e.latlng.lng, $("#pointDescr").val()]);
                 var selectedItem = $("#points option:selected").first();
                 if (selectedItem.index() >= 0) {
                     $("#points option").eq(selectedItem.index()).before($("<option></option>")
@@ -399,7 +476,7 @@
                         $(points)
                             .append($("<option></option>")
                             .attr("value", "["+point[0]+","+point[1]+"]")
-                            .text("["+point[0]+","+point[1]+"]"));
+                            .text("["+point[0]+","+point[1]+"]"));   
                         //                        console.log(t);
                         t = t + 1;
                     });

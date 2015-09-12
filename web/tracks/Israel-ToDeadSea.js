@@ -2,7 +2,7 @@
 "name":"Israel1"
 ,"copyright":"(c)OT"
 ,"defaultScale":11
-,"photoLocationTolerancy":0.01
+,"photoLocationTolerancy":10
 ,"stepsToRedraw":5
 ,"stepsToShowPhoto":5
 ,"numOfPhotos":10

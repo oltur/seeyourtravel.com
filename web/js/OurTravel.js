@@ -28,11 +28,11 @@ function pointToLatLng(point) {
     var result;
     if (point.hasOwnProperty("lat")) {
         result = new L.LatLng(point.lat, point.lng);
-        if (point.hasOwnProperty("text")) {
-            result["syt_text"] = point["text"];
+        if (point.hasOwnProperty("syt_text")) {
+            result["syt_text"] = point["syt_text"];
         }
-        if (point.hasOwnProperty("audio")) {
-            result["syt_audio"] = point["audio"];
+        if (point.hasOwnProperty("syt_audio")) {
+            result["syt_audio"] = point["syt_audio"];
         }
         return result;
     }
@@ -245,7 +245,7 @@ function doStartStop() {
 
 function showPhotos(track, p, tolerancy) {
     if (!tolerancy)
-        tolerancy = track.photoLocationTolerancy;
+        tolerancy = track.photoLocationTolerancy/1000;
     if (!tolerancy)
         tolerancy = 0.1;
 
@@ -542,7 +542,7 @@ function init(filename) {
         map = L.map('map', { zoomControl: false });
         tileLayer = L.tileLayer(mapTileUrl, {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
-            maxZoom: 18,
+            maxZoom: 20,
             id: "mapbox.streets"
         });
         tileLayer.addTo(map);
@@ -696,6 +696,8 @@ function addMarkersNearAll(allData, types) {
         var from = Math.round(allData.length * i / 3);
         var to = Math.round(allData.length * (i + 1) / 3);
         var step = Math.round(allData.length / (10 * pieces));
+        if (step == 0)
+            step = 1;
         doSetTimeout(allData, types, from, to, step, i);
     }
 }

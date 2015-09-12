@@ -2,7 +2,7 @@
 "name":"Koh Samui"
 ,"copyright":"(c)"
 ,"defaultScale":13
-,"photoLocationTolerancy":0.005
+,"photoLocationTolerancy":5
 ,"stepsToRedraw":50
 ,"stepsToShowPhoto":40
 ,"numOfPhotos":20

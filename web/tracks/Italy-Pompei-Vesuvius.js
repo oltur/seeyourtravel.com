@@ -2,7 +2,7 @@
 "name":"Italy-Pompei-Vesuvius"
 ,"copyright":"(c)"
 ,"defaultScale":14
-,"photoLocationTolerancy":0.01
+,"photoLocationTolerancy":10
 ,"stepsToRedraw":33
 ,"stepsToShowPhoto":20
 ,"numOfPhotos":10

@@ -2,7 +2,7 @@
 "name":"BadWörishofen-Hahntennjoch-Ötz"
 ,"copyright":"(c)"
 ,"defaultScale":13
-,"photoLocationTolerancy":0.01
+,"photoLocationTolerancy":10
 ,"stepsToRedraw":31
 ,"stepsToShowPhoto":25
 ,"numOfPhotos":10

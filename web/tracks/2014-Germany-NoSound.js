@@ -2,7 +2,7 @@
 		"name":"N10",
 		"copyright":"AT",
 		"defaultScale":7,
-	        "photoLocationTolerancy": 0.2,
+	        "photoLocationTolerancy": 200,
         	"stepsToRedraw": 500,
 	        "stepsToShowPhoto": 200,
         	"velocityMetersPerSec": 5000,
