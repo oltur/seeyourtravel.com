@@ -2,7 +2,7 @@
 "name":"Georgia"
 ,"copyright":"AT"
 ,"defaultScale":11
-,"photoLocationTolerancy":0.05
+,"photoLocationTolerancy":50
 ,"stepsToRedraw":100
 ,"stepsToShowPhoto":10
 ,"numOfPhotos":20

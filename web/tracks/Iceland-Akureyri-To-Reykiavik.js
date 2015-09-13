@@ -2,7 +2,7 @@
 "name":"Iceland-Akureyri-To-Reykiavik"
 ,"copyright":"OT(c)"
 ,"defaultScale":9
-,"photoLocationTolerancy":181
+,"photoLocationTolerancy":100
 ,"stepsToRedraw":196
 ,"stepsToShowPhoto":167
 ,"numOfPhotos":9
