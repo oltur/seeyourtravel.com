@@ -65,7 +65,6 @@ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
         ga('set', '&uid', globalUserId); // Set the user ID using signed-in user_id.
 
         $(function () {
-
             var sel = $("#langList");
             sel.empty();
             sel.append('<option value="en-US" >En</option>');

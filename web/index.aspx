@@ -10,6 +10,7 @@
         function translateAll(err, t) {
             $(".i").i18n();
             $("option.i").i18n();
+            $("#profile").text($.t("Profile") + ": " + globalUserName);
         }
 
         function clickStart() {
@@ -120,7 +121,7 @@
                 <span id="lblCoord" style="vertical-align:super; text-shadow: 1px 1px #ffffff;"></span>
             </div>
         </div>
-            <div style="position: absolute; right: 20px; bottom:30px; z-index:1001">
+            <div style="position: absolute; right: 20px; bottom:20px; z-index:1001">
                 <div class="fb-like" data-width="50" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
                 <a href="https://twitter.com/share" class="twitter-share-button" data-via="turevskiy">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
@@ -132,7 +133,7 @@
                 <button type="button" data-i18n="[title]Edit;Edit" id="editTrackButton" title="Edit" class="i headerButton" style="background-image: url(img/edit.png );" onclick="clickEdit()" >Edit</button>
                 <button type="button" data-i18n="[title]Settings;Settings" id="settingsCheckBox" title="Settings" class="i headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
                 <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site"  class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" >About SeeYourTravel</button>
-                <button type="button" data-i18n="[title]Profile;Profile" id="profile" title="Profile" class="i headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'" >Profile</button>
+                <button type="button" <%--data-i18n="[title]Profile;Profile" --%>id="profile" title="Profile" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'"></button>
                 <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout"  class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" >Logout</button>
                 <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>
             </div>

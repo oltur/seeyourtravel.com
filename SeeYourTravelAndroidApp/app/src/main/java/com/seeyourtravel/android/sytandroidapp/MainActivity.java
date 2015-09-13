@@ -1,7 +1,13 @@
 package com.seeyourtravel.android.sytandroidapp;
 
+import java.io.IOException;
 import java.util.Locale;
 
+import android.content.DialogInterface;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.net.http.SslError;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -11,12 +17,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.GeolocationPermissions;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -186,7 +196,41 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+            /*
+            rootView.setFocusableInTouchMode(true);
+            rootView.requestFocus();
+            rootView.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        webView1.goBack();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+*/
+
             webView1 = (WebView) rootView.findViewById(R.id.webView1);
+
+            WebSettings settings = webView1.getSettings();
+            settings.setJavaScriptEnabled(true);
+            settings.setJavaScriptCanOpenWindowsAutomatically(true);
+            settings.setGeolocationEnabled(true);
+            settings.setMediaPlaybackRequiresUserGesture(false);
+            settings.setBlockNetworkLoads(false);
+            settings.setAllowContentAccess(true);
+            settings.setAllowFileAccess(true);
+            settings.setAllowFileAccessFromFileURLs(true);
+            settings.setAllowUniversalAccessFromFileURLs(true);
+            settings.setDatabaseEnabled(true);
+            settings.setAppCacheEnabled(true);
+            settings.setDomStorageEnabled(true);
+            settings.setSupportZoom(true);
+
+            settings.setPluginState(WebSettings.PluginState.ON);
+            //settings.setMediaPlaybackRequiresUserGesture(false);
+            settings.setGeolocationDatabasePath( getActivity().getFilesDir().getPath() );
 
             webView1.setWebChromeClient(new WebChromeClient());
 
@@ -194,12 +238,38 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    view.loadUrl(url);
-                    return true;
+                    if (url.endsWith(".mp3")) {
+                        MediaPlayer mediaPlayer = new MediaPlayer();
+                        try {
+                            mediaPlayer.setDataSource(getActivity(), Uri.parse(url));
+                            mediaPlayer.prepare();
+                            mediaPlayer.start();
+                        } catch (IllegalArgumentException e) {
+//                            showMessage("Illegal argument exception on " + url);
+                        } catch (IllegalStateException e) {
+//                            showMessage("Illegal State exception on " + url);
+                        } catch (IOException e) {
+//                            showMessage("I/O exception on " + url);
+                        }
+                        return true;
+                    }
+                    else {
+                        view.loadUrl(url);
+                        return true;
+                    }
+                }
+
+                @Override
+                public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                    handler.proceed(); // Ignore SSL certificate errors
+                }
+
+                public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+                    callback.invoke(origin, true, false);
                 }
             });
 
-            webView1.loadUrl("https://seeyourtravel.com");
+            webView1.loadUrl("https://seeyourtravel.com/Login.aspx?ReturnUrl=%2findex.aspx%3ftrackname%3d2014-Germany&action=demo");
 
             return rootView;
         }

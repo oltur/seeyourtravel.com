@@ -21,7 +21,7 @@ public partial class Login : System.Web.UI.Page
         // the login is successful
         if (Request.QueryString["ReturnUrl"] == null)
         {
-            returnUrl1 = "index.html";
+            returnUrl1 = "index.aspx";
         }
         else
         {
@@ -37,7 +37,7 @@ public partial class Login : System.Web.UI.Page
     {
         this.UserName.Text="demo";
         this.Password.Text="demo";
-	    if(returnUrl1 == "index.html")
+	    if(returnUrl1 == "index.aspx")
         	    returnUrl1 = "index.aspx?trackname=2014-Germany";
 	    LoginButton_Click(sender, e);
     }    

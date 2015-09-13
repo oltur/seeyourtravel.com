@@ -9,4 +9,5 @@
 	        "numOfPhotos": 10,
 		"icon": "mybike.png",
 		"trackGpx": "Aachen_Koeln_Railway.xml"
+,"audioSrc": "meinland.mp3"
 }
