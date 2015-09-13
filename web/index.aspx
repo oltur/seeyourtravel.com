@@ -121,7 +121,7 @@
                 <span id="lblCoord" style="vertical-align:super; text-shadow: 1px 1px #ffffff;"></span>
             </div>
         </div>
-            <div style="position: absolute; right: 20px; bottom:20px; z-index:1001">
+            <div style="position: absolute; right: 5px; bottom:15px; z-index:1001">
                 <div class="fb-like" data-width="50" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
                 <a href="https://twitter.com/share" class="twitter-share-button" data-via="turevskiy">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
@@ -204,9 +204,9 @@
         </div>
          <div style="position: absolute; right: 5px; top:75px; z-index:1001">
             <div>
-                <button type="button" id="mute" style="width:15px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute();SaveSettings();"></button>
+                <button type="button" id="mute" style="padding-left:0px; width:46px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute();SaveSettings();"></button>
                 <br />
-                <button type="button" id="continuePauseButton" disabled="disabled" class="headerButton" style="width:15px; background-image: url(img/play.png );" onclick="doStartStop();" ></button>
+                <button type="button" id="continuePauseButton" disabled="disabled" class="headerButton" style="padding-left:0px; width:46px; background-image: url(img/play.png );" onclick="doStartStop();" ></button>
             </div>
         </div>
 

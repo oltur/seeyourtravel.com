@@ -97,7 +97,7 @@
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 340px; height: 670px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 340px; height: 700px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
         <table border="0">
             <tr>
                 <td class="big">Track name:</td>
@@ -174,11 +174,12 @@
             <input name="trackData" id="trackData" type="hidden" />
         </p>
         <p class="big">
-            <select id="points" name="points" size="10" style="width: 300px" multiple="multiple">
+		Track points:<br/>
+            <select id="points" name="points" size="10" style="width: 330px" multiple="multiple">
             </select>
         </p>
         <p class="big">
-            <span>Point description (optional):</span><input id="pointDescr" name="pointDescr" type="text" value="" style="width: 100px" />
+            <span>Point description (optional):</span>&nbsp;<input id="pointDescr" name="pointDescr" type="text" value="" style="width: 120px" />
         </p>
         <p class="big">
             <asp:Button

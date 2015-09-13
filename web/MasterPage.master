@@ -84,7 +84,7 @@ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
 <body onresize="onBodyResize()">
     <form id="form1" runat="server">
         <div>
-            <div style="position: absolute; right: 55px; top: 5px; z-index: 1003">
+            <div style="position: absolute; right: 5px; top: 5px; z-index: 1003">
                 <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
             </div>
             <input id="showGoesOn" type="hidden" value="0" />
