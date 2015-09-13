@@ -147,7 +147,7 @@
             <div class="i" data-i18n="[html]help_content"> 
             </div>
         </div>
-        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 60px; left: 60px; width: 300px; height: 250px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 1001; top: 60px; left: 60px; width: 300px; height: 250px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
             <input id="scriptTextCheckBox" type="checkbox" title="Description" onchange="SaveSettings();$('#textToReadArea0').toggle('fold', 1000);" />
             <label for="scriptTextCheckBox" class="i" data-i18n="Description">Description</label>
             <br />

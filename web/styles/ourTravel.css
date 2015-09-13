@@ -101,22 +101,25 @@ input.glow.focus
   box-shadow: 0 0 5px 1px #969696;
 }
 
-/*@media all and (orientation:portrait) { 
+@media screen and (max-height: 599px) { 
     #imageDiv0 {
-        z-index: 100; border-width: 2px; height: 90%; width: 30%; position: absolute; top: 50px; left: 68%; overflow-x: hidden; overflow-y: hidden;
+        background: rgba(100,100,100,0.2); border-width: 0px; margin: 0 auto; z-index: 100; border-width: 2px; height: 35%; position: absolute; right: 5px; left: 5px; bottom: 5px; overflow-x: hidden; overflow-y: hidden;
     }
-        .photo {
+/*
+            .photo {
             width: 100%;
             margin-top: 1px;
             margin-bottom: 1px;
             margin-right: 1px;
             margin-left: 1px;
         }
+*/
 }
-@media all and (orientation:landscape) {*/
+@media screen and (min-height: 600px) {
     #imageDiv0 {
         background: rgba(100,100,100,0.2); border-width: 0px; margin: 0 auto; z-index: 100; border-width: 2px; height: 25%; position: absolute; right: 5px; left: 5px; bottom: 5px; overflow-x: hidden; overflow-y: hidden;
     }
+}
     #imageDiv0 .innerScrollArea {
         overflow: hidden;
         position: absolute;
@@ -136,13 +139,10 @@ input.glow.focus
         list-style-type: none;
         position: absolute;
     }
-
-
-        .photo {
+    .photo {
             /*height: 100%;*/
             margin-top: 0px;
             margin-bottom: 0px;
             margin-right: 0px;
             margin-left: 0px;
         }
-/*}*/
