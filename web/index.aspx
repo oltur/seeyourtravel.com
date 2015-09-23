@@ -70,6 +70,8 @@
         var slider1;
 		$(document).ready(function()
 		{
+$.jStorage.set("aaa", {a:"aa"});
+
 		    if (showSidePanel == "yes") {
 		        switchSidePanel(true);
 		    }
