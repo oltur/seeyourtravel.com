@@ -70,8 +70,6 @@
         var slider1;
 		$(document).ready(function()
 		{
-$.jStorage.set("aaa", {a:"aa"});
-
 		    if (showSidePanel == "yes") {
 		        switchSidePanel(true);
 		    }
@@ -324,7 +322,7 @@ $.jStorage.set("aaa", {a:"aa"});
                 .find('option')
                 .remove()
                 .end()
-            tracksList.append('<option value="Choose a track" data-i18n="Chooseatrack"></option>');
+            tracksList.append('<option value="Choose a track" data-i18n="Chooseatrack">Choose a track:</option>');
             for (var i = 0; i < fileList.length; i++) {
                 tracksList.append('<option value="' + fileList[i] + '">' + fileList[i] + '</option>');
             }

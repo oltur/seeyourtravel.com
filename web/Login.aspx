@@ -101,7 +101,7 @@
     <style type="text/css">
         #loginform {
         width: 300px;
-        height: 250px;
+        height: 300px;
 
         position:absolute; /*it can be fixed too*/
         left:0; right:0;
@@ -188,16 +188,15 @@
                     </fb:login-button>
                 </div>
             </td>
-            
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align:center; padding-top:30px;">
-                <asp:Button ID="DemoButton"  runat="server" Text="Try it now!" OnClick="DemoButton_Click" style="width:200px; height: 70px; font-size:large" class="i" data-i18n="[value]Demo;"/> 
-            </td>
         </tr>
         <tr>
             <td colspan="2">
                 <asp:Label ID="Message" runat="server" ForeColor="Red" Text="" class="i" data-i18n></asp:Label> </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center; padding-top:30px;">
+                <asp:Button ID="DemoButton"  runat="server" Text="Try it now!" OnClick="DemoButton_Click" style="width:200px; height: 70px; font-size:large" class="i" data-i18n="[value]Demo;"/> 
             </td>
         </tr>
     </table>
