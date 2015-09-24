@@ -9,6 +9,7 @@ var MAX_HERE_PLACES = 50;
 var MAX_GOOGLE_RADIUS = 10000;
 var GOOGLE_TYPES = ['lodging', 'restaurant']
 var sidePanelWidth = 200;
+var cacheImages = false;
 
 var iconWhereIAm = L.icon({
     iconUrl: ("img/youarehere.png"),
@@ -358,7 +359,14 @@ function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
             nextImage.width = photos[i].width * (divHeight / photos[i].height);
             nextImage.height = divHeight;
         }
-        nextImage.src = photos[i].photo_file_url;
+        if (cacheImages == true) {
+            getFromCacheOrServer(photos[i].photo_file_url, nextImage, function (obj, data) {
+                obj.src = data;
+            });
+        }
+        else {
+            nextImage.src = photos[i].photo_file_url;
+        }
 
         //nextImage.style.maxHeight = $("#pictureMaxHeight").val() + "px";
         //TODO: translate
@@ -880,5 +888,32 @@ function createPhotoMarker(place, isGoogle) {
 //  });
 //}
 
+function getFromCacheOrServer(url, obj, handler) {
 
+    var data = $.jStorage.get(url);
+    if (!data) {
+        // if not - load the data from the server
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.responseType = 'blob';
+        xhr.onload = function (e) {
+            if (this.status == 200) {
+                // Note: .response instead of .responseText
+                var blob = new Blob([this.response], { type: 'image/png' });
+                var reader = new window.FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function (event) {
+                    var data = event.target.result;
+                    // and save it
+                    $.jStorage.set(url, data, { TTL: 1000 * 60 * 60 * 24 });
+                    handler(obj, data);
+                };
+            }
+        };
+        xhr.send();
+    }
+    else {
+        handler(obj, data);
+    }
+}
 
