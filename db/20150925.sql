@@ -2,6 +2,9 @@ USE [Master]
 go
 Create database [SeeYourTravel]
 GO
+use [SeeYourTravel]
+
+GO
 /****** Object:  User [SeeYourTravel]    Script Date: 9/25/2015 7:39:52 PM ******/
 CREATE USER [SeeYourTravel] FOR LOGIN [SeeYourTravel] WITH DEFAULT_SCHEMA=[dbo]
 GO
