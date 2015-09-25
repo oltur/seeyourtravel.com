@@ -5,7 +5,7 @@
 ,"photoLocationTolerancy":100
 ,"stepsToRedraw":400
 ,"stepsToShowPhoto":100
-,"numOfPhotos":20
+,"numOfPhotos":10
 ,"velocityMetersPerSec":5000
 ,"icon":"mycar.png"
 ,"audioSrc":"Tirol.mp3"

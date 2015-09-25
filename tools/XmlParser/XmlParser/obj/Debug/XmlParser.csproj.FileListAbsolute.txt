@@ -1,0 +1,6 @@
+D:\ot\Projects\seeyourtravel.com-git\seeyourtravel.com\tools\XmlParser\XmlParser\bin\Debug\XmlParser.exe.config
+D:\ot\Projects\seeyourtravel.com-git\seeyourtravel.com\tools\XmlParser\XmlParser\bin\Debug\XmlParser.exe
+D:\ot\Projects\seeyourtravel.com-git\seeyourtravel.com\tools\XmlParser\XmlParser\bin\Debug\XmlParser.pdb
+D:\ot\Projects\seeyourtravel.com-git\seeyourtravel.com\tools\XmlParser\XmlParser\obj\Debug\XmlParser.csprojResolveAssemblyReference.cache
+D:\ot\Projects\seeyourtravel.com-git\seeyourtravel.com\tools\XmlParser\XmlParser\obj\Debug\XmlParser.exe
+D:\ot\Projects\seeyourtravel.com-git\seeyourtravel.com\tools\XmlParser\XmlParser\obj\Debug\XmlParser.pdb

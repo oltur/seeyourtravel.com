@@ -17,7 +17,7 @@ using System.Drawing.Imaging;
 
 public partial class services_get_thumbnail : System.Web.UI.Page
 {
-    private Regex validChars = new Regex("[^a-zA-Z0-9_ ]");
+    private Regex validChars = new Regex("[^a-zA-Z0-9-_ ]");
 
     private int _maximumDimensionSmall = 100;
     private int _maximumDimensionMedium = 300;
@@ -37,7 +37,7 @@ public partial class services_get_thumbnail : System.Web.UI.Page
         var sizeParam = request.QueryString["size"] ?? "medium";
         int _maximumDimension = sizeParam != "medium" ? _maximumDimensionSmall : _maximumDimensionMedium;
 
-        var photo = request.QueryString["P"] ?? String.Empty;
+        var photo = request.QueryString["p"] ?? String.Empty;
         CompositingQuality compositingQuality = CompositingQuality.Default;
         InterpolationMode interpolationMode = InterpolationMode.Default;
         try
@@ -98,15 +98,16 @@ public partial class services_get_thumbnail : System.Web.UI.Page
                     }
                 }
                 // Setup caching
-                //HttpCachePolicy cachePolicy = context.Response.Cache;
-                //cachePolicy.SetCacheability(HttpCacheability.Public);
-                //cachePolicy.VaryByParams["p"] = true;
-                //cachePolicy.VaryByParams["cq"] = true;
-                //cachePolicy.VaryByParams["im"] = true;
-                //cachePolicy.SetOmitVaryStar(true);
-                //cachePolicy.SetExpires(DateTime.Now + TimeSpan.FromDays(365));
-                //cachePolicy.SetValidUntilExpires(true);
-                //cachePolicy.SetLastModified(lastModified);
+                HttpCachePolicy cachePolicy = context.Response.Cache;
+                cachePolicy.SetCacheability(HttpCacheability.Public);
+                cachePolicy.VaryByParams["p"] = true;
+                cachePolicy.VaryByParams["cq"] = true;
+                cachePolicy.VaryByParams["im"] = true;
+                cachePolicy.VaryByParams["size"] = true;
+                cachePolicy.SetOmitVaryStar(true);
+                cachePolicy.SetExpires(DateTime.Now + TimeSpan.FromDays(365));
+                cachePolicy.SetValidUntilExpires(true);
+                cachePolicy.SetLastModified(lastModified);
                 // Content-type
                 context.Response.ContentType = "image/png";
                 // Send the contents (need to use a searchable intermediary stream for png
