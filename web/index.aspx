@@ -312,7 +312,7 @@
 
             var fileListString = $.ajax(
             {
-                url: translateTracksPath('filelist.aspx' + "?" + Math.random()),
+                url: translateTracksContentPath('filelist.aspx' + "?" + Math.random()),
                 async: false,
                 dataType: 'json'
             }
