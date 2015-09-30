@@ -140,7 +140,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            if(position==0) {
+                return MapPlaceholderFragment.newInstance(position + 1);
+            }
+            else {
+                return EmptyPlaceholderFragment.newInstance(position + 1);
+            }
         }
 
         @Override
@@ -165,9 +170,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
     /**
-     * A placeholder fragment containing a simple view.
+     * A placeholder fragment containing a map view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class MapPlaceholderFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -180,15 +185,15 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static MapPlaceholderFragment newInstance(int sectionNumber) {
+            MapPlaceholderFragment fragment = new MapPlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
         }
 
-        public PlaceholderFragment() {
+        public MapPlaceholderFragment() {
         }
 
         @Override
@@ -224,9 +229,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             settings.setAllowFileAccessFromFileURLs(true);
             settings.setAllowUniversalAccessFromFileURLs(true);
             settings.setDatabaseEnabled(true);
-            settings.setAppCacheEnabled(true);
+            //settings.setAppCacheEnabled(true);
             settings.setDomStorageEnabled(true);
             settings.setSupportZoom(true);
+
+            settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+            settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
             settings.setPluginState(WebSettings.PluginState.ON);
             //settings.setMediaPlaybackRequiresUserGesture(false);
@@ -269,9 +277,44 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                 }
             });
 
-            webView1.loadUrl("https://seeyourtravel.com/Login.aspx?ReturnUrl=%2findex.aspx%3ftrackname%3d2014-Germany&action=demo");
+            webView1.loadUrl("https://seeyourtravel.com/index.html");
 
             return rootView;
+        }
+    }
+
+    /**
+     * A placeholder fragment containing a map view.
+     */
+    public static class EmptyPlaceholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static EmptyPlaceholderFragment newInstance(int sectionNumber) {
+            EmptyPlaceholderFragment fragment = new EmptyPlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        public EmptyPlaceholderFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+             return rootView;
         }
     }
 

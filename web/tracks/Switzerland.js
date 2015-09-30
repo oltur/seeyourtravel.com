@@ -2,7 +2,7 @@
 		"name":"Switz",
 		"copyright":"AT",
 		"defaultScale":10,
-	        "photoLocationTolerancy": 50,
+	        "photoLocationTolerancy": 200,
         	"stepsToRedraw": 10,
 	        "stepsToShowPhoto": 5,
         	"velocityMetersPerSec": 500,
