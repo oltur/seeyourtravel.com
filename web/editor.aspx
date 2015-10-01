@@ -235,7 +235,7 @@
             });
 
             var icon = L.icon({
-                iconUrl: ("tracks/mycar.png"),
+                iconUrl: ("tracks/content/mycar.png"),
                 iconSize: [50, 50],
                 iconAnchor: [1, 50],
                 shadowUrl: null
@@ -245,7 +245,7 @@
             L.control.zoom({ position: 'topright' }).addTo(map);
             L.control.scale({ position: 'bottomleft' }).addTo(map);
             tileLayer = L.tileLayer(mapTileUrl, {
-                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+                attribution: 'Map data &copy; <a href="https://www.mapbox.com/">MapBox</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
                 maxZoom: 18,
                 id: "mapbox.streets"
             });
@@ -332,7 +332,7 @@
         //});
 
         if (trackname) {
-            var initialTrack = loadTrackSync(translateTracksPath(trackname));
+            var initialTrack = loadTrackSync(translateTracksPath(trackname+".js"));
 
             $("#name").val(initialTrack.name);
             $("#copyright").val(initialTrack.copyright);
