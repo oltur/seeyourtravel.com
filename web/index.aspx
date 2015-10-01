@@ -1,4 +1,4 @@
-<%@ Page Title="See Your Travel" Language="C#" MasterPageFile="MasterPage.master" %>
+<%@ Page Title="See Your Travel" Language="C#" MasterPageFile="MasterPage.master" CodeFile="Index.aspx.cs" Inherits="Index"%>
 
 <%@ Import Namespace="System.IO" %>
 

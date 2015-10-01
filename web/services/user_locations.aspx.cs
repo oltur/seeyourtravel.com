@@ -30,6 +30,7 @@ public partial class services_user_locations : System.Web.UI.Page
         if (string.Compare(action, "getfriendslocations", true) == 0)
         {
             string userId = Request.QueryString["userId"];
+            Guid userId2 = string.IsNullOrEmpty(userId) ? Guid.Empty : Guid.Parse(userId);
 
             string resultgetfriendslocations = @"/**/" + callback + @"( [{0}] )";
             string userTemplate = @"{{
@@ -40,7 +41,7 @@ public partial class services_user_locations : System.Web.UI.Page
 'time' : '{4}'
 }}";
 
-            var lastLocations = db.GetFriendsLocations(Guid.Parse(userId)).ToList();
+            var lastLocations = db.GetFriendsLocations(userId2).ToList();
             var strLocs = new List<string>(lastLocations.Count);
             foreach (var location in lastLocations)
             {
@@ -63,31 +64,33 @@ public partial class services_user_locations : System.Web.UI.Page
             string lat = Request.QueryString["lat"];
             string lng = Request.QueryString["lng"];
 
-            Dictionary<string, Location> locations;
-            if (this.Application["UserLocations"] != null)
+            if (!string.IsNullOrEmpty(userId))
             {
-                locations = (Dictionary<string,Location>)this.Application["UserLocations"];
+                Dictionary<string, Location> locations;
+                if (this.Application["UserLocations"] != null)
+                {
+                    locations = (Dictionary<string, Location>)this.Application["UserLocations"];
+                }
+                else
+                {
+                    locations = new Dictionary<string, Location>();
+                }
+
+                if (locations.ContainsKey(userId))
+                    locations.Remove(userId);
+                locations.Add(userId, new Location() { lat = Double.Parse(lat), lng = Double.Parse(lng) });
+
+                this.Application["UserLocations"] = locations;
+
+                UserLocation userLocation = new UserLocation();
+                userLocation.UserLocationID = Guid.NewGuid();
+                userLocation.UserID = Guid.Parse(userId);
+                userLocation.Lat = double.Parse(lat);
+                userLocation.Lng = double.Parse(lng);
+                userLocation.Time = DateTime.UtcNow;
+                db.UserLocations.Add(userLocation);
+                db.SaveChanges();
             }
-            else
-            {
-                locations = new Dictionary<string, Location>();
-            }
-
-            if(locations.ContainsKey(userId))
-                locations.Remove(userId);
-            locations.Add(userId, new Location() { lat = Double.Parse(lat), lng = Double.Parse(lng) });
-
-            this.Application["UserLocations"] = locations;
-
-            UserLocation userLocation = new UserLocation();
-            userLocation.UserLocationID = Guid.NewGuid();
-            userLocation.UserID = Guid.Parse(userId);
-            userLocation.Lat = double.Parse(lat);
-            userLocation.Lng = double.Parse(lng);
-            userLocation.Time = DateTime.UtcNow;
-            db.UserLocations.Add(userLocation);
-            db.SaveChanges();
-
             string resultsenduserlocation = @"/**/" + callback + @"( {} )";
 
             Response.Clear();
