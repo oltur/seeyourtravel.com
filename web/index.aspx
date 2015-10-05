@@ -4,6 +4,7 @@
 
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
     <script>
+        var errorMessage = '<%=Request["errorMessage"]%>';
         var trackParam = '<%=Request["trackname"]%>';
         var showSidePanel = '<%=Request["showSidePanel"]%>';
 
@@ -70,6 +71,10 @@
         var slider1;
 		$(document).ready(function()
 		{
+		    if(errorMessage != "") {
+                toastr.error(errorMessage, "ERROR", { timeOut: 5000, extendedTimeOut: 10000 });
+		    }
+
 		    if (showSidePanel == "yes") {
 		        switchSidePanel(true);
 		    }
@@ -312,7 +317,7 @@
 
             var fileListString = $.ajax(
             {
-                url: translateTracksContentPath('filelist.aspx' + "?" + Math.random()),
+                url: ('api/filelist.aspx' + "?" + Math.random()),
                 async: false,
                 dataType: 'json'
             }
@@ -324,7 +329,8 @@
                 .end()
             tracksList.append('<option value="Choose a track" data-i18n="Chooseatrack">Choose a track:</option>');
             for (var i = 0; i < fileList.length; i++) {
-                tracksList.append('<option value="' + fileList[i] + '">' + fileList[i] + '</option>');
+                var parts = fileList[i].split(';', 2);
+                tracksList.append('<option value="' + parts[0] + '">' + parts[1] + '</option>');
             }
 
             if (trackParam != '') {

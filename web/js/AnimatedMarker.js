@@ -70,14 +70,19 @@ L.AnimatedMarker = L.Marker.extend({
         }
     },
 
-    resetAM:function (trackData, options) {
-        this._latlngs = trackData;
-        this._i = 0;
-        this.options = options;
-    },
-
     resetAM: function () {
         this._i = 0;
+
+        var t = this._latlngs[0];
+        if (L.DomUtil.TRANSITION) {
+            if (this._icon) {
+                this._icon.style[L.DomUtil.TRANSITION] = '';
+            }
+            if (this._shadow) {
+                this._shadow.style[L.DomUtil.TRANSITION] = '';
+            }
+        }
+        this.setLatLng(t);
     },
 
     isFinished:function() {
@@ -91,7 +96,12 @@ L.AnimatedMarker = L.Marker.extend({
 
         // Normalize the transition speed from vertex to vertex
         if (this._i < len) {
-            speed = this._latlngs[this._i - 1].distanceTo(this._latlngs[this._i]) / this.options.distance * this.options.interval;
+            if (this._i > 0) {
+                speed = this._latlngs[this._i - 1].distanceTo(this._latlngs[this._i]) / this.options.distance * this.options.interval;
+            }
+            else {
+                speed = this._latlngs[this._i + 1].distanceTo(this._latlngs[this._i]) / this.options.distance * this.options.interval;
+            }
         }
 
         // Only if CSS3 transitions are supported
@@ -115,11 +125,10 @@ L.AnimatedMarker = L.Marker.extend({
                 self.options.onStep(t);
             }, 1);
 
-        // Queue up the animation to the next next vertex
+        // Queue up the animation to the next vertex
         this._tid = setTimeout(function () {
             if ((self._i === len)) {
                 self.options.onEnd.apply(self, Array.prototype.slice.call(arguments));
-                
             } else {
                 self.animate();
             }
@@ -128,15 +137,21 @@ L.AnimatedMarker = L.Marker.extend({
 
     // Start the animation
     start:function () {
-        if (this.isFinished()) {
-            this.resetAM();
-        }
-
         if (!this._i) {
             this._i = 1;
         }
+        else {
+            this.resetAM();
+        }
 
-        this.animate();
+        //if (this.isFinished()) {
+        //    this.initialize();
+        //}
+
+        var mythis = this;
+        setTimeout(function () {
+            mythis.animate();
+        }, 10);
     },
 
     // Stop the animation in place

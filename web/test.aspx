@@ -19,7 +19,7 @@
 		    //        }
 		    //});
 
-		    getFromCacheOrServer(url, function (data) {
+		    getFromCacheOrServer(url, null, function (x, data) {
 		        var i = $("#i");
 		        i.attr("src", data);
 		    });

@@ -10,6 +10,108 @@
 using System;
 using System.Collections.Generic;
 
+public partial class Image
+{
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public Image()
+    {
+        this.ImageUsers = new HashSet<ImageUser>();
+        this.PlaceImages = new HashSet<PlaceImage>();
+    }
+
+    public System.Guid ImageId { get; set; }
+    public string FileName { get; set; }
+    public bool IsPublic { get; set; }
+    public double Lat { get; set; }
+    public double Lng { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<ImageUser> ImageUsers { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<PlaceImage> PlaceImages { get; set; }
+}
+
+public partial class ImageUser
+{
+    public System.Guid ImageUserID { get; set; }
+    public System.Guid ImageID { get; set; }
+    public System.Guid UserID { get; set; }
+
+    public virtual Image Image { get; set; }
+    public virtual User User { get; set; }
+}
+
+public partial class Place
+{
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public Place()
+    {
+        this.PlaceImages = new HashSet<PlaceImage>();
+        this.PlaceTypePlaces = new HashSet<PlaceTypePlace>();
+        this.PlaceUsers = new HashSet<PlaceUser>();
+    }
+
+    public System.Guid PlaceID { get; set; }
+    public double Lat { get; set; }
+    public double Lng { get; set; }
+    public string Name { get; set; }
+    public string Vicinity { get; set; }
+    public double Rating { get; set; }
+    public bool IsPublic { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<PlaceImage> PlaceImages { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<PlaceTypePlace> PlaceTypePlaces { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<PlaceUser> PlaceUsers { get; set; }
+}
+
+public partial class PlaceImage
+{
+    public System.Guid PlaceImageID { get; set; }
+    public System.Guid PlaceID { get; set; }
+    public System.Guid ImageID { get; set; }
+
+    public virtual Image Image { get; set; }
+    public virtual Place Place { get; set; }
+}
+
+public partial class PlaceType
+{
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public PlaceType()
+    {
+        this.PlaceTypePlaces = new HashSet<PlaceTypePlace>();
+    }
+
+    public System.Guid PlaceTypeID { get; set; }
+    public string Name { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<PlaceTypePlace> PlaceTypePlaces { get; set; }
+}
+
+public partial class PlaceTypePlace
+{
+    public System.Guid PlaceTypePlaceID { get; set; }
+    public System.Guid PlaceTypeID { get; set; }
+    public System.Guid PlaceID { get; set; }
+
+    public virtual Place Place { get; set; }
+    public virtual PlaceType PlaceType { get; set; }
+}
+
+public partial class PlaceUser
+{
+    public System.Guid PlaceUserID { get; set; }
+    public System.Guid PlaceID { get; set; }
+    public System.Guid UserID { get; set; }
+
+    public virtual Place Place { get; set; }
+    public virtual User User { get; set; }
+}
+
 public partial class Role
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,6 +127,42 @@ public partial class Role
     public virtual ICollection<UserRole> UserRoles { get; set; }
 }
 
+public partial class sysdiagram
+{
+    public string name { get; set; }
+    public int principal_id { get; set; }
+    public int diagram_id { get; set; }
+    public Nullable<int> version { get; set; }
+    public byte[] definition { get; set; }
+}
+
+public partial class Track
+{
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public Track()
+    {
+        this.TrackUsers = new HashSet<TrackUser>();
+    }
+
+    public System.Guid TrackID { get; set; }
+    public string FileName { get; set; }
+    public bool IsPublic { get; set; }
+    public string Description { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<TrackUser> TrackUsers { get; set; }
+}
+
+public partial class TrackUser
+{
+    public System.Guid TrackUserID { get; set; }
+    public System.Guid TrackID { get; set; }
+    public System.Guid UserID { get; set; }
+
+    public virtual Track Track { get; set; }
+    public virtual User User { get; set; }
+}
+
 public partial class User
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -33,6 +171,9 @@ public partial class User
         this.UserLocations = new HashSet<UserLocation>();
         this.UserRoles = new HashSet<UserRole>();
         this.UserLogins = new HashSet<UserLogin>();
+        this.ImageUsers = new HashSet<ImageUser>();
+        this.PlaceUsers = new HashSet<PlaceUser>();
+        this.TrackUsers = new HashSet<TrackUser>();
     }
 
     public System.Guid UserID { get; set; }
@@ -47,6 +188,12 @@ public partial class User
     public virtual ICollection<UserRole> UserRoles { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<UserLogin> UserLogins { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<ImageUser> ImageUsers { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<PlaceUser> PlaceUsers { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<TrackUser> TrackUsers { get; set; }
 }
 
 public partial class UserLocation
@@ -90,4 +237,12 @@ public partial class GetFriendsLocations_Result
     public double Lat { get; set; }
     public double Lng { get; set; }
     public System.DateTime Time { get; set; }
+}
+
+public partial class GetUserandPublicTracks_Result
+{
+    public System.Guid TrackID { get; set; }
+    public string FileName { get; set; }
+    public bool IsPublic { get; set; }
+    public string Description { get; set; }
 }

@@ -596,7 +596,6 @@ function init(filename) {
             autoStart: false,
             onEnd: function () {
                 if ($("#loopTrackCheckBox").is(':checked')) {
-                    animatedMarker.resetAM();
                     animatedMarker.start();
                 }
             },

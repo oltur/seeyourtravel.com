@@ -1,6 +1,7 @@
 ﻿<%@ Master Language="C#" %>
 <!DOCTYPE html>
-<html manifest="manifest.appcache" xmlns="http://www.w3.org/1999/xhtml">
+<html  xmlns="http://www.w3.org/1999/xhtml">
+<!--manifest="manifest.appcache"-->
 <head runat="server">
 
     <link rel="SHORTCUT ICON" href="favicon.ico"/>

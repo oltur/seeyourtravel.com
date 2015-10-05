@@ -1896,3 +1896,54 @@ USE [master]
 GO
 ALTER DATABASE [seeyourtravel] SET  READ_WRITE 
 GO
+
+insert into Track (FileName, IsPublic,Description) values ('2014-Germany-NoSound.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('2014-Germany.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('2014-Norway.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('2015-CastlesLviv.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('2015-KopachivObukhiv.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('2015-LvivKyiv.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Aachen-To-Koeln.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Barcelona-Andorra.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('content', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Croatia-Split.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Deutschland-BadW”rishofen-Hahntennjoch-™tz.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Dreilaenderpunkt-Fahrrad-1.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Dreilaenderpunkt-Fahrrad-2.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Georgia.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Iceland-Akureyri-To-Reykiavik.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Israel-ToDeadSea.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Italy-Pompei-Vesuvius.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Koh Samui.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Kyiv Minsk.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('q', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Switzerland.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('t.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Ukraine-Bukovyna.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Ukraine-Kharkov-Bohodukhiv-Poltava.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Ukraine-Kyiv-Pechersk.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Ukraine-Kyiv-Pyrohovo.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Ukraine-Lutsk.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Ukraine-Ternopil.js', 1,'')
+insert into Track (FileName, IsPublic,Description) values ('Yacht-Greece.js', 1,'')
+GO
+ALTER FUNCTION dbo.GetUserandPublicTracks 
+(	
+	@UserID uniqueidentifier 
+)
+RETURNS TABLE 
+AS
+RETURN 
+(
+	SELECT t.* from track t 
+	left join TrackUser tu on t.TrackID = tu.TrackID 
+	left join [User] u on tu.UserID = u.UserID and tu.UserID = @UserID
+	left join [UserRole] ur on u.UserID = ur.UserID
+	left join [Role] r on ur.RoleID = r.RoleID
+	WHERE t.IsPublic = 1 OR u.UserName = 'admin' OR r.RoleName = 'admin'
+)
+GO
+INSERT [dbo].[Role] ([RoleID], [RoleName]) VALUES (N'5195a2d5-0b51-44c4-b672-7383482bc77a', N'admin')
+GO
+INSERT [dbo].[UserRole] ([UserRoleID], [UserID], [RoleID]) VALUES (N'087a788e-7245-45c2-a369-2d8cf02ce5dc', N'c9f148f7-923a-46b0-8b7c-bd4b54d90886', N'5195a2d5-0b51-44c4-b672-7383482bc77a')
+GO

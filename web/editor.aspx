@@ -105,6 +105,11 @@
                     <input id="name" name="name" type="text" value="New Track" /></td>
             </tr>
             <tr>
+                <td class="big">Make track public?</td>
+                <td>
+                    <input id="isPublic" name="isPublic" type="checkbox" value="isPublic" /></td>
+            </tr>
+            <tr>
                 <td class="big">Copyright:</td>
                 <td>
                     <input id="copyright" name="copyright" type="text" value="(c)" /></td>

@@ -5,12 +5,100 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SeeYourTravelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsPublic" Type="bit" Nullable="false" />
+          <Property Name="Lat" Type="float" Nullable="false" />
+          <Property Name="Lng" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ImageUser">
+          <Key>
+            <PropertyRef Name="ImageUserID" />
+          </Key>
+          <Property Name="ImageUserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ImageID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="PlaceID" />
+          </Key>
+          <Property Name="PlaceID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Lat" Type="float" Nullable="false" />
+          <Property Name="Lng" Type="float" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Vicinity" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Rating" Type="float" Nullable="false" />
+          <Property Name="IsPublic" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlaceImage">
+          <Key>
+            <PropertyRef Name="PlaceImageID" />
+          </Key>
+          <Property Name="PlaceImageID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PlaceID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ImageID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlaceType">
+          <Key>
+            <PropertyRef Name="PlaceTypeID" />
+          </Key>
+          <Property Name="PlaceTypeID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlaceTypePlace">
+          <Key>
+            <PropertyRef Name="PlaceTypePlaceID" />
+          </Key>
+          <Property Name="PlaceTypePlaceID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PlaceTypeID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PlaceID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlaceUser">
+          <Key>
+            <PropertyRef Name="PlaceUserID" />
+          </Key>
+          <Property Name="PlaceUserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PlaceID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleID" />
           </Key>
           <Property Name="RoleID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Track">
+          <Key>
+            <PropertyRef Name="TrackID" />
+          </Key>
+          <Property Name="TrackID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsPublic" Type="bit" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TrackUser">
+          <Key>
+            <PropertyRef Name="TrackUserID" />
+          </Key>
+          <Property Name="TrackUserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TrackID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -52,6 +140,146 @@
           <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RoleID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <Association Name="FK_ImageUser_Image">
+          <End Role="Image" Type="Self.Image" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ImageUser" Type="Self.ImageUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="ImageUser">
+              <PropertyRef Name="ImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImageUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ImageUser" Type="Self.ImageUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ImageUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceImage_Image">
+          <End Role="Image" Type="Self.Image" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlaceImage" Type="Self.PlaceImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="PlaceImage">
+              <PropertyRef Name="ImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceImage_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlaceImage" Type="Self.PlaceImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceID" />
+            </Principal>
+            <Dependent Role="PlaceImage">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceTypePlace_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlaceTypePlace" Type="Self.PlaceTypePlace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceID" />
+            </Principal>
+            <Dependent Role="PlaceTypePlace">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceTypePlace_PlaceType">
+          <End Role="PlaceType" Type="Self.PlaceType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlaceTypePlace" Type="Self.PlaceTypePlace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlaceType">
+              <PropertyRef Name="PlaceTypeID" />
+            </Principal>
+            <Dependent Role="PlaceTypePlace">
+              <PropertyRef Name="PlaceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceUser_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlaceUser" Type="Self.PlaceUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceID" />
+            </Principal>
+            <Dependent Role="PlaceUser">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlaceUser" Type="Self.PlaceUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PlaceUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrackUser_Track">
+          <End Role="Track" Type="Self.Track" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TrackUser" Type="Self.TrackUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Track">
+              <PropertyRef Name="TrackID" />
+            </Principal>
+            <Dependent Role="TrackUser">
+              <PropertyRef Name="TrackID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrackUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TrackUser" Type="Self.TrackUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="TrackUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserLocation_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="UserLocation" Type="Self.UserLocation" Multiplicity="*" />
@@ -103,12 +331,75 @@
         <Function Name="GetFriendsLocations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
         </Function>
+        <Function Name="GetUserandPublicTracks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="TrackID" Type="uniqueidentifier" Nullable="false" />
+                <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="IsPublic" Type="bit" Nullable="false" />
+                <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <EntityContainer Name="SeeYourTravelModelStoreContainer">
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImageUser" EntityType="Self.ImageUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlaceImage" EntityType="Self.PlaceImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlaceType" EntityType="Self.PlaceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlaceTypePlace" EntityType="Self.PlaceTypePlace" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlaceUser" EntityType="Self.PlaceUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Track" EntityType="Self.Track" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TrackUser" EntityType="Self.TrackUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLocation" EntityType="Self.UserLocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLogin" EntityType="Self.UserLogin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ImageUser_Image" Association="Self.FK_ImageUser_Image">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="ImageUser" EntitySet="ImageUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImageUser_User" Association="Self.FK_ImageUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ImageUser" EntitySet="ImageUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceImage_Image" Association="Self.FK_PlaceImage_Image">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="PlaceImage" EntitySet="PlaceImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceImage_Place" Association="Self.FK_PlaceImage_Place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="PlaceImage" EntitySet="PlaceImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceTypePlace_Place" Association="Self.FK_PlaceTypePlace_Place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="PlaceTypePlace" EntitySet="PlaceTypePlace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceTypePlace_PlaceType" Association="Self.FK_PlaceTypePlace_PlaceType">
+            <End Role="PlaceType" EntitySet="PlaceType" />
+            <End Role="PlaceTypePlace" EntitySet="PlaceTypePlace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceUser_Place" Association="Self.FK_PlaceUser_Place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="PlaceUser" EntitySet="PlaceUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceUser_User" Association="Self.FK_PlaceUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="PlaceUser" EntitySet="PlaceUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrackUser_Track" Association="Self.FK_TrackUser_Track">
+            <End Role="Track" EntitySet="Track" />
+            <End Role="TrackUser" EntitySet="TrackUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrackUser_User" Association="Self.FK_TrackUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="TrackUser" EntitySet="TrackUser" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserLocation_User" Association="Self.FK_UserLocation_User">
             <End Role="User" EntitySet="User" />
             <End Role="UserLocation" EntitySet="UserLocation" />
@@ -150,6 +441,9 @@
           <Property Name="Disabled" Type="Boolean" />
           <NavigationProperty Name="UserLogins" Relationship="SeeYourTravelModel.FK_UserLogin_User" FromRole="User" ToRole="UserLogin" />
           <Property Name="FacebookId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ImageUsers" Relationship="SeeYourTravelModel.FK_ImageUser_User" FromRole="User" ToRole="ImageUser" />
+          <NavigationProperty Name="PlaceUsers" Relationship="SeeYourTravelModel.FK_PlaceUser_User" FromRole="User" ToRole="PlaceUser" />
+          <NavigationProperty Name="TrackUsers" Relationship="SeeYourTravelModel.FK_TrackUser_User" FromRole="User" ToRole="TrackUser" />
         </EntityType>
         <EntityType Name="UserLocation">
           <Key>
@@ -231,6 +525,59 @@
             <End Role="UserLogin" EntitySet="UserLogins" />
           </AssociationSet>
           <FunctionImport Name="GetFriendsLocations" ReturnType="Collection(SeeYourTravelModel.GetFriendsLocations_Result)">
+          <Parameter Name="UserID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <EntitySet Name="Images" EntityType="SeeYourTravelModel.Image" />
+          <EntitySet Name="ImageUsers" EntityType="SeeYourTravelModel.ImageUser" />
+          <EntitySet Name="Places" EntityType="SeeYourTravelModel.Place" />
+          <EntitySet Name="PlaceImages" EntityType="SeeYourTravelModel.PlaceImage" />
+          <EntitySet Name="PlaceTypes" EntityType="SeeYourTravelModel.PlaceType" />
+          <EntitySet Name="PlaceTypePlaces" EntityType="SeeYourTravelModel.PlaceTypePlace" />
+          <EntitySet Name="PlaceUsers" EntityType="SeeYourTravelModel.PlaceUser" />
+          <EntitySet Name="sysdiagrams" EntityType="SeeYourTravelModel.sysdiagram" />
+          <EntitySet Name="Tracks" EntityType="SeeYourTravelModel.Track" />
+          <EntitySet Name="TrackUsers" EntityType="SeeYourTravelModel.TrackUser" />
+          <AssociationSet Name="FK_ImageUser_Image" Association="SeeYourTravelModel.FK_ImageUser_Image">
+            <End Role="Image" EntitySet="Images" />
+            <End Role="ImageUser" EntitySet="ImageUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceImage_Image" Association="SeeYourTravelModel.FK_PlaceImage_Image">
+            <End Role="Image" EntitySet="Images" />
+            <End Role="PlaceImage" EntitySet="PlaceImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImageUser_User" Association="SeeYourTravelModel.FK_ImageUser_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ImageUser" EntitySet="ImageUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceImage_Place" Association="SeeYourTravelModel.FK_PlaceImage_Place">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="PlaceImage" EntitySet="PlaceImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceTypePlace_Place" Association="SeeYourTravelModel.FK_PlaceTypePlace_Place">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="PlaceTypePlace" EntitySet="PlaceTypePlaces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceUser_Place" Association="SeeYourTravelModel.FK_PlaceUser_Place">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="PlaceUser" EntitySet="PlaceUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceTypePlace_PlaceType" Association="SeeYourTravelModel.FK_PlaceTypePlace_PlaceType">
+            <End Role="PlaceType" EntitySet="PlaceTypes" />
+            <End Role="PlaceTypePlace" EntitySet="PlaceTypePlaces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceUser_User" Association="SeeYourTravelModel.FK_PlaceUser_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PlaceUser" EntitySet="PlaceUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrackUser_Track" Association="SeeYourTravelModel.FK_TrackUser_Track">
+            <End Role="Track" EntitySet="Tracks" />
+            <End Role="TrackUser" EntitySet="TrackUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrackUser_User" Association="SeeYourTravelModel.FK_TrackUser_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="TrackUser" EntitySet="TrackUsers" />
+          </AssociationSet>
+          <FunctionImport Name="GetUserandPublicTracks" IsComposable="true" ReturnType="Collection(SeeYourTravelModel.GetUserandPublicTracks_Result)">
             <Parameter Name="UserID" Mode="In" Type="Guid" />
           </FunctionImport>
         </EntityContainer>
@@ -265,6 +612,257 @@
           <Property Type="Double" Name="Lat" Nullable="false" />
           <Property Type="Double" Name="Lng" Nullable="false" />
           <Property Type="DateTime" Name="Time" Nullable="false" Precision="23" />
+        </ComplexType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="Guid" Nullable="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <Property Name="Lat" Type="Double" Nullable="false" />
+          <Property Name="Lng" Type="Double" Nullable="false" />
+          <NavigationProperty Name="ImageUsers" Relationship="SeeYourTravelModel.FK_ImageUser_Image" FromRole="Image" ToRole="ImageUser" />
+          <NavigationProperty Name="PlaceImages" Relationship="SeeYourTravelModel.FK_PlaceImage_Image" FromRole="Image" ToRole="PlaceImage" />
+        </EntityType>
+        <EntityType Name="ImageUser">
+          <Key>
+            <PropertyRef Name="ImageUserID" />
+          </Key>
+          <Property Name="ImageUserID" Type="Guid" Nullable="false" />
+          <Property Name="ImageID" Type="Guid" Nullable="false" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Image" Relationship="SeeYourTravelModel.FK_ImageUser_Image" FromRole="ImageUser" ToRole="Image" />
+          <NavigationProperty Name="User" Relationship="SeeYourTravelModel.FK_ImageUser_User" FromRole="ImageUser" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="PlaceID" />
+          </Key>
+          <Property Name="PlaceID" Type="Guid" Nullable="false" />
+          <Property Name="Lat" Type="Double" Nullable="false" />
+          <Property Name="Lng" Type="Double" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Vicinity" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="Double" Nullable="false" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PlaceImages" Relationship="SeeYourTravelModel.FK_PlaceImage_Place" FromRole="Place" ToRole="PlaceImage" />
+          <NavigationProperty Name="PlaceTypePlaces" Relationship="SeeYourTravelModel.FK_PlaceTypePlace_Place" FromRole="Place" ToRole="PlaceTypePlace" />
+          <NavigationProperty Name="PlaceUsers" Relationship="SeeYourTravelModel.FK_PlaceUser_Place" FromRole="Place" ToRole="PlaceUser" />
+        </EntityType>
+        <EntityType Name="PlaceImage">
+          <Key>
+            <PropertyRef Name="PlaceImageID" />
+          </Key>
+          <Property Name="PlaceImageID" Type="Guid" Nullable="false" />
+          <Property Name="PlaceID" Type="Guid" Nullable="false" />
+          <Property Name="ImageID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Image" Relationship="SeeYourTravelModel.FK_PlaceImage_Image" FromRole="PlaceImage" ToRole="Image" />
+          <NavigationProperty Name="Place" Relationship="SeeYourTravelModel.FK_PlaceImage_Place" FromRole="PlaceImage" ToRole="Place" />
+        </EntityType>
+        <EntityType Name="PlaceType">
+          <Key>
+            <PropertyRef Name="PlaceTypeID" />
+          </Key>
+          <Property Name="PlaceTypeID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PlaceTypePlaces" Relationship="SeeYourTravelModel.FK_PlaceTypePlace_PlaceType" FromRole="PlaceType" ToRole="PlaceTypePlace" />
+        </EntityType>
+        <EntityType Name="PlaceTypePlace">
+          <Key>
+            <PropertyRef Name="PlaceTypePlaceID" />
+          </Key>
+          <Property Name="PlaceTypePlaceID" Type="Guid" Nullable="false" />
+          <Property Name="PlaceTypeID" Type="Guid" Nullable="false" />
+          <Property Name="PlaceID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Place" Relationship="SeeYourTravelModel.FK_PlaceTypePlace_Place" FromRole="PlaceTypePlace" ToRole="Place" />
+          <NavigationProperty Name="PlaceType" Relationship="SeeYourTravelModel.FK_PlaceTypePlace_PlaceType" FromRole="PlaceTypePlace" ToRole="PlaceType" />
+        </EntityType>
+        <EntityType Name="PlaceUser">
+          <Key>
+            <PropertyRef Name="PlaceUserID" />
+          </Key>
+          <Property Name="PlaceUserID" Type="Guid" Nullable="false" />
+          <Property Name="PlaceID" Type="Guid" Nullable="false" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Place" Relationship="SeeYourTravelModel.FK_PlaceUser_Place" FromRole="PlaceUser" ToRole="Place" />
+          <NavigationProperty Name="User" Relationship="SeeYourTravelModel.FK_PlaceUser_User" FromRole="PlaceUser" ToRole="User" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Track">
+          <Key>
+            <PropertyRef Name="TrackID" />
+          </Key>
+          <Property Name="TrackID" Type="Guid" Nullable="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TrackUsers" Relationship="SeeYourTravelModel.FK_TrackUser_Track" FromRole="Track" ToRole="TrackUser" />
+        </EntityType>
+        <EntityType Name="TrackUser">
+          <Key>
+            <PropertyRef Name="TrackUserID" />
+          </Key>
+          <Property Name="TrackUserID" Type="Guid" Nullable="false" />
+          <Property Name="TrackID" Type="Guid" Nullable="false" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Track" Relationship="SeeYourTravelModel.FK_TrackUser_Track" FromRole="TrackUser" ToRole="Track" />
+          <NavigationProperty Name="User" Relationship="SeeYourTravelModel.FK_TrackUser_User" FromRole="TrackUser" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_ImageUser_Image">
+          <End Type="SeeYourTravelModel.Image" Role="Image" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SeeYourTravelModel.ImageUser" Role="ImageUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="ImageUser">
+              <PropertyRef Name="ImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceImage_Image">
+          <End Type="SeeYourTravelModel.Image" Role="Image" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SeeYourTravelModel.PlaceImage" Role="PlaceImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="PlaceImage">
+              <PropertyRef Name="ImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImageUser_User">
+          <End Type="SeeYourTravelModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SeeYourTravelModel.ImageUser" Role="ImageUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ImageUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceImage_Place">
+          <End Type="SeeYourTravelModel.Place" Role="Place" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SeeYourTravelModel.PlaceImage" Role="PlaceImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceID" />
+            </Principal>
+            <Dependent Role="PlaceImage">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceTypePlace_Place">
+          <End Type="SeeYourTravelModel.Place" Role="Place" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SeeYourTravelModel.PlaceTypePlace" Role="PlaceTypePlace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceID" />
+            </Principal>
+            <Dependent Role="PlaceTypePlace">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceUser_Place">
+          <End Type="SeeYourTravelModel.Place" Role="Place" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SeeYourTravelModel.PlaceUser" Role="PlaceUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="PlaceID" />
+            </Principal>
+            <Dependent Role="PlaceUser">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceTypePlace_PlaceType">
+          <End Type="SeeYourTravelModel.PlaceType" Role="PlaceType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SeeYourTravelModel.PlaceTypePlace" Role="PlaceTypePlace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlaceType">
+              <PropertyRef Name="PlaceTypeID" />
+            </Principal>
+            <Dependent Role="PlaceTypePlace">
+              <PropertyRef Name="PlaceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceUser_User">
+          <End Type="SeeYourTravelModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SeeYourTravelModel.PlaceUser" Role="PlaceUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PlaceUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrackUser_Track">
+          <End Type="SeeYourTravelModel.Track" Role="Track" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SeeYourTravelModel.TrackUser" Role="TrackUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Track">
+              <PropertyRef Name="TrackID" />
+            </Principal>
+            <Dependent Role="TrackUser">
+              <PropertyRef Name="TrackID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrackUser_User">
+          <End Type="SeeYourTravelModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SeeYourTravelModel.TrackUser" Role="TrackUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="TrackUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetUserandPublicTracks_Result">
+          <Property Type="Guid" Name="TrackID" Nullable="false" />
+          <Property Type="String" Name="FileName" Nullable="false" />
+          <Property Type="Boolean" Name="IsPublic" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -332,6 +930,114 @@
                 <ScalarProperty Name="Lat" ColumnName="Lat" />
                 <ScalarProperty Name="Lng" ColumnName="Lng" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="SeeYourTravelModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="Lng" ColumnName="Lng" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImageUsers">
+            <EntityTypeMapping TypeName="SeeYourTravelModel.ImageUser">
+              <MappingFragment StoreEntitySet="ImageUser">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="ImageUserID" ColumnName="ImageUserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Places">
+            <EntityTypeMapping TypeName="SeeYourTravelModel.Place">
+              <MappingFragment StoreEntitySet="Place">
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Vicinity" ColumnName="Vicinity" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Lng" ColumnName="Lng" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlaceImages">
+            <EntityTypeMapping TypeName="SeeYourTravelModel.PlaceImage">
+              <MappingFragment StoreEntitySet="PlaceImage">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+                <ScalarProperty Name="PlaceImageID" ColumnName="PlaceImageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlaceTypes">
+            <EntityTypeMapping TypeName="SeeYourTravelModel.PlaceType">
+              <MappingFragment StoreEntitySet="PlaceType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PlaceTypeID" ColumnName="PlaceTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlaceTypePlaces">
+            <EntityTypeMapping TypeName="SeeYourTravelModel.PlaceTypePlace">
+              <MappingFragment StoreEntitySet="PlaceTypePlace">
+                <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+                <ScalarProperty Name="PlaceTypeID" ColumnName="PlaceTypeID" />
+                <ScalarProperty Name="PlaceTypePlaceID" ColumnName="PlaceTypePlaceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlaceUsers">
+            <EntityTypeMapping TypeName="SeeYourTravelModel.PlaceUser">
+              <MappingFragment StoreEntitySet="PlaceUser">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+                <ScalarProperty Name="PlaceUserID" ColumnName="PlaceUserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SeeYourTravelModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tracks">
+            <EntityTypeMapping TypeName="SeeYourTravelModel.Track">
+              <MappingFragment StoreEntitySet="Track">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="TrackID" ColumnName="TrackID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TrackUsers">
+            <EntityTypeMapping TypeName="SeeYourTravelModel.TrackUser">
+              <MappingFragment StoreEntitySet="TrackUser">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="TrackID" ColumnName="TrackID" />
+                <ScalarProperty Name="TrackUserID" ColumnName="TrackUserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetUserandPublicTracks" FunctionName="SeeYourTravelModel.Store.GetUserandPublicTracks">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SeeYourTravelModel.GetUserandPublicTracks_Result">
+                <ScalarProperty Name="TrackID" ColumnName="TrackID" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
