@@ -331,6 +331,21 @@
         <Function Name="GetFriendsLocations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
         </Function>
+        <Function Name="GetTrackForUserByIdOrName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="TrackId" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="TrackID" Type="uniqueidentifier" Nullable="false" />
+                <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="IsPublic" Type="bit" Nullable="false" />
+                <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="GetUserandPublicTracks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
           <ReturnType>
@@ -578,7 +593,12 @@
             <End Role="TrackUser" EntitySet="TrackUsers" />
           </AssociationSet>
           <FunctionImport Name="GetUserandPublicTracks" IsComposable="true" ReturnType="Collection(SeeYourTravelModel.GetUserandPublicTracks_Result)">
+          <Parameter Name="UserID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetTrackForUserByIdOrName" IsComposable="true" ReturnType="Collection(SeeYourTravelModel.GetTrackForUserByIdOrName_Result)">
             <Parameter Name="UserID" Mode="In" Type="Guid" />
+            <Parameter Name="TrackId" Mode="In" Type="Guid" />
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="UserLogin">
@@ -864,6 +884,12 @@
           <Property Type="Boolean" Name="IsPublic" Nullable="false" />
           <Property Type="String" Name="Description" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="GetTrackForUserByIdOrName_Result">
+          <Property Type="Guid" Name="TrackID" Nullable="false" />
+          <Property Type="String" Name="FileName" Nullable="false" />
+          <Property Type="Boolean" Name="IsPublic" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1034,6 +1060,16 @@
           <FunctionImportMapping FunctionImportName="GetUserandPublicTracks" FunctionName="SeeYourTravelModel.Store.GetUserandPublicTracks">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SeeYourTravelModel.GetUserandPublicTracks_Result">
+                <ScalarProperty Name="TrackID" ColumnName="TrackID" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTrackForUserByIdOrName" FunctionName="SeeYourTravelModel.Store.GetTrackForUserByIdOrName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SeeYourTravelModel.GetTrackForUserByIdOrName_Result">
                 <ScalarProperty Name="TrackID" ColumnName="TrackID" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />

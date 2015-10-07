@@ -15,8 +15,9 @@
     //}
     //Response.Write(sb);
 
+    Guid userId = Tools.GetUserId(this);
+
     var db = new SeeYourTravelEntities();
-    Guid userId = (Session["UserID"] == null)?Guid.Empty:(Guid)Session["UserID"];//string.IsNullOrWhiteSpace(Session["UserId"] as string) ? Guid.Empty : Guid.Parse(Session["UserId"] as string);
     var tracks = (from t in db.GetUserandPublicTracks(userId) orderby t.Description select t).ToList();
     StringBuilder sb = new StringBuilder();
 

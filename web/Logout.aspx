@@ -4,7 +4,6 @@
     <script>    
         $(function () {
             fblogout();
-            setTimeout(function () { document.location="Login.aspx"}, 1000);
         });
 </script>
 </asp:Content>

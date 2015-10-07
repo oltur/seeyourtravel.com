@@ -5,7 +5,7 @@
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
     <script>
         var errorMessage = '<%=Request["errorMessage"]%>';
-        var trackParam = '<%=Request["trackname"]%>';
+        var trackParam = '<%=this.TrackFileName%>';
         var showSidePanel = '<%=Request["showSidePanel"]%>';
 
         function translateAll(err, t) {

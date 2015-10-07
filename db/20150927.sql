@@ -1943,6 +1943,38 @@ RETURN
 	WHERE t.IsPublic = 1 OR u.UserName = 'admin' OR r.RoleName = 'admin'
 )
 GO
+USE [seeyourtravel]
+GO
+/****** Object:  UserDefinedFunction [dbo].[GetUserandPublicTracks]    Script Date: 10/5/2015 12:54:07 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+USE [seeyourtravel]
+GO
+/****** Object:  UserDefinedFunction [dbo].[GetUserandPublicTracks]    Script Date: 10/5/2015 12:54:07 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER FUNCTION [dbo].[GetTrackForUserByIdOrName] 
+(	
+	@UserID uniqueidentifier,
+	@TrackId uniqueidentifier = NULL,
+	@Name nvarchar(250) = NULL
+)
+RETURNS TABLE 
+AS
+RETURN 
+(
+	SELECT TOP 1 t.* from track t 
+	left join TrackUser tu on t.TrackID = tu.TrackID
+	left join [User] u on tu.UserID = u.UserID and tu.UserID = @UserID
+	left join [UserRole] ur on u.UserID = ur.UserID
+	left join [Role] r on ur.RoleID = r.RoleID
+	WHERE (t.TrackID = @TrackId or t.Description = @Name) AND (t.IsPublic = 1 OR u.UserName = 'admin' OR r.RoleName = 'admin')
+)
+GO
 INSERT [dbo].[Role] ([RoleID], [RoleName]) VALUES (N'5195a2d5-0b51-44c4-b672-7383482bc77a', N'admin')
 GO
 INSERT [dbo].[UserRole] ([UserRoleID], [UserID], [RoleID]) VALUES (N'087a788e-7245-45c2-a369-2d8cf02ce5dc', N'c9f148f7-923a-46b0-8b7c-bd4b54d90886', N'5195a2d5-0b51-44c4-b672-7383482bc77a')

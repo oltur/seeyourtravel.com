@@ -5,8 +5,8 @@
     try
     {
         string trackName = Request.Form["name"];
-        string trackFileName = Guid.NewGuid().ToString().Trim('{', '}');
-        string path = Server.MapPath(".") + "\\tracks\\" + trackFileName + ".js";
+        Guid trackId = Guid.Parse(Request.Form["id"]);
+        string path = Server.MapPath(".") + "\\tracks\\" + trackId.ToString() + ".js";
         using (System.IO.StreamWriter writer = new System.IO.StreamWriter(path, false))
         {
             writer.WriteLine("{");
@@ -88,25 +88,33 @@
         }
 
         var db = new SeeYourTravelEntities();
-        Guid userId = (Session["UserID"] == null)?Guid.Empty:(Guid)Session["UserID"];//string.IsNullOrWhiteSpace(Session["UserId"] as string) ? Guid.Empty : Guid.Parse(Session["UserId"] as string);
-        Track track = new Track();
-        track.TrackID = Guid.NewGuid();
-        track.FileName = trackFileName;
+        Guid userId = Tools.GetUserId(this);
+        Track track = db.Tracks.FirstOrDefault(t => t.TrackID == trackId);
+        if(track == null)
+        {
+            track = new Track();
+            track.TrackID = trackId;
+            db.Tracks.Add(track);
+        }
+        track.FileName = trackId.ToString() + ".js";
         track.Description = trackName;
         track.IsPublic = string.IsNullOrEmpty(Request.Form["isPublic"]) ? false : (Request.Form["isPublic"]=="isPublic");
-        db.Tracks.Add(track);
 
         db.SaveChanges();
 
-        TrackUser trackUser = new TrackUser();
-        trackUser.TrackUserID = Guid.NewGuid();
-        trackUser.TrackID = track.TrackID;
-        trackUser.UserID = userId;
-        db.TrackUsers.Add(trackUser);
+        TrackUser trackUser = db.TrackUsers.FirstOrDefault(tu => (tu.TrackID == track.TrackID && tu.UserID == userId));
+        if(trackUser == null)
+        {
+            trackUser = new TrackUser();
+            trackUser.TrackUserID = Guid.NewGuid();
+            trackUser.TrackID = track.TrackID;
+            trackUser.UserID = userId;
+            db.TrackUsers.Add(trackUser);
 
-        db.SaveChanges();
+            db.SaveChanges();
+        }
 
-        Response.Redirect("./index.aspx?trackname=" + trackName);
+        Response.Redirect("./index.aspx?trackid=" + trackId);
     }
     catch(ThreadAbortException)
     {
@@ -115,7 +123,7 @@
     catch (Exception ex)
     {
         string message = ex.Message;
-        Response.Redirect("./index.aspx?errorMessage=" + message);
+        Response.Redirect("./index.aspx?errorMessage=" + HttpUtility.UrlEncode(message));
     }
 
 %>

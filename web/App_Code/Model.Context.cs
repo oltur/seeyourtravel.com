@@ -59,4 +59,22 @@ public partial class SeeYourTravelEntities : DbContext
 
         return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetUserandPublicTracks_Result>("[SeeYourTravelEntities].[GetUserandPublicTracks](@UserID)", userIDParameter);
     }
+
+    [DbFunction("SeeYourTravelEntities", "GetTrackForUserByIdOrName")]
+    public virtual IQueryable<GetTrackForUserByIdOrName_Result> GetTrackForUserByIdOrName(Nullable<System.Guid> userID, Nullable<System.Guid> trackId, string name)
+    {
+        var userIDParameter = userID.HasValue ?
+            new ObjectParameter("UserID", userID) :
+            new ObjectParameter("UserID", typeof(System.Guid));
+
+        var trackIdParameter = trackId.HasValue ?
+            new ObjectParameter("TrackId", trackId) :
+            new ObjectParameter("TrackId", typeof(System.Guid));
+
+        var nameParameter = name != null ?
+            new ObjectParameter("Name", name) :
+            new ObjectParameter("Name", typeof(string));
+
+        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetTrackForUserByIdOrName_Result>("[SeeYourTravelEntities].[GetTrackForUserByIdOrName](@UserID, @TrackId, @Name)", userIDParameter, trackIdParameter, nameParameter);
+    }
 }

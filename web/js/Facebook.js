@@ -22,11 +22,11 @@ function fblogout() {
         FB.getLoginStatus(function (response) {
             try {
                 FB.logout(function (response) {
-                    window.location = "index.aspx";
+                    window.location = "login.aspx";
                 });
             }
             catch (err) { }
-            window.location = "index.aspx";
+            window.location = "login.aspx";
         });
     }
 }

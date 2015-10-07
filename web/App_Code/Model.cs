@@ -239,6 +239,14 @@ public partial class GetFriendsLocations_Result
     public System.DateTime Time { get; set; }
 }
 
+public partial class GetTrackForUserByIdOrName_Result
+{
+    public System.Guid TrackID { get; set; }
+    public string FileName { get; set; }
+    public bool IsPublic { get; set; }
+    public string Description { get; set; }
+}
+
 public partial class GetUserandPublicTracks_Result
 {
     public System.Guid TrackID { get; set; }
