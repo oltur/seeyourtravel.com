@@ -860,8 +860,8 @@ function createPhotoMarker(place, isGoogle) {
         // do whatever else you want to do - open accordion etc
     };
     var marker = L.marker(new L.LatLng(
-        isGoogle ? place.geometry.location.H : place.geometry.location.lat,
-        isGoogle ? place.geometry.location.L : place.geometry.location.lng),
+        isGoogle ? place.geometry.location.lat() : place.geometry.location.lat,
+        isGoogle ? place.geometry.location.lng() : place.geometry.location.lng),
         { icon: icon }).bindPopup(domelem);
     myMarkers.push(marker);
 
