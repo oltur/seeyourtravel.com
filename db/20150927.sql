@@ -1927,7 +1927,7 @@ insert into Track (FileName, IsPublic,Description) values ('Ukraine-Lutsk.js', 1
 insert into Track (FileName, IsPublic,Description) values ('Ukraine-Ternopil.js', 1,'')
 insert into Track (FileName, IsPublic,Description) values ('Yacht-Greece.js', 1,'')
 GO
-ALTER FUNCTION dbo.GetUserandPublicTracks 
+CREATE FUNCTION dbo.GetUserandPublicTracks 
 (	
 	@UserID uniqueidentifier 
 )
@@ -1943,21 +1943,7 @@ RETURN
 	WHERE t.IsPublic = 1 OR u.UserName = 'admin' OR r.RoleName = 'admin'
 )
 GO
-USE [seeyourtravel]
-GO
-/****** Object:  UserDefinedFunction [dbo].[GetUserandPublicTracks]    Script Date: 10/5/2015 12:54:07 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-USE [seeyourtravel]
-GO
-/****** Object:  UserDefinedFunction [dbo].[GetUserandPublicTracks]    Script Date: 10/5/2015 12:54:07 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-ALTER FUNCTION [dbo].[GetTrackForUserByIdOrName] 
+CREATE FUNCTION [dbo].[GetTrackForUserByIdOrName] 
 (	
 	@UserID uniqueidentifier,
 	@TrackId uniqueidentifier = NULL,
