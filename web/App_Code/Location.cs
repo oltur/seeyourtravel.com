@@ -10,9 +10,12 @@ public class Location
 {
     public Location()
     {
-        //
-        // TODO: Add constructor logic here
-        //
+    }
+
+    public Location(double _lat, double _lng)
+    {
+        this.lat = _lat;
+        this.lng = _lng;
     }
 
     public double lat { get; set; }

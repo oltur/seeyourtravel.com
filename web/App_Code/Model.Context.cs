@@ -25,11 +25,6 @@ public partial class SeeYourTravelEntities : DbContext
         throw new UnintentionalCodeFirstException();
     }
 
-    public virtual DbSet<Role> Roles { get; set; }
-    public virtual DbSet<User> Users { get; set; }
-    public virtual DbSet<UserLocation> UserLocations { get; set; }
-    public virtual DbSet<UserRole> UserRoles { get; set; }
-    public virtual DbSet<UserLogin> UserLogins { get; set; }
     public virtual DbSet<Image> Images { get; set; }
     public virtual DbSet<ImageUser> ImageUsers { get; set; }
     public virtual DbSet<Place> Places { get; set; }
@@ -37,27 +32,18 @@ public partial class SeeYourTravelEntities : DbContext
     public virtual DbSet<PlaceType> PlaceTypes { get; set; }
     public virtual DbSet<PlaceTypePlace> PlaceTypePlaces { get; set; }
     public virtual DbSet<PlaceUser> PlaceUsers { get; set; }
-    public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+    public virtual DbSet<Role> Roles { get; set; }
     public virtual DbSet<Track> Tracks { get; set; }
     public virtual DbSet<TrackUser> TrackUsers { get; set; }
+    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<UserLocation> UserLocations { get; set; }
+    public virtual DbSet<UserLogin> UserLogins { get; set; }
+    public virtual DbSet<UserRole> UserRoles { get; set; }
 
-    public virtual ObjectResult<GetFriendsLocations_Result> GetFriendsLocations(Nullable<System.Guid> userID)
+    [DbFunction("SeeYourTravelEntities", "GetAllTracks")]
+    public virtual IQueryable<GetAllTracks_Result> GetAllTracks()
     {
-        var userIDParameter = userID.HasValue ?
-            new ObjectParameter("UserID", userID) :
-            new ObjectParameter("UserID", typeof(System.Guid));
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFriendsLocations_Result>("GetFriendsLocations", userIDParameter);
-    }
-
-    [DbFunction("SeeYourTravelEntities", "GetUserandPublicTracks")]
-    public virtual IQueryable<GetUserandPublicTracks_Result> GetUserandPublicTracks(Nullable<System.Guid> userID)
-    {
-        var userIDParameter = userID.HasValue ?
-            new ObjectParameter("UserID", userID) :
-            new ObjectParameter("UserID", typeof(System.Guid));
-
-        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetUserandPublicTracks_Result>("[SeeYourTravelEntities].[GetUserandPublicTracks](@UserID)", userIDParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetAllTracks_Result>("[SeeYourTravelEntities].[GetAllTracks]()");
     }
 
     [DbFunction("SeeYourTravelEntities", "GetTrackForUserByIdOrName")]
@@ -76,5 +62,54 @@ public partial class SeeYourTravelEntities : DbContext
             new ObjectParameter("Name", typeof(string));
 
         return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetTrackForUserByIdOrName_Result>("[SeeYourTravelEntities].[GetTrackForUserByIdOrName](@UserID, @TrackId, @Name)", userIDParameter, trackIdParameter, nameParameter);
+    }
+
+    [DbFunction("SeeYourTravelEntities", "GetUserandPublicTracks")]
+    public virtual IQueryable<GetUserandPublicTracks_Result> GetUserandPublicTracks(Nullable<System.Guid> userID)
+    {
+        var userIDParameter = userID.HasValue ?
+            new ObjectParameter("UserID", userID) :
+            new ObjectParameter("UserID", typeof(System.Guid));
+
+        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetUserandPublicTracks_Result>("[SeeYourTravelEntities].[GetUserandPublicTracks](@UserID)", userIDParameter);
+    }
+
+    [DbFunction("SeeYourTravelEntities", "GetUserTracks")]
+    public virtual IQueryable<GetUserTracks_Result> GetUserTracks(Nullable<System.Guid> userID)
+    {
+        var userIDParameter = userID.HasValue ?
+            new ObjectParameter("UserID", userID) :
+            new ObjectParameter("UserID", typeof(System.Guid));
+
+        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetUserTracks_Result>("[SeeYourTravelEntities].[GetUserTracks](@UserID)", userIDParameter);
+    }
+
+    [DbFunction("SeeYourTravelEntities", "IsAdmin")]
+    public virtual IQueryable<IsAdmin_Result> IsAdmin(Nullable<System.Guid> userID)
+    {
+        var userIDParameter = userID.HasValue ?
+            new ObjectParameter("UserID", userID) :
+            new ObjectParameter("UserID", typeof(System.Guid));
+
+        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<IsAdmin_Result>("[SeeYourTravelEntities].[IsAdmin](@UserID)", userIDParameter);
+    }
+
+    public virtual ObjectResult<GetFriendsLocations_Result> GetFriendsLocations(Nullable<System.Guid> userID)
+    {
+        var userIDParameter = userID.HasValue ?
+            new ObjectParameter("UserID", userID) :
+            new ObjectParameter("UserID", typeof(System.Guid));
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFriendsLocations_Result>("GetFriendsLocations", userIDParameter);
+    }
+
+    [DbFunction("SeeYourTravelEntities", "IsGuest")]
+    public virtual IQueryable<Nullable<int>> IsGuest(Nullable<System.Guid> userID)
+    {
+        var userIDParameter = userID.HasValue ?
+            new ObjectParameter("UserID", userID) :
+            new ObjectParameter("UserID", typeof(System.Guid));
+
+        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Nullable<int>>("[SeeYourTravelEntities].[IsGuest](@UserID)", userIDParameter);
     }
 }

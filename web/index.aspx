@@ -8,6 +8,23 @@
         var trackParam = '<%=this.TrackFileName%>';
         var showSidePanel = '<%=Request["showSidePanel"]%>';
 
+        var audio;
+        var imageDiv;
+        var tracksList;
+        var textToReadArea;
+        var counter = 0;
+        var markerSize = 50;
+        var track;
+        var map = undefined;
+        var map2 = document.getElementById("map2");
+        var animatedMarker;
+        var tileLayer;
+        var markers;
+        var markersFriends;
+        var line;
+        var markerStart;
+        var markerFinish;
+
         function translateAll(err, t) {
             $(".i").i18n();
             $("option.i").i18n();
@@ -71,6 +88,11 @@
         var slider1;
 		$(document).ready(function()
 		{
+		    audio = document.getElementById("audio");
+		    imageDiv = $("#imageDiv");
+		    tracksList = $("#tracksList");
+		    textToReadArea = document.getElementById("textToReadArea");
+
 		    if(errorMessage != "") {
                 toastr.error(errorMessage, "ERROR", { timeOut: 5000, extendedTimeOut: 10000 });
 		    }
@@ -102,6 +124,7 @@
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
     <!--Content-->
+            <input id="showGoesOn" type="hidden" value="0" />
 <div id="splitterContainer">
     <div id='sidePanel' style='display:none; height: 100%; width:0%; float: left;'>
 <div id="slider1">
@@ -138,7 +161,7 @@
                 <button type="button" data-i18n="[title]Edit;Edit" id="editTrackButton" title="Edit" class="i headerButton" style="background-image: url(img/edit.png );" onclick="clickEdit()" >Edit</button>
                 <button type="button" data-i18n="[title]Settings;Settings" id="settingsCheckBox" title="Settings" class="i headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
                 <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site"  class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')" >About SeeYourTravel</button>
-                <button type="button" <%--data-i18n="[title]Profile;Profile" --%>id="profile" title="Profile" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'"></button>
+                <button type="button" <%--data-i18n="[title]Profile;Profile" --%>id="profile" title="Profile" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = 'UserProfile.aspx'"></button>
                 <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout"  class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'" >Logout</button>
                 <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>
             </div>
@@ -152,61 +175,9 @@
             <div class="i" data-i18n="[html]help_content"> 
             </div>
         </div>
-        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 1001; top: 60px; left: 60px; width: 300px; height: 250px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
-            <input id="scriptTextCheckBox" type="checkbox" title="Description" onchange="SaveSettings();$('#textToReadArea0').toggle('fold', 1000);" />
-            <label for="scriptTextCheckBox" class="i" data-i18n="Description">Description</label>
-            <br />
-            <input id="imagesCheckBox" type="checkbox" checked="checked" title="Images" onchange="SaveSettings(); $('#imageDiv0').toggle('fold', 1000);" />
-            <label for="imagesCheckBox" class="i" data-i18n="Images">Images</label>
-            <br />
-<%--            <input id="sidePanelCheckBox" type="checkbox" title="Show Side Panel" onchange="switchSidePanel();" />
-            <label for="sidePanelCheckBox" class="i" data-i18n="ShowSidePanel">Show Side Panel</label>
-            <br />--%>
-            <input id="loopTrackCheckBox" type="checkbox" checked="checked" title="Loop track infinitely"  onchange="SaveSettings();"/>
-            <label for="loopTrackCheckBox" class="i" data-i18n="LoopTrack">Loop track infinitely</label>
-            <br />
-            <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" title="Use Panoramio images"  onchange="SaveSettings();"/>
-            <label for="usePanoramioImagesCheckBox" class="i" data-i18n="UsePanoramioImages">Use Panoramio images</label>
-            <br />
-            <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" title="Use SeeYourTravel images"  onchange="SaveSettings();"/>
-            <label for="useSYTImagesCheckBox" class="i" data-i18n="UseCYTImages">Use SeeYourTravel images</label>
-            <br />
-            <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" title="Use Google Places"  onchange="SaveSettings();"/>
-            <label for="useGooglePlacesCheckBox" class="i" data-i18n="UseGooglePlaces">Use Google Places</label>
-            <br />
-            <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" title="Use SeeYourTravel places"  onchange="SaveSettings();"/>
-            <label for="useSYTPlacesCheckBox" class="i" data-i18n="UseCYTPlaces">Use SeeYourTravel places</label>
-<%--            <br />
-            <label for="pictureHeight">Max Picture Height</label>
-            <input id="pictureMaxHeight" type="number" value="100" />--%>
-            <br />
-            <label for="mapStyle" class="i" data-i18n="MapStyle">Map style</label>
-            <select id="mapStyle" class="graySelect" onchange="SaveSettings();selectMapStyle()">
-                <option>mapbox.streets</option>
-                <option>mapbox.light</option>
-                <option>mapbox.dark</option>
-                <option>mapbox.satellite</option>
-                <option>mapbox.streets-satellite</option>
-                <option>mapbox.wheatpaste</option>
-                <option>mapbox.streets-basic</option>
-                <option>mapbox.comic</option>
-                <option>mapbox.outdoors</option>
-                <option>mapbox.run-bike-hike</option>
-                <option>mapbox.pencil</option>
-                <option>mapbox.pirates</option>
-                <option>mapbox.emerald</option>
-                <option>mapbox.high-contrast</option>
-            </select>
-            <br />
-            <span class="i" data-i18n="Volume">Volume:</span>
-            <br />
-            <div id="slider" style="left: 10%; width: 80%; vertical-align: top" ></div>
-            <script>
-                $("#slider").on("slidestop", function (event, ui) {
-                    SaveSettings();
-                });
-            </script>
-        </div>
+
+        <!-- #Include virtual="include/settingsPanel.inc" -->
+
          <div style="position: absolute; right: 5px; top:75px; z-index:1001">
             <div>
                 <button type="button" id="mute" style="padding-left:0px; width:46px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute();SaveSettings();"></button>
@@ -220,14 +191,9 @@
         <div id="map"></div>
         <div id="map2"></div>
 
-        <audio id="audio" loop="loop">
-            <source type="audio/mpeg" />
-            Your browser does not support the audio element.
-        </audio>
-
         <div id="textToReadArea0" class="ui-widget-content" style="z-index: 100; min-height:50px; min-width:50px; background: rgba(100,100,100,0.2); border-width: 0px; width: 25%; height: 25%; position: absolute; left: 2%; top: 35%">
            <%-- <br />--%>
-            <div id="textToReadArea" disabled="disabled" style="position:absolute; overflow:scroll; background: rgba(240,240,240,0.9); padding: 0; top: 2px; bottom:2px; left:2px; right:2px; margin: 0 auto; resize: none;" ></div>
+            <div id="textToReadArea"  style="position:absolute; overflow:scroll; background: rgba(240,240,240,0.9); padding: 0; top: 2px; bottom:2px; left:2px; right:2px; margin: 0 auto; resize: none;" ></div>
         </div>
 
         <div id="imageDiv0" class="ui-widget-content">
@@ -252,11 +218,11 @@
     <script>
         $(function () {
 
-            if ("True" != "<%=User.IsInRole("admins")%>") {
+            if ("True" == "<%=Tools.IsGuest(this)%>") {
                 $("#newTrackButton").attr("disabled", "disabled");
             }
 
-            if (trackParam == "" || "True" != "<%=User.IsInRole("admins")%>") {
+            if (trackParam == "" || "True" == "<%=Tools.IsGuest(this)%>") {
                 $("#editTrackButton").attr("disabled", "disabled");
             }
 
@@ -317,7 +283,7 @@
 
             var fileListString = $.ajax(
             {
-                url: ('api/filelist.aspx' + "?" + Math.random()),
+                url: ('services/get_myandpublictracks.aspx' + "?" + Math.random()),
                 async: false,
                 dataType: 'json'
             }
@@ -327,10 +293,16 @@
                 .find('option')
                 .remove()
                 .end()
+            var label = "";
             tracksList.append('<option value="Choose a track" data-i18n="Chooseatrack">Choose a track:</option>');
             for (var i = 0; i < fileList.length; i++) {
-                var parts = fileList[i].split(';', 2);
-                tracksList.append('<option value="' + parts[0] + '">' + parts[1] + '</option>');
+                var parts = fileList[i].split(';');
+                if (label != parts[3])
+                {
+                    label = parts[3];
+                    tracksList.append('<optgroup label="' + label + '"/>');
+                }
+                tracksList.append('<option value="' + parts[0] + '">' + (parts[2]==1?"*":"") + parts[1] + '</option>');
             }
 
             if (trackParam != '') {
@@ -341,28 +313,6 @@
             }
 
         });
-    </script>
-
-
-    <script lang="JavaScript">
-
-        var audio = document.getElementById("audio");
-        var imageDiv = $("#imageDiv");
-        var tracksList = $("#tracksList");
-        var textToReadArea = document.getElementById("textToReadArea");
-        var counter = 0;
-        var markerSize = 50;
-        var track;
-        var map = undefined;
-        var map2 = document.getElementById("map2");
-        var animatedMarker;
-        var tileLayer;
-        var markers;
-        var markersFriends;
-        var line;
-        var markerStart;
-        var markerFinish;
-
     </script>
 </asp:Content>
 

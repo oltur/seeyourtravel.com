@@ -13,4 +13,13 @@ public static class Tools
     {
         return (page.Session["UserID"] == null) ? Guid.Empty : (Guid)page.Session["UserID"];
     }
+    public static string GetUserName(Page page)
+    {
+        return (page.Session["UserName"] == null) ? "Guest" : page.Session["UserName"].ToString();
+    }
+    public static bool IsGuest(Page page)
+    {
+        var db = new SeeYourTravelEntities();
+        return db.IsGuest(GetUserId(page)).First().Value == 1;
+    }
 }

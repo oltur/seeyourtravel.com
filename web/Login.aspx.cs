@@ -12,7 +12,8 @@ using System.Linq;
 
 public partial class Login : System.Web.UI.Page
 {
-    SeeYourTravelEntities db;
+    protected SeeYourTravelEntities db;
+
     String returnUrl1;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -239,7 +240,7 @@ public partial class Login : System.Web.UI.Page
                 DateTime.Now,                        // issue time is now
                 DateTime.Now.AddMinutes(10),         // expires in 10 minutes
                 RememberMe.Checked,      // cookie is not persistent
-                name == "admin" ? "admins" : ""                              // role assignment is stored
+                (db.IsAdmin((Guid)id).First().Result == 1)? "admin" : ""                              // role assignment is stored
                                                                          // in userData
                 );
         HttpCookie cookie1 = new HttpCookie(

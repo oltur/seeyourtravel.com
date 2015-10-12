@@ -257,6 +257,7 @@ CREATE TABLE [dbo].[Track](
 	[FileName] [nvarchar](max) NOT NULL,
 	[IsPublic] [bit] NOT NULL,
 	[Description] [nvarchar](max) NOT NULL,
+	[Category] [nvarchar](max) NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Track] PRIMARY KEY CLUSTERED 
 (
 	[TrackID] ASC
@@ -1958,7 +1959,7 @@ RETURN
 	left join [User] u on tu.UserID = u.UserID and tu.UserID = @UserID
 	left join [UserRole] ur on u.UserID = ur.UserID
 	left join [Role] r on ur.RoleID = r.RoleID
-	WHERE (t.TrackID = @TrackId or t.Description = @Name) AND (t.IsPublic = 1 OR u.UserName = 'admin' OR r.RoleName = 'admin')
+	WHERE (t.TrackID = @TrackId or t.FileName = @Name) AND (t.IsPublic = 1 OR u.UserName = 'admin' OR r.RoleName = 'admin')
 )
 GO
 INSERT [dbo].[Role] ([RoleID], [RoleName]) VALUES (N'5195a2d5-0b51-44c4-b672-7383482bc77a', N'admin')

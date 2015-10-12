@@ -19,11 +19,12 @@ public partial class Image
         this.PlaceImages = new HashSet<PlaceImage>();
     }
 
-    public System.Guid ImageId { get; set; }
+    public System.Guid ImageID { get; set; }
     public string FileName { get; set; }
     public bool IsPublic { get; set; }
     public double Lat { get; set; }
     public double Lng { get; set; }
+    public string Description { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<ImageUser> ImageUsers { get; set; }
@@ -127,15 +128,6 @@ public partial class Role
     public virtual ICollection<UserRole> UserRoles { get; set; }
 }
 
-public partial class sysdiagram
-{
-    public string name { get; set; }
-    public int principal_id { get; set; }
-    public int diagram_id { get; set; }
-    public Nullable<int> version { get; set; }
-    public byte[] definition { get; set; }
-}
-
 public partial class Track
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -148,6 +140,7 @@ public partial class Track
     public string FileName { get; set; }
     public bool IsPublic { get; set; }
     public string Description { get; set; }
+    public string Category { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<TrackUser> TrackUsers { get; set; }
@@ -168,32 +161,32 @@ public partial class User
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
     public User()
     {
-        this.UserLocations = new HashSet<UserLocation>();
-        this.UserRoles = new HashSet<UserRole>();
-        this.UserLogins = new HashSet<UserLogin>();
         this.ImageUsers = new HashSet<ImageUser>();
         this.PlaceUsers = new HashSet<PlaceUser>();
         this.TrackUsers = new HashSet<TrackUser>();
+        this.UserLocations = new HashSet<UserLocation>();
+        this.UserLogins = new HashSet<UserLogin>();
+        this.UserRoles = new HashSet<UserRole>();
     }
 
     public System.Guid UserID { get; set; }
     public string UserName { get; set; }
     public string UserPassword { get; set; }
-    public Nullable<bool> Disabled { get; set; }
     public string FacebookId { get; set; }
+    public Nullable<bool> Disabled { get; set; }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<UserLocation> UserLocations { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<UserRole> UserRoles { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<UserLogin> UserLogins { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<ImageUser> ImageUsers { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<PlaceUser> PlaceUsers { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<TrackUser> TrackUsers { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<UserLocation> UserLocations { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<UserLogin> UserLogins { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<UserRole> UserRoles { get; set; }
 }
 
 public partial class UserLocation
@@ -230,6 +223,15 @@ public partial class UserRole
     public virtual User User { get; set; }
 }
 
+public partial class GetAllTracks_Result
+{
+    public System.Guid TrackID { get; set; }
+    public string FileName { get; set; }
+    public bool IsPublic { get; set; }
+    public string Description { get; set; }
+    public string Category { get; set; }
+}
+
 public partial class GetFriendsLocations_Result
 {
     public System.Guid UserID { get; set; }
@@ -245,6 +247,7 @@ public partial class GetTrackForUserByIdOrName_Result
     public string FileName { get; set; }
     public bool IsPublic { get; set; }
     public string Description { get; set; }
+    public string Category { get; set; }
 }
 
 public partial class GetUserandPublicTracks_Result
@@ -253,4 +256,20 @@ public partial class GetUserandPublicTracks_Result
     public string FileName { get; set; }
     public bool IsPublic { get; set; }
     public string Description { get; set; }
+    public string Category { get; set; }
+}
+
+public partial class GetUserTracks_Result
+{
+    public System.Guid TrackID { get; set; }
+    public string FileName { get; set; }
+    public bool IsPublic { get; set; }
+    public string Description { get; set; }
+    public string Category { get; set; }
+    public Nullable<System.Guid> UserID { get; set; }
+}
+
+public partial class IsAdmin_Result
+{
+    public int Result { get; set; }
 }

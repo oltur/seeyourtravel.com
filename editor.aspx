@@ -1,8 +1,11 @@
-<%@ Page validateRequest="false" Title="See Your Travel - Editor" Language="C#" MasterPageFile="MasterPage.master" CodeFile="Editor.aspx.cs" Inherits="Editor"%>
+<%@ Page Title="See Your Travel - Editor" Language="C#" MasterPageFile="MasterPage.master" %>
+
 
 <%@ Import Namespace="System.IO" %>
 
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
+
+    <% if (!User.IsInRole("admins")) Response.Redirect("./"); %>
 
     <script>
         function clickCancel() {
@@ -41,43 +44,65 @@
                 <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site" class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')">About SeeYourTravel</button>
             </div>
             <div style="position: absolute; left: 10px; top: 195px;">
-                <button type="button" <%--data-i18n="[title]Profile;Profile" --%>id="profile" title="Profile" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = 'UserProfile.aspx'"></button>
+                <button type="button" <%--data-i18n="[title]Profile;Profile" --%>id="profile" title="Profile" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = './profile'"></button>
                 <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout" class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'">Logout</button>
                 <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>
             </div>
         </div>
     </div>
-
-    <!-- #Include virtual="include/settingsPanel.inc" -->
+    <div id="settingsPanel" style="display: none; position: absolute; padding: 10px; z-index: 100; top: 45px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+        <input id="scriptTextCheckBox" type="checkbox" checked="checked" value="Editor" onclick="$('#textToReadArea0').toggle('fold', 1000);" />
+        <label for="scriptTextCheckBox" class="i" data-i18n="Editor">Editor</label>
+        <br />
+        <input id="imagesCheckBox" type="checkbox" checked="checked" value="Images" onclick="$('#imageDiv0').toggle('fold', 1000);" />
+        <label for="imagesCheckBox" class="i" data-i18n="Images">Images</label>
+        <br />
+        <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" value="Use Panoramio images" />
+        <label for="usePanoramioImagesCheckBox" class="i" data-i18n="UsePanoramioImages">Use Panoramio images</label>
+        <br />
+        <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel images" />
+        <label for="useSYTImagesCheckBox" class="i" data-i18n="UseCYTImages">Use SeeYourTravel images</label>
+        <br />
+        <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" value="Use Google Places" />
+        <label for="useGooglePlacesCheckBox" class="i" data-i18n="UseGooglePlaces">Use Google Places</label>
+        <br />
+        <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" value="Use SeeYourTravel places" />
+        <label for="useSYTPlacesCheckBox" class="i" data-i18n="UseCYTPlaces">Use SeeYourTravel places</label>
+        <%--            <br />
+            <label for="pictureHeight">Max Picture Height</label>
+            <input id="pictureMaxHeight" type="number" value="100" />--%>
+        <br />
+        <label for="mapStyle" class="i" data-i18n="MapStyle">Map style</label>
+        <select id="mapStyle" class="graySelect" onchange="selectMapStyle()">
+            <option>mapbox.streets</option>
+            <option>mapbox.light</option>
+            <option>mapbox.dark</option>
+            <option>mapbox.satellite</option>
+            <option>mapbox.streets-satellite</option>
+            <option>mapbox.wheatpaste</option>
+            <option>mapbox.streets-basic</option>
+            <option>mapbox.comic</option>
+            <option>mapbox.outdoors</option>
+            <option>mapbox.run-bike-hike</option>
+            <option>mapbox.pencil</option>
+            <option>mapbox.pirates</option>
+            <option>mapbox.emerald</option>
+            <option>mapbox.high-contrast</option>
+        </select>
+        <br />
+        <span class="i" data-i18n="Volume">Volume:</span>
+        <br />
+        <div id="slider" style="left: 10%; width: 80%; vertical-align: top"></div>
+    </div>
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="overflow:auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 340px; height: 770px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
-        <input type="hidden" id="trackId" name="trackId"value="<%=this.TrackId%>" />
-        <input type="hidden" id="trackFileName" name="trackFileName" value="<%=this.TrackFileName%>" />
+    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 340px; height: 700px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
         <table border="0">
             <tr>
-                <td class="big">Track description:</td>
+                <td class="big">Track name:</td>
                 <td>
                     <input id="name" name="name" type="text" value="New Track" /></td>
-            </tr>
-            <tr>
-                <td class="big">Make track public?</td>
-                <td>
-                    <input id="isPublic" name="isPublic" type="checkbox" value="isPublic" /></td>
-            </tr>
-            <tr>
-                <td class="big">Category:</td>
-                <td>
-                    <input id="category" name="category" list="categories" value="Other" />
-                    <datalist id="categories">
-                      <option value="Ukraine"/>
-                      <option value="Germany"/>
-                      <option value="Europe"/>
-                      <option value="Asia"/>
-                      <option value="Other"/>
-                    </datalist>
-                </td>
             </tr>
             <tr>
                 <td class="big">Copyright:</td>
@@ -103,10 +128,10 @@
                     <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="range" max="1000" min="2" step="1" value="10" style="width: 95%;" /></td>
             </tr>
             <tr>
-                <td class="big">Speed:<br />
-                    meters/sec, 1..100000</td>
+                <td class="big">Velocity:<br />
+                    meters/sec, 1..10000</td>
                 <td>
-                    <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="range" max="100000" min="1" step="1" value="1000" style="width: 95%;" /></td>
+                    <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="range" max="10000" min="1" step="1" value="100" style="width: 95%;" /></td>
             </tr>
             <tr>
                 <td class="big"># of photos to load:<br />
@@ -170,15 +195,14 @@
     <input type="button" value="Cancel" id="gotoMain" onclick="window.location = 'index.aspx?trackname=' + trackname" />
             <!--input type="button" value="Undo last"/-->
         </p>
-        <div class="big">
-            <br/>
+        <p class="big">
             <div id="fileOperations">
                 <label for="fileGpx">Import Gpx file:</label>
                 <input type="file" accept=".gpx" id="filesGpx" />
                 <%--multiple="multiple"--%>
                 <!--input type="button" value="Import data" id="importGpx"/-->
             </div>
-        </div>
+        </p>
     </div>
 
     <div id="imageDiv0" class="ui-widget-content">
@@ -211,7 +235,7 @@
             });
 
             var icon = L.icon({
-                iconUrl: ("tracks/content/mycar.png"),
+                iconUrl: ("tracks/mycar.png"),
                 iconSize: [50, 50],
                 iconAnchor: [1, 50],
                 shadowUrl: null
@@ -221,7 +245,7 @@
             L.control.zoom({ position: 'topright' }).addTo(map);
             L.control.scale({ position: 'bottomleft' }).addTo(map);
             tileLayer = L.tileLayer(mapTileUrl, {
-                attribution: 'Map data &copy; <a href="https://www.mapbox.com/">MapBox</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
                 maxZoom: 18,
                 id: "mapbox.streets"
             });
@@ -308,11 +332,10 @@
         //});
 
         if (trackname) {
-            var initialTrack = loadTrackSync(translateTracksPath(trackname+".js"));
+            var initialTrack = loadTrackSync(getTrackPathByName(trackname));
 
             $("#name").val(initialTrack.name);
             $("#copyright").val(initialTrack.copyright);
-            $("#category").val(initialTrack.category);
             $("#photoLocationTolerancy").val(initialTrack.photoLocationTolerancy);
             $("#stepsToRedraw").val(initialTrack.stepsToRedraw);
             $("#stepsToShowPhoto").val(initialTrack.stepsToShowPhoto);
@@ -342,7 +365,7 @@
                 });
 
                 if (initialTrack.trackData.length > 0) {
-                    map.setView(initialTrack.trackData[0], initialTrack.defaultScale);
+                    map.setView(initialTrack.trackData[0], 8);
                 }
 
             }
