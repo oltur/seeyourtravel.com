@@ -1,0 +1,12 @@
+{
+"name":"ko"
+,"copyright":"(c)"
+,"defaultScale":8
+,"photoLocationTolerancy":42
+,"stepsToRedraw":2
+,"stepsToShowPhoto":2
+,"numOfPhotos":10
+,"velocityMetersPerSec":25322
+,"icon":"mybike.png"
+,"trackData":[{"lat":50.24720490139267,"lng":31.13525390625,"syt_text":"a"},{"lat":50.23666548810372,"lng":30.9979248046875,"syt_text":""},{"lat":50.198001033269506,"lng":30.3826904296875,"syt_text":"c"},{"lat":50.583236614805905,"lng":29.9212646484375,"syt_text":"d"},{"lat":50.90303283111257,"lng":30.437622070312496,"syt_text":"e"},{"lat":50.70167663576478,"lng":31.0748291015625,"syt_text":"f"},{"lat":50.292848766619365,"lng":31.162719726562496,"syt_text":"g"}]
+}

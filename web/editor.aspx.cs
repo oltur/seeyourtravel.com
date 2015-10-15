@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-public partial class Index : System.Web.UI.Page
+public partial class Editor : System.Web.UI.Page
 {
     protected Guid TrackId = Guid.Empty;
     protected string TrackFileName = "";
@@ -32,13 +32,13 @@ public partial class Index : System.Web.UI.Page
             else
             {
                 TrackId = Guid.NewGuid();
-                TrackFileName = "";
+                TrackFileName = TrackId.ToString();
             }
         }
         catch (NullReferenceException ex)
         {
             TrackId = Guid.NewGuid();
-            TrackFileName = "";
+            TrackFileName = TrackId.ToString();
         }
     }
 }
