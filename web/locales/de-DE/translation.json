@@ -48,6 +48,30 @@
   "UseCYTPlaces": "Benutzen SeeYourTravel Orte",
   "MapStyle": "Map-Stil",
   "Volume": "Volumen",
-  "Corporate_GETINTOUCH": "NEHMEN SIE KONTAKT"
-,"Demo":"Probieren jetzt!!"
+  "Corporate_GETINTOUCH": "NEHMEN SIE KONTAKT",
+  "Demo": "Probieren jetzt!!",
+
+  "MyTracks": "Meine Spuren",
+"DeleteSelected": "Ausgewählte löschen",
+"MyPhotos": "Meine Bilder",
+"SiteComponentHTML": "Site-Komponente HTML",
+"Show": "Zeigen",
+"TrackDescription": "Spur Beschreibung:",
+"Maketrackpublic": "Machen Spur Öffentlich?",
+"Category": "Kategorie:",
+"Copyright": "Copyright:",
+"Photolocationdistance": "Foto Ort Entfernung, Grad / 1000, 2..1000",
+"Stepstoredraw": "Schritte zum neu zu zeichnen: 2..1000",
+"Stepstoshowphotos": "Schritte zum Fotos zu zeigen: 2..1000",
+"Speed": "Geschwindigkeit: m / sec, 1..100000",
+"Numberofphotostoload": "Anzahl der Fotos, um zu laden: 1..50",
+"Animatedmarkericon": "Animated Markersymbol:",
+"Audiofilepath": "Audio-Dateipfad:",
+"Trackimagepath": "Spur Bild Pfad:",
+"TextDescriptionPath": "Textbeschreibung Dateipfad:",
+"Defaultscale": "Standard-Skala: 1 (größte)..20(kleinste)",
+"Trackpoints": "Track-Punkte",
+"Currentpointdescriptionoptional": "Aktuelle Punkt Beschreibung (fakultativ):",
+"ImportGpxFile": "Import GPX-Datei:"
+
 }

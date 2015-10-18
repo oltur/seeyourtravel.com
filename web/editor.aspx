@@ -87,7 +87,7 @@
                     <input id="copyright" name="copyright" type="text" value="(c)" /></td>
             </tr>
             <tr>
-                <td class="big i" data-i18n="Photo location distance">Photo location distance:<br />
+                <td class="big i" data-i18n="Photolocationdistance">Photo location distance:<br />
                     degree/1000, 2..1000</td>
                 <td>
                     <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="range" max="1000" min="2" step="1" value="100" style="width: 95%;" /></td>
@@ -99,7 +99,7 @@
                     <input id="stepsToRedraw" name="stepsToRedraw" type="range" max="1000" min="2" step="1" value="100" style="width: 95%;" /></td>
             </tr>
             <tr>
-                <td class="big i" data-i18n="Steps to show photos">Steps to show photos:<br />
+                <td class="big i" data-i18n="Stepstoshowphotos">Steps to show photos:<br />
                     2..1000</td>
                 <td>
                     <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="range" max="1000" min="2" step="1" value="10" style="width: 95%;" /></td>
@@ -117,7 +117,7 @@
                     <input id="numOfPhotos" name="numOfPhotos" type="range" max="50" min="1" step="1" value="10" style="width: 95%;" /></td>
             </tr>
             <tr>
-                <td class="big i" data-i18n="Animated marker icon">Animated marker icon:</td>
+                <td class="big i" data-i18n="Animatedmarkericon">Animated marker icon:</td>
                 <td>
                     <input id="icon" name="icon" type="text" value="mybike.png" list="markers" />
                     <datalist id="markers">
