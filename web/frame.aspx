@@ -136,6 +136,12 @@
     <script>
         $(function () {
 
+            map2 = document.getElementById("map2");
+            audio = document.getElementById("audio");
+            imageDiv = $("#imageDiv");
+            tracksList = $("#tracksList");
+            textToReadArea = document.getElementById("textToReadArea");
+
             $("#langList").hide();
 
             init();
@@ -161,15 +167,15 @@
 
     <script lang="JavaScript">
 
-        var audio = document.getElementById("audio");
-        var imageDiv = $("#imageDiv");
-        var tracksList = $("#tracksList");
-        var textToReadArea = document.getElementById("textToReadArea");
+        var audio;
+        var imageDiv;
+        var tracksList;
+        var textToReadArea;
         var counter = 0;
         var markerSize = 50;
         var track;
         var map = undefined;
-        var map2 = document.getElementById("map2");
+        var map2;
         var animatedMarker;
         var tileLayer;
         var markers;

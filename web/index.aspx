@@ -17,7 +17,7 @@
         var markerSize = 50;
         var track;
         var map = undefined;
-        var map2 = document.getElementById("map2");
+        var map2;
         var animatedMarker;
         var tileLayer;
         var markers;
@@ -93,6 +93,7 @@
 
         var slider1;
         $(document).ready(function () {
+            map2 = document.getElementById("map2");
             audio = document.getElementById("audio");
             imageDiv = $("#imageDiv");
             tracksList = $("#tracksList");
