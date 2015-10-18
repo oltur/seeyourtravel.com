@@ -1,0 +1,13 @@
+{
+"name":"Round-Kharkov"
+,"copyright":"(c)"
+,"defaultScale":10
+,"photoLocationTolerancy":123
+,"stepsToRedraw":35
+,"stepsToShowPhoto":2
+,"numOfPhotos":10
+,"velocityMetersPerSec":2570
+,"icon":"mybike.png"
+,"trackData":[{"lat":50.085344397538876,"lng":36.2713623046875,"syt_text":""},{"lat":50.04655739071663,"lng":36.3372802734375,"syt_text":""},{"lat":49.986552130506176,"lng":36.36474609375,"syt_text":""},{"lat":49.91939873027269,"lng":36.32080078125,"syt_text":""},{"lat":49.905249238801304,"lng":36.221923828125,"syt_text":""},{"lat":49.91939873027269,"lng":36.1285400390625,"syt_text":""},{"lat":49.96888926176223,"lng":36.1395263671875,"syt_text":""},{"lat":50.014799234787844,"lng":36.1505126953125,"syt_text":""},{"lat":50.06066538593667,"lng":36.2384033203125,"syt_text":""},{"lat":50.07124366044474,"lng":36.287841796875,"syt_text":""}]
+,"category":"Ukraine"
+}
