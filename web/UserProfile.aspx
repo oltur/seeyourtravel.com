@@ -19,8 +19,10 @@
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
-
-    <!--Content-->
+    <div style="position: absolute; right: 40px; top: 5px; z-index: 1003">
+        <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
+    </div>
+<!--Content-->
     <div id='pageContent' style='height: 100%;'>
         <div style="position: absolute; left: 5px; top: 5px; z-index: 1001">
             <a id="alogo" href="javascript:clickMenu()">
@@ -54,16 +56,15 @@
 
     <!-- #Include virtual="include/settingsPanel.inc" -->
 
-    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 410px; height: 800px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 510px; height: 900px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
         <table border="0">
             <tr>
                 <td>
-        <div><%=Tools.GetUserName(this)%>: <spanc lass="i" data-i18n="[title]MyTracks;MyTracks">My Tracks</spanc></div>
+        <div><%=Tools.GetUserName(this)%>: <span class="i" data-i18n="[title]MyTracks;MyTracks">My tracks</span></div>
         <br />
-        <br />
-        <span class="i" data-i18n="TheTracks">The Tracks</span>
-        <br />
-        <select style="vertical-align: central; width: 400px;" id="tracksList" class="i" size="20"></select>
+        <span class="i" data-i18n="TheTracks">My tracks</span>
+        <br /> 
+        <select style="vertical-align: central; width: 500px;" id="tracksList" size="20"></select>
         <br />
         <br />
         <button type="button" id="buttonNew" class="i" data-i18n="[title]New;New">New</button>
@@ -71,13 +72,13 @@
         <button type="button" id="buttonDelete" class="i" data-i18n="[title]DeleteSelected;DeleteSelected">Delete Selected</button>
         <br />
         <br />
-        <a href="UserPhotos.aspx" class="i" data-i18n="[title]MyPhotos;MyPhotos">My Photos</a>
+        <a href="UserPhotos.aspx" class="i" data-i18n="[title]MyPhotos;MyPhotos">My photos</a>
 <%--        <a href="UserPlaces.aspx" class="i" data-i18n="[title]MyPlaces;MyPlaces">My Places</a>--%>
         <br />
         <br />
         <span class="i" data-i18n="SiteComponentHTML">Site component HTML:</span> 
         <br />
-        <input type="text" id="frameUrl" value="" style="width: 300px" /> <button type="button" id="buttonShow" class="i" data-i18n="[title]Show;Show">Show</button>
+        <input type="text" id="frameUrl" value="" style="width: 400px" /> <button type="button" id="buttonShow" class="i" data-i18n="[title]Show;Show">Show</button>
         <br />
         <br />
         <div id="divframe"></div>
@@ -151,7 +152,7 @@
             fillTracks();
 
             tracksList.change(function () {
-                var s = '<iframe style="width: 400px; height: 200px;" src="' + '<%=Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath%>' + "frame.aspx?trackname=" + tracksList.val() + '"></iframe>'
+                var s = '<iframe style="width: 500px; height: 300px;" src="' + '<%=Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath%>' + "frame.aspx?trackname=" + tracksList.val() + '"></iframe>'
                 $("#frameUrl").val(s);
                 $("#divframe").html("");
 

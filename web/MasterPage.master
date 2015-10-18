@@ -76,9 +76,6 @@
 <body onresize="onBodyResize()">
     <form id="form1" method="POST" enctype="multipart/form-data" runat="server">
         <div>
-            <div style="position: absolute; right: 5px; top: 5px; z-index: 1003">
-                <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
-            </div>
             <asp:ContentPlaceHolder ID="BodyPlaceholder" runat="server">
             </asp:ContentPlaceHolder>
         </div>

@@ -19,7 +19,9 @@
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
-
+    <div style="position: absolute; right: 40px; top: 5px; z-index: 1003">
+        <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
+    </div>
     <!--Content-->
     <div id='pageContent' style='height: 100%'>
         <div style="position: absolute; left: 5px; top: 5px; z-index: 1001">
@@ -52,22 +54,22 @@
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="overflow:auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 340px; height: 770px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
-        <input type="hidden" id="trackId" name="trackId"value="<%=this.TrackId%>" />
+    <div id="textToReadArea0" class="ui-widget-content" style="overflow:auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 450px; height: 800px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+        <input type="hidden" id="trackId" name="trackId" value="<%=this.TrackId%>" />
         <input type="hidden" id="trackFileName" name="trackFileName" value="<%=this.TrackFileName%>" />
         <table border="0">
             <tr>
-                <td class="big">Track description:</td>
+                <td class="big i" data-i18n="TrackDescription">Track description:</td>
                 <td>
                     <input id="name" name="name" type="text" value="New Track" /></td>
             </tr>
             <tr>
-                <td class="big">Make track public?</td>
+                <td class="big i" data-i18n="Maketrackpublic">Make track public?</td>
                 <td>
                     <input id="isPublic" name="isPublic" type="checkbox" value="isPublic" /></td>
             </tr>
             <tr>
-                <td class="big">Category:</td>
+                <td class="big i" data-i18n="Category">Category:</td>
                 <td>
                     <input id="category" name="category" list="categories" value="Other" />
                     <datalist id="categories">
@@ -80,100 +82,108 @@
                 </td>
             </tr>
             <tr>
-                <td class="big">Copyright:</td>
+                <td class="big i" data-i18n="Copyright">Copyright:</td>
                 <td>
                     <input id="copyright" name="copyright" type="text" value="(c)" /></td>
             </tr>
             <tr>
-                <td class="big">Photo location distance:<br />
+                <td class="big i" data-i18n="Photo location distance">Photo location distance:<br />
                     degree/1000, 2..1000</td>
                 <td>
                     <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="range" max="1000" min="2" step="1" value="100" style="width: 95%;" /></td>
             </tr>
             <tr>
-                <td class="big">Steps to redraw:<br />
+                <td class="big i" data-i18n="Stepstoredraw">Steps to redraw:<br />
                     2..1000</td>
                 <td>
                     <input id="stepsToRedraw" name="stepsToRedraw" type="range" max="1000" min="2" step="1" value="100" style="width: 95%;" /></td>
             </tr>
             <tr>
-                <td class="big">Steps to show photos:<br />
+                <td class="big i" data-i18n="Steps to show photos">Steps to show photos:<br />
                     2..1000</td>
                 <td>
                     <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="range" max="1000" min="2" step="1" value="10" style="width: 95%;" /></td>
             </tr>
             <tr>
-                <td class="big">Speed:<br />
+                <td class="big i" data-i18n="Speed">Speed:<br />
                     meters/sec, 1..100000</td>
                 <td>
                     <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="range" max="100000" min="1" step="1" value="1000" style="width: 95%;" /></td>
             </tr>
             <tr>
-                <td class="big"># of photos to load:<br />
+                <td class="big i" data-i18n="Numberofphotostoload">Number of photos to load:<br />
                     1..50</td>
                 <td>
                     <input id="numOfPhotos" name="numOfPhotos" type="range" max="50" min="1" step="1" value="10" style="width: 95%;" /></td>
             </tr>
             <tr>
-                <td class="big">Animated marker icon:</td>
+                <td class="big i" data-i18n="Animated marker icon">Animated marker icon:</td>
                 <td>
-                    <input id="icon" name="icon" type="text" value="mybike.png" /></td>
+                    <input id="icon" name="icon" type="text" value="mybike.png" list="markers" />
+                    <datalist id="markers">
+                      <option value="mycar.png"/>
+                      <option value="mybike.png"/>
+                      <option value="aman.gif"/>
+                      <option value="myyacht.png"  />
+                      <option value="myplane.png"/>
+                    </datalist>
+                </td>
             </tr>
             <tr>
-                <td class="big">Audio file path:</td>
+                <td class="big i" data-i18n="Audiofilepath">Audio file path:</td>
                 <td>
                     <input id="audioSrc" name="audioSrc" type="text" value="" /></td>
             </tr>
             <tr>
-                <td class="big">Track image path:</td>
+                <td class="big i" data-i18n="Trackimagepath">Track image path:</td>
                 <td>
                     <input id="trackImage" name="trackImage" type="text" value="" /></td>
             </tr>
-            <%--<tr><td class="big">audioVolume:</td><td>
-        <input id="audioVolume" name="audioVolume" type="text" value="0.5" /></td></tr>--%>
             <tr>
-                <td class="big">Text description:</td>
+                <td class="big i" data-i18n="TextDescriptionPath">Text description file path:</td>
                 <td>
                     <input id="textToRead" name="textToRead" type="text" value="" /></td>
             </tr>
             <tr>
-                <td class="big">Default scale:<br />
+                <td class="big i" data-i18n="Defaultscale">Default scale:<br />
                     1(largest).20(smallest)</td>
                 <td>
                     <input id="defaultScale" name="defaultScale" type="range" max="20" min="1" step="1" value="8" style="width: 95%;" /></td>
             </tr>
-            <%--        <tr><td class="big">trackGpx:</td><td>
-        <input id="trackGpx" name="trackGpx" type="text" value="" /></td></tr>--%>
-        </table>
+         </table>
         <p class="big">
             <input name="trackData" id="trackData" type="hidden" />
         </p>
         <p class="big">
-		Track points:<br/>
+		    <span class="big  i" data-i18n="Trackpoints">Track points:</span>
+            <br/>
             <select id="points" name="points" size="10" style="width: 330px" multiple="multiple">
             </select>
         </p>
         <p class="big">
-            <span>Point description (optional):</span>&nbsp;<input id="pointDescr" name="pointDescr" type="text" value="" style="width: 120px" />
+            <span class="big  i" data-i18n="Currentpointdescriptionoptional">Current point description (optional):</span>
+            <br /><input id="pointDescr" name="pointDescr" type="text" value="" style="width: 300px" />
         </p>
         <p class="big">
             <asp:Button
                 ID="Button1"
                 PostBackUrl="saveTrack.aspx"
                 runat="server"
-                Text="Submit" />
+                Text="Submit"
+                data-i18n="TrackDescription"
+                class="i" />
             &nbsp;
     <input type="reset" value="Reset" />
             &nbsp;
-    <input type="button" value="Delete selected" id="buttonDeleteSelected" />
+    <input type="button" value="Delete selected" id="buttonDeleteSelected" class="i" data-i18n="[title]DeleteSelected;[value]DeleteSelected" />
             &nbsp;
-    <input type="button" value="Cancel" id="gotoMain" onclick="window.location = 'index.aspx?trackname=' + trackname" />
+    <input type="button" value="Cancel" class="i" data-i18n="[title]Cancel;[value]Cancel" id="gotoMain" onclick="window.location = 'index.aspx?trackname=' + trackname" />
             <!--input type="button" value="Undo last"/-->
         </p>
         <div class="big">
             <br/>
             <div id="fileOperations">
-                <label for="fileGpx">Import Gpx file:</label>
+                <label for="fileGpx" class="i" data-i18n="[title]ImportGpxFile;ImportGpxFile">Import Gpx file:</label>
                 <input type="file" accept=".gpx" id="filesGpx" />
                 <%--multiple="multiple"--%>
                 <!--input type="button" value="Import data" id="importGpx"/-->

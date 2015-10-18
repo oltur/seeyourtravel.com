@@ -161,6 +161,9 @@
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
     <!--Content-->
+    <div style="position: absolute; right: 40px; top: 5px; z-index: 1003">
+        <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
+    </div>
     <input id="showGoesOn" type="hidden" value="0" />
     <div id="splitterContainer">
         <div id='sidePanel' style='display: none; height: 100%; width: 0%; float: left;'>

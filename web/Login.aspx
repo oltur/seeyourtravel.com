@@ -117,8 +117,9 @@
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
-
-
+    <div style="position: absolute; right: 55px; top: 5px; z-index: 1003">
+        <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
+    </div>
     <div class="mapheader">
         <span style="position: absolute; left: 0;">
             <a href="./corporate" target="_blank"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
