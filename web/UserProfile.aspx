@@ -62,7 +62,7 @@
                 <td>
         <div><%=Tools.GetUserName(this)%>: <span class="i" data-i18n="[title]MyTracks;MyTracks">My tracks</span></div>
         <br />
-        <span class="i" data-i18n="TheTracks">My tracks</span>
+        <span class="i" data-i18n="MyTracks">My tracks</span>
         <br /> 
         <select style="vertical-align: central; width: 500px;" id="tracksList" size="20"></select>
         <br />
