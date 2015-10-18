@@ -22,8 +22,8 @@ public partial class Image
     public System.Guid ImageID { get; set; }
     public string FileName { get; set; }
     public bool IsPublic { get; set; }
-    public double Lat { get; set; }
-    public double Lng { get; set; }
+    public Nullable<double> Lat { get; set; }
+    public Nullable<double> Lng { get; set; }
     public string Description { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -141,6 +141,7 @@ public partial class Track
     public bool IsPublic { get; set; }
     public string Description { get; set; }
     public string Category { get; set; }
+    public string ImageUrl { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<TrackUser> TrackUsers { get; set; }
@@ -253,10 +254,22 @@ public partial class GetTrackForUserByIdOrName_Result
 public partial class GetUserandPublicTracks_Result
 {
     public System.Guid TrackID { get; set; }
+    public bool IsPublic { get; set; }
+    public string Category { get; set; }
+    public string Description { get; set; }
+    public string FileName { get; set; }
+    public string ImageUrl { get; set; }
+}
+
+public partial class GetUserImages_Result
+{
+    public System.Guid ImageID { get; set; }
     public string FileName { get; set; }
     public bool IsPublic { get; set; }
     public string Description { get; set; }
-    public string Category { get; set; }
+    public Nullable<double> Lat { get; set; }
+    public Nullable<double> Lng { get; set; }
+    public Nullable<System.Guid> UserID { get; set; }
 }
 
 public partial class GetUserTracks_Result
@@ -270,6 +283,11 @@ public partial class GetUserTracks_Result
 }
 
 public partial class IsAdmin_Result
+{
+    public int Result { get; set; }
+}
+
+public partial class IsGuest_Result
 {
     public int Result { get; set; }
 }

@@ -20,6 +20,6 @@ public static class Tools
     public static bool IsGuest(Page page)
     {
         var db = new SeeYourTravelEntities();
-        return db.IsGuest(GetUserId(page)).First().Value == 1;
+        return db.IsGuest(GetUserId(page)).First().Result == 1;
     }
 }

@@ -6,6 +6,12 @@
     <script>
         var trackParam = '<%=Request["trackname"]%>';
 
+        $(function () {
+            if (trackParam == "") {
+                window.location = "index.aspx";
+            }
+        });
+
         function translateAll(err, t) {
             $(".i").i18n();
             $("option.i").i18n();
@@ -35,6 +41,9 @@
             <a id="alogo" href="javascript:window.open('./corporate','_blank')"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
                 <span id="lblCoord" style="visibility:hidden; vertical-align:super; text-shadow: 1px 1px #ffffff;"></span>
         </div>
+        <script>
+            $("#alogo").attr("href", "javascript:window.open('" + window.location.toString().replace("frame.aspx", "index.aspx") + "','_blank')");
+        </script>
         <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 60px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
             <input id="scriptTextCheckBox" type="checkbox" title="Description" onchange="$('#textToReadArea0').toggle('fold', 1000);" />
             <label for="scriptTextCheckBox" class="i" data-i18n="Description">Description</label>

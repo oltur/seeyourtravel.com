@@ -83,6 +83,15 @@ function onBodyResize() {
     if ($(".viewport").length) {
         $(".viewport").height(window.innerHeight - 150);
     }
+
+    if (typeof (switchSidePanel) != "undefined") {
+        if (window.innerWidth < 800 && showSidePanel != "no") {
+            switchSidePanel(false);
+        }
+        else {
+            switchSidePanel(true);
+        }
+    }
 }
 
 $(function () { onBodyResize(); });
@@ -603,7 +612,7 @@ function init(filename) {
                 counter++;
                 if (p.hasOwnProperty("syt_text") && p["syt_text"] != "") {
                     toastr.info(p["syt_text"], "", { timeOut: 5000, extendedTimeOut: 10000 });
-                    prependToSidePanel(p["syt_text"]);
+                    //prependToSidePanel(p["syt_text"]);
                 }
                 
                 if (p.hasOwnProperty("syt_audio")) {

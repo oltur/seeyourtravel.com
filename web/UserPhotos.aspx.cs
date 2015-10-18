@@ -13,7 +13,6 @@ using System.IO;
 
 public partial class UserPhotos : System.Web.UI.Page
 {
-    SeeYourTravelEntities db;
     protected void Page_Load(object sender, EventArgs e)
     {
         Guid userId = Tools.GetUserId(this);
@@ -24,21 +23,39 @@ public partial class UserPhotos : System.Web.UI.Page
 
         if (this.IsPostBack)
         {
-            //var db = new SeeYourTravelEntities();
+            SeeYourTravelEntities db = new SeeYourTravelEntities();
 
             HttpFileCollection files = Request.Files; // Load File collection into HttpFileCollection variable.
-            var keys = files.AllKeys;  // This will get names of all files into a string array.
-            for (int i= 0; i < keys.Length; i++)
+            var keys = files.Keys;  // This will get names of all files into a string array.
+            for (int i= 0; i < keys.Count; i++)
             {
                 Guid id = Guid.NewGuid();
-                var key = keys[i];
-                var file = files[key];
+                var file = files[i];
                 var oldFileName = file.FileName;
                 var ext = Path.GetExtension(oldFileName);
                 var newFileName = id.ToString() + ext;
-                var path = Server.MapPath("./data/images/1/" + newFileName);
+                var path = Server.MapPath("./data/images/" + newFileName);
                 file.SaveAs(path);
                 Location location = LocationExtractor.GetLocation(path);
+
+                var image = new Image();
+                image.ImageID = id;
+                image.FileName = newFileName;
+                image.Description = oldFileName;
+                image.IsPublic = true;
+                image.Lat = location == null ? null : new double?(location.lat);
+                image.Lng = location == null ? null : new double?(location.lng);
+                db.Images.Add(image);
+
+                db.SaveChanges();
+
+                ImageUser imageUser = new ImageUser();
+                imageUser.ImageUserID = Guid.NewGuid();
+                imageUser.ImageID = image.ImageID;
+                imageUser.UserID = userId;
+                db.ImageUsers.Add(imageUser);
+
+                db.SaveChanges();
             }
         }
     }

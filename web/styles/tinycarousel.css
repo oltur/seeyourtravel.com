@@ -14,7 +14,9 @@
 }
 
 #slider1 .disable {
-    visibility: hidden;
+    opacity: 0.2;
+    pointer-events: none;
+    /*visibility: hidden;*/
 }
 
 #slider1 .overview {
@@ -30,13 +32,10 @@
 #slider1 .overview li {
     float: left;
     margin: 0 0px 0 0;
-    /*border: 1px solid #dcdcdc;*/
-    /*background-color: rgba(200,200,200,0.8);*/
-    /*height: 121px;
-    width: 236px;*/
-  padding: 5px;
+    padding: 5px;
  }
 
+#slider1 .overview li a div,
 #slider1 .overview li div {
     overflow:auto;
   display: block;
@@ -45,17 +44,37 @@
   height: 100%;
 }
 
-#slider1 .overview li div::after {
+.sideMenuItem:after {
   content: "";
-  background: url(../img/italy1.jpg);
+  background: url('../img/See Your Travels-01-grey.png');
   background-size: cover;
-  opacity: 0.5;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   position: absolute;
   z-index: -1;   
+  background-repeat:no-repeat;
 }
 
+.withA::after {
+  opacity: 0.2;
+}
 
+.withoutA::after {
+  opacity: 0.4;
+}
+
+#slider1 .prev img,
+#slider1 .next img {
+    height: 36px;
+    width: 36px;
+}
+
+.sideMenuItem {
+    text-align: center;
+    text-decoration: none;
+    color:gray;
+    text-shadow: 1px 1px lightgray;
+    opacity: 1;
+}

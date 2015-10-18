@@ -18,14 +18,14 @@
     Guid userId = Tools.GetUserId(this);
 
     var db = new SeeYourTravelEntities();
-    var tracks = (from t in db.GetUserandPublicTracks(userId) orderby t.Category, t.Description select t).ToList();
+    var Images = (from t in db.GetUserImages(userId) orderby t.Description select t).ToList();
     StringBuilder sb = new StringBuilder();
 
-    foreach (var track in tracks)
+    foreach (var Image in Images)
     {
         if (sb.Length != 0)
             sb.Append("\n");
-        sb.Append(track.FileName + ";" + track.Description + ";" + (track.IsPublic?1:0) + ";" + (track.Category) + ";" + track.ImageUrl);
+        sb.Append(Image.FileName + ";" + (Image.Description == "(EMPTY)" ? Image.FileName : Image.Description) + ";" + (Image.IsPublic ? 1 : 0) + ";" + Image.Lat + ";" + Image.Lng);
     }
     Response.Write(sb);
 %>    

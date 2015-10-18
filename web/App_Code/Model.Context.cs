@@ -94,6 +94,16 @@ public partial class SeeYourTravelEntities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<IsAdmin_Result>("[SeeYourTravelEntities].[IsAdmin](@UserID)", userIDParameter);
     }
 
+    [DbFunction("SeeYourTravelEntities", "IsGuest")]
+    public virtual IQueryable<IsGuest_Result> IsGuest(Nullable<System.Guid> userID)
+    {
+        var userIDParameter = userID.HasValue ?
+            new ObjectParameter("UserID", userID) :
+            new ObjectParameter("UserID", typeof(System.Guid));
+
+        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<IsGuest_Result>("[SeeYourTravelEntities].[IsGuest](@UserID)", userIDParameter);
+    }
+
     public virtual ObjectResult<GetFriendsLocations_Result> GetFriendsLocations(Nullable<System.Guid> userID)
     {
         var userIDParameter = userID.HasValue ?
@@ -103,13 +113,13 @@ public partial class SeeYourTravelEntities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFriendsLocations_Result>("GetFriendsLocations", userIDParameter);
     }
 
-    [DbFunction("SeeYourTravelEntities", "IsGuest")]
-    public virtual IQueryable<Nullable<int>> IsGuest(Nullable<System.Guid> userID)
+    [DbFunction("SeeYourTravelEntities", "GetUserImages")]
+    public virtual IQueryable<GetUserImages_Result> GetUserImages(Nullable<System.Guid> userID)
     {
         var userIDParameter = userID.HasValue ?
             new ObjectParameter("UserID", userID) :
             new ObjectParameter("UserID", typeof(System.Guid));
 
-        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Nullable<int>>("[SeeYourTravelEntities].[IsGuest](@UserID)", userIDParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetUserImages_Result>("[SeeYourTravelEntities].[GetUserImages](@UserID)", userIDParameter);
     }
 }

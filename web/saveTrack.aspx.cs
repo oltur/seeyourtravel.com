@@ -74,7 +74,7 @@ public partial class SaveTrack : System.Web.UI.Page
                 if (!string.IsNullOrEmpty(Request.Form["trackImage"]))
                 {
                     writer.Write(",");
-                    writer.WriteLine("\"icon\":\"" + Request.Form["trackImage"] + "\"");
+                    writer.WriteLine("\"trackImage\":\"" + Request.Form["trackImage"] + "\"");
                 }
                 if (!string.IsNullOrEmpty(Request.Form["audioSrc"]))
                 {
@@ -115,6 +115,7 @@ public partial class SaveTrack : System.Web.UI.Page
             track.Description = trackDescription;
             track.IsPublic = string.IsNullOrEmpty(Request.Form["isPublic"]) ? false : (Request.Form["isPublic"] == "isPublic");
             track.Category = category;
+            track.ImageUrl = string.IsNullOrWhiteSpace(Request.Form["trackImage"]) ? "SYTLogo-grey.png" : Request.Form["trackImage"];
 
             db.SaveChanges();
 

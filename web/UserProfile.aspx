@@ -54,12 +54,34 @@
 
     <!-- #Include virtual="include/settingsPanel.inc" -->
 
-    <div id="textToReadArea0" class="ui-widget-content" style="visibility: hidden; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 340px; height: 700px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 410px; height: 800px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
         <table border="0">
             <tr>
-                <td class="big">Test:</td>
                 <td>
-                    <input id="name" name="name" type="text" value="New Track" /></td>
+        <div><%=Tools.GetUserName(this)%>: <spanc lass="i" data-i18n="[title]MyTracks;MyTracks">My Tracks</spanc></div>
+        <br />
+        <br />
+        <span class="i" data-i18n="TheTracks">The Tracks</span>
+        <br />
+        <select style="vertical-align: central; width: 400px;" id="tracksList" class="i" size="20"></select>
+        <br />
+        <br />
+        <button type="button" id="buttonNew" class="i" data-i18n="[title]New;New">New</button>
+        <button type="button" id="buttonEdit" class="i" data-i18n="[title]Edit;Edit">Edit</button>
+        <button type="button" id="buttonDelete" class="i" data-i18n="[title]DeleteSelected;DeleteSelected">Delete Selected</button>
+        <br />
+        <br />
+        <a href="UserPhotos.aspx" class="i" data-i18n="[title]MyPhotos;MyPhotos">My Photos</a>
+<%--        <a href="UserPlaces.aspx" class="i" data-i18n="[title]MyPlaces;MyPlaces">My Places</a>--%>
+        <br />
+        <br />
+        <span class="i" data-i18n="SiteComponentHTML">Site component HTML:</span> 
+        <br />
+        <input type="text" id="frameUrl" value="" style="width: 300px" /> <button type="button" id="buttonShow" class="i" data-i18n="[title]Show;Show">Show</button>
+        <br />
+        <br />
+        <div id="divframe"></div>
+                </td>
             </tr>
         </table>
     </div>
@@ -70,42 +92,81 @@
         </div>
     </div>
 
-    <div style="position: absolute; left: 10px; top: 50px; z-index: 101;">
-        <div><%=Tools.GetUserName(this)%></div>
-        <br />
-        <br />
-        <span class="i" data-i18n="TheTracks">The Tracks</span>
-        <br />
-        <select style="vertical-align: central; width: 200px;" id="tracksList" class="i" size="15"></select>
-        <br />
-        <br />
-        <button type="button" id="buttonNew" class="i" data-i18n="[title]New;New">New</button>
-        <button type="button" id="buttonEdit" class="i" data-i18n="[title]Edit;Edit">Edit</button>
-        <button type="button" id="buttonDelete" class="i" data-i18n="[title]Delete;Delete">Delete</button>
-        <br />
-        <br />
-        <a href="UserPhotos.aspx" class="i" data-i18n="[title]UserPhotos;UserPhotos">User Photos</a>
-        <br />
-        <br />
-        <span class="i" data-i18n="SiteComponentHTML">Site component HTML:</span> 
-        <br />
-        <input type="text" id="frameUrl" value="" style="width: 600px" />
-        <br />
-        <br />
-        <div id="divframe"></div>
-    </div>
+    <div id="map"></div>
+
+<%--    <div style="position: absolute; left: 10px; top: 50px; z-index: 101;">
+    </div>--%>
     <script>
         var tracksList;
         $(function () {
+
+            var imageDiv = $("#imageDiv");
+            var polyline;
+            var map;
+            var markers;
+
+            function onMapClick(e) {
+                //updateTrackData(e);
+                //updateMap();
+            }
+
+            var icon = L.icon({
+                iconUrl: ("tracks/content/mycar.png"),
+                iconSize: [50, 50],
+                iconAnchor: [1, 50],
+                shadowUrl: null
+            });
+
+            map = L.map('map', { zoomControl: false }).setView([50.430981, 30.539267], 8);
+            L.control.zoom({ position: 'topright' }).addTo(map);
+            L.control.scale({ position: 'bottomleft' }).addTo(map);
+            tileLayer = L.tileLayer(mapTileUrl, {
+                attribution: 'Map data &copy; <a href="https://www.mapbox.com/">MapBox</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+                maxZoom: 18,
+                id: "mapbox.streets"
+            });
+
+            tileLayer.addTo(map);
+            markerPosition = L.marker(new L.LatLng(1000, 1000), { icon: icon }).addTo(map);
+
+            markers = new L.FeatureGroup();
+            map.addLayer(markers);
+
+            map.on('click', onMapClick);
+
+            $("#imageDiv0").draggable().resizable({ minHeight: 50, minWidth: 50 });
+            $("#textToReadArea0").draggable();
+            $("#slider").slider({
+                value: 0.8,
+                min: 0,
+                max: 1,
+                step: 0.1,
+                slide: function (event, ui) {
+                    audio.volume = ui.value;
+                }
+            });
 
             tracksList = $("#tracksList");
 
             fillTracks();
 
             tracksList.change(function () {
-                var s = '<iframe style="width: 500px; height: 300px;" src="' + '<%=Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath%>' + "frame.aspx?trackname=" + tracksList.val() + '"></iframe>'
+                var s = '<iframe style="width: 400px; height: 200px;" src="' + '<%=Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath%>' + "frame.aspx?trackname=" + tracksList.val() + '"></iframe>'
                 $("#frameUrl").val(s);
-                $("#divframe").html(s);
+                $("#divframe").html("");
+
+                var path = translateTracksPath(tracksList.val() + ".js");
+                track = loadTrackSync(path);
+
+                markers.clearLayers();
+                line = L.polyline(track.trackData, { color: 'green' });
+                markers.addLayer(line);
+
+                map.panTo(track.trackData[0]);
+
+            });
+            $("#buttonShow").click(function () {
+                $("#divframe").html($("#frameUrl").val());
             });
             $("#buttonNew").click(function () {
                 window.location = "editor.aspx";

@@ -12,8 +12,8 @@
           <Property Name="ImageID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsPublic" Type="bit" Nullable="false" />
-          <Property Name="Lat" Type="float" Nullable="false" />
-          <Property Name="Lng" Type="float" Nullable="false" />
+          <Property Name="Lat" Type="float" />
+          <Property Name="Lng" Type="float" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="ImageUser">
@@ -83,6 +83,7 @@
           <Property Name="IsPublic" Type="bit" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ImageUrl" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="TrackUser">
           <Key>
@@ -358,10 +359,27 @@
             <CollectionType>
               <RowType>
                 <Property Name="TrackID" Type="uniqueidentifier" Nullable="false" />
+                <Property Name="IsPublic" Type="bit" Nullable="false" />
+                <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="ImageUrl" Type="nvarchar(max)" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetUserImages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ImageID" Type="uniqueidentifier" Nullable="false" />
                 <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
                 <Property Name="IsPublic" Type="bit" Nullable="false" />
                 <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-                <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="Lat" Type="float" />
+                <Property Name="Lng" Type="float" />
+                <Property Name="UserID" Type="uniqueidentifier" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -493,10 +511,11 @@
         </ComplexType>
         <ComplexType Name="GetUserandPublicTracks_Result">
           <Property Name="TrackID" Type="Guid" Nullable="false" />
-          <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsPublic" Type="Boolean" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetUserTracks_Result">
           <Property Name="TrackID" Type="Guid" Nullable="false" />
@@ -509,6 +528,9 @@
         <ComplexType Name="IsAdmin_Result">
           <Property Name="Result" Type="Int32" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="IsGuest_Result">
+          <Property Name="Result" Type="Int32" Nullable="false" />
+        </ComplexType>
         <EntityType Name="Image">
           <Key>
             <PropertyRef Name="ImageID" />
@@ -516,8 +538,8 @@
           <Property Name="ImageID" Type="Guid" Nullable="false" />
           <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsPublic" Type="Boolean" Nullable="false" />
-          <Property Name="Lat" Type="Double" Nullable="false" />
-          <Property Name="Lng" Type="Double" Nullable="false" />
+          <Property Name="Lat" Type="Double" />
+          <Property Name="Lng" Type="Double" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="ImageUsers" Relationship="Self.FK_ImageUser_Image" FromRole="Image" ToRole="ImageUser" />
           <NavigationProperty Name="PlaceImages" Relationship="Self.FK_PlaceImage_Image" FromRole="Image" ToRole="PlaceImage" />
@@ -602,6 +624,7 @@
           <Property Name="IsPublic" Type="Boolean" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="TrackUsers" Relationship="Self.FK_TrackUser_Track" FromRole="Track" ToRole="TrackUser" />
         </EntityType>
         <EntityType Name="TrackUser">
@@ -938,10 +961,13 @@
           <FunctionImport Name="IsAdmin" IsComposable="true" ReturnType="Collection(SeeYourTravelModel.IsAdmin_Result)">
           <Parameter Name="UserID" Mode="In" Type="Guid" />
           </FunctionImport>
+          <FunctionImport Name="IsGuest" IsComposable="true" ReturnType="Collection(SeeYourTravelModel.IsGuest_Result)">
+          <Parameter Name="UserID" Mode="In" Type="Guid" />
+          </FunctionImport>
           <FunctionImport Name="GetFriendsLocations" ReturnType="Collection(SeeYourTravelModel.GetFriendsLocations_Result)">
           <Parameter Name="UserID" Mode="In" Type="Guid" />
           </FunctionImport>
-          <FunctionImport Name="IsGuest" IsComposable="true" ReturnType="Collection(Int32)">
+          <FunctionImport Name="GetUserImages" IsComposable="true" ReturnType="Collection(SeeYourTravelModel.GetUserImages_Result)">
             <Parameter Name="UserID" Mode="In" Type="Guid" />
           </FunctionImport>
         </EntityContainer>
@@ -951,6 +977,15 @@
           <Property Type="Double" Name="Lat" Nullable="false" />
           <Property Type="Double" Name="Lng" Nullable="false" />
           <Property Type="DateTime" Name="Time" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetUserImages_Result">
+          <Property Type="Guid" Name="ImageID" Nullable="false" />
+          <Property Type="String" Name="FileName" Nullable="false" />
+          <Property Type="Boolean" Name="IsPublic" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="Double" Name="Lat" Nullable="true" />
+          <Property Type="Double" Name="Lng" Nullable="true" />
+          <Property Type="Guid" Name="UserID" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1043,6 +1078,7 @@
                 <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1125,10 +1161,11 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="SeeYourTravelModel.GetUserandPublicTracks_Result">
                 <ScalarProperty Name="TrackID" ColumnName="TrackID" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1151,6 +1188,13 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="SeeYourTravelModel.Store.IsGuest" FunctionImportName="IsGuest">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SeeYourTravelModel.IsGuest_Result">
+                <ScalarProperty Name="Result" ColumnName="Result" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetFriendsLocations" FunctionName="SeeYourTravelModel.Store.GetFriendsLocations">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SeeYourTravelModel.GetFriendsLocations_Result">
@@ -1162,7 +1206,19 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="IsGuest" FunctionName="SeeYourTravelModel.Store.IsGuest" />
+          <FunctionImportMapping FunctionImportName="GetUserImages" FunctionName="SeeYourTravelModel.Store.GetUserImages">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SeeYourTravelModel.GetUserImages_Result">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Lng" ColumnName="Lng" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
