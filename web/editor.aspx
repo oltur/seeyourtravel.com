@@ -72,12 +72,13 @@
                 <td class="big i" data-i18n="Category">Category:</td>
                 <td>
                     <input id="category" name="category" list="categories" value="Other" />
-                    <datalist id="categories">
-                      <option value="Ukraine"/>
-                      <option value="Germany"/>
-                      <option value="Europe"/>
-                      <option value="Asia"/>
-                      <option value="Other"/>
+                    <datalist class="i" id="categories">
+                      <option value="Ukraine" class="i" data-i18n="Ukraine"/>
+                      <option value="Germany" class="i" data-i18n="Germany"/>
+                      <option value="Europe" class="i" data-i18n="Europe"/>
+                      <option value="Asia" class="i" data-i18n="Asia"/>
+                      <option value="America" class="i" data-i18n="America"/>
+                      <option value="Other" class="i" data-i18n="Other"/>
                     </datalist>
                 </td>
             </tr>

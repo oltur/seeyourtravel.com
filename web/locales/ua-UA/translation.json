@@ -39,7 +39,7 @@
   "Corporate_Italy1": "Побач на власні очі красу італійського життя та історії",
   "Corporate_FeelFree": "Будь ласка зв'яжіться з нами: ",
   "Corporate_View": "Дивитися",
-  "Feedback":  "Ваша думка",
+  "Feedback": "Ваша думка",
   "Description": "Опис",
   "Images": "Фото",
   "LoopTrack": "Повторювати трек",
@@ -51,7 +51,7 @@
   "Volume": "Гучність",
   "Corporate_GETINTOUCH": "БУДЬТЕ НА ЗВ'ЯЗКУ",
   "Corporate_SeeYourTravelCom": "Побач Подорож",
-  "Demo":"Спробуй зараз!!",
+  "Demo": "Спробуй зараз!!",
   "MyTracks": "Мої маршрути",
   "DeleteSelected": "Видалити вибрані",
   "MyPhotos": "Мої фото",
@@ -73,6 +73,12 @@
   "Defaultscale": "Початковий масштаб: 1(найбільший)..20(найменший)",
   "Trackpoints": "Точки маршруту:",
   "Currentpointdescriptionoptional": "Опис вибраної точки (не обов'язково):",
-  "ImportGpxFile": "Імпорт файлу Gpx:"
+  "ImportGpxFile": "Імпорт файлу Gpx:",
+  "Ukraine": "Ukraine",
+  "Germany": "Germany",
+  "Europe": "Europe",
+  "Asia": "Asia",
+  "America": "America",
+  "Other": "Other"
 
 }

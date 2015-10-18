@@ -72,5 +72,12 @@
   "Defaultscale": "Default scale: 1(largest)..20(smallest)",
   "Trackpoints": "Track points:",
   "Currentpointdescriptionoptional": "Current point description (optional):",
-  "ImportGpxFile": "Import Gpx file:"
+  "ImportGpxFile": "Import Gpx file:",
+  "Ukraine": "Ukraine",
+  "Germany": "Germany",
+  "Europe": "Europe",
+  "Asia": "Asia",
+  "America": "America",
+  "Other": "Other"
+
 }

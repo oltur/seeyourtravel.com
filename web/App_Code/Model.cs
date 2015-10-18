@@ -10,6 +10,15 @@
 using System;
 using System.Collections.Generic;
 
+public partial class GetAllRoughUserLocation
+{
+    public System.Guid userid { get; set; }
+    public string username { get; set; }
+    public double lat { get; set; }
+    public double lng { get; set; }
+    public Nullable<System.DateTime> Expr1 { get; set; }
+}
+
 public partial class Image
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -145,6 +154,14 @@ public partial class Track
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<TrackUser> TrackUsers { get; set; }
+}
+
+public partial class TrackLocalization
+{
+    public System.Guid TrackLocalizationID { get; set; }
+    public System.Guid TrackID { get; set; }
+    public string Locale { get; set; }
+    public string Description { get; set; }
 }
 
 public partial class TrackUser

@@ -33,6 +33,8 @@
         <AssociationConnector Association="SeeYourTravelModel.FK_UserLocation_User" ManuallyRouted="false" />
         <AssociationConnector Association="SeeYourTravelModel.FK_UserLogin_User" ManuallyRouted="false" />
         <AssociationConnector Association="SeeYourTravelModel.FK_UserRole_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.TrackLocalization" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.GetAllRoughUserLocation" Width="1.5" PointX="6.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

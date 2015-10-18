@@ -17,8 +17,10 @@
 
     Guid userId = Tools.GetUserId(this);
 
+    string locale = Request["locale"];
+
     var db = new SeeYourTravelEntities();
-    var tracks = (from t in db.GetUserandPublicTracks(userId) orderby t.Category, t.Description select t).ToList();
+    var tracks = (from t in db.GetUserandPublicTracks(userId, locale) orderby t.Category, t.Description select t).ToList();
     StringBuilder sb = new StringBuilder();
 
     foreach (var track in tracks)

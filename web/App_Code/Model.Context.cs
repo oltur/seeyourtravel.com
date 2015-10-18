@@ -39,6 +39,8 @@ public partial class SeeYourTravelEntities : DbContext
     public virtual DbSet<UserLocation> UserLocations { get; set; }
     public virtual DbSet<UserLogin> UserLogins { get; set; }
     public virtual DbSet<UserRole> UserRoles { get; set; }
+    public virtual DbSet<TrackLocalization> TrackLocalizations { get; set; }
+    public virtual DbSet<GetAllRoughUserLocation> GetAllRoughUserLocations { get; set; }
 
     [DbFunction("SeeYourTravelEntities", "GetAllTracks")]
     public virtual IQueryable<GetAllTracks_Result> GetAllTracks()
@@ -65,13 +67,17 @@ public partial class SeeYourTravelEntities : DbContext
     }
 
     [DbFunction("SeeYourTravelEntities", "GetUserandPublicTracks")]
-    public virtual IQueryable<GetUserandPublicTracks_Result> GetUserandPublicTracks(Nullable<System.Guid> userID)
+    public virtual IQueryable<GetUserandPublicTracks_Result> GetUserandPublicTracks(Nullable<System.Guid> userID, string locale)
     {
         var userIDParameter = userID.HasValue ?
             new ObjectParameter("UserID", userID) :
             new ObjectParameter("UserID", typeof(System.Guid));
 
-        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetUserandPublicTracks_Result>("[SeeYourTravelEntities].[GetUserandPublicTracks](@UserID)", userIDParameter);
+        var localeParameter = locale != null ?
+            new ObjectParameter("Locale", locale) :
+            new ObjectParameter("Locale", typeof(string));
+
+        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetUserandPublicTracks_Result>("[SeeYourTravelEntities].[GetUserandPublicTracks](@UserID, @Locale)", userIDParameter, localeParameter);
     }
 
     [DbFunction("SeeYourTravelEntities", "GetUserTracks")]

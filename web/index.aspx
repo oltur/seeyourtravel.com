@@ -328,7 +328,7 @@
 
             var fileListString = $.ajax(
             {
-                url: ('services/get_myandpublictracks.aspx' + "?" + Math.random()),
+                url: ("services/get_myandpublictracks.aspx?locale=" + $("#langList").val() + "&rnd=" + Math.random()),
                 async: false,
                 dataType: 'json'
             }

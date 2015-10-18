@@ -72,6 +72,11 @@
   "Defaultscale": "Standard-Skala: 1 (größte)..20(kleinste)",
   "Trackpoints": "Track-Punkte",
   "Currentpointdescriptionoptional": "Aktuelle Punkt Beschreibung (fakultativ):",
-  "ImportGpxFile": "Import GPX-Datei:"
-
+  "ImportGpxFile": "Import GPX-Datei:",
+  "Ukraine": "Ukraina",
+  "Germany": "Deutschland",
+  "Europe": "Europa",
+  "Asia": "Asien",
+  "America": "Amerika",
+  "Other": "Andere"
 }
