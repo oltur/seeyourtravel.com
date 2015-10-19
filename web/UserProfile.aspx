@@ -26,7 +26,7 @@
     <div id='pageContent' style='height: 100%;'>
         <div style="position: absolute; left: 5px; top: 5px; z-index: 1001">
             <a id="alogo" href="javascript:clickMenu()">
-                <img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+                <img src="img/3lines.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
         </div>
         <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
             <div style="position: absolute; left: 10px; top: 50px;">

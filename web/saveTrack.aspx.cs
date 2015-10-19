@@ -115,7 +115,7 @@ public partial class SaveTrack : System.Web.UI.Page
             track.Description = trackDescription;
             track.IsPublic = string.IsNullOrEmpty(Request.Form["isPublic"]) ? false : (Request.Form["isPublic"] == "isPublic");
             track.Category = category;
-            track.ImageUrl = string.IsNullOrWhiteSpace(Request.Form["trackImage"]) ? "SYTLogo-grey.png" : Request.Form["trackImage"];
+            track.ImageUrl = string.IsNullOrWhiteSpace(Request.Form["trackImage"]) ? "" : Request.Form["trackImage"];
 
             db.SaveChanges();
 

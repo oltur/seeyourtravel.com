@@ -68,7 +68,7 @@
   "Numberofphotostoload": "Кількість фото для завантаження: 1..50",
   "Animatedmarkericon": "Піктограма анімованого маркера:",
   "Audiofilepath": "Шлях до файлу звуку:",
-  "Trackimagepath": "Шлях до файлу заставки машруту:",
+  "Trackimagepath": "Шлях до файлу заставки маршруту:",
   "TextDescriptionPath": "Шлях до файлу опису маршруту:",
   "Defaultscale": "Початковий масштаб: 1(найбільший)..20(найменший)",
   "Trackpoints": "Точки маршруту:",
@@ -79,6 +79,10 @@
   "Europe": "Europe",
   "Asia": "Asia",
   "America": "America",
-  "Other": "Other"
+  "Other": "Other",
+  "UploadPhotos": "Завантажити фото",
+  "Upload": "Завантажити"
+    ,"Photocoordinates": "Координати фото"
+
 
 }

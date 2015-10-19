@@ -26,7 +26,7 @@
     <div id='pageContent' style='height: 100%;'>
         <div style="position: absolute; left: 5px; top: 5px; z-index: 1001">
             <a id="alogo" href="javascript:clickMenu()">
-                <img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+                <img src="img/3lines.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
         </div>
         <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
             <div style="position: absolute; left: 10px; top: 50px;">
@@ -60,10 +60,10 @@
         <table border="0">
             <tr>
                 <td>
-        <div><%=Tools.GetUserName(this)%>: <span lass="i" data-i18n="[title]MyPhotos;MyPhotos">My Photos</span></div>
+        <div><%=Tools.GetUserName(this)%>: <span class="i" data-i18n="[title]MyPhotos;MyPhotos">My Photos</span></div>
         <br />
         <br />
-        <span class="i" data-i18n="ThePhotos">The Photos</span>
+        <span class="i" data-i18n="MyPhotos">My Photos</span>
         <br />
         <select style="vertical-align: central; width: 400px;" id="photosList" class="i" size="20" multiple="multiple"></select>
         <br />
@@ -75,7 +75,7 @@
 <%--        <a href="UserPlaces.aspx" class="i" data-i18n="[title]MyPlaces;MyPlaces">My Places</a>--%>
         <br />
         <br />
-        <input type="text" id="imageLatLng" value="" style="width: 400px" />
+        <span class="i" data-i18n="Photocoordinates">Photo coordinates</span><br /><input type="text" id="imageLatLng" value="" style="width: 400px" />
         <br />
         <br />
         <span class="i" data-i18n="UploadPhotos">Upload photos:</span>
@@ -160,7 +160,7 @@
                 $("#imageLatLng").val('');
                 for (var i in options) {
                     var parts = options[i].toString().split(';');
-                    var imgPath = '<%=Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath%>' + "data/images/" + parts[0];
+                    var imgPath = "services/get_thumbnail.aspx?size=small&p=" + parts[0];
                     $("#imageLatLng").val($("#imageLatLng").val() + "{" + parts[3] + "," + parts[4] + "}; ");
                     var ll = new L.LatLng(parseFloat(parts[3]), parseFloat(parts[4]))
                     map.panTo(ll);

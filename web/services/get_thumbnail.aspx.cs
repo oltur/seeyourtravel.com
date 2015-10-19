@@ -17,7 +17,7 @@ using System.Drawing.Imaging;
 
 public partial class services_get_thumbnail : System.Web.UI.Page
 {
-    private Regex validChars = new Regex("[^a-zA-Z0-9-_ ]");
+    private Regex validChars = new Regex("[^a-zA-Z0-9-_. ]");
 
     private int _maximumDimensionSmall = 100;
     private int _maximumDimensionMedium = 300;
@@ -54,7 +54,7 @@ public partial class services_get_thumbnail : System.Web.UI.Page
         {
             throw new HttpException("Invalid photo name.");
         }
-        string physicalPath = context.Server.MapPath("../data/images/" + photo + ".jpg");
+        string physicalPath = context.Server.MapPath("../data/images/" + Path.GetFileNameWithoutExtension(photo) + ".jpg");
         if (!File.Exists(physicalPath))
         {
             throw new HttpException(404, "Photo not found");

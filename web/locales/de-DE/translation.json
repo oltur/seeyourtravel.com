@@ -53,7 +53,7 @@
 
   "MyTracks": "Meine Spuren",
   "DeleteSelected": "Ausgewählte löschen",
-  "MyPhotos": "Meine Bilder",
+  "MyPhotos": "Meine Fotos",
   "SiteComponentHTML": "Site-Komponente HTML",
   "Show": "Zeigen",
   "TrackDescription": "Spur Beschreibung:",
@@ -79,4 +79,7 @@
   "Asia": "Asien",
   "America": "Amerika",
   "Other": "Andere"
+    ,"UploadPhotos": "Fotos hochladen"
+    ,"Upload": "Hochladen"
+    ,"Photocoordinates": "Foto Koordinaten"
 }

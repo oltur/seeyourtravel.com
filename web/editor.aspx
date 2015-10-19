@@ -26,7 +26,7 @@
     <div id='pageContent' style='height: 100%'>
         <div style="position: absolute; left: 5px; top: 5px; z-index: 1001">
             <a id="alogo" href="javascript:clickMenu()">
-                <img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+                <img src="img/3lines.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
         </div>
         <div style="position: absolute; left: 60px; top: 10px; z-index: 1001">
             <div id="wrapper">
@@ -111,23 +111,22 @@
                 <td>
                     <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="range" max="100000" min="1" step="1" value="1000" style="width: 95%;" /></td>
             </tr>
-            <tr>
+<%--            <tr>
                 <td class="big i" data-i18n="Numberofphotostoload">Number of photos to load:<br />
                     1..50</td>
                 <td>
-                    <input id="numOfPhotos" name="numOfPhotos" type="range" max="50" min="1" step="1" value="10" style="width: 95%;" /></td>
-            </tr>
+            </tr>--%>
+                    <input id="numOfPhotos" name="numOfPhotos" type="hidden" max="50" min="1" step="1" value="20" style="width: 95%;" /></td>
             <tr>
                 <td class="big i" data-i18n="Animatedmarkericon">Animated marker icon:</td>
                 <td>
-                    <input id="icon" name="icon" type="text" value="mybike.png" list="markers" />
-                    <datalist id="markers">
-                      <option value="mycar.png"/>
-                      <option value="mybike.png"/>
-                      <option value="aman.gif"/>
-                      <option value="myyacht.png"  />
-                      <option value="myplane.png"/>
-                    </datalist>
+                    <select id="icon" name="icon" style="width: 95%;" >
+                      <option value="mycar.png" selected="selected">mycar.png</option>
+                      <option value="mybike.png">mybike.png</option>
+                      <option value="aman.gif">aman.gif</option>
+                      <option value="myyacht.png">myyacht.png</option>
+                      <option value="myplane.png">myplane.png</option>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -145,12 +144,12 @@
                 <td>
                     <input id="textToRead" name="textToRead" type="text" value="" /></td>
             </tr>
-            <tr>
+<%--            <tr>
                 <td class="big i" data-i18n="Defaultscale">Default scale:<br />
                     1(largest).20(smallest)</td>
                 <td>
-                    <input id="defaultScale" name="defaultScale" type="range" max="20" min="1" step="1" value="8" style="width: 95%;" /></td>
-            </tr>
+            </tr>--%>
+                    <input id="defaultScale" name="defaultScale" type="hidden" max="20" min="1" step="1" value="8" style="width: 95%;" /></td>
          </table>
         <p class="big">
             <input name="trackData" id="trackData" type="hidden" />

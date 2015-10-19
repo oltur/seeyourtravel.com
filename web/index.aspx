@@ -131,6 +131,9 @@
                 $("<style type='text/css' id='" + dynamicCSSId + "' />").appendTo("head");
                 $("#" + dynamicCSSId).text("#" + sideMenuId + ":after {background-size: cover;  background-repeat:no-repeat; background: url('../tracks/content/" + image + "');}");
             }
+            else {
+                var t = 0;
+            }
             r = r + '"><br/>' + html + '</div>';
             if (href != null && href != '')
                 r = r + '</a>';
@@ -186,7 +189,7 @@
         <div id='pageContent' style='height: 100%; position: relative; margin-left: 0%;'>
             <div style="position: absolute; left: 5px; top: 15px; z-index: 1001">
                 <a id="alogo" href="javascript:clickMenu()">
-                    <img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+                    <img src="img/3lines.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
                 <select style="vertical-align: central; width: 200px; height: 35px" id="tracksList" class="i graySelect" onchange="clickStart()"></select>
             </div>
             <div style="position: absolute; left: 270px; top: 20px; z-index: 1001">

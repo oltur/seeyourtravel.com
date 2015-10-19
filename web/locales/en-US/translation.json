@@ -78,6 +78,8 @@
   "Europe": "Europe",
   "Asia": "Asia",
   "America": "America",
-  "Other": "Other"
-
+  "Other": "Other",
+  "UploadPhotos": "Upload photos",
+  "Upload": "Upload"
+    ,"Photocoordinates": "Photo coordinates"
 }
