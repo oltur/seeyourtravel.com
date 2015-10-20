@@ -54,7 +54,7 @@
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="overflow:auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 450px; height: 800px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="overflow:auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 400px; height: 770px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
         <input type="hidden" id="trackId" name="trackId" value="<%=this.TrackId%>" />
         <input type="hidden" id="trackFileName" name="trackFileName" value="<%=this.TrackFileName%>" />
         <table border="0">
@@ -107,9 +107,9 @@
             </tr>
             <tr>
                 <td class="big i" data-i18n="Speed">Speed:<br />
-                    meters/sec, 1..100000</td>
+                    meters/sec, 1..10000</td>
                 <td>
-                    <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="range" max="100000" min="1" step="1" value="1000" style="width: 95%;" /></td>
+                    <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="range" max="10000" min="1" step="1" value="100" style="width: 95%;" /></td>
             </tr>
 <%--            <tr>
                 <td class="big i" data-i18n="Numberofphotostoload">Number of photos to load:<br />
@@ -157,12 +157,12 @@
         <p class="big">
 		    <span class="big  i" data-i18n="Trackpoints">Track points:</span>
             <br/>
-            <select id="points" name="points" size="10" style="width: 330px" multiple="multiple">
+            <select id="points" name="points" size="10" style="width: 350px" multiple="multiple">
             </select>
         </p>
         <p class="big">
             <span class="big  i" data-i18n="Currentpointdescriptionoptional">Current point description (optional):</span>
-            <br /><input id="pointDescr" name="pointDescr" type="text" value="" style="width: 300px" />
+            <br /><input id="pointDescr" name="pointDescr" type="text" value="" style="width: 350px" />
         </p>
         <p class="big">
             <asp:Button
@@ -172,8 +172,6 @@
                 Text="Submit"
                 data-i18n="TrackDescription"
                 class="i" />
-            &nbsp;
-    <input type="reset" value="Reset" />
             &nbsp;
     <input type="button" value="Delete selected" id="buttonDeleteSelected" class="i" data-i18n="[title]DeleteSelected;[value]DeleteSelected" />
             &nbsp;
