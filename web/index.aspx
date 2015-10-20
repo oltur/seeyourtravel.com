@@ -189,7 +189,7 @@
         <div id='pageContent' style='height: 100%; position: relative; margin-left: 0%;'>
             <div style="position: absolute; left: 5px; top: 15px; z-index: 1001">
                 <a id="alogo" href="javascript:clickMenu()">
-                    <img src="img/3lines.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+                    <img src="img/3lines.png" style="height: 30px; width: 30px; vertical-align: middle;" /></a>
                 <select style="vertical-align: central; width: 200px; height: 35px" id="tracksList" class="i graySelect" onchange="clickStart()"></select>
             </div>
             <div style="position: absolute; left: 270px; top: 20px; z-index: 1001">
@@ -350,7 +350,7 @@
                 var parts = fileList[i].split(';');
                 if (label != parts[3]) {
                     label = parts[3];
-                    tracksList.append('<optgroup label="' + label + '"/>');
+                    tracksList.append('<optgroup label="' + label + '" style="color: black;"/>');
                 }
                 tracksList.append('<option value="' + parts[0] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
                 var isSelected = (trackParam == parts[0]);
