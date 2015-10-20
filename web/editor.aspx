@@ -26,7 +26,7 @@
     <div id='pageContent' style='height: 100%'>
         <div style="position: absolute; left: 5px; top: 5px; z-index: 1001">
             <a id="alogo" href="javascript:clickMenu()">
-                <img src="img/3lines.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+                    <img src="img/3lines.png" style="height: 30px; width: 30px; vertical-align: middle;" /></a>
         </div>
         <div style="position: absolute; left: 60px; top: 10px; z-index: 1001">
             <div id="wrapper">
