@@ -144,9 +144,17 @@ L.AnimatedMarker = L.Marker.extend({
             this.resetAM();
         }
 
+        startagain();
+    },
+
+    // Continue the animation
+    startagain: function () {
         //if (this.isFinished()) {
         //    this.initialize();
         //}
+        if (!this._i) {
+            this._i = 1;
+        }
 
         var mythis = this;
         setTimeout(function () {

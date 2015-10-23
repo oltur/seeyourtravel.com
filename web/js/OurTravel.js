@@ -222,7 +222,7 @@ function doStartStop() {
         if (isTrackPaused) {
             isTrackPaused = !isTrackPaused;
             if (typeof animatedMarker != "undefined")
-                animatedMarker.start();
+                animatedMarker.startagain();
             if (track.audioSrc && track.audioSrc.length > 0)
                 audio.play();
             scrollerEnabled = true;
