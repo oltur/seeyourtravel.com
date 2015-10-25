@@ -42,7 +42,7 @@ public partial class UserPhotos : System.Web.UI.Page
                 image.ImageID = id;
                 image.FileName = newFileName;
                 image.Description = oldFileName;
-                image.IsPublic = true;
+                image.IsPublic = (Request["isPublic"] == "isPublic");
                 image.Lat = location == null ? null : new double?(location.lat);
                 image.Lng = location == null ? null : new double?(location.lng);
                 db.Images.Add(image);

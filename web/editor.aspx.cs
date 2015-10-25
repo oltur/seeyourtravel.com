@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Web;
 
 public partial class Editor : System.Web.UI.Page
 {
@@ -13,32 +14,36 @@ public partial class Editor : System.Web.UI.Page
         UserId = Tools.GetUserId(this);
         db = new SeeYourTravelEntities();
 
-        try
+        if (!IsCallback)
         {
-            //var t = User.IsInRole("admin");
-            if (Request["trackname"] != null)
+            try
             {
-                TrackFileName = Request["trackname"];
-                var t = db.GetTrackForUserByIdOrName(UserId, null, TrackFileName);
-                var track = t.FirstOrDefault();
-                TrackId = track.TrackID;
-            }
-            else if (Request["trackid"] != null)
-            {
-                TrackId = Guid.Parse(Request["trackid"]);
-                var track = db.GetTrackForUserByIdOrName(UserId, TrackId, null).FirstOrDefault();
-                TrackFileName = track.FileName;
-            }
-            else
+                //var t = User.IsInRole("admin");
+                if (Request["trackname"] != null)
+                {
+                    TrackFileName = Request["trackname"];
+                    var t = db.GetTrackForUserByIdOrName(UserId, null, TrackFileName);
+                    var track = t.FirstOrDefault();
+                    TrackId = track.TrackID;
+                }
+                else if (Request["trackid"] != null)
+                {
+                    TrackId = Guid.Parse(Request["trackid"]);
+                    var track = db.GetTrackForUserByIdOrName(UserId, TrackId, null).FirstOrDefault();
+                    TrackFileName = track.FileName;
+                }
+                else
+                {
+                    TrackId = Guid.NewGuid();
+                    TrackFileName = TrackId.ToString();
+                }
+
+             }
+            catch (NullReferenceException ex)
             {
                 TrackId = Guid.NewGuid();
                 TrackFileName = TrackId.ToString();
             }
-        }
-        catch (NullReferenceException ex)
-        {
-            TrackId = Guid.NewGuid();
-            TrackFileName = TrackId.ToString();
         }
     }
 }

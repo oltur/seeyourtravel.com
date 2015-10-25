@@ -1,4 +1,4 @@
-<%@ Page validateRequest="false" Title="See Your Travel - Editor" Language="C#" MasterPageFile="MasterPage.master" CodeFile="Editor.aspx.cs" Inherits="Editor"%>
+<%@ Page ValidateRequest="false" Title="See Your Travel - Editor" Language="C#" MasterPageFile="MasterPage.master" CodeFile="Editor.aspx.cs" Inherits="Editor" %>
 
 <%@ Import Namespace="System.IO" %>
 
@@ -26,7 +26,7 @@
     <div id='pageContent' style='height: 100%'>
         <div style="position: absolute; left: 5px; top: 5px; z-index: 1001">
             <a id="alogo" href="javascript:clickMenu()">
-                    <img src="img/3lines.png" style="height: 30px; width: 30px; vertical-align: middle;" /></a>
+                <img src="img/3lines.png" style="height: 30px; width: 30px; vertical-align: middle;" /></a>
         </div>
         <div style="position: absolute; left: 60px; top: 10px; z-index: 1001">
             <div id="wrapper">
@@ -54,116 +54,167 @@
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="overflow:auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 400px; height: 770px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="overflow: auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 500px; height: 620px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+
         <input type="hidden" id="trackId" name="trackId" value="<%=this.TrackId%>" />
         <input type="hidden" id="trackFileName" name="trackFileName" value="<%=this.TrackFileName%>" />
-        <table border="0">
-            <tr>
-                <td class="big i" data-i18n="TrackDescription">Track description:</td>
-                <td>
-                    <input id="name" name="name" type="text" value="New Track" /></td>
-            </tr>
-            <tr>
-                <td class="big i" data-i18n="Maketrackpublic">Make track public?</td>
-                <td>
-                    <input id="isPublic" name="isPublic" type="checkbox" value="isPublic" /></td>
-            </tr>
-            <tr>
-                <td class="big i" data-i18n="Category">Category:</td>
-                <td>
-                    <input id="category" name="category" list="categories" value="Other" />
-                    <datalist class="i" id="categories">
-                      <option value="Ukraine" class="i" data-i18n="Ukraine"/>
-                      <option value="Germany" class="i" data-i18n="Germany"/>
-                      <option value="Europe" class="i" data-i18n="Europe"/>
-                      <option value="Asia" class="i" data-i18n="Asia"/>
-                      <option value="America" class="i" data-i18n="America"/>
-                      <option value="Other" class="i" data-i18n="Other"/>
-                    </datalist>
-                </td>
-            </tr>
-            <tr>
-                <td class="big i" data-i18n="Copyright">Copyright:</td>
-                <td>
-                    <input id="copyright" name="copyright" type="text" value="(c)" /></td>
-            </tr>
-            <tr>
-                <td class="big i" data-i18n="Photolocationdistance">Photo location distance:<br />
-                    degree/1000, 2..1000</td>
-                <td>
-                    <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="range" max="1000" min="2" step="1" value="100" style="width: 95%;" /></td>
-            </tr>
-            <tr>
-                <td class="big i" data-i18n="Stepstoredraw">Steps to redraw:<br />
-                    2..1000</td>
-                <td>
-                    <input id="stepsToRedraw" name="stepsToRedraw" type="range" max="1000" min="2" step="1" value="100" style="width: 95%;" /></td>
-            </tr>
-            <tr>
-                <td class="big i" data-i18n="Stepstoshowphotos">Steps to show photos:<br />
-                    2..1000</td>
-                <td>
-                    <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="range" max="1000" min="2" step="1" value="10" style="width: 95%;" /></td>
-            </tr>
-            <tr>
-                <td class="big i" data-i18n="Speed">Speed:<br />
-                    meters/sec, 1..10000</td>
-                <td>
-                    <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="range" max="10000" min="1" step="1" value="100" style="width: 95%;" /></td>
-            </tr>
-<%--            <tr>
-                <td class="big i" data-i18n="Numberofphotostoload">Number of photos to load:<br />
-                    1..50</td>
-                <td>
-            </tr>--%>
-                    <input id="numOfPhotos" name="numOfPhotos" type="hidden" max="50" min="1" step="1" value="20" style="width: 95%;" /></td>
-            <tr>
-                <td class="big i" data-i18n="Animatedmarkericon">Animated marker icon:</td>
-                <td>
-                    <select id="icon" name="icon" style="width: 95%;" >
-                      <option value="mycar.png" selected="selected">mycar.png</option>
-                      <option value="mybike.png">mybike.png</option>
-                      <option value="aman.gif">aman.gif</option>
-                      <option value="myyacht.png">myyacht.png</option>
-                      <option value="myplane.png">myplane.png</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="big i" data-i18n="Audiofilepath">Audio file path:</td>
-                <td>
-                    <input id="audioSrc" name="audioSrc" type="text" value="" /></td>
-            </tr>
-            <tr>
-                <td class="big i" data-i18n="Trackimagepath">Track image path:</td>
-                <td>
-                    <input id="trackImage" name="trackImage" type="text" value="" /></td>
-            </tr>
-            <tr>
-                <td class="big i" data-i18n="TextDescriptionPath">Text description file path:</td>
-                <td>
-                    <input id="textToRead" name="textToRead" type="text" value="" /></td>
-            </tr>
-<%--            <tr>
+
+        <script>
+            $(function () {
+                $("#tabs").tabs();
+            });
+        </script>
+        <div id="tabs">
+            <ul>
+                <li><a href="#basic">Basic</a></li>
+                <li><a href="#advanced">Advanced</a></li>
+            </ul>
+            <div id="basic">
+                <table border="0">
+                    <tr>
+                        <td class="big i" data-i18n="TrackName">Track name:</td>
+                        <td>
+                            <input id="name" name="name" type="text" value="<%="New track " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")  %>" style="width: 95%;" /></td>
+                    </tr>
+                    <tr>
+                        <td class="big i" data-i18n="Maketrackpublic">Make track public?</td>
+                        <td>
+                            <input id="isPublic" name="isPublic" type="checkbox" value="isPublic" checked="checked" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="big i" data-i18n="Category">Category:</td>
+                        <td>
+                            <input id="category" name="category" list="categories" value="Other" style="width: 95%;"/>
+                            <datalist class="i" id="categories">
+                                <option value="Ukraine" class="i" data-i18n="Ukraine" />
+                                <option value="Germany" class="i" data-i18n="Germany" />
+                                <option value="Europe" class="i" data-i18n="Europe" />
+                                <option value="Asia" class="i" data-i18n="Asia" />
+                                <option value="America" class="i" data-i18n="America" />
+                                <option value="Other" class="i" data-i18n="Other" />
+                            </datalist>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="big i" data-i18n="Copyright">Copyright:</td>
+                        <td>
+                            <input id="copyright" name="copyright" type="text" value="(c)" style="width: 95%;"/></td>
+                    </tr>
+                    <tr>
+                        <td class="big i" data-i18n="Travelwith">Travel with:</td>
+                        <td>
+                            <select id="travelWith" name="travelWith" style="width: 95%;" >
+                                <option value="WalkingMan">Walking Man</option>
+                                <option value="Bike">Bike</option>
+                                <option value="Car" selected="selected">Car</option>
+                                <option value="Bus">Bus</option>
+                                <option value="Yacht">Yacht</option>
+                                <option value="Plane">Plane</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="big i" data-i18n="Audiofile">Audio file:</td>
+                        <td>
+                        <input type="text" id="audioSrc" name="audioSrc" />
+                        <input type="file" accept=".mp3" id="fileAudio" name="fileAudio"/>
+                        </td>
+                    </tr>
+                      <%--            <tr>
                 <td class="big i" data-i18n="Defaultscale">Default scale:<br />
                     1(largest).20(smallest)</td>
-                <td>
+                <td></td>
             </tr>--%>
-                    <input id="defaultScale" name="defaultScale" type="hidden" max="20" min="1" step="1" value="8" style="width: 95%;" /></td>
-         </table>
-        <p class="big">
-            <input name="trackData" id="trackData" type="hidden" />
-        </p>
-        <p class="big">
-		    <span class="big  i" data-i18n="Trackpoints">Track points:</span>
-            <br/>
-            <select id="points" name="points" size="10" style="width: 350px" multiple="multiple">
-            </select>
-        </p>
-        <p class="big">
-            <span class="big  i" data-i18n="Currentpointdescriptionoptional">Current point description (optional):</span>
-            <br /><input id="pointDescr" name="pointDescr" type="text" value="" style="width: 350px" />
-        </p>
+                    <input id="defaultScale" name="defaultScale" type="hidden" max="20" min="1" step="1" value="8" style="width: 95%;" />
+                </table>
+                <p class="big">
+                    <input name="trackData" id="trackData" type="hidden" />
+                </p>
+                <p class="big">
+                    <span class="big  i" data-i18n="Trackpoints">Track points:</span>
+                    <br />
+                    <select id="points" name="points" size="10" style="width: 350px" multiple="multiple">
+                    </select>
+                </p>
+                <p class="big">
+                    <span class="big  i" data-i18n="Currentpointdescriptionoptional">Current point description (optional):</span>
+                    <br />
+                    <input id="pointDescr" name="pointDescr" type="text" value="" style="width: 350px" />
+                </p>
+                <input type="button" value="Delete selected" id="buttonDeleteSelected" class="i" data-i18n="[title]DeleteSelected;[value]DeleteSelected" />
+                <div class="big">
+                    <br />
+                    <div id="fileOperations">
+                        <label for="fileGpx" class="i" data-i18n="[title]ImportGpxFile;ImportGpxFile">Import Gpx file:</label>
+                        <input type="file" accept=".gpx" id="filesGpx" name="filesGpx"/>
+                        <%--multiple="multiple"--%>
+                        <!--input type="button" value="Import data" id="importGpx"/-->
+                    </div>
+                </div>
+            </div>
+            <div id="advanced">
+                <table border="0">
+                    <tr>
+                        <td class="big i" data-i18n="Photolocationdistance">Photo location distance:<br />
+                            degree/1000, 2..1000</td>
+                        <td>
+                            <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="number" max="1000" min="2" step="1" value="100" style="width: 95%;" /></td>
+                    </tr>
+<%--                    <tr>
+                        <td class="big i" data-i18n="Stepstoredraw">Steps to redraw:<br />
+                            2..1000</td>
+                        <td>
+                            <input id="stepsToRedraw" name="stepsToRedraw" type="number" max="1000" min="2" step="1" value="100" style="width: 95%;" /></td>
+                    </tr>
+                    <tr>
+                        <td class="big i" data-i18n="Stepstoshowphotos">Steps to show photos:<br />
+                            2..1000</td>
+                        <td>
+                            <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="number" max="1000" min="2" step="1" value="10" style="width: 95%;" /></td>
+                    </tr>--%>
+                    <tr>
+                        <td class="big i" data-i18n="Speed">Speed:<br />
+                            meters/sec, 1..100000</td>
+                        <td>
+                            <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="number" max="100000" min="1" step="1" value="100" style="width: 95%;" /></td>
+                    </tr>
+                    <%--            <tr>
+                <td class="big i" data-i18n="Numberofphotostoload">Number of photos to load:<br />
+                    1..50</td>
+                <td></td>
+            </tr>--%>
+                    <input id="numOfPhotos" name="numOfPhotos" type="hidden" max="50" min="1" step="1" value="20" style="width: 95%;" />
+                    <tr>
+                        <td class="big i" data-i18n="Animatedmarkericon">Animated marker icon:</td>
+                        <td>
+                            <select id="icon" name="icon" style="width: 95%;" onchange="setAnimatedMarkerIcon(this.value)">
+                                <option value="aman.gif">aman.gif</option>
+                                <option value="mybike.png">mybike.png</option>
+                                <option value="mycar.png" selected="selected">mycar.png</option>
+                                <option value="mybus.png">mybus.png</option>
+                                <option value="myyacht.png">myyacht.png</option>
+                                <option value="myplane.png">myplane.png</option>
+                            </select>
+                        </td>
+                    </tr>
+                  <tr>
+                        <td class="big i" data-i18n="Trackimage">Track image:</td>
+                        <td>
+                        <input type="text" id="trackImage" name="trackImage" />
+                        <input type="file" accept="image/*" id="fileImage" name="fileImage"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="big i" data-i18n="TextDescriptionFile">Text description file:</td>
+                        <td>
+                        <input type="text" id="textToRead" name="textToRead"/>
+                        <input type="file" accept="text/plain" id="fileText" name="fileText"/>
+                        </td>
+                    </tr>                
+                </table>
+            </div>
+        </div>
         <p class="big">
             <asp:Button
                 ID="Button1"
@@ -173,20 +224,8 @@
                 data-i18n="TrackDescription"
                 class="i" />
             &nbsp;
-    <input type="button" value="Delete selected" id="buttonDeleteSelected" class="i" data-i18n="[title]DeleteSelected;[value]DeleteSelected" />
-            &nbsp;
     <input type="button" value="Cancel" class="i" data-i18n="[title]Cancel;[value]Cancel" id="gotoMain" onclick="window.location = 'index.aspx?trackname=' + trackname" />
-            <!--input type="button" value="Undo last"/-->
         </p>
-        <div class="big">
-            <br/>
-            <div id="fileOperations">
-                <label for="fileGpx" class="i" data-i18n="[title]ImportGpxFile;ImportGpxFile">Import Gpx file:</label>
-                <input type="file" accept=".gpx" id="filesGpx" />
-                <%--multiple="multiple"--%>
-                <!--input type="button" value="Import data" id="importGpx"/-->
-            </div>
-        </div>
     </div>
 
     <div id="imageDiv0" class="ui-widget-content">
@@ -209,16 +248,17 @@
 
     %>
     <script lang="JavaScript">
-        
+
         $(function () {
 
+            points = $("#points");
             $('form').submit(function () {
                 var t = JSON.stringify(getTrackPoints());
                 $("#trackData").val(t);
                 return true;
             });
 
-            var icon = L.icon({
+            icon = L.icon({
                 iconUrl: ("tracks/content/mycar.png"),
                 iconSize: [50, 50],
                 iconAnchor: [1, 50],
@@ -251,17 +291,17 @@
                 }
             });
 
-            $('#points')
+            points
                 .data("lastIndex", this.selectedIndex)
-                .on('change', function(event){
+                .on('change', function (event) {
                     var idx = this.selectedIndex;
                     var prevIdx = $(this).data("lastIndex");
 
-                    if(prevIdx != null && typeof prevIdx != "undefined") {
+                    if (prevIdx != null && typeof prevIdx != "undefined") {
                         var oldOptionSelected = $("option", this).eq(prevIdx);
                         var oldValueSelected = oldOptionSelected.val();
                         var oldPoint = JSON.parse(oldValueSelected);
-                        if(oldPoint.hasOwnProperty("lat"))
+                        if (oldPoint.hasOwnProperty("lat"))
                             oldPoint["syt_text"] = $("#pointDescr").val();
                         else
                             oldPoint[2] = $("#pointDescr").val();
@@ -273,7 +313,8 @@
                     var point = JSON.parse(valueSelected);
                     var newLatLng = pointToLatLng(point);
                     markerPosition.setLatLng(newLatLng);
-                    $("#pointDescr").val(point.hasOwnProperty("syt_text")?point["syt_text"]:(point.length>2?point[2]:""));
+                    map.setView(newLatLng);
+                    $("#pointDescr").val(point.hasOwnProperty("syt_text") ? point["syt_text"] : (point.length > 2 ? point[2] : ""));
                     track = { numOfPhotos: parseInt(numOfPhotos.value), photoLocationTolerancy: parseInt(photoLocationTolerancy.value) };
                     showPhotos(track, newLatLng);
 
@@ -281,85 +322,151 @@
                     $(this).data("lastIndex", idx);
                 });
 
-        document.getElementById('filesGpx').addEventListener('change', handleFileSelect, false);
-        $('#buttonDeleteSelected').click(function () {
-            $('#points option:selected').remove();
-            updateMap();
-        });
+            document.getElementById('filesGpx').addEventListener('change', handleFileSelect, false);
+            $('#buttonDeleteSelected').click(function () {
+                $('#points option:selected').remove();
+                updateMap();
+            });
 
-        // Check for the various File API support.
-        if (window.File && window.FileReader && window.FileList && window.Blob) {
-            // Great success! All the File APIs are supported.
-        } else {
-            $("#fileOperations").hide();
-        }
-
-        map.on('zoomend', function () {
-            $("#defaultScale").val(map.getZoom());
-        });
-
-        //$("#stepsToRedraw").spinner({
-        //    min: 1,
-        //    max: 1000,
-        //    step: 1,
-        //    height: 30
-        //}).on('input', function () {
-        //    if ($(this).data('onInputPrevented')) return;
-        //    var val = this.value,
-        //        $this = $(this),
-        //        max = $this.spinner('option', 'max'),
-        //        min = $this.spinner('option', 'min');
-        //    if (!val.match(/^\d+$/)) val = min; //we want only number, no alpha
-        //    this.value = val > max ? max : val < min ? min : val;
-        //}).on('keydown', function (e) { // to allow 'Backspace' key behaviour
-        //    $(this).data('onInputPrevented', e.which === 8 ? true : false);
-        //});
-
-        if (trackname) {
-            var initialTrack = loadTrackSync(translateTracksPath(trackname+".js"));
-
-            $("#name").val(initialTrack.name);
-            $("#copyright").val(initialTrack.copyright);
-            $("#category").val(initialTrack.category);
-            $("#photoLocationTolerancy").val(initialTrack.photoLocationTolerancy);
-            $("#stepsToRedraw").val(initialTrack.stepsToRedraw);
-            $("#stepsToShowPhoto").val(initialTrack.stepsToShowPhoto);
-            $("#velocityMetersPerSec").val(initialTrack.velocityMetersPerSec);
-            $("#numOfPhotos").val(initialTrack.numOfPhotos);
-            $("#icon").val(initialTrack.icon);
-            $("#trackImage").val(initialTrack.trackImage);
-            $("#audioSrc").val(initialTrack.audioSrc);
-            $("#audioVolume").val(initialTrack.audioVolume);
-            $("#textToRead").val(initialTrack.textToRead);
-            $("#defaultScale").val(initialTrack.defaultScale);
-            if (initialTrack.trackGpx) {
-                $("#trackGpx").val(initialTrack.trackGpx);
+            // Check for the various File API support.
+            if (window.File && window.FileReader && window.FileList && window.Blob) {
+                // Great success! All the File APIs are supported.
+            } else {
+                $("#fileOperations").hide();
             }
-            else {
 
-                initialTrack.trackData.forEach(function (point) {
-                    if(point.hasOwnProperty("lat") && (point.hasOwnProperty("syt_text") == null ||point.hasOwnProperty("syt_text") == ""))
-                        point["syt_text"] = "";
-                    if (!point.hasOwnProperty("lat") && point.length < 3)
-                        point[2] = "";
-                    var t = JSON.stringify(point);
-                    $('#points')
-                        .append($("<option></option>")
-                        .attr("value", t)
-                        .text(t));
-                });
+            map.on('zoomend', function () {
+                $("#defaultScale").val(map.getZoom());
+            });
 
-                if (initialTrack.trackData.length > 0) {
-                    map.setView(initialTrack.trackData[0], initialTrack.defaultScale);
+            //$("#stepsToRedraw").spinner({
+            //    min: 1,
+            //    max: 1000,
+            //    step: 1,
+            //    height: 30
+            //}).on('input', function () {
+            //    if ($(this).data('onInputPrevented')) return;
+            //    var val = this.value,
+            //        $this = $(this),
+            //        max = $this.spinner('option', 'max'),
+            //        min = $this.spinner('option', 'min');
+            //    if (!val.match(/^\d+$/)) val = min; //we want only number, no alpha
+            //    this.value = val > max ? max : val < min ? min : val;
+            //}).on('keydown', function (e) { // to allow 'Backspace' key behaviour
+            //    $(this).data('onInputPrevented', e.which === 8 ? true : false);
+            //});
+
+            if (trackname) {
+                var initialTrack = loadTrackSync(translateTracksPath(trackname + ".js"));
+
+                $("#name").val(initialTrack.name);
+                if (initialTrack.isPublic == "No") {
+                    $("#isPublic").prop('checked', false);
+                }
+                else {
+                    $("#isPublic").prop('checked', true);
                 }
 
+                if (!isNullOrEmpty(initialTrack.travelWith)) {
+                    $("#travelWith").val(initialTrack.travelWith);
+                }
+                $("#travelWith").change(function () { travelWithChanged(); });
+
+                $("#copyright").val(initialTrack.copyright);
+                $("#category").val(initialTrack.category);
+                $("#photoLocationTolerancy").val(initialTrack.photoLocationTolerancy);
+//                $("#stepsToRedraw").val(initialTrack.stepsToRedraw);
+//                $("#stepsToShowPhoto").val(initialTrack.stepsToShowPhoto);
+                $("#velocityMetersPerSec").val(initialTrack.velocityMetersPerSec);
+                $("#numOfPhotos").val(initialTrack.numOfPhotos);
+                $("#icon").val(initialTrack.icon);
+                setAnimatedMarkerIcon(initialTrack.icon);
+                $("#trackImage").val(initialTrack.trackImage);
+                $("#audioSrc").val(initialTrack.audioSrc);
+                $("#audioVolume").val(initialTrack.audioVolume);
+                $("#textToRead").val(initialTrack.textToRead);
+                $("#defaultScale").val(initialTrack.defaultScale);
+                map.setZoom(initialTrack.defaultScale);
+
+                if (initialTrack.trackGpx) {
+                    $("#trackGpx").val(initialTrack.trackGpx);
+                }
+                else {
+
+                    initialTrack.trackData.forEach(function (point) {
+                        if (point.hasOwnProperty("lat") && (point.hasOwnProperty("syt_text") == null || point.hasOwnProperty("syt_text") == ""))
+                            point["syt_text"] = "";
+                        if (!point.hasOwnProperty("lat") && point.length < 3)
+                            point[2] = "";
+                        var t = JSON.stringify(point);
+                        points
+                            .append($("<option></option>")
+                            .attr("value", t)
+                            .text(t));
+                    });
+
+                    if (initialTrack.trackData.length > 0) {
+                        points[0].selectedIndex = 0;
+                        points.change();
+                    }
+
+                }
+
+                drawTrack();
+
             }
-
-            drawTrack();
-
-        }
         });
 
+        function travelWithChanged() {
+
+            var x = $('#travelWith').find(":selected").val();
+            if(x == "WalkingMan") {
+                var t = ("aman.gif");
+                $("#velocityMetersPerSec").val(Math.round(5 * 10*1000 / 3660));
+                $("#icon").val(t);
+                setAnimatedMarkerIcon(t);
+            }
+            else if(x == "Bike") {
+                var t = ("mybike.png");
+                $("#velocityMetersPerSec").val(Math.round(15 * 50 * 1000 / 3660));
+                $("#icon").val(t);
+                setAnimatedMarkerIcon(t);
+            }
+            else if (x == "Car") {
+                var t = "mycar.png";
+                $("#velocityMetersPerSec").val(Math.round(100 * 100 * 1000 / 3660));
+                $("#icon").val(t);
+                setAnimatedMarkerIcon(t);
+            }
+            else if(x == "Bus") {
+                var t = ("mybus.png");
+                $("#velocityMetersPerSec").val(Math.round(80 * 100 * 1000 / 3660));
+                $("#icon").val(t);
+                setAnimatedMarkerIcon(t);
+            }
+            else if(x == "Yacht") {
+                var t = ("myyacht.png");
+                $("#velocityMetersPerSec").val(Math.round(40 * 100 * 1000 / 3660));
+                $("#icon").val(t);
+                setAnimatedMarkerIcon(t);
+            }
+            else if(x == "Plane") {
+                var t = ("myplane.png");
+                $("#velocityMetersPerSec").val(Math.round(800 * 100 * 1000 / 3660));
+                $("#icon").val(t);
+                setAnimatedMarkerIcon(t);
+            }
+        }
+
+        function setAnimatedMarkerIcon(t) {
+            icon = L.icon({
+                iconUrl: ("tracks/content/" + t),
+                iconSize: [50, 50],
+                iconAnchor: [1, 50],
+                shadowUrl: null
+            });
+            markerPosition.setIcon(icon);
+        }
 
         function drawTrack() {
             var points = getTrackPoints();
@@ -393,8 +500,10 @@
         var markers;
         var markersFriends;
         var line;
+        var icon;
         var markerStart;
         var markerFinish;
+        var points;
 
         function onMapClick(e) {
             updateTrackData(e);
@@ -417,7 +526,7 @@
                      .text(point));
                 }
                 else {
-                    $('#points')
+                    points
                         .append($("<option></option>")
                         .attr("value", point)
                         .text(point));
@@ -462,8 +571,8 @@
                         var point = [$this.attr('lat'), $this.attr('lon')];
                         $(points)
                             .append($("<option></option>")
-                            .attr("value", "["+point[0]+","+point[1]+"]")
-                            .text("["+point[0]+","+point[1]+"]"));   
+                            .attr("value", "[" + point[0] + "," + point[1] + "]")
+                            .text("[" + point[0] + "," + point[1] + "]"));
                         //                        console.log(t);
                         t = t + 1;
                     });

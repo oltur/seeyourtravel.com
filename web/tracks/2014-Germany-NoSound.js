@@ -1,5 +1,5 @@
 {
-		"name":"N10",
+		"name":"Germany-NoSound",
 		"copyright":"AT",
 		"defaultScale":7,
 	        "photoLocationTolerancy": 200,

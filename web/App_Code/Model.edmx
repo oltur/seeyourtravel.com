@@ -84,6 +84,8 @@
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ImageUrl" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="TrackLocalization">
           <Key>
@@ -141,6 +143,18 @@
           <Property Name="UserRoleID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RoleID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'seeyourtravel.dbo.Version' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Version">
+          <Key>
+            <PropertyRef Name="VersionHigh" />
+            <PropertyRef Name="VersionLow" />
+            <PropertyRef Name="Created" />
+          </Key>
+          <Property Name="VersionHigh" Type="int" Nullable="false" />
+          <Property Name="VersionLow" Type="int" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -377,6 +391,53 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="GetUserAndPublicImagesByLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="MinLat" Type="float" Mode="In" />
+          <Parameter Name="MinLng" Type="float" Mode="In" />
+          <Parameter Name="MaxLat" Type="float" Mode="In" />
+          <Parameter Name="MaxLng" Type="float" Mode="In" />
+          <Parameter Name="From" Type="int" Mode="In" />
+          <Parameter Name="To" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ImageID" Type="uniqueidentifier" Nullable="false" />
+                <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="IsPublic" Type="bit" Nullable="false" />
+                <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="Lat" Type="float" />
+                <Property Name="Lng" Type="float" />
+                <Property Name="UserID" Type="uniqueidentifier" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetUserAndPublicPlacesByLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Types" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="MinLat" Type="float" Mode="In" />
+          <Parameter Name="MinLng" Type="float" Mode="In" />
+          <Parameter Name="MaxLat" Type="float" Mode="In" />
+          <Parameter Name="MaxLng" Type="float" Mode="In" />
+          <Parameter Name="From" Type="int" Mode="In" />
+          <Parameter Name="To" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="PlaceID" Type="uniqueidentifier" Nullable="false" />
+                <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="IsPublic" Type="bit" Nullable="false" />
+                <Property Name="Lat" Type="float" Nullable="false" />
+                <Property Name="Lng" Type="float" Nullable="false" />
+                <Property Name="Rating" Type="float" Nullable="false" />
+                <Property Name="Vicinity" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="PlaceTypeName" Type="nvarchar" MaxLength="200" />
+                <Property Name="UserID" Type="uniqueidentifier" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="GetUserandPublicTracks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="Locale" Type="nvarchar" Mode="In" />
@@ -460,6 +521,13 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
           <EntitySet Name="UserLocation" EntityType="Self.UserLocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLogin" EntityType="Self.UserLogin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Version" EntityType="Self.Version" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Version].[VersionHigh] AS [VersionHigh], 
+    [Version].[VersionLow] AS [VersionLow], 
+    [Version].[Created] AS [Created]
+    FROM [dbo].[Version] AS [Version]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="GetAllRoughUserLocations" EntityType="Self.GetAllRoughUserLocations" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [GetAllRoughUserLocations].[userid] AS [userid], 
@@ -661,6 +729,8 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
           <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="TrackUsers" Relationship="Self.FK_TrackUser_Track" FromRole="Track" ToRole="TrackUser" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TrackUser">
           <Key>
@@ -1008,6 +1078,26 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
           </FunctionImport>
           <EntitySet Name="TrackLocalizations" EntityType="SeeYourTravelModel.TrackLocalization" />
           <EntitySet Name="GetAllRoughUserLocations" EntityType="SeeYourTravelModel.GetAllRoughUserLocation" />
+          <FunctionImport Name="GetUserAndPublicImagesByLocation" IsComposable="true" ReturnType="Collection(SeeYourTravelModel.GetUserAndPublicImagesByLocation_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Guid" />
+            <Parameter Name="MinLat" Mode="In" Type="Double" />
+            <Parameter Name="MinLng" Mode="In" Type="Double" />
+            <Parameter Name="MaxLat" Mode="In" Type="Double" />
+            <Parameter Name="MaxLng" Mode="In" Type="Double" />
+            <Parameter Name="From" Mode="In" Type="Int32" />
+            <Parameter Name="To" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Versions" EntityType="SeeYourTravelModel.Version" />
+          <FunctionImport Name="GetUserAndPublicPlacesByLocation" IsComposable="true" ReturnType="Collection(SeeYourTravelModel.GetUserAndPublicPlacesByLocation_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Guid" />
+            <Parameter Name="Types" Mode="In" Type="String" />
+            <Parameter Name="MinLat" Mode="In" Type="Double" />
+            <Parameter Name="MinLng" Mode="In" Type="Double" />
+            <Parameter Name="MaxLat" Mode="In" Type="Double" />
+            <Parameter Name="MaxLng" Mode="In" Type="Double" />
+            <Parameter Name="From" Mode="In" Type="Int32" />
+            <Parameter Name="To" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetFriendsLocations_Result">
           <Property Type="Guid" Name="UserID" Nullable="false" />
@@ -1047,6 +1137,35 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
           <Property Name="lng" Type="Double" Nullable="false" />
           <Property Name="Expr1" Type="DateTime" Precision="3" />
         </EntityType>
+        <ComplexType Name="GetUserAndPublicImagesByLocation_Result">
+          <Property Type="Guid" Name="ImageID" Nullable="false" />
+          <Property Type="String" Name="FileName" Nullable="false" />
+          <Property Type="Boolean" Name="IsPublic" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="Double" Name="Lat" Nullable="true" />
+          <Property Type="Double" Name="Lng" Nullable="true" />
+          <Property Type="Guid" Name="UserID" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Version">
+          <Key>
+            <PropertyRef Name="VersionHigh" />
+            <PropertyRef Name="VersionLow" />
+            <PropertyRef Name="Created" />
+          </Key>
+          <Property Name="VersionHigh" Type="Int32" Nullable="false" />
+          <Property Name="VersionLow" Type="Int32" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <ComplexType Name="GetUserAndPublicPlacesByLocation_Result">
+          <Property Type="Guid" Name="PlaceID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Boolean" Name="IsPublic" Nullable="false" />
+          <Property Type="Double" Name="Lat" Nullable="false" />
+          <Property Type="Double" Name="Lng" Nullable="false" />
+          <Property Type="Double" Name="Rating" Nullable="false" />
+          <Property Type="String" Name="Vicinity" Nullable="false" />
+          <Property Type="Guid" Name="UserID" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1133,6 +1252,8 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
           <EntitySetMapping Name="Tracks">
             <EntityTypeMapping TypeName="SeeYourTravelModel.Track">
               <MappingFragment StoreEntitySet="Track">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="TrackID" ColumnName="TrackID" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
@@ -1300,6 +1421,42 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetUserAndPublicImagesByLocation" FunctionName="SeeYourTravelModel.Store.GetUserAndPublicImagesByLocation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SeeYourTravelModel.GetUserAndPublicImagesByLocation_Result">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Lng" ColumnName="Lng" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Versions">
+            <EntityTypeMapping TypeName="SeeYourTravelModel.Version">
+              <MappingFragment StoreEntitySet="Version">
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="VersionLow" ColumnName="VersionLow" />
+                <ScalarProperty Name="VersionHigh" ColumnName="VersionHigh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetUserAndPublicPlacesByLocation" FunctionName="SeeYourTravelModel.Store.GetUserAndPublicPlacesByLocation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SeeYourTravelModel.GetUserAndPublicPlacesByLocation_Result">
+                <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Lng" ColumnName="Lng" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Vicinity" ColumnName="Vicinity" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

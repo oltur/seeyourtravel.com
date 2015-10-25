@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -8,11 +9,22 @@ public partial class SaveTrack : System.Web.UI.Page
     protected Guid TrackId = Guid.Empty;
     protected string TrackFileName = "";
     SeeYourTravelEntities db;
+
+    HttpFileCollection files;
+    Guid trackId;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
-            Guid trackId = Guid.Parse(Request.Form["trackId"]);
+            trackId = Guid.Parse(Request.Form["trackId"]);
+            files = Request.Files; // Load File collection into HttpFileCollection variable.
+            var keys = files.Keys;  // This will get names of all files into a string array.
+
+            string audioFileName = SaveFileByKey("fileAudio", Request.Form["audioSrc"]);
+            string imageFileName = SaveFileByKey("fileImage", Request.Form["trackImage"]);
+            string textFileName = SaveFileByKey("fileText", Request.Form["textToRead"]);
+
             string trackFileName = Request.Form["trackFileName"];
             string trackDescription = Request.Form["name"];
             string path = Server.MapPath(".") + "\\tracks\\" + trackId.ToString() + ".js";
@@ -25,6 +37,14 @@ public partial class SaveTrack : System.Web.UI.Page
                 writer.WriteLine("{");
 
                 writer.WriteLine("\"name\":\"" + Request.Form["name"] + "\"");
+                writer.Write(",");
+                writer.WriteLine("\"isPublic\":\"" + ((Request.Form["isPublic"]=="checked")?"Yes":"No") + "\"");
+                
+                if (!string.IsNullOrEmpty(Request.Form["travelWith"]))
+                {
+                    writer.Write(",");
+                    writer.WriteLine("\"travelWith\":\"" + Request.Form["travelWith"] + "\"");
+                }
                 if (!string.IsNullOrEmpty(Request.Form["copyright"]))
                 {
                     writer.Write(",");
@@ -71,21 +91,16 @@ public partial class SaveTrack : System.Web.UI.Page
                     writer.Write(",");
                     writer.WriteLine("\"icon\":\"" + Request.Form["icon"] + "\"");
                 }
-                if (!string.IsNullOrEmpty(Request.Form["trackImage"]))
-                {
-                    writer.Write(",");
-                    writer.WriteLine("\"trackImage\":\"" + Request.Form["trackImage"] + "\"");
-                }
-                if (!string.IsNullOrEmpty(Request.Form["audioSrc"]))
-                {
-                    writer.Write(",");
-                    writer.WriteLine("\"audioSrc\":\"" + Request.Form["audioSrc"] + "\"");
-                }
-                if (!string.IsNullOrEmpty(Request.Form["textToRead"]))
-                {
-                    writer.Write(",");
-                    writer.WriteLine("\"textToRead\":\"" + Request.Form["textToRead"] + "\"");
-                }
+                
+                writer.Write(",");
+                writer.WriteLine("\"trackImage\":\"" + imageFileName + "\"");
+
+                writer.Write(",");
+                writer.WriteLine("\"audioSrc\":\"" + audioFileName + "\"");
+
+                writer.Write(",");
+                writer.WriteLine("\"textToRead\":\"" + textFileName + "\"");
+
                 if (!string.IsNullOrEmpty(Request.Form["trackGpx"]))
                 {
                     writer.Write(",");
@@ -143,5 +158,20 @@ public partial class SaveTrack : System.Web.UI.Page
             Response.Redirect("./index.aspx?errorMessage=" + HttpUtility.UrlEncode(message));
         }
 
+    }
+
+    private string SaveFileByKey(string key, string defaultFileName)
+    {
+        if (defaultFileName == null)
+            defaultFileName = "";
+        var file = files[key];
+        if (file == null || file.ContentLength == 0)
+            return defaultFileName;
+        var oldFileName = file.FileName;
+        var ext = Path.GetExtension(oldFileName);
+        var newFileName = trackId.ToString() + ext;
+        var path = Server.MapPath("./tracks/content/" + newFileName);
+        file.SaveAs(path);
+        return newFileName;
     }
 }

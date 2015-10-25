@@ -151,6 +151,8 @@ public partial class Track
     public string Description { get; set; }
     public string Category { get; set; }
     public string ImageUrl { get; set; }
+    public System.DateTime Created { get; set; }
+    public string CreatedBy { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<TrackUser> TrackUsers { get; set; }
@@ -241,6 +243,13 @@ public partial class UserRole
     public virtual User User { get; set; }
 }
 
+public partial class Version
+{
+    public int VersionHigh { get; set; }
+    public int VersionLow { get; set; }
+    public System.DateTime Created { get; set; }
+}
+
 public partial class GetAllTracks_Result
 {
     public System.Guid TrackID { get; set; }
@@ -266,6 +275,29 @@ public partial class GetTrackForUserByIdOrName_Result
     public bool IsPublic { get; set; }
     public string Description { get; set; }
     public string Category { get; set; }
+}
+
+public partial class GetUserAndPublicImagesByLocation_Result
+{
+    public System.Guid ImageID { get; set; }
+    public string FileName { get; set; }
+    public bool IsPublic { get; set; }
+    public string Description { get; set; }
+    public Nullable<double> Lat { get; set; }
+    public Nullable<double> Lng { get; set; }
+    public Nullable<System.Guid> UserID { get; set; }
+}
+
+public partial class GetUserAndPublicPlacesByLocation_Result
+{
+    public System.Guid PlaceID { get; set; }
+    public string Name { get; set; }
+    public bool IsPublic { get; set; }
+    public double Lat { get; set; }
+    public double Lng { get; set; }
+    public double Rating { get; set; }
+    public string Vicinity { get; set; }
+    public Nullable<System.Guid> UserID { get; set; }
 }
 
 public partial class GetUserandPublicTracks_Result

@@ -41,6 +41,7 @@ public partial class SeeYourTravelEntities : DbContext
     public virtual DbSet<UserRole> UserRoles { get; set; }
     public virtual DbSet<TrackLocalization> TrackLocalizations { get; set; }
     public virtual DbSet<GetAllRoughUserLocation> GetAllRoughUserLocations { get; set; }
+    public virtual DbSet<Version> Versions { get; set; }
 
     [DbFunction("SeeYourTravelEntities", "GetAllTracks")]
     public virtual IQueryable<GetAllTracks_Result> GetAllTracks()
@@ -127,5 +128,77 @@ public partial class SeeYourTravelEntities : DbContext
             new ObjectParameter("UserID", typeof(System.Guid));
 
         return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetUserImages_Result>("[SeeYourTravelEntities].[GetUserImages](@UserID)", userIDParameter);
+    }
+
+    [DbFunction("SeeYourTravelEntities", "GetUserAndPublicImagesByLocation")]
+    public virtual IQueryable<GetUserAndPublicImagesByLocation_Result> GetUserAndPublicImagesByLocation(Nullable<System.Guid> userID, Nullable<double> minLat, Nullable<double> minLng, Nullable<double> maxLat, Nullable<double> maxLng, Nullable<int> from, Nullable<int> to)
+    {
+        var userIDParameter = userID.HasValue ?
+            new ObjectParameter("UserID", userID) :
+            new ObjectParameter("UserID", typeof(System.Guid));
+
+        var minLatParameter = minLat.HasValue ?
+            new ObjectParameter("MinLat", minLat) :
+            new ObjectParameter("MinLat", typeof(double));
+
+        var minLngParameter = minLng.HasValue ?
+            new ObjectParameter("MinLng", minLng) :
+            new ObjectParameter("MinLng", typeof(double));
+
+        var maxLatParameter = maxLat.HasValue ?
+            new ObjectParameter("MaxLat", maxLat) :
+            new ObjectParameter("MaxLat", typeof(double));
+
+        var maxLngParameter = maxLng.HasValue ?
+            new ObjectParameter("MaxLng", maxLng) :
+            new ObjectParameter("MaxLng", typeof(double));
+
+        var fromParameter = from.HasValue ?
+            new ObjectParameter("From", from) :
+            new ObjectParameter("From", typeof(int));
+
+        var toParameter = to.HasValue ?
+            new ObjectParameter("To", to) :
+            new ObjectParameter("To", typeof(int));
+
+        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetUserAndPublicImagesByLocation_Result>("[SeeYourTravelEntities].[GetUserAndPublicImagesByLocation](@UserID, @MinLat, @MinLng, @MaxLat, @MaxLng, @From, @To)", userIDParameter, minLatParameter, minLngParameter, maxLatParameter, maxLngParameter, fromParameter, toParameter);
+    }
+
+    [DbFunction("SeeYourTravelEntities", "GetUserAndPublicPlacesByLocation")]
+    public virtual IQueryable<GetUserAndPublicPlacesByLocation_Result> GetUserAndPublicPlacesByLocation(Nullable<System.Guid> userID, string types, Nullable<double> minLat, Nullable<double> minLng, Nullable<double> maxLat, Nullable<double> maxLng, Nullable<int> from, Nullable<int> to)
+    {
+        var userIDParameter = userID.HasValue ?
+            new ObjectParameter("UserID", userID) :
+            new ObjectParameter("UserID", typeof(System.Guid));
+
+        var typesParameter = types != null ?
+            new ObjectParameter("Types", types) :
+            new ObjectParameter("Types", typeof(string));
+
+        var minLatParameter = minLat.HasValue ?
+            new ObjectParameter("MinLat", minLat) :
+            new ObjectParameter("MinLat", typeof(double));
+
+        var minLngParameter = minLng.HasValue ?
+            new ObjectParameter("MinLng", minLng) :
+            new ObjectParameter("MinLng", typeof(double));
+
+        var maxLatParameter = maxLat.HasValue ?
+            new ObjectParameter("MaxLat", maxLat) :
+            new ObjectParameter("MaxLat", typeof(double));
+
+        var maxLngParameter = maxLng.HasValue ?
+            new ObjectParameter("MaxLng", maxLng) :
+            new ObjectParameter("MaxLng", typeof(double));
+
+        var fromParameter = from.HasValue ?
+            new ObjectParameter("From", from) :
+            new ObjectParameter("From", typeof(int));
+
+        var toParameter = to.HasValue ?
+            new ObjectParameter("To", to) :
+            new ObjectParameter("To", typeof(int));
+
+        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetUserAndPublicPlacesByLocation_Result>("[SeeYourTravelEntities].[GetUserAndPublicPlacesByLocation](@UserID, @Types, @MinLat, @MinLng, @MaxLat, @MaxLng, @From, @To)", userIDParameter, typesParameter, minLatParameter, minLngParameter, maxLatParameter, maxLngParameter, fromParameter, toParameter);
     }
 }

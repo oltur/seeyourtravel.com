@@ -83,6 +83,10 @@
         <input name="file" type="file" id="files" multiple="multiple" />
         <br />
         <br />
+            <input id="isPublic" name="isPublic" type="checkbox" value="isPublic" checked="checked" />
+            <label for="isPublic" class="i" data-i18n="Makepublic">Make public</label>
+        <br />
+        <br />
         <input type="submit" id="buttonUpload" class="i" data-i18n="[title]Upload;[value]Upload" value="Upload"/>
                 </td>
             </tr>
@@ -161,7 +165,7 @@
                 for (var i in options) {
                     var parts = options[i].toString().split(';');
                     var imgPath = "services/get_thumbnail.aspx?size=small&p=" + parts[0];
-                    $("#imageLatLng").val($("#imageLatLng").val() + "{" + parts[3] + "," + parts[4] + "}; ");
+                    $("#imageLatLng").val("".concat($("#imageLatLng").val(), parts[3], ",", parts[4], "; "));
                     var ll = new L.LatLng(parseFloat(parts[3]), parseFloat(parts[4]))
                     map.panTo(ll);
 
@@ -230,8 +234,10 @@
                     .remove()
                     .end();
             for (var i = 0; i < fileList.length; i++) {
-                var parts = fileList[i].split(';');
-                photosList.append('<option value="' + fileList[i] + '">' + (parts[2] == 1 ? "*" : "") + parts[1] + '</option>');
+                if (!isNullOrEmpty(fileList[i])) {
+                    var parts = fileList[i].split(';');
+                    photosList.append('<option value="' + fileList[i] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
+                }
             }
         }
 

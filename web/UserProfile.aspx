@@ -211,8 +211,10 @@
                     .remove()
                     .end();
             for (var i = 0; i < fileList.length; i++) {
-                var parts = fileList[i].split(';');
-                tracksList.append('<option value="' + parts[0] + '">' + (parts[2] == 1 ? "*" : "") + parts[1] + '</option>');
+                if (!isNullOrEmpty(fileList[i])) {
+                    var parts = fileList[i].split(';');
+                    tracksList.append('<option value="' + parts[0] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
+                }
             }
         }
 

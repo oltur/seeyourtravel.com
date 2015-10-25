@@ -1,5 +1,5 @@
 {
-"name":""
+"name":"2014-Germany"
 ,"copyright":"AT"
 ,"defaultScale":8
 ,"photoLocationTolerancy":100

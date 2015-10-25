@@ -7,9 +7,10 @@ var panoramioUrl = "https://ssl.panoramio.com/map/get_panoramas.php?set=";
 var MAX_GOOGLE_PLACES = 10;
 var MAX_HERE_PLACES = 50;
 var MAX_GOOGLE_RADIUS = 10000;
-var GOOGLE_TYPES = ['lodging', 'restaurant']
+var GOOGLE_TYPES = ['lodging', 'restaurant', 'museum', 'park', 'bakery', 'zoo']
 var sidePanelWidth = 200;
 var cacheImages = false;
+var updateIntervalSeconds = 5;
 
 var iconWhereIAm = L.icon({
     iconUrl: ("img/youarehere.png"),
@@ -477,12 +478,17 @@ function selectMapStyle() {
 }
 function fixTrackData(track) {
     var newTrackData = [];
+    var totalDistance = 0.0;
     for (var i = 0; i < track.trackData.length; i++) {
         var told = track.trackData[i];
         var tnew = pointToLatLng(told)
         newTrackData.push(tnew);
+        if(i>0) {
+            totalDistance = totalDistance + newTrackData[i].distanceTo(newTrackData[i-1]);
+        }
     }
     track.trackData = newTrackData;
+    track.avgDistM = totalDistance / (i - 1);
 }
 
 function loadTrackSync(path) {
@@ -503,7 +509,7 @@ function loadTrackSync(path) {
     fixTrackData(track);
 
     if ($("#textToReadArea").length > 0) {
-        if ("textToRead" in track) {
+        if (!isNullOrEmpty(track.textToRead)) {
             textToReadArea.innerHTML = $.ajax(
                 {
                     url: translateTracksContentPath(track.textToRead + "?" + Math.random()),
@@ -598,6 +604,8 @@ function init(filename) {
             shadowUrl: null
         });
 
+        var lastUpdateTime = new Date(2000, 2);
+
         var amOptions = {
             distance: track.velocityMetersPerSec, // meters
             interval: 1000, // milliseconds
@@ -614,18 +622,21 @@ function init(filename) {
                     toastr.info(p["syt_text"], "", { timeOut: 5000, extendedTimeOut: 10000 });
                     //prependToSidePanel(p["syt_text"]);
                 }
-                
+
                 if (p.hasOwnProperty("syt_audio")) {
                     audio.src = translateTracksContentPath(p["syt_audio"]);
                     audio.play();
                 }
-                markerSize = 2 + map.getZoom() * 5;
-                if (counter % track.stepsToRedraw == 0) {
+                //markerSize = 2 + map.getZoom() * 5;
+
+                var currentDate = new Date();
+                if ((currentDate.getTime() - lastUpdateTime.getTime()) / 1000 > updateIntervalSeconds) {
+
                     map.setView([p.lat, p.lng], map.getZoom());
-                }
-                if (counter % track.stepsToShowPhoto == 1) {
                     showPhotos(track, p);
                     //                    animatedMarker.bindPopup("".concat(p.lat, ",", p.lng)).openPopup();
+
+                    lastUpdateTime = currentDate;
                 }
             }
         };
@@ -850,7 +861,14 @@ function createPhotoMarker(place, isGoogle) {
     }
 
     var icon = L.icon({
-        iconUrl: (place.types.indexOf("lodging") >= 0 ? "img/lodging.png" : place.types.indexOf("restaurant") >= 0 ? "img/restaurant1.png" : "img/something.png"),
+        iconUrl: (
+            place.types.indexOf("lodging") >= 0 ? "img/lodging.png" :
+            place.types.indexOf("restaurant") >= 0 ? "img/restaurant1.png" :
+            place.types.indexOf("museum") >= 0 ? "img/museum.png" :
+            place.types.indexOf("park") >= 0 ? "img/park.png" :
+            place.types.indexOf("bakery") >= 0 ? "img/bakery.png" :
+            place.types.indexOf("zoo") >= 0 ? "img/zoo.png" :
+            "img/something.png"),
         //    shadowUrl: 'leaf-shadow.png',
 
         iconSize: [26, 35] // size of the icon
