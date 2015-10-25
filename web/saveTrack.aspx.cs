@@ -127,6 +127,8 @@ public partial class SaveTrack : System.Web.UI.Page
                 db.Tracks.Add(track);
             }
             track.FileName = trackId.ToString();
+            track.CreatedBy = userId.ToString();
+            track.Created = DateTime.Now;
             track.Description = trackDescription;
             track.IsPublic = string.IsNullOrEmpty(Request.Form["isPublic"]) ? false : (Request.Form["isPublic"] == "isPublic");
             track.Category = category;

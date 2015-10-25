@@ -144,7 +144,7 @@ L.AnimatedMarker = L.Marker.extend({
             this.resetAM();
         }
 
-        startagain();
+        this.startagain();
     },
 
     // Continue the animation
