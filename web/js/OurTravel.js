@@ -404,6 +404,18 @@ var fullW;
 var viewportW;
 
 $(function () {
+    var url = "services/get_version.aspx";
+    $.ajax({
+        url: url,
+        success: function (data) {
+            var $hiddenInput = $('<input/>', { type: 'hidden', id: 'version', value: data });
+            $hiddenInput.appendTo('form');
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log("get version error: " + textStatus); console.log("Error: " + errorThrown);
+        }
+    });
+
     scroller = $('#imageDiv0 div.innerScrollArea');
     scrollerContent = scroller.children('ul');
     curX = 0;
