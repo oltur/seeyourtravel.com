@@ -215,6 +215,7 @@
                 </table>
             </div>
         </div>
+        <br />
         <p class="big">
             <asp:Button
                 ID="Button1"
@@ -356,7 +357,11 @@
             //    $(this).data('onInputPrevented', e.which === 8 ? true : false);
             //});
 
-            if (trackname) {
+            $("#travelWith").change(function () { travelWithChanged(); });
+            if (!trackname) {
+                setAnimatedMarkerIcon("mycar.png");
+            }
+            else {
                 var initialTrack = loadTrackSync(translateTracksPath(trackname + ".js"));
 
                 $("#name").val(initialTrack.name);
@@ -370,7 +375,6 @@
                 if (!isNullOrEmpty(initialTrack.travelWith)) {
                     $("#travelWith").val(initialTrack.travelWith);
                 }
-                $("#travelWith").change(function () { travelWithChanged(); });
 
                 $("#copyright").val(initialTrack.copyright);
                 $("#category").val(initialTrack.category);
