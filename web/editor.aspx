@@ -159,7 +159,7 @@
                         <td class="big i" data-i18n="Photolocationdistance">Photo location distance:<br />
                             degree/1000, 2..1000</td>
                         <td>
-                            <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="number" max="1000" min="2" step="1" value="100" style="width: 95%;" /></td>
+                            <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="number" max="1000" min="1" step="1" value="100" style="width: 95%;" /></td>
                     </tr>
 <%--                    <tr>
                         <td class="big i" data-i18n="Stepstoredraw">Steps to redraw:<br />
