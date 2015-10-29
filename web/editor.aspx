@@ -189,6 +189,7 @@
                         <td class="big i" data-i18n="Animatedmarkericon">Animated marker icon:</td>
                         <td>
                             <select id="icon" name="icon" style="width: 95%;" onchange="setAnimatedMarkerIcon(this.value)">
+                                <option value="man.png">man.png</option>
                                 <option value="aman.gif">aman.gif</option>
                                 <option value="mybike.png">mybike.png</option>
                                 <option value="mycar.png" selected="selected">mycar.png</option>

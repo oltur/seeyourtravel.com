@@ -38,7 +38,7 @@ public partial class SaveTrack : System.Web.UI.Page
 
                 writer.WriteLine("\"name\":\"" + Request.Form["name"] + "\"");
                 writer.Write(",");
-                writer.WriteLine("\"isPublic\":\"" + ((Request.Form["isPublic"]=="checked")?"Yes":"No") + "\"");
+                writer.WriteLine("\"isPublic\":\"" + ((Request.Form["isPublic"]== "isPublic") ?"Yes":"No") + "\"");
                 
                 if (!string.IsNullOrEmpty(Request.Form["travelWith"]))
                 {
