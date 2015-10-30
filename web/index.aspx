@@ -215,16 +215,7 @@
                     <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>
                 </div>
             </div>
-            <div id="helpPanel" style="display: none; padding: 10px; position: absolute; z-index: 1000; right: 0px; width: 400px; height: 90%; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
-                <span id="siteseal">
-                    <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=hLfbdeAuTQVxRe4IZmMtr1Gf0jrMv1XSJ0S6JNnyohWiDdJm3EUMtIJuf0LN"></script>
-                </span>
-                <br />
-                <br />
-                <div class="i" data-i18n="[html]help_content">
-                </div>
-            </div>
-
+            <!-- #Include virtual="include/profileHelpPanel.inc" -->
             <!-- #Include virtual="include/settingsPanel.inc" -->
 
             <div style="position: absolute; right: 5px; top: 75px; z-index: 1001">

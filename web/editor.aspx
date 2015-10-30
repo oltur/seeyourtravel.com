@@ -19,42 +19,17 @@
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
-    <div style="position: absolute; right: 40px; top: 5px; z-index: 1003">
-        <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
-    </div>
+    <!-- #Include virtual="include/profileLangPanel.inc" -->
     <!--Content-->
     <div id='pageContent' style='height: 100%'>
-        <div style="position: absolute; left: 5px; top: 5px; z-index: 1001">
-            <a id="alogo" href="javascript:clickMenu()">
-                <img src="img/3lines.png" style="height: 30px; width: 30px; vertical-align: middle;" /></a>
-        </div>
-        <div style="position: absolute; left: 60px; top: 10px; z-index: 1001">
-            <div id="wrapper">
-                <img id="imgCoord" src="img/location.png" />
-                <span id="lblCoord" style="vertical-align: super; text-shadow: 1px 1px #ffffff;"></span>
-            </div>
-        </div>
-        <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
-            <div style="position: absolute; left: 10px; top: 50px;">
-                <button type="button" data-i18n="[title]Cancel;Cancel" id="cancelButton" title="Cancel changes" class="i headerButton" style="background-image: url(img/cancel.png );" onclick="clickCancel()">Cancel</button>
-            </div>
-            <div style="position: absolute; left: 10px; top: 100px;">
-                <button type="button" data-i18n="[title]Settings;Settings" id="settingsCheckBox" title="Settings" class="i headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
-                <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site" class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')">About SeeYourTravel</button>
-            </div>
-            <div style="position: absolute; left: 10px; top: 195px;">
-                <button type="button" <%--data-i18n="[title]Profile;Profile" --%>id="profile" title="Profile" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = 'UserProfile.aspx'"></button>
-                <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout" class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'">Logout</button>
-                <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>
-            </div>
-        </div>
+        <!-- #Include virtual="include/profileMenu.inc" -->
     </div>
 
     <!-- #Include virtual="include/settingsPanel.inc" -->
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="overflow: auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 500px; height: 620px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="overflow: auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 500px; height: 640px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
 
         <input type="hidden" id="trackId" name="trackId" value="<%=this.TrackId%>" />
         <input type="hidden" id="trackFileName" name="trackFileName" value="<%=this.TrackFileName%>" />
@@ -85,7 +60,7 @@
                     <tr>
                         <td class="big i" data-i18n="Category">Category:</td>
                         <td>
-                            <input id="category" name="category" list="categories" value="Other" style="width: 95%;"/>
+                            <input id="category" name="category" list="categories" value="Other" style="width: 95%;" />
                             <datalist class="i" id="categories">
                                 <option value="Ukraine" class="i" data-i18n="Ukraine" />
                                 <option value="Germany" class="i" data-i18n="Germany" />
@@ -99,12 +74,12 @@
                     <tr>
                         <td class="big i" data-i18n="Copyright">Copyright:</td>
                         <td>
-                            <input id="copyright" name="copyright" type="text" value="(c)" style="width: 95%;"/></td>
+                            <input id="copyright" name="copyright" type="text" value="(c)" style="width: 95%;" /></td>
                     </tr>
                     <tr>
                         <td class="big i" data-i18n="Travelwith">Travel with:</td>
                         <td>
-                            <select id="travelWith" name="travelWith" style="width: 95%;" >
+                            <select id="travelWith" name="travelWith" style="width: 95%;">
                                 <option value="WalkingMan">Walking Man</option>
                                 <option value="Bike">Bike</option>
                                 <option value="Car" selected="selected">Car</option>
@@ -117,11 +92,11 @@
                     <tr>
                         <td class="big i" data-i18n="Audiofile">Audio file:</td>
                         <td>
-                        <input type="text" id="audioSrc" name="audioSrc" />
-                        <input type="file" accept=".mp3" id="fileAudio" name="fileAudio"/>
+                            <input type="text" id="audioSrc" name="audioSrc" />
+                            <input type="file" accept=".mp3" id="fileAudio" name="fileAudio" />
                         </td>
                     </tr>
-                      <%--            <tr>
+                    <%--            <tr>
                 <td class="big i" data-i18n="Defaultscale">Default scale:<br />
                     1(largest).20(smallest)</td>
                 <td></td>
@@ -147,7 +122,7 @@
                     <br />
                     <div id="fileOperations">
                         <label for="fileGpx" class="i" data-i18n="[title]ImportGpxFile;ImportGpxFile">Import Gpx file:</label>
-                        <input type="file" accept=".gpx" id="filesGpx" name="filesGpx"/>
+                        <input type="file" accept=".gpx" id="filesGpx" name="filesGpx" />
                         <%--multiple="multiple"--%>
                         <!--input type="button" value="Import data" id="importGpx"/-->
                     </div>
@@ -161,7 +136,7 @@
                         <td>
                             <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="number" max="1000" min="1" step="1" value="100" style="width: 95%;" /></td>
                     </tr>
-<%--                    <tr>
+                    <%--                    <tr>
                         <td class="big i" data-i18n="Stepstoredraw">Steps to redraw:<br />
                             2..1000</td>
                         <td>
@@ -199,20 +174,52 @@
                             </select>
                         </td>
                     </tr>
-                  <tr>
+                    <tr>
                         <td class="big i" data-i18n="Trackimage">Track image:</td>
                         <td>
-                        <input type="text" id="trackImage" name="trackImage" />
-                        <input type="file" accept="image/*" id="fileImage" name="fileImage"/>
+                            <input type="text" id="trackImage" name="trackImage" />
+                            <input type="file" accept="image/*" id="fileImage" name="fileImage" />
                         </td>
                     </tr>
                     <tr>
                         <td class="big i" data-i18n="TextDescriptionFile">Text description file:</td>
                         <td>
-                        <input type="text" id="textToRead" name="textToRead"/>
-                        <input type="file" accept="text/plain" id="fileText" name="fileText"/>
+                            <input type="text" id="textToRead" name="textToRead" />
+                            <input type="file" accept="text/plain" id="fileText" name="fileText" />
                         </td>
-                    </tr>                
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="usePanoramioImages" class="i" data-i18n="UsePanoramioImages">Use Panoramio images</label>
+                        </td>
+                        <td>
+                            <input id="usePanoramioImages" name="usePanoramioImages" type="checkbox" title="Use Panoramio images" onchange="SaveSettings();" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="useSYTImagesTrack" class="i" data-i18n="UseCYTImages">Use SeeYourTravel images</label>
+                        </td>
+                        <td>
+                            <input id="useSYTImagesTrack" name="useSYTImagesTrack" type="checkbox" title="Use SeeYourTravel images" onchange="SaveSettings();" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="useGooglePlaces" class="i" data-i18n="UseGooglePlaces">Use Google Places</label>
+                        </td>
+                        <td>
+                            <input id="useGooglePlaces" name="useGooglePlaces" type="checkbox" title="Use Google Places" onchange="SaveSettings();" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="useSYTPlaces" class="i" data-i18n="UseCYTPlaces">Use SeeYourTravel places</label>
+                        </td>
+                        <td>
+                            <input id="useSYTPlaces" name="useSYTPlaces" type="checkbox" title="Use SeeYourTravel places" onchange="SaveSettings();" />
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -271,7 +278,7 @@
             L.control.zoom({ position: 'topright' }).addTo(map);
             L.control.scale({ position: 'bottomleft' }).addTo(map);
             tileLayer = L.tileLayer(mapTileUrl, {
-                attribution: 'Map data &copy; <a href="https://www.mapbox.com/">MapBox</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+                attribution: 'SeeYourTravel.com &copy; Map data &copy; <a href="https://www.mapbox.com/">MapBox</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
                 maxZoom: 18,
                 id: "mapbox.streets"
             });
@@ -380,8 +387,8 @@
                 $("#copyright").val(initialTrack.copyright);
                 $("#category").val(initialTrack.category);
                 $("#photoLocationTolerancy").val(initialTrack.photoLocationTolerancy);
-//                $("#stepsToRedraw").val(initialTrack.stepsToRedraw);
-//                $("#stepsToShowPhoto").val(initialTrack.stepsToShowPhoto);
+                //                $("#stepsToRedraw").val(initialTrack.stepsToRedraw);
+                //                $("#stepsToShowPhoto").val(initialTrack.stepsToShowPhoto);
                 $("#velocityMetersPerSec").val(initialTrack.velocityMetersPerSec);
                 $("#numOfPhotos").val(initialTrack.numOfPhotos);
                 $("#icon").val(initialTrack.icon);
@@ -393,11 +400,15 @@
                 $("#defaultScale").val(initialTrack.defaultScale);
                 map.setZoom(initialTrack.defaultScale);
 
-                if (initialTrack.trackGpx) {
+                    $("#usePanoramioImages").prop('checked',initialTrack.usePanoramioImages != "No");
+                    $("#useSYTImagesTrack").prop('checked', initialTrack.useSYTImagesTrack != "No");
+                    $("#useGooglePlaces").prop('checked', initialTrack.useGooglePlaces != "No");
+                    $("#useSYTPlaces").prop('checked', initialTrack.useSYTPlaces != "No");
+
+                if (!isNullOrEmpty(initialTrack.trackGpx)) {
                     $("#trackGpx").val(initialTrack.trackGpx);
                 }
                 else {
-
                     initialTrack.trackData.forEach(function (point) {
                         if (point.hasOwnProperty("lat") && (point.hasOwnProperty("syt_text") == null || point.hasOwnProperty("syt_text") == ""))
                             point["syt_text"] = "";
@@ -425,13 +436,13 @@
         function travelWithChanged() {
 
             var x = $('#travelWith').find(":selected").val();
-            if(x == "WalkingMan") {
+            if (x == "WalkingMan") {
                 var t = ("aman.gif");
-                $("#velocityMetersPerSec").val(Math.round(5 * 10*1000 / 3660));
+                $("#velocityMetersPerSec").val(Math.round(5 * 10 * 1000 / 3660));
                 $("#icon").val(t);
                 setAnimatedMarkerIcon(t);
             }
-            else if(x == "Bike") {
+            else if (x == "Bike") {
                 var t = ("mybike.png");
                 $("#velocityMetersPerSec").val(Math.round(15 * 50 * 1000 / 3660));
                 $("#icon").val(t);
@@ -443,19 +454,19 @@
                 $("#icon").val(t);
                 setAnimatedMarkerIcon(t);
             }
-            else if(x == "Bus") {
+            else if (x == "Bus") {
                 var t = ("mybus.png");
                 $("#velocityMetersPerSec").val(Math.round(80 * 100 * 1000 / 3660));
                 $("#icon").val(t);
                 setAnimatedMarkerIcon(t);
             }
-            else if(x == "Yacht") {
+            else if (x == "Yacht") {
                 var t = ("myyacht.png");
                 $("#velocityMetersPerSec").val(Math.round(40 * 100 * 1000 / 3660));
                 $("#icon").val(t);
                 setAnimatedMarkerIcon(t);
             }
-            else if(x == "Plane") {
+            else if (x == "Plane") {
                 var t = ("myplane.png");
                 $("#velocityMetersPerSec").val(Math.round(800 * 100 * 1000 / 3660));
                 $("#icon").val(t);

@@ -8,47 +8,49 @@ public partial class services_get_places : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        string callback = Request.QueryString["callback"];
-        string types = Request.QueryString["types"];
-        string set = Request.QueryString["set"];
-        string from = Request.QueryString["from"];
-        string to = Request.QueryString["to"];
-        double minx = double.Parse(Request.QueryString["minx"]);
-        double miny = double.Parse(Request.QueryString["miny"]);
-        double maxx = double.Parse(Request.QueryString["maxx"]);
-        double maxy = double.Parse(Request.QueryString["maxy"]);
-        double x = (minx + maxx) / 2;
-        double y = (miny + maxy) / 2;
-        StringBuilder items = new StringBuilder();
-
-        string order = Request.QueryString["order"];
-
-        Guid userId = Tools.GetUserId(this);
-
-        var db = new SeeYourTravelEntities();
-        var places = (from t in db.GetUserAndPublicPlacesByLocation(userId, types, miny, minx, maxy, maxx, 0, 1000) select t).ToList();
-
-        //XmlDocument doc = new XmlDocument();
-        //    doc.Load(Server.MapPath(@"..\data\photos.xml"));
-        //    string query = string.Format("//r[b>={2} and b<={3} and c>={0} and c<={1}][position() >= {4} and position() <= {5}]", minx, maxx, miny, maxy, from, to);
-        //    XmlNodeList list = doc.SelectNodes(query);
-
-        //    foreach (XmlElement elem in list)
-        foreach (var place in places)
+        if (Request.QueryString["minx"] != null)
         {
-            // http://localhost:88/seeyourtravel/services/get_places.aspx?types=restaurant%2Clodging&set=full&from=0&to=10&miny=47.955776&minx=10.096568999999999&maxy=48.055775999999994&maxx=10.196569&callback=abc
+            string callback = Request.QueryString["callback"];
+            string types = Request.QueryString["types"];
+            string set = Request.QueryString["set"];
+            string from = Request.QueryString["from"];
+            string to = Request.QueryString["to"];
+            double minx = double.Parse(Request.QueryString["minx"]);
+            double miny = double.Parse(Request.QueryString["miny"]);
+            double maxx = double.Parse(Request.QueryString["maxx"]);
+            double maxy = double.Parse(Request.QueryString["maxy"]);
+            double x = (minx + maxx) / 2;
+            double y = (miny + maxy) / 2;
+            StringBuilder items = new StringBuilder();
 
-            double lat = place.Lat;
-            double lng = place.Lng;
-            string icon = "data/places/forum.jpg";
-            Guid id = Guid.Empty;
-            string description = place.Name;
-            string resultTypes = "\'restaurant\'";
-            string vicinity = place.Vicinity;
+            string order = Request.QueryString["order"];
 
-            if (items.Length > 0)
-                items.AppendLine(",");
-            items.AppendFormat(@"
+            Guid userId = Tools.GetUserId(this);
+
+            var db = new SeeYourTravelEntities();
+            var places = (from t in db.GetUserAndPublicPlacesByLocation(userId, types, miny, minx, maxy, maxx, 0, 1000) select t).ToList();
+
+            //XmlDocument doc = new XmlDocument();
+            //    doc.Load(Server.MapPath(@"..\data\photos.xml"));
+            //    string query = string.Format("//r[b>={2} and b<={3} and c>={0} and c<={1}][position() >= {4} and position() <= {5}]", minx, maxx, miny, maxy, from, to);
+            //    XmlNodeList list = doc.SelectNodes(query);
+
+            //    foreach (XmlElement elem in list)
+            foreach (var place in places)
+            {
+                // http://localhost:88/seeyourtravel/services/get_places.aspx?types=restaurant%2Clodging&set=full&from=0&to=10&miny=47.955776&minx=10.096568999999999&maxy=48.055775999999994&maxx=10.196569&callback=abc
+
+                double lat = place.Lat;
+                double lng = place.Lng;
+                string icon = "data/places/forum.jpg";
+                Guid id = Guid.Empty;
+                string description = place.Name;
+                string resultTypes = "\'restaurant\'";
+                string vicinity = place.Vicinity;
+
+                if (items.Length > 0)
+                    items.AppendLine(",");
+                items.AppendFormat(@"
       {
          'geometry' : {
             'location' : {
@@ -80,33 +82,33 @@ public partial class services_get_places : System.Web.UI.Page
          'vicinity' : '{6}'
       }
 ", (decimal)lat, (decimal)lng, icon, id, description, resultTypes, vicinity);
-        }
+            }
 
-        string result = string.Format(@"/**/{0}( {
+            string result = string.Format(@"/**/{0}( {
    'results' : [
       {1}
    ],
    'status' : 'OK'
 }
  )", callback, items.ToString());
-        //Response.Cache.SetNoStore();
-        //Response.Cache.SetNoServerCaching();
-        //Response.Cache.SetMaxAge(new TimeSpan(0));
-        //Response.Cache.SetCacheability(HttpCacheability.NoCache);
-        //Response.Cache.AppendCacheExtension("no-store, must-revalidate");
-        //Response.AppendHeader("Pragma", "no-cache");
-        //Response.AppendHeader("Expires", "0");
+            //Response.Cache.SetNoStore();
+            //Response.Cache.SetNoServerCaching();
+            //Response.Cache.SetMaxAge(new TimeSpan(0));
+            //Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            //Response.Cache.AppendCacheExtension("no-store, must-revalidate");
+            //Response.AppendHeader("Pragma", "no-cache");
+            //Response.AppendHeader("Expires", "0");
 
-Response.ContentType = "application/javascript; charset=utf-8";
-        Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
-        Response.Headers.Add("Content-Disposition", "Attachment");
+            Response.ContentType = "application/javascript; charset=utf-8";
+            Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+            Response.Headers.Add("Content-Disposition", "Attachment");
 
-        Response.Write(result);
-        
-        Response.End();
+            Response.Write(result);
+
+            Response.End();
+        }
     }
 }
-
 //        string result = @"/**/" + callback + @"( {
 //   'html_attributions' : [],
 //   'next_page_token' : 'CoQC9AAAAJ--wCsNhotf9qf23DPwPDuM5t0iBee4HsyLksTuqiJXod1qyTsxA-XZ_d2E6iQO-KxXwUGi-y0abQc75GxAhM7Owzs_CWPfrLhQDcsCwmeIaVJOkFshdN_ms6p0VDtRy9lsAgSd-8ufJcah9CvY8YXHgS8_ZRE0TgcIQvhZH5C0mysMMtnDqQqWaZwpLKJz0_7vR4sWuqYEm8zDxERsaeHGEokIhbuFh-9c_f9YMsdvW8v-Njmt80tKSuWAuz3XA3m8UdqZTDmkkrMEkUhwgsCtEWWG2htDYuM5Ahm_nL_GimwZ8rfGT5tZ0rcmexo6O5NOALeCmX81OFuyjU8RyVcSEBPnezRjVNBcnYCtnP2p_5caFLQYCq7Ntfyh-Me1MF-8SKiBNgm4',

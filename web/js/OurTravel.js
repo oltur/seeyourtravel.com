@@ -255,7 +255,7 @@ function showPhotos(track, p, tolerancy) {
     if (!tolerancy)
         tolerancy = 0.1;
 
-    if ($('#usePanoramioImagesCheckBox').is(':checked')) {
+    if ($('#usePanoramioImagesCheckBox').is(':checked') && track.usePanoramioImages != "No") {
         //var set = "7459025";//"full";//"public";
         var set = "full";
         var count = 0;
@@ -294,7 +294,7 @@ function get_panoramas_panoramio_success(data, p, tolerancy) {
 
     //var urlp = "http://localhost/seeyourtravel/services/get_panoramas.aspx?x=x&set=full&from=0&to=10&miny=47.955776&minx=10.096568999999999&maxy=48.055775999999994&maxx=10.196569&size=medium&mapfilter=true&order=popularity";
 
-    if ($('#useSYTImagesCheckBox').is(':checked')) {
+    if ($('#useSYTImagesCheckBox').is(':checked') && track.useSYTImages != "No") {
         //var set = "7459025";//"full";//"public";
         var set = "full";
         var count = 0;
@@ -772,7 +772,7 @@ function addMarkersNear(nearLat, nearLng, types, odd) {
     //    });
     //}
     //else {
-        if ($('#useGooglePlacesCheckBox').is(':checked')) {
+    if ($('#useGooglePlacesCheckBox').is(':checked') && track.useGooglePlaces != "No") {
 
             var service = new google.maps.places.PlacesService(map2);
 
@@ -805,7 +805,7 @@ function callbackHerePlacesSearch(results) {
 
 function get_places_googlehere_success(data) {
 
-    if ($('#useSYTPlacesCheckBox').is(':checked')) {
+    if ($('#useSYTPlacesCheckBox').is(':checked') && track.useSYTPlaces != "No") {
         var urlp = "services/get_places.aspx?callback=?";
 
         $.ajax({

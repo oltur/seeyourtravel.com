@@ -91,7 +91,16 @@ public partial class SaveTrack : System.Web.UI.Page
                     writer.Write(",");
                     writer.WriteLine("\"icon\":\"" + Request.Form["icon"] + "\"");
                 }
-                
+
+                writer.Write(",");
+                writer.WriteLine("\"usePanoramioImages\":\"" + ((Request.Form["usePanoramioImages"] == "on") ? "Yes" : "No") + "\"");
+                writer.Write(",");
+                writer.WriteLine("\"useSYTImagesTrack\":\"" + ((Request.Form["useSYTImagesTrack"] == "on") ? "Yes" : "No") + "\"");
+                writer.Write(",");
+                writer.WriteLine("\"useGooglePlaces\":\"" + ((Request.Form["useGooglePlaces"] == "on") ? "Yes" : "No") + "\"");
+                writer.Write(",");
+                writer.WriteLine("\"useSYTPlaces\":\"" + ((Request.Form["useSYTPlaces"] == "on") ? "Yes" : "No") + "\"");
+
                 writer.Write(",");
                 writer.WriteLine("\"trackImage\":\"" + imageFileName + "\"");
 
