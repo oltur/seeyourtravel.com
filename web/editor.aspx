@@ -231,7 +231,9 @@
                 runat="server"
                 Text="Submit"
                 data-i18n="TrackDescription"
-                class="i" />
+                class="i" 
+                OnClientClick="beforeSubmit()"
+                />
             &nbsp;
     <input type="button" value="Cancel" class="i" data-i18n="[title]Cancel;[value]Cancel" id="gotoMain" onclick="window.location = 'index.aspx?trackname=' + trackname" />
         </p>
@@ -257,6 +259,21 @@
 
     %>
     <script lang="JavaScript">
+
+        function beforeSubmit() {
+            var idx = this.selectedIndex;
+
+            if (idx != null && typeof idx != "undefined") {
+                var optionSelected = $("option", this).eq(idx);
+                var valueSelected = optionSelected.val();
+                var point = JSON.parse(valueSelected);
+                if (point.hasOwnProperty("lat"))
+                    point["syt_text"] = $("#pointDescr").val();
+                else
+                    point[2] = $("#pointDescr").val();
+                optionSelected.val(JSON.stringify(point));
+            }
+        }
 
         $(function () {
 

@@ -41,20 +41,7 @@
         <br />
         <span class="i" data-i18n="MyPlaces">My Places</span>
         <br /> 
-        <select style="vertical-align: central; width: 500px;" id="tracksList" size="20"></select>
         <br />
-        <br />
-        <button type="button" id="buttonNew" class="i" data-i18n="[title]New;New">New</button>
-        <button type="button" id="buttonEdit" class="i" data-i18n="[title]Edit;Edit">Edit</button>
-        <button type="button" id="buttonDelete" class="i" data-i18n="[title]DeleteSelected;DeleteSelected">Delete Selected</button>
-        <br />
-        <br />
-        <span class="i" data-i18n="SiteComponentHTML">Site component HTML:</span> 
-        <br />
-        <input type="text" id="frameUrl" value="" style="width: 400px" /> <button type="button" id="buttonShow" class="i" data-i18n="[title]Show;Show">Show</button>
-        <br />
-        <br />
-        <div id="divframe"></div>
                 </td>
             </tr>
         </table>
@@ -120,76 +107,8 @@
                 }
             });
 
-            tracksList = $("#tracksList");
-
-            fillTracks();
-
-            tracksList.change(function () {
-                var s = '<iframe style="width: 500px; height: 300px;" src="' + '<%=Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath%>' + "frame.aspx?trackname=" + tracksList.val() + '"></iframe>'
-                $("#frameUrl").val(s);
-                $("#divframe").html("");
-
-                var path = translateTracksPath(tracksList.val() + ".js");
-                track = loadTrackSync(path);
-
-                markers.clearLayers();
-                line = L.polyline(track.trackData, { color: 'green' });
-                markers.addLayer(line);
-
-                map.panTo(track.trackData[0]);
-
-            });
-            $("#buttonShow").click(function () {
-                $("#divframe").html($("#frameUrl").val());
-            });
-            $("#buttonNew").click(function () {
-                window.location = "editor.aspx";
-            });
-            $("#buttonEdit").click(function () {
-                window.location = "editor.aspx?trackname=" + tracksList.val();
-            });
-            $("#buttonDelete").click(function () {
-                if (tracksList.val() != null) {
-                    var url = "services/delete_trackbyfilename.aspx?fileName=" + tracksList.val();
-                    $.ajax({
-                        //                    dataType: "jsonp",
-                        url: url,
-                        success: function (data) {
-                            toastr.info("Track is deleted", "", { timeOut: 5000, extendedTimeOut: 10000 });
-                            fillTracks();
-                            $("#frameUrl").val("");
-                            $("#divframe").html("");
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            console.log("delete track error: " + textStatus); console.log("Error: " + errorThrown);
-                            toastr.error(textStatus + "," + errorThrown, "ERROR", { timeOut: 5000, extendedTimeOut: 10000 });
-                        }
-                    });
-                }
-            });
         });
 
-        function fillTracks() {
-            var fileListString = $.ajax(
-        {
-            url: ('services/get_mytracks.aspx' + "?" + Math.random()),
-            async: false,
-            dataType: 'json'
-        }
-        ).responseText;
-
-            var fileList = fileListString.split('\n');
-            tracksList
-                    .find('option')
-                    .remove()
-                    .end();
-            for (var i = 0; i < fileList.length; i++) {
-                if (!isNullOrEmpty(fileList[i])) {
-                    var parts = fileList[i].split(';');
-                    tracksList.append('<option value="' + parts[0] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
-                }
-            }
-        }
 
     </script>
 </asp:Content>
