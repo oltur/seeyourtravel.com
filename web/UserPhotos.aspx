@@ -27,7 +27,7 @@
     <!-- #Include virtual="include/profileHelpPanel.inc" -->
     <!-- #Include virtual="include/settingsPanel.inc" -->
 
-    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 410px; height: 850px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 700px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
         <table border="0">
             <tr>
                 <td>
@@ -41,13 +41,13 @@
         <br />
         <span class="i" data-i18n="MyPhotos">My Photos</span>
         <br />
-        <select style="vertical-align: central; width: 400px;" id="photosList" class="i" size="20" multiple="multiple"></select>
+        <select style="vertical-align: central; width: 330px;" id="photosList" class="i" size="20" multiple="multiple"></select>
         <br />
         <br />
         <button type="button" id="buttonDelete" class="i" data-i18n="[title]DeleteSelected ;DeleteSelected">Delete Selected</button>
         <br />
         <br />
-        <span class="i" data-i18n="Photocoordinates">Photo coordinates</span><br /><input type="text" id="imageLatLng" value="" style="width: 400px" />
+        <span class="i" data-i18n="Photocoordinates">Photo coordinates</span><br /><input type="text" id="imageLatLng" value="" style="width: 330px" />
         <br />
         <br />
         <span class="i" data-i18n="UploadPhotos">Upload photos:</span>

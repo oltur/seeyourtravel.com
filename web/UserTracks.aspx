@@ -28,7 +28,7 @@
     <!-- #Include virtual="include/settingsPanel.inc" -->
 
 
-    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 510px; height: 900px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 900px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
         <table border="0">
             <tr>
                 <td>
@@ -42,7 +42,7 @@
         <br />
         <span class="i" data-i18n="MyTracks">My Tracks</span>
         <br /> 
-        <select style="vertical-align: central; width: 500px;" id="tracksList" size="20"></select>
+        <select style="vertical-align: central; width: 330px;" id="tracksList" size="20"></select>
         <br />
         <br />
         <button type="button" id="buttonNew" class="i" data-i18n="[title]New;New">New</button>
@@ -52,7 +52,7 @@
         <br />
         <span class="i" data-i18n="SiteComponentHTML">Site component HTML:</span> 
         <br />
-        <input type="text" id="frameUrl" value="" style="width: 400px" /> <button type="button" id="buttonShow" class="i" data-i18n="[title]Show;Show">Show</button>
+        <input type="text" id="frameUrl" value="" style="width: 250px" /> <button type="button" id="buttonShow" class="i" data-i18n="[title]Show;Show">Show</button>
         <br />
         <br />
         <div id="divframe"></div>
@@ -126,7 +126,7 @@
             fillTracks();
 
             tracksList.change(function () {
-                var s = '<iframe style="width: 500px; height: 300px;" src="' + '<%=Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath%>' + "frame.aspx?trackname=" + tracksList.val() + '"></iframe>'
+                var s = '<iframe style="width: 330px; height: 300px;" src="' + '<%=Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath%>' + "frame.aspx?trackname=" + tracksList.val() + '"></iframe>'
                 $("#frameUrl").val(s);
                 $("#divframe").html("");
 

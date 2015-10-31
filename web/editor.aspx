@@ -29,7 +29,7 @@
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="overflow: auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 500px; height: 640px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="overflow: auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 720px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
 
         <input type="hidden" id="trackId" name="trackId" value="<%=this.TrackId%>" />
         <input type="hidden" id="trackFileName" name="trackFileName" value="<%=this.TrackFileName%>" />
@@ -49,7 +49,7 @@
                     <tr>
                         <td class="big i" data-i18n="TrackName">Track name:</td>
                         <td>
-                            <input id="name" name="name" type="text" value="<%="New track " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")  %>" style="width: 95%;" /></td>
+                            <input id="name" name="name" type="text" value="<%="New track " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")  %>" style="width: 180px;" /></td>
                     </tr>
                     <tr>
                         <td class="big i" data-i18n="Maketrackpublic">Make track public?</td>
@@ -60,7 +60,7 @@
                     <tr>
                         <td class="big i" data-i18n="Category">Category:</td>
                         <td>
-                            <input id="category" name="category" list="categories" value="Other" style="width: 95%;" />
+                            <input id="category" name="category" list="categories" value="Other" style="width: 180px;" />
                             <datalist class="i" id="categories">
                                 <option value="Ukraine" class="i" data-i18n="Ukraine" />
                                 <option value="Germany" class="i" data-i18n="Germany" />
@@ -74,12 +74,12 @@
                     <tr>
                         <td class="big i" data-i18n="Copyright">Copyright:</td>
                         <td>
-                            <input id="copyright" name="copyright" type="text" value="(c)" style="width: 95%;" /></td>
+                            <input id="copyright" name="copyright" type="text" value="(c)" style="width: 180px;" /></td>
                     </tr>
                     <tr>
                         <td class="big i" data-i18n="Travelwith">Travel with:</td>
                         <td>
-                            <select id="travelWith" name="travelWith" style="width: 95%;">
+                            <select id="travelWith" name="travelWith" style="width: 180px;">
                                 <option value="WalkingMan">Walking Man</option>
                                 <option value="Bike">Bike</option>
                                 <option value="Car" selected="selected">Car</option>
@@ -92,8 +92,8 @@
                     <tr>
                         <td class="big i" data-i18n="Audiofile">Audio file:</td>
                         <td>
-                            <input type="text" id="audioSrc" name="audioSrc" />
-                            <input type="file" accept=".mp3" id="fileAudio" name="fileAudio" />
+                            <input type="text" id="audioSrc" name="audioSrc" style="width: 180px;"/>
+                            <input type="file" accept=".mp3" id="fileAudio" name="fileAudio" style="width: 180px;"/>
                         </td>
                     </tr>
                     <%--            <tr>
@@ -101,7 +101,7 @@
                     1(largest).20(smallest)</td>
                 <td></td>
             </tr>--%>
-                    <input id="defaultScale" name="defaultScale" type="hidden" max="20" min="1" step="1" value="8" style="width: 95%;" />
+                    <input id="defaultScale" name="defaultScale" type="hidden" max="20" min="1" step="1" value="8" style="width: 180px;" />
                 </table>
                 <p class="big">
                     <input name="trackData" id="trackData" type="hidden" />
@@ -109,20 +109,20 @@
                 <p class="big">
                     <span class="big  i" data-i18n="Trackpoints">Track points:</span>
                     <br />
-                    <select id="points" name="points" size="10" style="width: 350px" multiple="multiple">
+                    <select id="points" name="points" size="10" style="width: 250px" multiple="multiple">
                     </select>
                 </p>
                 <p class="big">
                     <span class="big  i" data-i18n="Currentpointdescriptionoptional">Current point description (optional):</span>
                     <br />
-                    <input id="pointDescr" name="pointDescr" type="text" value="" style="width: 350px" />
+                    <input id="pointDescr" name="pointDescr" type="text" value="" style="width: 250px" />
                 </p>
                 <input type="button" value="Delete selected" id="buttonDeleteSelected" class="i" data-i18n="[title]DeleteSelected;[value]DeleteSelected" />
                 <div class="big">
                     <br />
                     <div id="fileOperations">
                         <label for="fileGpx" class="i" data-i18n="[title]ImportGpxFile;ImportGpxFile">Import Gpx file:</label>
-                        <input type="file" accept=".gpx" id="filesGpx" name="filesGpx" />
+                        <input type="file" accept=".gpx" id="filesGpx" name="filesGpx"  style="width: 180px;"/>
                         <%--multiple="multiple"--%>
                         <!--input type="button" value="Import data" id="importGpx"/-->
                     </div>
@@ -134,36 +134,36 @@
                         <td class="big i" data-i18n="Photolocationdistance">Photo location distance:<br />
                             degree/1000, 2..1000</td>
                         <td>
-                            <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="number" max="1000" min="1" step="1" value="100" style="width: 95%;" /></td>
+                            <input id="photoLocationTolerancy" name="photoLocationTolerancy" type="number" max="1000" min="1" step="1" value="100" style="width: 180px;" /></td>
                     </tr>
                     <%--                    <tr>
                         <td class="big i" data-i18n="Stepstoredraw">Steps to redraw:<br />
                             2..1000</td>
                         <td>
-                            <input id="stepsToRedraw" name="stepsToRedraw" type="number" max="1000" min="2" step="1" value="100" style="width: 95%;" /></td>
+                            <input id="stepsToRedraw" name="stepsToRedraw" type="number" max="1000" min="2" step="1" value="100" style="width: 180px;" /></td>
                     </tr>
                     <tr>
                         <td class="big i" data-i18n="Stepstoshowphotos">Steps to show photos:<br />
                             2..1000</td>
                         <td>
-                            <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="number" max="1000" min="2" step="1" value="10" style="width: 95%;" /></td>
+                            <input id="stepsToShowPhoto" name="stepsToShowPhoto" type="number" max="1000" min="2" step="1" value="10" style="width: 180px;" /></td>
                     </tr>--%>
                     <tr>
                         <td class="big i" data-i18n="Speed">Speed:<br />
                             meters/sec, 1..100000</td>
                         <td>
-                            <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="number" max="100000" min="1" step="1" value="100" style="width: 95%;" /></td>
+                            <input id="velocityMetersPerSec" name="velocityMetersPerSec" type="number" max="100000" min="1" step="1" value="100" style="width: 180px;" /></td>
                     </tr>
                     <%--            <tr>
                 <td class="big i" data-i18n="Numberofphotostoload">Number of photos to load:<br />
                     1..50</td>
                 <td></td>
             </tr>--%>
-                    <input id="numOfPhotos" name="numOfPhotos" type="hidden" max="50" min="1" step="1" value="20" style="width: 95%;" />
+                    <input id="numOfPhotos" name="numOfPhotos" type="hidden" max="50" min="1" step="1" value="20" style="width: 180px;" />
                     <tr>
                         <td class="big i" data-i18n="Animatedmarkericon">Animated marker icon:</td>
                         <td>
-                            <select id="icon" name="icon" style="width: 95%;" onchange="setAnimatedMarkerIcon(this.value)">
+                            <select id="icon" name="icon" style="width: 180px;" onchange="setAnimatedMarkerIcon(this.value)">
                                 <option value="man.png">man.png</option>
                                 <option value="aman.gif">aman.gif</option>
                                 <option value="mybike.png">mybike.png</option>
@@ -177,15 +177,15 @@
                     <tr>
                         <td class="big i" data-i18n="Trackimage">Track image:</td>
                         <td>
-                            <input type="text" id="trackImage" name="trackImage" />
-                            <input type="file" accept="image/*" id="fileImage" name="fileImage" />
+                            <input type="text" id="trackImage" name="trackImage" style="width: 180px;"/>
+                            <input type="file" accept="image/*" id="fileImage" name="fileImage"  style="width: 180px;"/>
                         </td>
                     </tr>
                     <tr>
                         <td class="big i" data-i18n="TextDescriptionFile">Text description file:</td>
                         <td>
-                            <input type="text" id="textToRead" name="textToRead" />
-                            <input type="file" accept="text/plain" id="fileText" name="fileText" />
+                            <input type="text" id="textToRead" name="textToRead" style="width: 180px;"/>
+                            <input type="file" accept="text/plain" id="fileText" name="fileText"  style="width: 180px;"/>
                         </td>
                     </tr>
                     <tr>
