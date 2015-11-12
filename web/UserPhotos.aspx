@@ -19,63 +19,35 @@
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
-    <div style="position: absolute; right: 40px; top: 5px; z-index: 1003">
-        <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
-    </div>
+    <!-- #Include virtual="include/profileLangPanel.inc" -->
     <!--Content-->
     <div id='pageContent' style='height: 100%;'>
-        <div style="position: absolute; left: 5px; top: 5px; z-index: 1001">
-            <a id="alogo" href="javascript:clickMenu()">
-                    <img src="img/3lines.png" style="height: 30px; width: 30px; vertical-align: middle;" /></a>
-        </div>
-        <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
-            <div style="position: absolute; left: 10px; top: 50px;">
-                <button type="button" data-i18n="[title]Cancel;Cancel" id="cancelButton" title="Cancel changes" class="i headerButton" style="background-image: url(img/cancel.png );" onclick="clickCancel()">Cancel</button>
-            </div>
-            <div style="position: absolute; left: 10px; top: 100px;">
-                <button type="button" data-i18n="[title]Settings;Settings" id="settingsCheckBox" title="Settings" class="i headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
-                <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site" class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')">About SeeYourTravel</button>
-            </div>
-            <div style="position: absolute; left: 10px; top: 195px;">
-                <button type="button" <%--data-i18n="[title]Profile;Profile" --%>id="profile" title="Profile" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = 'UserProfile.aspx'"></button>
-                <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout" class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx'">Logout</button>
-                <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>
-            </div>
-        </div>
+        <!-- #Include virtual="include/profileMenu.inc" -->
     </div>
-
-    <div id="helpPanel" style="display: none; padding: 10px; position: absolute; z-index: 1000; right: 0px; width: 400px; height: 90%; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
-        <span id="siteseal">
-            <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=hLfbdeAuTQVxRe4IZmMtr1Gf0jrMv1XSJ0S6JNnyohWiDdJm3EUMtIJuf0LN"></script>
-        </span>
-        <br />
-        <br />
-        <div class="i" data-i18n="[html]help_content">
-        </div>
-    </div>
-
+    <!-- #Include virtual="include/profileHelpPanel.inc" -->
     <!-- #Include virtual="include/settingsPanel.inc" -->
 
-    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 410px; height: 850px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 700px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
         <table border="0">
             <tr>
                 <td>
         <div><%=Tools.GetUserName(this)%>: <span class="i" data-i18n="[title]MyPhotos;MyPhotos">My Photos</span></div>
         <br />
+        <a href="UserProfile.aspx" class="i" data-i18n="[title]MyProfile;MyProfile">My Profile</a>
+        <a href="UserTracks.aspx" class="i" data-i18n="[title]MyTracks;MyTracks">My Tracks</a>
+        <aa href="UserPhotos.aspx" class="i" data-i18n="[title]MyPhotos;MyPhotos">My photos</aa>
+        <a href="UserPlaces.aspx" class="i" data-i18n="[title]MyPlaces;MyPlaces">My Places</a>
+        <br />
         <br />
         <span class="i" data-i18n="MyPhotos">My Photos</span>
         <br />
-        <select style="vertical-align: central; width: 400px;" id="photosList" class="i" size="20" multiple="multiple"></select>
+        <select style="vertical-align: central; width: 330px;" id="photosList" class="i" size="20" multiple="multiple"></select>
         <br />
         <br />
         <button type="button" id="buttonDelete" class="i" data-i18n="[title]DeleteSelected ;DeleteSelected">Delete Selected</button>
         <br />
         <br />
-        <a href="UserProfile.aspx" class="i" data-i18n="[title]MyTracks;MyTracks">My Tracks</a>
-<%--        <a href="UserPlaces.aspx" class="i" data-i18n="[title]MyPlaces;MyPlaces">My Places</a>--%>
-        <br />
-        <br />
-        <span class="i" data-i18n="Photocoordinates">Photo coordinates</span><br /><input type="text" id="imageLatLng" value="" style="width: 400px" />
+        <span class="i" data-i18n="Photocoordinates">Photo coordinates</span><br /><input type="text" id="imageLatLng" value="" style="width: 330px" />
         <br />
         <br />
         <span class="i" data-i18n="UploadPhotos">Upload photos:</span>
@@ -128,7 +100,7 @@
             L.control.zoom({ position: 'topright' }).addTo(map);
             L.control.scale({ position: 'bottomleft' }).addTo(map);
             tileLayer = L.tileLayer(mapTileUrl, {
-                attribution: 'Map data &copy; <a href="https://www.mapbox.com/">MapBox</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+                attribution: 'SeeYourTravel.com &copy; Map data &copy; <a href="https://www.mapbox.com/">MapBox</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
                 maxZoom: 18,
                 id: "mapbox.streets"
             });
