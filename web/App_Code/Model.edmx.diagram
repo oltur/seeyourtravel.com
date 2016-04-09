@@ -4,38 +4,39 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c04b8e24268146db8f655d86476d8c70" Name="Diagram1">
-        <EntityTypeShape EntityType="SeeYourTravelModel.Image" Width="1.5" PointX="0.75" PointY="13.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.ImageUser" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.Place" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.PlaceImage" Width="1.5" PointX="6" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.PlaceType" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.PlaceTypePlace" Width="1.5" PointX="6" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.PlaceUser" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.Role" Width="1.5" PointX="3.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.Track" Width="1.5" PointX="0.75" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.TrackUser" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.User" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.UserLocation" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.UserLogin" Width="1.5" PointX="3" PointY="18.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.UserRole" Width="1.5" PointX="6" PointY="9.5" IsExpanded="true" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_ImageUser_Image" ManuallyRouted="false" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_PlaceImage_Image" ManuallyRouted="false" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_ImageUser_User" ManuallyRouted="false" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_PlaceImage_Place" ManuallyRouted="false" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_PlaceTypePlace_Place" ManuallyRouted="false" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_PlaceUser_Place" ManuallyRouted="false" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_PlaceTypePlace_PlaceType" ManuallyRouted="false" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_PlaceUser_User" ManuallyRouted="false" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_UserRole_Role" ManuallyRouted="false" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_TrackUser_Track" ManuallyRouted="false" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_TrackUser_User" ManuallyRouted="false" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_UserLocation_User" ManuallyRouted="false" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_UserLogin_User" ManuallyRouted="false" />
-        <AssociationConnector Association="SeeYourTravelModel.FK_UserRole_User" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.TrackLocalization" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.GetAllRoughUserLocation" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SeeYourTravelModel.Version" Width="1.5" PointX="8.375" PointY="3.75" />
+      <Diagram DiagramId="c04b8e24268146db8f655d86476d8c70" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="SeeYourTravelModel.Image" Width="1.5" PointX="0.75" PointY="16.625" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.ImageUser" Width="1.5" PointX="3" PointY="11.875" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.Place" Width="1.5" PointX="3.75" PointY="1.375" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.PlaceImage" Width="1.5" PointX="6" PointY="12.25" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.PlaceType" Width="1.5" PointX="3.75" PointY="25" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.PlaceTypePlace" Width="1.5" PointX="6" PointY="1.875" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.PlaceUser" Width="1.5" PointX="6" PointY="8.875" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.Role" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.Track" Width="1.5" PointX="0.75" PointY="12.375" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.TrackLocalization" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.TrackUser" Width="1.5" PointX="3" PointY="8.875" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.User" Width="1.5" PointX="0.75" PointY="8.25" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.UserLocation" Width="1.5" PointX="3" PointY="15.25" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.UserLogin" Width="1.5" PointX="3" PointY="21" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.UserRole" Width="1.5" PointX="3" PointY="5.875" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.Version" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="SeeYourTravelModel.GetAllRoughUserLocation" Width="1.5" PointX="8.75" PointY="0.75" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_ImageUser_Image" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_PlaceImage_Image" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_ImageUser_User" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_PlaceImage_Place" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_PlaceTypePlace_Place" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_PlaceUser_Place" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_PlaceTypePlace_PlaceType" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_PlaceUser_User" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_UserRole_Role" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_TrackUser_Track" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_TrackUser_User" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_UserLocation_User" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_UserLogin_User" />
+        <AssociationConnector Association="SeeYourTravelModel.FK_UserRole_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -22,6 +22,7 @@
         var tileLayer;
         var markers;
         var markersFriends;
+        var markersTracks;
         var line;
         var markerStart;
         var markerFinish;
@@ -170,7 +171,7 @@
     </div>
     <input id="showGoesOn" type="hidden" value="0" />
     <div id="splitterContainer">
-        <div id='sidePanel' style='display: none; height: 100%; width: 0%; float: left;'>
+        <div id='sidePanel' style='display: none; height: 100%; width: 0; float: left;'>
             <div id="slider1">
 <%--                <span data-i18n="Chooseatrack">Choose a track:</span>--%>
                 <br />
@@ -186,7 +187,7 @@
                 <%--    <button type="button" data-i18n="[title]Clear;Clear" id="clearSidePanelButton" title="Clear" class="i headerButton" style="width:100px; background-image: url(img/clear.png );" onclick="clearSidePanel()">Clear</button>--%>
             </div>
         </div>
-        <div id='pageContent' style='height: 100%; position: relative; margin-left: 0%;'>
+        <div id='pageContent' style='height: 100%; position: relative; margin-left: 0;'>
             <div style="position: absolute; left: 5px; top: 15px; z-index: 1001">
                 <a id="alogo" href="javascript:clickMenu()">
                     <img src="img/3lines.png" style="height: 30px; width: 30px; vertical-align: middle;" /></a>
@@ -204,7 +205,7 @@
                 <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
             </div>
 
-            <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; top: 10px; left: 0px; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0px solid #000;">
+            <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; top: 10px; left: 0; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0 solid #000;">
                 <div style="position: absolute; left: 10px; top: 50px;">
                     <button type="button" data-i18n="[title]New;New" id="newTrackButton" title="New" class="i headerButton" style="background-image: url(img/new.png );" onclick="clickNew()">New</button>
                     <button type="button" data-i18n="[title]Edit;Edit" id="editTrackButton" title="Edit" class="i headerButton" style="background-image: url(img/edit.png );" onclick="clickEdit()">Edit</button>
@@ -220,9 +221,9 @@
 
             <div style="position: absolute; right: 5px; top: 75px; z-index: 1001">
                 <div>
-                    <button type="button" id="mute" style="padding-left: 0px; width: 46px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute();SaveSettings();"></button>
+                    <button type="button" id="mute" style="padding-left: 0; width: 46px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute();SaveSettings();"></button>
                     <br />
-                    <button type="button" id="continuePauseButton" disabled="disabled" class="headerButton" style="padding-left: 0px; width: 46px; background-image: url(img/play.png );" onclick="doStartStop();"></button>
+                    <button type="button" id="continuePauseButton" disabled="disabled" class="headerButton" style="padding-left: 0; width: 46px; background-image: url(img/play.png );" onclick="doStartStop();"></button>
                 </div>
             </div>
 
@@ -231,7 +232,7 @@
             <div id="map"></div>
             <div id="map2"></div>
 
-            <div id="textToReadArea0" class="ui-widget-content" style="z-index: 100; min-height: 50px; min-width: 50px; background: rgba(100,100,100,0.2); border-width: 0px; width: 25%; height: 25%; position: absolute; left: 2%; top: 35%">
+            <div id="textToReadArea0" class="ui-widget-content" style="z-index: 100; min-height: 50px; min-width: 50px; background: rgba(100,100,100,0.2); border-width: 0; width: 25%; height: 25%; position: absolute; left: 2%; top: 35%">
                 <%-- <br />--%>
                 <div id="textToReadArea" style="position: absolute; overflow: scroll; background: rgba(240,240,240,0.9); padding: 0; top: 2px; bottom: 2px; left: 2px; right: 2px; margin: 0 auto; resize: none;"></div>
             </div>
@@ -337,6 +338,8 @@
             tracksList.append('<option value="Choose a track" data-i18n="Chooseatrack">Choose a track:</option>');
             clearSidePanel();
 
+            markersTracks.clearLayers();
+
             for (var i = 0; i < fileList.length; i++) {
                 var parts = fileList[i].split(';');
                 if (label != parts[3]) {
@@ -350,6 +353,34 @@
                     + (trackParam == parts[0]?'</b>':'');
                 var sidePanelHref = (isSelected ? '' : 'index.aspx?trackName=' + parts[0]);
                 appendToSidePanel(sidePanelHtml, sidePanelHref, parts[4]);
+                if(parts[5].length > 0)
+                {
+                    var location = JSON.parse(parts[5]);
+
+                    var iconTrack = L.icon({
+                        iconUrl: ('img/track.png'),
+                        iconSize: [40, 40],
+                        iconAnchor: [20, 20],
+                        //shadowUrl: null
+                    });
+
+                    var fileName = parts[0];
+                    var text = parts[1];
+                    var imgPath = (parts[4] != "")?("tracks/content/" + parts[4]) : ("img/track.png");
+                    var domelem = document.createElement('a');
+                    //domelem.href = place.name;
+                    domelem.innerHTML = "<p>" + text + "</p><img height='100px' width='100px' src='" + imgPath + "'/>";
+                    domelem.alt = text;
+                    domelem.href = "./index.aspx?trackname=" + fileName;
+                    domelem.target = "_blank";
+                    
+
+                    var markerTrack = L.marker(new L.LatLng(location.lat - 0.0002 + Math.random() * 0.0004, location.lng - 0.0002 + Math.random() * 0.0004),
+                        { icon: iconTrack })
+                            .bindPopup(domelem);    
+
+                    markersTracks.addLayer(markerTrack);
+                }
             }
 
             if (trackParam != '') {

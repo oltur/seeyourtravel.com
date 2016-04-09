@@ -582,8 +582,12 @@ function init(filename) {
 
     markers = new L.FeatureGroup();
     map.addLayer(markers);
-    markersFriends = new L.FeatureGroup();
+    if(typeof markersFriends == "undefined")
+        markersFriends = new L.FeatureGroup();
     markers.addLayer(markersFriends);
+    if (typeof markersTracks == "undefined")
+        markersTracks = new L.FeatureGroup();
+    markers.addLayer(markersTracks);
 
     markerWhereIAm = L.marker(new L.LatLng(1000, 1000), { icon: iconWhereIAm, zIndexOffset: 100 }).bindPopup(globalUserName);
     markers.addLayer(markerWhereIAm);
@@ -689,10 +693,10 @@ function init(filename) {
         line = L.polyline(track.trackData, { color: 'green' });
         markers.addLayer(line);
 
-        markerStart = L.marker(track.trackData[0]).bindPopup("Start");
+        markerStart = L.marker(track.trackData[0]).bindPopup("Start");//TODO
         markers.addLayer(markerStart);
 
-        markerFinish = L.marker(track.trackData[track.trackData.length - 1]).bindPopup("Finish");
+        markerFinish = L.marker(track.trackData[track.trackData.length - 1]).bindPopup("Finish");//TODO
         markers.addLayer(markerFinish);
 
         map.setView(track.trackData[0], track.defaultScale ? track.defaultScale : 8);

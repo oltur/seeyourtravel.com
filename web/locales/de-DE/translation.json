@@ -81,5 +81,21 @@
   "Other": "Andere"
     ,"UploadPhotos": "Fotos hochladen"
     ,"Upload": "Hochladen"
-    ,"Photocoordinates": "Foto Koordinaten"
+    ,"Photocoordinates": "Foto Koordinaten",
+  "MyPlaces": "Meine Orte",
+  "Placedescription": "Ort Beschreibung",
+  "Placelink": "Ort link",
+  "Placecoordinates": "Ort Koordinaten",
+  "UploadPhoto": "Foto hochladen",
+  "Makepublic": "Veröffentlichen",
+  "Save": "Speichern",
+    "Checklink": "Überprüfen",
+   "Audiofile": "Audio-Datei",
+  "Travelwith": "Reisen mit",
+  "TrackName": "Spurname",
+  "Trackimage": "Spur image",
+  "TextDescriptionFile": "Text-Beschreibungsdatei",
+  "Basic": "Basic",
+  "Advanced": "Erweiterte"
+  ,"MyProfile": "Mein Profil"
 }

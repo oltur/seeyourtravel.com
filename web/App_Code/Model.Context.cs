@@ -33,15 +33,16 @@ public partial class SeeYourTravelEntities : DbContext
     public virtual DbSet<PlaceTypePlace> PlaceTypePlaces { get; set; }
     public virtual DbSet<PlaceUser> PlaceUsers { get; set; }
     public virtual DbSet<Role> Roles { get; set; }
+    public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     public virtual DbSet<Track> Tracks { get; set; }
+    public virtual DbSet<TrackLocalization> TrackLocalizations { get; set; }
     public virtual DbSet<TrackUser> TrackUsers { get; set; }
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<UserLocation> UserLocations { get; set; }
     public virtual DbSet<UserLogin> UserLogins { get; set; }
     public virtual DbSet<UserRole> UserRoles { get; set; }
-    public virtual DbSet<TrackLocalization> TrackLocalizations { get; set; }
-    public virtual DbSet<GetAllRoughUserLocation> GetAllRoughUserLocations { get; set; }
     public virtual DbSet<Version> Versions { get; set; }
+    public virtual DbSet<GetAllRoughUserLocation> GetAllRoughUserLocations { get; set; }
 
     [DbFunction("SeeYourTravelEntities", "GetAllTracks")]
     public virtual IQueryable<GetAllTracks_Result> GetAllTracks()

@@ -137,6 +137,15 @@ public partial class Role
     public virtual ICollection<UserRole> UserRoles { get; set; }
 }
 
+public partial class sysdiagram
+{
+    public string name { get; set; }
+    public int principal_id { get; set; }
+    public int diagram_id { get; set; }
+    public Nullable<int> version { get; set; }
+    public byte[] definition { get; set; }
+}
+
 public partial class Track
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -153,6 +162,7 @@ public partial class Track
     public string ImageUrl { get; set; }
     public System.DateTime Created { get; set; }
     public string CreatedBy { get; set; }
+    public string Location { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<TrackUser> TrackUsers { get; set; }
@@ -257,6 +267,10 @@ public partial class GetAllTracks_Result
     public bool IsPublic { get; set; }
     public string Description { get; set; }
     public string Category { get; set; }
+    public string ImageUrl { get; set; }
+    public System.DateTime Created { get; set; }
+    public string CreatedBy { get; set; }
+    public string Location { get; set; }
 }
 
 public partial class GetFriendsLocations_Result
@@ -275,6 +289,10 @@ public partial class GetTrackForUserByIdOrName_Result
     public bool IsPublic { get; set; }
     public string Description { get; set; }
     public string Category { get; set; }
+    public string ImageUrl { get; set; }
+    public System.DateTime Created { get; set; }
+    public string CreatedBy { get; set; }
+    public string Location { get; set; }
 }
 
 public partial class GetUserAndPublicImagesByLocation_Result
@@ -308,6 +326,7 @@ public partial class GetUserandPublicTracks_Result
     public string Description { get; set; }
     public string FileName { get; set; }
     public string ImageUrl { get; set; }
+    public string Location { get; set; }
 }
 
 public partial class GetUserImages_Result
@@ -329,6 +348,7 @@ public partial class GetUserTracks_Result
     public string Description { get; set; }
     public string Category { get; set; }
     public Nullable<System.Guid> UserID { get; set; }
+    public string Location { get; set; }
 }
 
 public partial class IsAdmin_Result

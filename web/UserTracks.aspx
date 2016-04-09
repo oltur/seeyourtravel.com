@@ -28,7 +28,7 @@
     <!-- #Include virtual="include/settingsPanel.inc" -->
 
 
-    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 900px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 900px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0 solid #000;">
         <table border="0">
             <tr>
                 <td>

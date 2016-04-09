@@ -40,8 +40,32 @@
         <br />
         <br />
         <span class="i" data-i18n="MyPlaces">My Places</span>
-        <br /> 
         <br />
+        <select style="vertical-align: central; width: 330px;" id="placesList" class="i" size="20" multiple="multiple"></select>
+        <br />
+        <br />
+        <button type="button" id="buttonDelete" class="i" data-i18n="[title]DeleteSelected ;DeleteSelected">Delete Selected</button>
+        <br />
+        <br />
+        <span class="i" data-i18n="Placedescription">Place description</span><br /><input type="text" id="placeDescription" value="" style="width: 330px" />
+        <br />
+        <br />
+        <span class="i" data-i18n="Placelink">Place Link</span><br /><input type="text" id="placeLink" value="" style="width: 240px" />&nbsp;<button type="button" id="buttonCheckLink" class="i" data-i18n="[title]Checklink;Checklink">Check link</button>
+        <br />
+        <br />
+        <span class="i" data-i18n="Placecoordinates">Place coordinates</span><br /><input type="text" id="imageLatLng" value="" style="width: 330px" />
+        <br />
+        <br />
+        <span class="i" data-i18n="UploadPhoto">Upload photo:</span>
+        <br />
+        <input name="file" type="file" id="files" />
+        <br />
+        <br />
+            <input id="isPublic" name="isPublic" type="checkbox" value="isPublic" checked="checked" />
+            <label for="isPublic" class="i" data-i18n="Makepublic">Make public</label>
+        <br />
+        <br />
+        <input type="submit" id="buttonUpload" class="i" data-i18n="[title]Save;[value]Save" value="Save"/>
                 </td>
             </tr>
         </table>

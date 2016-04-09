@@ -81,8 +81,23 @@
   "America": "America",
   "Other": "Other",
   "UploadPhotos": "Завантажити фото",
-  "Upload": "Завантажити"
-    ,"Photocoordinates": "Координати фото"
-
+  "Upload": "Завантажити",
+  "Photocoordinates": "Координати фото",
+  "MyPlaces": "Мої місця",
+  "Placedescription": "Опис місця",
+  "Placelink": "Посилання",
+  "Placecoordinates": "Координати місця",
+  "UploadPhoto": "Завантажити фото",
+  "Makepublic": "Зробити загальнодоступним",
+  "Save": "Зберегти",
+  "Checklink": "Перевірити",
+  "Audiofile": "Аудіо файл",
+  "Travelwith": "Транспорт",
+  "TrackName": "Назва маршруту",
+  "Trackimage": "Малюнок",
+  "TextDescriptionFile": "Файл з описом",
+  "Basic": "Головне",
+  "Advanced": "Додаткове"
+  ,"MyProfile": "Мій профіль"
 
 }

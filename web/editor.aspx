@@ -29,7 +29,7 @@
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="overflow: auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 720px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="overflow: auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 720px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0 solid #000;">
 
         <input type="hidden" id="trackId" name="trackId" value="<%=this.TrackId%>" />
         <input type="hidden" id="trackFileName" name="trackFileName" value="<%=this.TrackFileName%>" />
@@ -41,8 +41,8 @@
         </script>
         <div id="tabs">
             <ul>
-                <li><a href="#basic">Basic</a></li>
-                <li><a href="#advanced">Advanced</a></li>
+                <li><a class="big i" data-i18n="Basic" href="#basic">Basic</a></li>
+                <li><a class="big i" data-i18n="Advanced" href="#advanced">Advanced</a></li>
             </ul>
             <div id="basic">
                 <table border="0">
@@ -94,6 +94,8 @@
                         <td>
                             <input type="text" id="audioSrc" name="audioSrc" style="width: 180px;"/>
                             <input type="file" accept=".mp3" id="fileAudio" name="fileAudio" style="width: 180px;"/>
+        
+                            <input id="defaultScale" name="defaultScale" type="hidden" max="20" min="1" step="1" value="8" style="width: 180px;" />
                         </td>
                     </tr>
                     <%--            <tr>
@@ -101,7 +103,6 @@
                     1(largest).20(smallest)</td>
                 <td></td>
             </tr>--%>
-                    <input id="defaultScale" name="defaultScale" type="hidden" max="20" min="1" step="1" value="8" style="width: 180px;" />
                 </table>
                 <p class="big">
                     <input name="trackData" id="trackData" type="hidden" />
@@ -193,7 +194,7 @@
                             <label for="usePanoramioImages" class="i" data-i18n="UsePanoramioImages">Use Panoramio images</label>
                         </td>
                         <td>
-                            <input id="usePanoramioImages" name="usePanoramioImages" type="checkbox" title="Use Panoramio images" onchange="SaveSettings();" />
+                            <input id="usePanoramioImages" name="usePanoramioImages" type="checkbox" checked="checked" title="Use Panoramio images" onchange="SaveSettings();" />
                         </td>
                     </tr>
                     <tr>
@@ -201,7 +202,7 @@
                             <label for="useSYTImagesTrack" class="i" data-i18n="UseCYTImages">Use SeeYourTravel images</label>
                         </td>
                         <td>
-                            <input id="useSYTImagesTrack" name="useSYTImagesTrack" type="checkbox" title="Use SeeYourTravel images" onchange="SaveSettings();" />
+                            <input id="useSYTImagesTrack" name="useSYTImagesTrack" type="checkbox" checked="checked" title="Use SeeYourTravel images" onchange="SaveSettings();" />
                         </td>
                     </tr>
                     <tr>
@@ -209,7 +210,7 @@
                             <label for="useGooglePlaces" class="i" data-i18n="UseGooglePlaces">Use Google Places</label>
                         </td>
                         <td>
-                            <input id="useGooglePlaces" name="useGooglePlaces" type="checkbox" title="Use Google Places" onchange="SaveSettings();" />
+                            <input id="useGooglePlaces" name="useGooglePlaces" type="checkbox" checked="checked" title="Use Google Places" onchange="SaveSettings();" />
                         </td>
                     </tr>
                     <tr>
@@ -217,7 +218,7 @@
                             <label for="useSYTPlaces" class="i" data-i18n="UseCYTPlaces">Use SeeYourTravel places</label>
                         </td>
                         <td>
-                            <input id="useSYTPlaces" name="useSYTPlaces" type="checkbox" title="Use SeeYourTravel places" onchange="SaveSettings();" />
+                            <input id="useSYTPlaces" name="useSYTPlaces" type="checkbox" checked="checked" title="Use SeeYourTravel places" onchange="SaveSettings();" />
                         </td>
                     </tr>
                 </table>
@@ -532,6 +533,7 @@
         var tileLayer;
         var markers;
         var markersFriends;
+        var markersTracks;
         var line;
         var icon;
         var markerStart;

@@ -80,6 +80,23 @@
   "America": "America",
   "Other": "Other",
   "UploadPhotos": "Upload photos",
-  "Upload": "Upload"
-    ,"Photocoordinates": "Photo coordinates"
+  "Upload": "Upload",
+  "Photocoordinates": "Photo coordinates",
+    
+  "MyPlaces": "My Places",
+  "Placedescription": "Place description",
+  "Placelink": "Place link",
+  "Placecoordinates": "Place coordinates",
+  "UploadPhoto": "Upload Photo",
+  "Makepublic": "Make public",
+  "Save": "Save",
+  "Checklink": "Check link",
+   "Audiofile": "Audio file",
+  "Travelwith": "Travel with",
+  "TrackName": "Track name",
+  "Trackimage": "Track image",
+  "TextDescriptionFile": "Text description file",
+  "Basic": "Basic",
+  "Advanced": "Advanced"
+  ,"MyProfile": "Mein Profil"
 }

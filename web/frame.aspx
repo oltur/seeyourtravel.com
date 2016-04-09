@@ -47,7 +47,7 @@
         <script>
             $("#alogo").attr("href", "javascript:window.open('" + window.location.toString().replace("frame.aspx", "index.aspx") + "','_blank')");
         </script>
-        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 60px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 60px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0 solid #000;">
             <input id="scriptTextCheckBox" type="checkbox" title="Description" onchange="$('#textToReadArea0').toggle('fold', 1000);" />
             <label for="scriptTextCheckBox" class="i" data-i18n="Description">Description</label>
             <br />
@@ -112,7 +112,7 @@
             Your browser does not support the audio element.
         </audio>
 
-        <div id="textToReadArea0" class="ui-widget-content" style="z-index: 100; background: rgba(100,100,100,0.2); border-width: 0px; width: 25%; height: 25%; position: absolute; left: 2%; top: 35%">
+        <div id="textToReadArea0" class="ui-widget-content" style="z-index: 100; background: rgba(100,100,100,0.2); border-width: 0; width: 25%; height: 25%; position: absolute; left: 2%; top: 35%">
             <br />
             <textarea id="textToReadArea" disabled="disabled" style="top: 25%; width: 99%; height: 88%; resize: none;"></textarea>
         </div>
@@ -180,6 +180,7 @@
         var tileLayer;
         var markers;
         var markersFriends;
+        var markersTracks;
         var line;
         var markerStart;
         var markerFinish;

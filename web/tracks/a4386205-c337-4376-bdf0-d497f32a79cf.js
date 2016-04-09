@@ -8,6 +8,10 @@
 ,"numOfPhotos":10
 ,"velocityMetersPerSec":100
 ,"icon":"aman.gif"
+,"usePanoramioImages":"Yes"
+,"useSYTImagesTrack":"Yes"
+,"useGooglePlaces":"Yes"
+,"useSYTPlaces":"Yes"
 ,"trackImage":""
 ,"audioSrc":"k.mp3"
 ,"textToRead":"k.txt"

@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Linq;
@@ -31,6 +33,8 @@ public partial class SaveTrack : System.Web.UI.Page
             string category = "Other";
             if (!string.IsNullOrEmpty(Request.Form["category"]))
                 category = Request.Form["category"];
+
+            string trackData = Request.Form["trackData"];
 
             using (System.IO.StreamWriter writer = new System.IO.StreamWriter(path, false))
             {
@@ -118,7 +122,7 @@ public partial class SaveTrack : System.Web.UI.Page
                 else
                 {
                     writer.Write(",");
-                    writer.WriteLine("\"trackData\":" + Request.Form["trackData"]);
+                    writer.WriteLine("\"trackData\":" + trackData);
                 }
                 writer.Write(",");
                 writer.WriteLine("\"category\":\"" + category + "\"");
@@ -142,6 +146,16 @@ public partial class SaveTrack : System.Web.UI.Page
             track.IsPublic = (Request.Form["isPublic"] == "isPublic");
             track.Category = category;
             track.ImageUrl = string.IsNullOrWhiteSpace(Request.Form["trackImage"]) ? "" : Request.Form["trackImage"];
+
+            if(!string.IsNullOrWhiteSpace(trackData) && trackData.Length > 5)
+            {
+                dynamic d = JArray.Parse(trackData);
+                track.Location = d[0].ToString();
+            }
+            else
+            {
+                track.Location = "";
+            }
 
             db.SaveChanges();
 
