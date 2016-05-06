@@ -556,7 +556,7 @@
                 var point = JSON.stringify([e.latlng.lat, e.latlng.lng, $("#pointDescr").val()]);
                 var selectedItem = $("#points option:selected").first();
                 if (selectedItem.index() >= 0) {
-                    $("#points option").eq(selectedItem.index()).before($("<option></option>")
+                    $("#points option").eq(selectedItem.index()).after($("<option></option>")
                      .attr("value", point)
                      .text(point));
                 }

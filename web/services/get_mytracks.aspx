@@ -25,7 +25,7 @@
     {
         if (sb.Length != 0)
             sb.Append("\n");
-        sb.Append(track.FileName + ";" + track.Description + ";" + (track.IsPublic?1:0) + ";" + track.Location);
+        sb.Append(track.FileName + ";" + track.Description + ";" + (track.IsPublic?1:0) + ";" + track.Location.Replace("\n","").Replace("\r",""));
     }
     Response.Write(sb);
 %>    

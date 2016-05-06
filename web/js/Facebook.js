@@ -15,18 +15,30 @@
 }(document, 'script', 'facebook-jssdk'));
 
 function fblogout() {
+//    debugger;
     if (typeof FB === "undefined") {
         setTimeout(function () { fblogout(); }, 300); // Retry after timeout
         return false;
     } else {
-        FB.getLoginStatus(function (response) {
-            try {
-                FB.logout(function (response) {
+        try {
+            FB.getLoginStatus(function (response) {
+                if (response.status != "unknown") {
+                    try {
+                        FB.logout(function (response) {
+                            window.location = "login.aspx";
+                        });
+                    }
+                    catch (err) {
+                        window.location = "login.aspx";
+                    }
+                }
+                else {
                     window.location = "login.aspx";
-                });
-            }
-            catch (err) { }
+                }
+            });
+        }
+        catch (err) {
             window.location = "login.aspx";
-        });
+        }
     }
 }
