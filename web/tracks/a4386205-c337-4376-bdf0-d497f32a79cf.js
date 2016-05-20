@@ -6,9 +6,9 @@
 ,"defaultScale":17
 ,"photoLocationTolerancy":20
 ,"numOfPhotos":10
-,"velocityMetersPerSec":100
+,"velocityMetersPerSec":200
 ,"icon":"aman.gif"
-,"usePanoramioImages":"Yes"
+,"usePanoramioImages":"No"
 ,"useSYTImagesTrack":"Yes"
 ,"useGooglePlaces":"Yes"
 ,"useSYTPlaces":"Yes"

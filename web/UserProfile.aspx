@@ -33,7 +33,7 @@
                 <td>
         <div><%=Tools.GetUserName(this)%>: <span class="i" data-i18n="[title]MyProfile;MyProfile">My Profile</span></div>
         <br />
-        <aa href="UserProfile.aspx" class="i" data-i18n="[title]MyProfile;MyProfile">My Profile</aa>
+        <b href="UserProfile.aspx" class="i" data-i18n="[title]MyProfile;MyProfile">My Profile</b>
         <a href="UserTracks.aspx" class="i" data-i18n="[title]MyTracks;MyTracks">My Tracks</a>
         <a href="UserPhotos.aspx" class="i" data-i18n="[title]MyPhotos;MyPhotos">My photos</a>
         <a href="UserPlaces.aspx" class="i" data-i18n="[title]MyPlaces;MyPlaces">My Places</a>

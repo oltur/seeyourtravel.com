@@ -33,7 +33,6 @@ public partial class SeeYourTravelEntities : DbContext
     public virtual DbSet<PlaceTypePlace> PlaceTypePlaces { get; set; }
     public virtual DbSet<PlaceUser> PlaceUsers { get; set; }
     public virtual DbSet<Role> Roles { get; set; }
-    public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     public virtual DbSet<Track> Tracks { get; set; }
     public virtual DbSet<TrackLocalization> TrackLocalizations { get; set; }
     public virtual DbSet<TrackUser> TrackUsers { get; set; }
@@ -122,13 +121,13 @@ public partial class SeeYourTravelEntities : DbContext
     }
 
     [DbFunction("SeeYourTravelEntities", "GetUserImages")]
-    public virtual IQueryable<GetUserImages_Result> GetUserImages(Nullable<System.Guid> userID)
+    public virtual IQueryable<Image> GetUserImages(Nullable<System.Guid> userID)
     {
         var userIDParameter = userID.HasValue ?
             new ObjectParameter("UserID", userID) :
             new ObjectParameter("UserID", typeof(System.Guid));
 
-        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetUserImages_Result>("[SeeYourTravelEntities].[GetUserImages](@UserID)", userIDParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Image>("[SeeYourTravelEntities].[GetUserImages](@UserID)", userIDParameter);
     }
 
     [DbFunction("SeeYourTravelEntities", "GetUserAndPublicImagesByLocation")]

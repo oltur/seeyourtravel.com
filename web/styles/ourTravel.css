@@ -48,8 +48,8 @@ input, select, #map, .headerButton, html, body, form {
 
 #wrapper #lblCoord {
 position:relative;
-top:0px;
-left:0px;
+top:0;
+left:0;
 visibility:hidden;
 }
 
@@ -78,7 +78,7 @@ visibility:visible;
 }
 
 p.big {
-    line-height: 150%; padding:0px; margin:0px;
+    line-height: 150%; padding:0; margin:0;
 }
 
 button.headerButton:disabled
@@ -141,8 +141,5 @@ input.glow.focus
     }
     .photo {
             /*height: 100%;*/
-            margin-top: 0px;
-            margin-bottom: 0px;
-            margin-right: 0px;
-            margin-left: 0px;
+            margin: 0 0 0 0
         }

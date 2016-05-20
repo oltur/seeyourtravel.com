@@ -50,7 +50,7 @@
   "MapStyle": "Map style",
   "Volume": "Volume",
   "Corporate_GETINTOUCH": "GET IN TOUCH",
-  "Demo": "Try it now!!",
+  "Demo": "Try it now",
   "MyTracks": "My tracks",
   "DeleteSelected": "Delete Selected",
   "MyPhotos": "My photos",
@@ -83,7 +83,7 @@
   "Upload": "Upload",
   "Photocoordinates": "Photo coordinates",
     
-  "MyPlaces": "My Places",
+  "MyPlaces": "My places",
   "Placedescription": "Place description",
   "Placelink": "Place link",
   "Placecoordinates": "Place coordinates",
@@ -98,5 +98,5 @@
   "TextDescriptionFile": "Text description file",
   "Basic": "Basic",
   "Advanced": "Advanced"
-  ,"MyProfile": "Mein Profil"
+  ,"MyProfile": "My Profile"
 }

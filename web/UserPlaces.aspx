@@ -36,12 +36,12 @@
         <a href="UserProfile.aspx" class="i" data-i18n="[title]MyProfile;MyProfile">My Profile</a>
         <a href="UserTracks.aspx" class="i" data-i18n="[title]MyTracks;MyTracks">My Tracks</a>
         <a href="UserPhotos.aspx" class="i" data-i18n="[title]MyPhotos;MyPhotos">My photos</a>
-        <aa href="UserPlaces.aspx" class="i" data-i18n="[title]MyPlaces;MyPlaces">My Places</aa>
+        <b href="UserPlaces.aspx" class="i" data-i18n="[title]MyPlaces;MyPlaces">My Places</b>
         <br />
         <br />
         <span class="i" data-i18n="MyPlaces">My Places</span>
         <br />
-        <select style="vertical-align: central; width: 330px;" id="placesList" class="i" size="20" multiple="multiple"></select>
+        <select style="vertical-align: central; width: 330px;" id="placesList" class="i" size="20" ></select>
         <br />
         <br />
         <button type="button" id="buttonDelete" class="i" data-i18n="[title]DeleteSelected ;DeleteSelected">Delete Selected</button>

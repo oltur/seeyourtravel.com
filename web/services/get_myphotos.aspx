@@ -18,7 +18,7 @@
     Guid userId = Tools.GetUserId(this);
 
     var db = new SeeYourTravelEntities();
-    var Images = (from t in db.GetUserImages(userId) orderby t.Description select t).ToList();
+    var Images = (from t in db.GetUserImages(userId) orderby t.Created select t).ToList();
     StringBuilder sb = new StringBuilder();
 
     foreach (var Image in Images)

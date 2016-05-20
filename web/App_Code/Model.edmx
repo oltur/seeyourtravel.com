@@ -15,6 +15,7 @@
           <Property Name="Lat" Type="float" />
           <Property Name="Lng" Type="float" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ImageUser">
           <Key>
@@ -73,16 +74,6 @@
           </Key>
           <Property Name="RoleID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="100" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Track">
           <Key>
@@ -485,6 +476,7 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
                 <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
                 <Property Name="Lat" Type="float" />
                 <Property Name="Lng" Type="float" />
+                <Property Name="Created" Type="datetime" Nullable="false" />
                 <Property Name="UserID" Type="uniqueidentifier" />
               </RowType>
             </CollectionType>
@@ -535,7 +527,6 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
           <EntitySet Name="PlaceTypePlace" EntityType="Self.PlaceTypePlace" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlaceUser" EntityType="Self.PlaceUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Track" EntityType="Self.Track" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TrackLocalization" EntityType="Self.TrackLocalization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TrackUser" EntityType="Self.TrackUser" Schema="dbo" store:Type="Tables" />
@@ -689,7 +680,7 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
           <FunctionImport Name="GetFriendsLocations" ReturnType="Collection(SeeYourTravelModel.GetFriendsLocations_Result)">
           <Parameter Name="UserID" Mode="In" Type="Guid" />
           </FunctionImport>
-          <FunctionImport Name="GetUserImages" IsComposable="true" ReturnType="Collection(SeeYourTravelModel.GetUserImages_Result)">
+          <FunctionImport Name="GetUserImages" IsComposable="true" EntitySet="Images" ReturnType="Collection(SeeYourTravelModel.Image)">
           <Parameter Name="UserID" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="GetUserAndPublicImagesByLocation" IsComposable="true" ReturnType="Collection(SeeYourTravelModel.GetUserAndPublicImagesByLocation_Result)">
@@ -719,7 +710,6 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
           <EntitySet Name="PlaceTypePlaces" EntityType="SeeYourTravelModel.PlaceTypePlace" />
           <EntitySet Name="PlaceUsers" EntityType="SeeYourTravelModel.PlaceUser" />
           <EntitySet Name="Roles" EntityType="SeeYourTravelModel.Role" />
-          <EntitySet Name="sysdiagrams" EntityType="SeeYourTravelModel.sysdiagram" />
           <EntitySet Name="Tracks" EntityType="SeeYourTravelModel.Track" />
           <EntitySet Name="TrackLocalizations" EntityType="SeeYourTravelModel.TrackLocalization" />
           <EntitySet Name="TrackUsers" EntityType="SeeYourTravelModel.TrackUser" />
@@ -833,6 +823,7 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ImageUsers" Relationship="SeeYourTravelModel.FK_ImageUser_Image" FromRole="Image" ToRole="ImageUser" />
           <NavigationProperty Name="PlaceImages" Relationship="SeeYourTravelModel.FK_PlaceImage_Image" FromRole="Image" ToRole="PlaceImage" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="ImageUser">
           <Key>
@@ -904,16 +895,6 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
           <Property Name="RoleID" Type="Guid" Nullable="false" />
           <Property Name="RoleName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserRoles" Relationship="SeeYourTravelModel.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Track">
           <Key>
@@ -1298,17 +1279,6 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetUserImages" FunctionName="SeeYourTravelModel.Store.GetUserImages">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SeeYourTravelModel.GetUserImages_Result">
-                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Lat" ColumnName="Lat" />
-                <ScalarProperty Name="Lng" ColumnName="Lng" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetUserAndPublicImagesByLocation" FunctionName="SeeYourTravelModel.Store.GetUserAndPublicImagesByLocation">
             <ResultMapping>
@@ -1340,6 +1310,7 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
           <EntitySetMapping Name="Images">
             <EntityTypeMapping TypeName="SeeYourTravelModel.Image">
               <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Lng" ColumnName="Lng" />
                 <ScalarProperty Name="Lat" ColumnName="Lat" />
@@ -1411,17 +1382,6 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
               <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="SeeYourTravelModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

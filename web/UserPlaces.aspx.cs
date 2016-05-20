@@ -12,7 +12,6 @@ using System.Linq;
 
 public partial class UserPlaces : System.Web.UI.Page
 {
-    SeeYourTravelEntities db;
     protected void Page_Load(object sender, EventArgs e)
     {
         Guid userId = Tools.GetUserId(this);

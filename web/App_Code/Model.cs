@@ -34,6 +34,7 @@ public partial class Image
     public Nullable<double> Lat { get; set; }
     public Nullable<double> Lng { get; set; }
     public string Description { get; set; }
+    public System.DateTime Created { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<ImageUser> ImageUsers { get; set; }
@@ -135,15 +136,6 @@ public partial class Role
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<UserRole> UserRoles { get; set; }
-}
-
-public partial class sysdiagram
-{
-    public string name { get; set; }
-    public int principal_id { get; set; }
-    public int diagram_id { get; set; }
-    public Nullable<int> version { get; set; }
-    public byte[] definition { get; set; }
 }
 
 public partial class Track

@@ -10,7 +10,6 @@ public partial class SaveTrack : System.Web.UI.Page
 {
     protected Guid TrackId = Guid.Empty;
     protected string TrackFileName = "";
-    SeeYourTravelEntities db;
 
     HttpFileCollection files;
     Guid trackId;
