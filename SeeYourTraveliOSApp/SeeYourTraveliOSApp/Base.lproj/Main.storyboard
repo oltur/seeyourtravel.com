@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--Map view-->
@@ -17,17 +17,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleAspectFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Jz-Za-ElJ">
-                                <rect key="frame" x="31" y="128" width="451" height="327"/>
+                            <webView contentMode="scaleAspectFill" mediaPlaybackRequiresUserAction="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Jz-Za-ElJ">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="1Jz-Za-ElJ" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" id="8h1-wp-krP"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="1Jz-Za-ElJ" secondAttribute="trailing" id="A9A-14-j5P"/>
-                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="1Jz-Za-ElJ" secondAttribute="bottom" id="hxG-YL-Rtt"/>
-                            <constraint firstItem="1Jz-Za-ElJ" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="vro-j8-LkG"/>
+                            <constraint firstAttribute="trailing" secondItem="1Jz-Za-ElJ" secondAttribute="trailing" id="CHc-gb-bac"/>
+                            <constraint firstItem="1Jz-Za-ElJ" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="Cgy-Hg-E3O"/>
+                            <constraint firstItem="1Jz-Za-ElJ" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="top" id="gXi-ZY-pZb"/>
+                            <constraint firstItem="1Jz-Za-ElJ" firstAttribute="bottom" secondItem="4ug-Mw-9AY" secondAttribute="top" id="yK7-WX-85c"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map view" image="first" id="acW-dT-cKf"/>
@@ -58,7 +59,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loaded by SecondViewController" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDk-cv-Gan">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Loaded by SecondViewController" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDk-cv-Gan">
                                 <rect key="frame" x="192" y="329" width="216" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
