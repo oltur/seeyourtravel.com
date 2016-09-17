@@ -111,7 +111,7 @@ function showLocation() {
     }
 }
 function errorPosition(err) {
-    console.warn('ERROR(' + err.code + '): ' + err.message);
+    console.warn('Cannot get position(' + err.code + '): ' + err.message);
 };
 function showPosition(position) {
     if ($("#map").length) {
@@ -273,10 +273,11 @@ function showPhotos(track, p, tolerancy) {
             dataType: "jsonp",
             url: urlp,
             success: function (data) {
-                get_panoramas_panoramio_success(data, p, tolerancy);
+                console.log("Panoramio success");
+				get_panoramas_panoramio_success(data, p, tolerancy);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Status: " + textStatus); console.log("Error: " + errorThrown);
+                console.log("Panoramio status: " + textStatus); console.log("Error: " + errorThrown);
 
                 var data = { photos: [] };
                 get_panoramas_panoramio_success(data, p, tolerancy);
@@ -816,12 +817,17 @@ function get_places_googlehere_success(data) {
             dataType: "jsonp",
             url: urlp,
             success: function (data2) {
+				console.log("get_places success");
                 get_SYT_getplaces_success(data, data2.results);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Status: " + textStatus); console.log("Error: " + errorThrown);
-
-                get_SYT_getplaces_success(data, []);
+				if(errorThrown.toString().indexOf("not called") == -1) {
+					console.log("get_places error status: " + textStatus + ", error: " + errorThrown);
+				}
+				else {
+					console.log("get_places success");
+					get_SYT_getplaces_success(data, []);
+				}
             }
         });
     }
