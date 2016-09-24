@@ -11,7 +11,7 @@
 ,"usePanoramioImages":"Yes"
 ,"useSYTImagesTrack":"No"
 ,"useGooglePlaces":"Yes"
-,"useSYTPlaces":"No"
+,"useSYTPlaces":"Yes"
 ,"trackImage":""
 ,"audioSrc":""
 ,"textToRead":""

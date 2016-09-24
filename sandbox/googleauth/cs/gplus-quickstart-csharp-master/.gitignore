@@ -1,4 +1,0 @@
-*.local
-*.suo
-*.nuget
-packages/*

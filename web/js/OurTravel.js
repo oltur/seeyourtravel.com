@@ -790,7 +790,7 @@ function addMarkersNear(nearLat, nearLng, types, odd) {
 }
 
 function callbackGoodlePlacesSearch(results, status) {
-    console.log(status);
+    console.log("GoodlePlaces result: " + status);
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         if (results.length > MAX_GOOGLE_PLACES)
             results = results.slice(0, MAX_GOOGLE_PLACES);

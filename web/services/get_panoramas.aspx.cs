@@ -5,9 +5,25 @@ using System.Web;
 using System.Xml;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 
 public partial class services_get_panoramas : System.Web.UI.Page
 {
+    private static Random rng = new Random();
+
+    public void Shuffle<T>(IList<T> list)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         string callback = Request.QueryString["callback"];
@@ -17,10 +33,10 @@ public partial class services_get_panoramas : System.Web.UI.Page
             size = "medium";
         int from = int.Parse(Request.QueryString["from"]);
         int to = int.Parse(Request.QueryString["to"]);
-        double minx = double.Parse(Request.QueryString["minx"]);
-        double miny = double.Parse(Request.QueryString["miny"]);
-        double maxx = double.Parse(Request.QueryString["maxx"]);
-        double maxy = double.Parse(Request.QueryString["maxy"]);
+        double minx = -90;// double.Parse(Request.QueryString["minx"]);
+        double miny = -90;//double.Parse(Request.QueryString["miny"]);
+        double maxx = 90;//double.Parse(Request.QueryString["maxx"]);
+        double maxy = 90;//double.Parse(Request.QueryString["maxy"]);
         double x = (minx+maxx)/2;
         double y = (miny+maxy)/2;
         StringBuilder items = new StringBuilder();
@@ -30,7 +46,9 @@ public partial class services_get_panoramas : System.Web.UI.Page
         Guid userId = Tools.GetUserId(this);
 
         var db = new SeeYourTravelEntities();
-        var Images = (from t in db.GetUserAndPublicImagesByLocation(userId,miny,minx,maxy,maxx,0,1000) select t).ToList();
+        var Images = (from t in db.GetUserAndPublicImagesByLocation(userId,miny,minx,maxy,maxx,0,10000) select t).ToList();
+
+        Shuffle(Images);
 
         //XmlDocument doc = new XmlDocument();
         //    doc.Load(Server.MapPath(@"..\data\photos.xml"));
@@ -38,8 +56,9 @@ public partial class services_get_panoramas : System.Web.UI.Page
         //    XmlNodeList list = doc.SelectNodes(query);
 
         //    foreach (XmlElement elem in list)
-        foreach (var Image in Images)
+        for (int i = from; i <= Math.Min(to,Images.Count-1);i++)
         {
+            var Image = Images[i];
             string url = "./data/images/" + Path.GetFileName(Image.FileName);
             string urlThumbnail = "services/get_thumbnail.aspx?size=" + size + "&p=" + Path.GetFileNameWithoutExtension(Image.FileName);
 
