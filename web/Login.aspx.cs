@@ -225,7 +225,7 @@ public partial class Login : System.Web.UI.Page
         //EventLog.WriteEntry(sSource, sEvent, level, 2);
     }
 
-    private void DoRedirect(object id, string name)
+    private void DoRedirect(Guid id, string name)
     {
         Session["UserId"] = id;
         Session["UserName"] = name;

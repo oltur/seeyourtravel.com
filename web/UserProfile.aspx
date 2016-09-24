@@ -27,18 +27,19 @@
     <!-- #Include virtual="include/profileHelpPanel.inc" -->
     <!-- #Include virtual="include/settingsPanel.inc" -->
 
-    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 900px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 800px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0px solid #000;">
         <table border="0">
             <tr>
                 <td>
-        <div><%=Tools.GetUserName(this)%>: <span class="i" data-i18n="[title]MyProfile;MyProfile">My Profile</span></div>
-        <br />
-        <b href="UserProfile.aspx" class="i" data-i18n="[title]MyProfile;MyProfile">My Profile</b>
-        <a href="UserTracks.aspx" class="i" data-i18n="[title]MyTracks;MyTracks">My Tracks</a>
-        <a href="UserPhotos.aspx" class="i" data-i18n="[title]MyPhotos;MyPhotos">My photos</a>
-        <a href="UserPlaces.aspx" class="i" data-i18n="[title]MyPlaces;MyPlaces">My Places</a>
-        <br />
-        <br />
+                    <div><%=Tools.GetUserName(this)%>: <span class="i" data-i18n="[title]MyProfile;MyProfile">My Profile</span></div>
+                    <br />
+                    <b href="UserProfile.aspx" class="i" data-i18n="[title]MyProfile;MyProfile">My Profile</b>
+                    <a href="UserTracks.aspx" class="i" data-i18n="[title]MyTracks;MyTracks">My Tracks</a>
+                    <a href="UserPhotos.aspx" class="i" data-i18n="[title]MyPhotos;MyPhotos">My photos</a>
+                    <a href="UserPlaces.aspx" class="i" data-i18n="[title]MyPlaces;MyPlaces">My Places</a>
+                    <br />
+                    <br />
+                    <span class="i" data-i18n="MyInformation">My information:</span> <%=Tools.GetUserInformation(this)%>
                 </td>
             </tr>
         </table>
@@ -90,104 +91,104 @@
 
             map.on('click', onMapClick);
 
-            $("#imageDiv0").draggable().resizable({ minHeight: 50, minWidth: 50 });
-            $("#textToReadArea0").draggable();
-            $("#slider").slider({
-                value: 0.8,
-                min: 0,
-                max: 1,
-                step: 0.1,
-                slide: function (event, ui) {
-                    audio.volume = ui.value;
-                }
-            });
+            //    $("#imageDiv0").draggable().resizable({ minHeight: 50, minWidth: 50 });
+            //    $("#textToReadArea0").draggable();
+            //    $("#slider").slider({
+            //        value: 0.8,
+            //        min: 0,
+            //        max: 1,
+            //        step: 0.1,
+            //        slide: function (event, ui) {
+            //            audio.volume = ui.value;
+            //        }
+            //    });
 
-            photosList = $("#photosList");
+            //    photosList = $("#photosList");
 
-            fillPhotos();
+            //    fillPhotos();
 
-            photosList.change(function () {
-                var options = photosList.val();
-                markers.clearLayers();
-                var isMultiple = options.length > 1;
-                $("#imageLatLng").val('');
-                for (var i in options) {
-                    var parts = options[i].toString().split(';');
-                    var imgPath = "services/get_thumbnail.aspx?size=small&p=" + parts[0];
-                    $("#imageLatLng").val("".concat($("#imageLatLng").val(), parts[3], ",", parts[4], "; "));
-                    var ll = new L.LatLng(parseFloat(parts[3]), parseFloat(parts[4]))
-                    map.panTo(ll);
+            //    photosList.change(function () {
+            //        var options = photosList.val();
+            //        markers.clearLayers();
+            //        var isMultiple = options.length > 1;
+            //        $("#imageLatLng").val('');
+            //        for (var i in options) {
+            //            var parts = options[i].toString().split(';');
+            //            var imgPath = "services/get_thumbnail.aspx?size=small&p=" + parts[0];
+            //            $("#imageLatLng").val("".concat($("#imageLatLng").val(), parts[3], ",", parts[4], "; "));
+            //            var ll = new L.LatLng(parseFloat(parts[3]), parseFloat(parts[4]))
+            //            map.panTo(ll);
 
 
-                    var icon = L.icon({
-                        iconUrl: imgPath,
-                        //    shadowUrl: 'leaf-shadow.png',
+            //            var icon = L.icon({
+            //                iconUrl: imgPath,
+            //                //    shadowUrl: 'leaf-shadow.png',
 
-                        iconSize: [100, 100] // size of the icon
-                        //    shadowSize:   [50, 64], // size of the shadow
-                            , iconAnchor: [50, 100] // point of the icon which will correspond to marker's location
-                        //    shadowAnchor: [4, 62],  // the same for the shadow
-                        //    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
-                    });
+            //                iconSize: [100, 100] // size of the icon
+            //                //    shadowSize:   [50, 64], // size of the shadow
+            //                    , iconAnchor: [50, 100] // point of the icon which will correspond to marker's location
+            //                //    shadowAnchor: [4, 62],  // the same for the shadow
+            //                //    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+            //            });
 
-                    //var text = '<img src>';
-                    //var domelem = document.createElement('div');
-                    //domelem.innerHTML = text;
+            //            //var text = '<img src>';
+            //            //var domelem = document.createElement('div');
+            //            //domelem.innerHTML = text;
 
-                    var marker = L.marker(ll,
-                        { icon: icon })
-                    //.bindPopup(domelem);
-                    markers.addLayer(marker);
-                }
-            });
+            //            var marker = L.marker(ll,
+            //                { icon: icon })
+            //            //.bindPopup(domelem);
+            //            markers.addLayer(marker);
+            //        }
+            //    });
 
-            $("#buttonDelete").click(function () {
-                if (photosList.val() != null) {
-                    var options = photosList.val();
-                    markers.clearLayers();
-                    var isMultiple = options.length > 1;
-                    $("#imageLatLng").val('');
-                    for (var i in options) {
-                        var parts = options[i].toString().split(';');
-                        var url = "services/delete_photobyfilename.aspx?fileName=" + parts[0];
-                        $.ajax({
-                            //                    dataType: "jsonp",
-                            url: url,
-                            success: function (data) {
-                                toastr.info("Photo is deleted", "", { timeOut: 5000, extendedTimeOut: 10000 });
-                                fillPhotos();
-                                $("#imageLatLng").val('');
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                console.log("delete track error: " + textStatus); console.log("Error: " + errorThrown);
-                                toastr.error(textStatus + "," + errorThrown, "ERROR", { timeOut: 5000, extendedTimeOut: 10000 });
-                            }
-                        });
-                    }
-                }
-            });
+            //    $("#buttonDelete").click(function () {
+            //        if (photosList.val() != null) {
+            //            var options = photosList.val();
+            //            markers.clearLayers();
+            //            var isMultiple = options.length > 1;
+            //            $("#imageLatLng").val('');
+            //            for (var i in options) {
+            //                var parts = options[i].toString().split(';');
+            //                var url = "services/delete_photobyfilename.aspx?fileName=" + parts[0];
+            //                $.ajax({
+            //                    //                    dataType: "jsonp",
+            //                    url: url,
+            //                    success: function (data) {
+            //                        toastr.info("Photo is deleted", "", { timeOut: 5000, extendedTimeOut: 10000 });
+            //                        fillPhotos();
+            //                        $("#imageLatLng").val('');
+            //                    },
+            //                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //                        console.log("delete track error: " + textStatus); console.log("Error: " + errorThrown);
+            //                        toastr.error(textStatus + "," + errorThrown, "ERROR", { timeOut: 5000, extendedTimeOut: 10000 });
+            //                    }
+            //                });
+            //            }
+            //        }
+            //    });
+            //});
+
+            //function fillPhotos() {
+            //    var fileListString = $.ajax(
+            //{
+            //    url: ('services/get_myphotos.aspx' + "?" + Math.random()),
+            //    async: false,
+            //    dataType: 'json'
+            //}
+            //).responseText;
+
+            //    var fileList = fileListString.split('\n');
+            //    photosList
+            //            .find('option')
+            //            .remove()
+            //            .end();
+            //    for (var i = 0; i < fileList.length; i++) {
+            //        if (!isNullOrEmpty(fileList[i])) {
+            //            var parts = fileList[i].split(';');
+            //            photosList.append('<option value="' + fileList[i] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
+            //        }
+            //    }
         });
-
-        function fillPhotos() {
-            var fileListString = $.ajax(
-        {
-            url: ('services/get_myphotos.aspx' + "?" + Math.random()),
-            async: false,
-            dataType: 'json'
-        }
-        ).responseText;
-
-            var fileList = fileListString.split('\n');
-            photosList
-                    .find('option')
-                    .remove()
-                    .end();
-            for (var i = 0; i < fileList.length; i++) {
-                if (!isNullOrEmpty(fileList[i])) {
-                    var parts = fileList[i].split(';');
-                    photosList.append('<option value="' + fileList[i] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
-                }
-            }
-        }
     </script>
 </asp:Content>

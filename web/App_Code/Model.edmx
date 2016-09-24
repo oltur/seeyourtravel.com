@@ -36,6 +36,9 @@
           <Property Name="Vicinity" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Rating" Type="float" Nullable="false" />
           <Property Name="IsPublic" Type="bit" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Link" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="PlaceImage">
           <Key>
@@ -482,6 +485,27 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="GetUserPlaces" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="PlaceID" Type="uniqueidentifier" Nullable="false" />
+                <Property Name="Rating" Type="float" Nullable="false" />
+                <Property Name="Vicinity" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="IsPublic" Type="bit" Nullable="false" />
+                <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="Lat" Type="float" Nullable="false" />
+                <Property Name="Lng" Type="float" Nullable="false" />
+                <Property Name="Created" Type="datetime" Nullable="false" />
+                <Property Name="UserID" Type="uniqueidentifier" />
+                <Property Name="FileName" Type="nvarchar(max)" />
+                <Property Name="Link" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="GetUserTracks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
           <ReturnType>
@@ -775,6 +799,9 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
+          <FunctionImport Name="GetUserPlaces" IsComposable="true" ReturnType="Collection(SeeYourTravelModel.GetUserPlaces_Result2)">
+          <Parameter Name="UserID" Mode="In" Type="Guid" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetFriendsLocations_Result">
           <Property Type="Guid" Name="UserID" Nullable="false" />
@@ -849,6 +876,9 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
           <NavigationProperty Name="PlaceImages" Relationship="SeeYourTravelModel.FK_PlaceImage_Place" FromRole="Place" ToRole="PlaceImage" />
           <NavigationProperty Name="PlaceTypePlaces" Relationship="SeeYourTravelModel.FK_PlaceTypePlace_Place" FromRole="Place" ToRole="PlaceTypePlace" />
           <NavigationProperty Name="PlaceUsers" Relationship="SeeYourTravelModel.FK_PlaceUser_Place" FromRole="Place" ToRole="PlaceUser" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Link" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PlaceImage">
           <Key>
@@ -1191,6 +1221,43 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GetUserPlaces_Result">
+          <Property Type="Guid" Name="PlaceID" Nullable="false" />
+          <Property Type="Double" Name="Rating" Nullable="false" />
+          <Property Type="String" Name="Vicinity" Nullable="false" />
+          <Property Type="Boolean" Name="IsPublic" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Double" Name="Lat" Nullable="false" />
+          <Property Type="Double" Name="Lng" Nullable="false" />
+          <Property Type="DateTime" Name="Created" Nullable="false" Precision="23" />
+          <Property Type="Guid" Name="UserID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetUserPlaces_Result1">
+          <Property Type="Guid" Name="PlaceID" Nullable="false" />
+          <Property Type="Double" Name="Rating" Nullable="false" />
+          <Property Type="String" Name="Vicinity" Nullable="false" />
+          <Property Type="Boolean" Name="IsPublic" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Double" Name="Lat" Nullable="false" />
+          <Property Type="Double" Name="Lng" Nullable="false" />
+          <Property Type="DateTime" Name="Created" Nullable="false" Precision="23" />
+          <Property Type="Guid" Name="UserID" Nullable="true" />
+          <Property Type="String" Name="FileName" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetUserPlaces_Result2">
+          <Property Type="Guid" Name="PlaceID" Nullable="false" />
+          <Property Type="Double" Name="Rating" Nullable="false" />
+          <Property Type="String" Name="Vicinity" Nullable="false" />
+          <Property Type="Boolean" Name="IsPublic" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Double" Name="Lat" Nullable="false" />
+          <Property Type="Double" Name="Lng" Nullable="false" />
+          <Property Type="DateTime" Name="Created" Nullable="false" Precision="23" />
+          <Property Type="Guid" Name="UserID" Nullable="true" />
+          <Property Type="String" Name="FileName" Nullable="true" />
+          <Property Type="String" Name="Link" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1332,6 +1399,9 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
           <EntitySetMapping Name="Places">
             <EntityTypeMapping TypeName="SeeYourTravelModel.Place">
               <MappingFragment StoreEntitySet="Place">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="Vicinity" ColumnName="Vicinity" />
@@ -1483,6 +1553,24 @@ warning 6002: The table/view 'seeyourtravel.dbo.GetAllRoughUserLocations' does n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetUserPlaces" FunctionName="SeeYourTravelModel.Store.GetUserPlaces">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="SeeYourTravelModel.GetUserPlaces_Result2">
+                <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Vicinity" ColumnName="Vicinity" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Lng" ColumnName="Lng" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

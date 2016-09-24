@@ -45,6 +45,7 @@ public partial class UserPhotos : System.Web.UI.Page
                 image.IsPublic = (Request["isPublic"] == "isPublic");
                 image.Lat = location == null ? null : new double?(location.lat);
                 image.Lng = location == null ? null : new double?(location.lng);
+                image.Created = DateTime.Now;
                 db.Images.Add(image);
 
                 db.SaveChanges();

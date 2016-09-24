@@ -69,6 +69,9 @@ public partial class Place
     public string Vicinity { get; set; }
     public double Rating { get; set; }
     public bool IsPublic { get; set; }
+    public System.DateTime Created { get; set; }
+    public string Link { get; set; }
+    public string Description { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<PlaceImage> PlaceImages { get; set; }
@@ -330,6 +333,49 @@ public partial class GetUserImages_Result
     public Nullable<double> Lat { get; set; }
     public Nullable<double> Lng { get; set; }
     public Nullable<System.Guid> UserID { get; set; }
+}
+
+public partial class GetUserPlaces_Result
+{
+    public System.Guid PlaceID { get; set; }
+    public double Rating { get; set; }
+    public string Vicinity { get; set; }
+    public bool IsPublic { get; set; }
+    public string Name { get; set; }
+    public double Lat { get; set; }
+    public double Lng { get; set; }
+    public System.DateTime Created { get; set; }
+    public Nullable<System.Guid> UserID { get; set; }
+}
+
+public partial class GetUserPlaces_Result1
+{
+    public System.Guid PlaceID { get; set; }
+    public double Rating { get; set; }
+    public string Vicinity { get; set; }
+    public bool IsPublic { get; set; }
+    public string Name { get; set; }
+    public double Lat { get; set; }
+    public double Lng { get; set; }
+    public System.DateTime Created { get; set; }
+    public Nullable<System.Guid> UserID { get; set; }
+    public string FileName { get; set; }
+}
+
+public partial class GetUserPlaces_Result2
+{
+    public System.Guid PlaceID { get; set; }
+    public double Rating { get; set; }
+    public string Vicinity { get; set; }
+    public bool IsPublic { get; set; }
+    public string Name { get; set; }
+    public double Lat { get; set; }
+    public double Lng { get; set; }
+    public System.DateTime Created { get; set; }
+    public Nullable<System.Guid> UserID { get; set; }
+    public string FileName { get; set; }
+    public string Link { get; set; }
+    public string Description { get; set; }
 }
 
 public partial class GetUserTracks_Result

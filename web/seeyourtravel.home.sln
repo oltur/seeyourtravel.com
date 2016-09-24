@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "http://localhost:88", "http://localhost:88", "{53FAB1A0-AD58-4C2D-8CBF-D50E1B238539}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "https://local.seeyourtravel.com", "https://local.seeyourtravel.com", "{53FAB1A0-AD58-4C2D-8CBF-D50E1B238539}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"

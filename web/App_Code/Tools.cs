@@ -22,4 +22,16 @@ public static class Tools
         var db = new SeeYourTravelEntities();
         return db.IsGuest(GetUserId(page)).First().Result == 1;
     }
+    public static string GetUserInformation(Page page)
+    {
+        var db = new SeeYourTravelEntities();
+        var currentUserID = (Guid)page.Session["UserId"];
+        var isAdmin = db.IsAdmin(currentUserID).First().Result == 1;
+        var user = db.Users.Where(x => x.UserID == currentUserID).First();
+        return "Name: " + user.UserName + (isAdmin ? " (Administrator) " : "") + (IsGuest(page) ? " (Guest) " : "")
+            + "Facebook ID: " + (string.IsNullOrWhiteSpace(user.FacebookId) ? " None ": user.FacebookId)
+            + " Images: " + user.ImageUsers.Count()
+            + " Places: " + user.PlaceUsers.Count()
+            + " Tracks: " + user.TrackUsers.Count();
+    }
 }

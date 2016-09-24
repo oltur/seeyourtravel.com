@@ -201,4 +201,14 @@ public partial class SeeYourTravelEntities : DbContext
 
         return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetUserAndPublicPlacesByLocation_Result>("[SeeYourTravelEntities].[GetUserAndPublicPlacesByLocation](@UserID, @Types, @MinLat, @MinLng, @MaxLat, @MaxLng, @From, @To)", userIDParameter, typesParameter, minLatParameter, minLngParameter, maxLatParameter, maxLngParameter, fromParameter, toParameter);
     }
+
+    [DbFunction("SeeYourTravelEntities", "GetUserPlaces")]
+    public virtual IQueryable<GetUserPlaces_Result2> GetUserPlaces(Nullable<System.Guid> userID)
+    {
+        var userIDParameter = userID.HasValue ?
+            new ObjectParameter("UserID", userID) :
+            new ObjectParameter("UserID", typeof(System.Guid));
+
+        return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetUserPlaces_Result2>("[SeeYourTravelEntities].[GetUserPlaces](@UserID)", userIDParameter);
+    }
 }

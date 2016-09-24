@@ -55,10 +55,17 @@ public partial class services_get_thumbnail : System.Web.UI.Page
             throw new HttpException("Invalid photo name.");
         }
         string physicalPath = context.Server.MapPath("../data/images/" + Path.GetFileNameWithoutExtension(photo) + ".jpg");
+
         if (!File.Exists(physicalPath))
         {
-            throw new HttpException(404, "Photo not found");
+            //throw new HttpException(404, "Photo not found");
+            context.Response.ContentType = "image/png";
+            // Send the contents (need to use a searchable intermediary stream for png
+            var imgNotFound = File.ReadAllBytes(context.Server.MapPath("../img/photoNotFound.png"));
+            context.Response.OutputStream.Write(imgNotFound, 0, imgNotFound.Length);
+            return;
         }
+
         var lastModified = File.GetLastWriteTime(physicalPath);
         // Build the thumbnail and send it to the output stream
         using (var stream = new FileStream(physicalPath, FileMode.Open, FileAccess.Read))

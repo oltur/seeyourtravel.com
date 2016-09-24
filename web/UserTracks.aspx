@@ -28,34 +28,35 @@
     <!-- #Include virtual="include/settingsPanel.inc" -->
 
 
-    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 900px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0 solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 800px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0 solid #000;">
         <table border="0">
             <tr>
                 <td>
-        <div><%=Tools.GetUserName(this)%>: <span class="i" data-i18n="[title]MyTracks;MyTracks">My Tracks</span></div>
-        <br />
-        <a href="UserProfile.aspx" class="i" data-i18n="[title]MyProfile;MyProfile">My Profile</a>
-        <b href="UserTracks.aspx" class="i" data-i18n="[title]MyTracks;MyTracks">My Tracks</b>
-        <a href="UserPhotos.aspx" class="i" data-i18n="[title]MyPhotos;MyPhotos">My photos</a>
-        <a href="UserPlaces.aspx" class="i" data-i18n="[title]MyPlaces;MyPlaces">My Places</a>
-        <br />
-        <br />
-        <span class="i" data-i18n="MyTracks">My Tracks</span>
-        <br /> 
-        <select style="vertical-align: central; width: 330px;" id="tracksList" size="20"></select>
-        <br />
-        <br />
-        <button type="button" id="buttonNew" class="i" data-i18n="[title]New;New">New</button>
-        <button type="button" id="buttonEdit" class="i" data-i18n="[title]Edit;Edit">Edit</button>
-        <button type="button" id="buttonDelete" class="i" data-i18n="[title]DeleteSelected;DeleteSelected">Delete Selected</button>
-        <br />
-        <br />
-        <span class="i" data-i18n="SiteComponentHTML">Site component HTML:</span> 
-        <br />
-        <input type="text" id="frameUrl" value="" style="width: 250px" /> <button type="button" id="buttonShow" class="i" data-i18n="[title]Show;Show">Show</button>
-        <br />
-        <br />
-        <div id="divframe"></div>
+                    <div><%=Tools.GetUserName(this)%>: <span class="i" data-i18n="[title]MyTracks;MyTracks">My Tracks</span></div>
+                    <br />
+                    <a href="UserProfile.aspx" class="i" data-i18n="[title]MyProfile;MyProfile">My Profile</a>
+                    <b href="UserTracks.aspx" class="i" data-i18n="[title]MyTracks;MyTracks">My Tracks</b>
+                    <a href="UserPhotos.aspx" class="i" data-i18n="[title]MyPhotos;MyPhotos">My photos</a>
+                    <a href="UserPlaces.aspx" class="i" data-i18n="[title]MyPlaces;MyPlaces">My Places</a>
+                    <br />
+                    <br />
+                    <span class="i" data-i18n="MyTracks">My Tracks</span>
+                    <br />
+                    <select style="vertical-align: central; width: 330px;" id="tracksList" size="15"></select>
+                    <br />
+                    <br />
+                    <button type="button" id="buttonNew" class="i" data-i18n="[title]New;New">New</button>
+                    <button type="button" id="buttonEdit" class="i" data-i18n="[title]Edit;Edit">Edit</button>
+                    <button type="button" id="buttonDelete" class="i" data-i18n="[title]DeleteSelected;DeleteSelected">Delete Selected</button>
+                    <br />
+                    <br />
+                    <span class="i" data-i18n="SiteComponentHTML">Site component HTML:</span>
+                    <br />
+                    <input type="text" id="frameUrl" value="" style="width: 250px" />
+                    <button type="button" id="buttonShow" class="i" data-i18n="[title]Show;Show">Show</button>
+                    <br />
+                    <br />
+                    <div id="divframe"></div>
                 </td>
             </tr>
         </table>
@@ -69,7 +70,7 @@
 
     <div id="map"></div>
 
-<%--    <div style="position: absolute; left: 10px; top: 50px; z-index: 101;">
+    <%--    <div style="position: absolute; left: 10px; top: 50px; z-index: 101;">
     </div>--%>
     <script>
         var tracksList;
