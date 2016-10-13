@@ -74,12 +74,14 @@
     </div>--%>
     <script>
         var tracksList;
-        $(function () {
+        var imageDiv = $("#imageDiv");
+        var polyline;
+        var map;
+        var markers;
+        var markersTracks;
+        var line;
 
-            var imageDiv = $("#imageDiv");
-            var polyline;
-            var map;
-            var markers;
+        $(function () {
 
             function onMapClick(e) {
                 //updateTrackData(e);
@@ -93,20 +95,23 @@
                 shadowUrl: null
             });
 
-            map = L.map('map', { zoomControl: false }).setView([50.430981, 30.539267], 8);
-            L.control.zoom({ position: 'topright' }).addTo(map);
-            L.control.scale({ position: 'bottomleft' }).addTo(map);
-            tileLayer = L.tileLayer(mapTileUrl, {
-                attribution: 'SeeYourTravel.com &copy; Map data &copy; <a href="https://www.mapbox.com/">MapBox</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
-                maxZoom: 18,
-                id: "mapbox.streets"
-            });
+            init(null);
+            map.setView([50.430981, 30.539267], 8);
 
-            tileLayer.addTo(map);
+            //map = L.map('map', { zoomControl: false }).setView([50.430981, 30.539267], 8);
+            //L.control.zoom({ position: 'topright' }).addTo(map);
+            //L.control.scale({ position: 'bottomleft' }).addTo(map);
+            //tileLayer = L.tileLayer(mapTileUrl, {
+            //    attribution: 'SeeYourTravel.com &copy; Map data &copy; <a href="https://www.mapbox.com/">MapBox</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+            //    maxZoom: 18,
+            //    id: "mapbox.streets"
+            //});
+
+            //tileLayer.addTo(map);
             markerPosition = L.marker(new L.LatLng(1000, 1000), { icon: icon }).addTo(map);
 
-            markers = new L.FeatureGroup();
-            map.addLayer(markers);
+            //markers = new L.FeatureGroup();
+            //map.addLayer(markers);
 
             map.on('click', onMapClick);
 
@@ -134,7 +139,9 @@
                 var path = translateTracksPath(tracksList.val() + ".js");
                 track = loadTrackSync(path);
 
-                markers.clearLayers();
+                //markers.clearLayers();
+                if (line)
+                    markers.removeLayer(line);
                 line = L.polyline(track.trackData, { color: 'green' });
                 markers.addLayer(line);
 
@@ -180,6 +187,8 @@
         }
         ).responseText;
 
+            markersTracks.clearLayers();
+
             var fileList = fileListString.split('\n');
             tracksList
                     .find('option')
@@ -189,6 +198,31 @@
                 if (!isNullOrEmpty(fileList[i])) {
                     var parts = fileList[i].split(';');
                     tracksList.append('<option value="' + parts[0] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
+
+                    var location = JSON.parse(parts[3]);
+
+                    var text = parts[1];
+                    var fileName = parts[0];
+                    var imgPath = (parts[4]) ? ("tracks/content/" + parts[4]) : ("img/track.png");
+                    var domelem = document.createElement('a');
+                    //domelem.href = place.name;
+                    domelem.innerHTML = "<p>" + text + "</p><img height='100px' width='100px' src='" + imgPath + "'/>";
+                    domelem.alt = text;
+                    domelem.href = "./index.aspx?trackname=" + fileName;
+                    domelem.target = "_blank";
+
+                    var iconTrack = L.icon({
+                        iconUrl: ('img/track.png'),
+                        iconSize: [40, 40],
+                        iconAnchor: [20, 20],
+                        //shadowUrl: null
+                    });
+
+                    var markerTrack = L.marker(new L.LatLng(location.lat - 0.0002 + Math.random() * 0.0004, location.lng - 0.0002 + Math.random() * 0.0004),
+                        { icon: iconTrack })
+                            .bindPopup(domelem);
+
+                    markersTracks.addLayer(markerTrack);
                 }
             }
         }

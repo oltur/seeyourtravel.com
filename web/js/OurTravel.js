@@ -251,7 +251,7 @@ function doStartStop() {
 
 function showPhotos(track, p, tolerancy) {
     if (!tolerancy)
-        tolerancy = track.photoLocationTolerancy/1000;
+        tolerancy = track.photoLocationTolerancy / 1000;
     if (!tolerancy)
         tolerancy = 0.1;
 
@@ -274,7 +274,7 @@ function showPhotos(track, p, tolerancy) {
             url: urlp,
             success: function (data) {
                 console.log("Panoramio success");
-				get_panoramas_panoramio_success(data, p, tolerancy);
+                get_panoramas_panoramio_success(data, p, tolerancy);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Panoramio status: " + textStatus); console.log("Error: " + errorThrown);
@@ -376,7 +376,9 @@ function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
 
         //nextImage.style.maxHeight = $("#pictureMaxHeight").val() + "px";
         //TODO: translate
-        nextImage.title = "Photo from: " + photos[i].photo_title + " by " + photos[i].owner_name + ". Click to open the source.";
+        var template = $.t("Photo from {0} by {1}. Click to open the source.");
+        nextImage.title = (template).format([photos[i].photo_title, photos[i].owner_name]);
+        //nextImage.title = "Photo from: " + photos[i].photo_title + " by " + photos[i].owner_name + ". Click to open the source.";
         nextImage.classList.add("photo");
         nextLink.appendChild(nextImage);
         nextLi.appendChild(nextLink);
@@ -496,8 +498,8 @@ function fixTrackData(track) {
         var told = track.trackData[i];
         var tnew = pointToLatLng(told)
         newTrackData.push(tnew);
-        if(i>0) {
-            totalDistance = totalDistance + newTrackData[i].distanceTo(newTrackData[i-1]);
+        if (i > 0) {
+            totalDistance = totalDistance + newTrackData[i].distanceTo(newTrackData[i - 1]);
         }
     }
     track.trackData = newTrackData;
@@ -583,13 +585,15 @@ function init(filename) {
 
     markers = new L.FeatureGroup();
     map.addLayer(markers);
-    if(typeof markersFriends == "undefined")
+    if (typeof markersFriends == "undefined") {
         markersFriends = new L.FeatureGroup();
-    markers.addLayer(markersFriends);
-    if (typeof markersTracks == "undefined")
+        markers.addLayer(markersFriends);
+    }
+    if (typeof markersTracks == "undefined") {
         markersTracks = new L.FeatureGroup();
-    markers.addLayer(markersTracks);
-
+        markers.addLayer(markersTracks);
+    }
+    
     markerWhereIAm = L.marker(new L.LatLng(1000, 1000), { icon: iconWhereIAm, zIndexOffset: 100 }).bindPopup(globalUserName);
     markers.addLayer(markerWhereIAm);
 
@@ -607,11 +611,11 @@ function init(filename) {
 
     showLocation();
 
-    if (typeof filename == "undefined") {
+    if (!filename) {
 
     }
     else {
-        var path = translateTracksPath(filename+".js");
+        var path = translateTracksPath(filename + ".js");
         track = loadTrackSync(path);
 
         var myIcon = L.icon({
@@ -741,8 +745,7 @@ function addMarkersNearAll(allData, types) {
     }
 }
 
-function doSetTimeout(allData, types, from, to, step, i)
-{
+function doSetTimeout(allData, types, from, to, step, i) {
     setTimeout(function () { addMarkersNearRange(allData, types, from, to, step, (i % 2) == 1) }, i * 5000 + 1);
 }
 
@@ -779,14 +782,14 @@ function addMarkersNear(nearLat, nearLng, types, odd) {
     //else {
     if ($('#useGooglePlacesCheckBox').is(':checked') && track.useGooglePlaces != "No") {
 
-            var service = new google.maps.places.PlacesService(map2);
+        var service = new google.maps.places.PlacesService(map2);
 
-            service.nearbySearch(request, callbackGoodlePlacesSearch);
-        }
-        else {
-            get_places_googlehere_success([]);
-        }
-//    }
+        service.nearbySearch(request, callbackGoodlePlacesSearch);
+    }
+    else {
+        get_places_googlehere_success([]);
+    }
+    //    }
 }
 
 function callbackGoodlePlacesSearch(results, status) {
@@ -802,9 +805,9 @@ function callbackGoodlePlacesSearch(results, status) {
 }
 
 function callbackHerePlacesSearch(results) {
-        if (results.length > MAX_HERE_PLACES)
-            results = results.slice(0, MAX_HERE_PLACES);
-        get_places_googlehere_success(results);
+    if (results.length > MAX_HERE_PLACES)
+        results = results.slice(0, MAX_HERE_PLACES);
+    get_places_googlehere_success(results);
 }
 
 
@@ -817,17 +820,17 @@ function get_places_googlehere_success(data) {
             dataType: "jsonp",
             url: urlp,
             success: function (data2) {
-				console.log("get_places success");
+                console.log("get_places success");
                 get_SYT_getplaces_success(data, data2.results);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-				if(errorThrown.toString().indexOf("not called") == -1) {
-					console.log("get_places error status: " + textStatus + ", error: " + errorThrown);
-				}
-				else {
-					console.log("get_places success");
-					get_SYT_getplaces_success(data, []);
-				}
+                if (errorThrown.toString().indexOf("not called") == -1) {
+                    console.log("get_places error status: " + textStatus + ", error: " + errorThrown);
+                }
+                else {
+                    console.log("get_places success");
+                    get_SYT_getplaces_success(data, []);
+                }
             }
         });
     }

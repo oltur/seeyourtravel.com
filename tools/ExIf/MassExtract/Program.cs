@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,18 +16,21 @@ namespace MassExtract
             string root = args[0];
             //string path = @"C:\_GoogleDrive\_Projects\seeyourtravel\tools\1024-2006_1011_093752.jpg";
 
-            using (var writer = new StreamWriter("metadata.csv", true))
+            using (var writer = new StreamWriter(@"metadata.sql", true))
             {
-                foreach (var path in Directory.EnumerateFiles(root, "*.jp*", SearchOption.AllDirectories))
+                var files = Directory.EnumerateFiles(root, "*.jp*", SearchOption.AllDirectories);
+                int i = 0;
+                foreach (var file in files)
                 {
-                    f(path, writer);
+                    f(file, args[1], writer);
+                    Console.WriteLine (i++);
                 }
             }
         }
 
-        static void f(string path, StreamWriter writer)
+        static void f(string sourcePath, string targetDir, StreamWriter writer)
         {
-            string fileName = Path.GetFileName(path);
+            string oldFileName = Path.GetFileName(sourcePath);
 
             try
             {
@@ -34,7 +38,7 @@ namespace MassExtract
                 decimal lon = -1000;
                 decimal lat = -1000;
 
-                using (var reader = new ExifReader(path))
+                using (var reader = new ExifReader(sourcePath))
                 {
                     // Get the image thumbnail (if present)
                     var thumbnailBytes = reader.GetJpegThumbnailBytes();
@@ -96,7 +100,38 @@ namespace MassExtract
                     }
                 }
 
-                writer.WriteLine("<r><a>{0}</a><b>{1}</b><c>{2}</c></r>", path, lat, lon);
+                Guid id = Guid.NewGuid();
+
+                string newFileName = id.ToString() + Path.GetExtension(oldFileName);
+
+                File.Copy(sourcePath, Path.Combine(targetDir, newFileName));
+
+                //writer.WriteLine("<r><a>{0}</a><b>{1}</b><c>{2}</c></r>", path, lat, lon);
+                string s = @"
+INSERT INTO [dbo].[Image]
+           ([ImageID]
+           ,[FileName]
+           ,[IsPublic]
+           ,[Lat]
+           ,[Lng]
+           ,[Description]
+           ,[Created]
+            ,[Checksum])
+     VALUES
+           ('{0}'
+           ,'{1}'
+           ,1
+           ,{2}
+           ,{3}
+           ,'{4}'
+           ,'{5}'
+            ,'{6}')
+
+GO
+
+";
+
+                writer.WriteLine(s, id, newFileName, lat, lon, oldFileName, DateTime.UtcNow.ToString("yyyy-MM-dd"), CalcChecksum(sourcePath));
             }
             catch (Exception ex)
             {
@@ -105,20 +140,31 @@ namespace MassExtract
             }
         }
 
-        private static string RenderTag(object tagValue)
+        private static string CalcChecksum(string path)
         {
-            // Arrays don't render well without assistance.
-            var array = tagValue as Array;
-            if (array != null)
+            using (var md5 = MD5.Create())
             {
-                // Hex rendering for really big byte arrays (ugly otherwise)
-                if (array.Length > 20 && array.GetType().GetElementType() == typeof(byte))
-                    return "0x" + string.Join("", array.Cast<byte>().Select(x => x.ToString("X2")).ToArray());
-
-                return string.Join(", ", array.Cast<object>().Select(x => x.ToString()).ToArray());
+                using (var stream = File.OpenRead(path))
+                {
+                    return string.Concat(md5.ComputeHash(stream).Select(b => b.ToString("X2")).ToArray()).ToLower();
+                }
             }
-
-            return tagValue.ToString();
         }
+
+        //private static string RenderTag(object tagValue)
+        //{
+        //    // Arrays don't render well without assistance.
+        //    var array = tagValue as Array;
+        //    if (array != null)
+        //    {
+        //        // Hex rendering for really big byte arrays (ugly otherwise)
+        //        if (array.Length > 20 && array.GetType().GetElementType() == typeof(byte))
+        //            return "0x" + string.Join("", array.Cast<byte>().Select(x => x.ToString("X2")).ToArray());
+
+        //        return string.Join(", ", array.Cast<object>().Select(x => x.ToString()).ToArray());
+        //    }
+
+        //    return tagValue.ToString();
+        //}
     }
 }

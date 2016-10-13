@@ -15,10 +15,10 @@ public partial class services_get_places : System.Web.UI.Page
             string set = Request.QueryString["set"];
             string from = Request.QueryString["from"];
             string to = Request.QueryString["to"];
-            double minx = -90;// double.Parse(Request.QueryString["minx"]);
-            double miny = -90;//double.Parse(Request.QueryString["miny"]);
-            double maxx = 90;//double.Parse(Request.QueryString["maxx"]);
-            double maxy = 90;//double.Parse(Request.QueryString["maxy"]);
+            double minx = double.Parse(Request.QueryString["minx"]);
+            double miny = double.Parse(Request.QueryString["miny"]);
+            double maxx = double.Parse(Request.QueryString["maxx"]);
+            double maxy = double.Parse(Request.QueryString["maxy"]);
             double x = (minx + maxx) / 2;
             double y = (miny + maxy) / 2;
             StringBuilder items = new StringBuilder();

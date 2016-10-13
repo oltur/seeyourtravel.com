@@ -11,3 +11,13 @@ C:\Users\oleksandr.turevskyi\Google Drive\_Projects\seeyourtravel\tools\ExIf\Exi
 C:\_GoogleDrive\_Projects\seeyourtravel\tools\ExIf\ExifLibTestApp\bin\Debug\ExifLibTestApp.exe.config
 C:\_GoogleDrive\_Projects\seeyourtravel\tools\ExIf\ExifLibTestApp\obj\Debug\ExifLibTestApp.exe
 C:\_GoogleDrive\_Projects\seeyourtravel\tools\ExIf\ExifLibTestApp\obj\Debug\ExifLibTestApp.pdb
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLibTestApp\bin\Debug\ExifLibTestApp.exe.config
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLibTestApp\bin\Debug\ExifLibTestApp.exe
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLibTestApp\bin\Debug\ExifLibTestApp.pdb
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLibTestApp\bin\Debug\ExifLib.dll
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLibTestApp\bin\Debug\ExifLib.pdb
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLibTestApp\obj\Debug\ExifLibTestApp.csprojResolveAssemblyReference.cache
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLibTestApp\obj\Debug\ExifLibTestApp.Form1.resources
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLibTestApp\obj\Debug\ExifLibTestApp.csproj.GenerateResource.Cache
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLibTestApp\obj\Debug\ExifLibTestApp.exe
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLibTestApp\obj\Debug\ExifLibTestApp.pdb

@@ -261,7 +261,7 @@
             if (!imgPath)
                 imgPath = "img/photoNotFound.png";
 
-            markers.clearLayers();
+            //markers.clearLayers();
             map.panTo(ll);
 
             var icon = L.icon({

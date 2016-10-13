@@ -32,7 +32,7 @@
             $("option.i").i18n();
             $("#profile").text($.t("Profile") + ": " + globalUserName);
             if ("True" == "<%=Tools.IsGuest(this)%>") {
-                $("#logout").text($.t("Login"));
+                $("#login").text($.t("Login"));
             }
             else {
                 $("#logout").text($.t("Logout"));

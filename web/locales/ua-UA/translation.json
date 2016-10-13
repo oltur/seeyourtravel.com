@@ -97,7 +97,8 @@
   "Trackimage": "Малюнок",
   "TextDescriptionFile": "Файл з описом",
   "Basic": "Головне",
-  "Advanced": "Додаткове"
-  ,"MyProfile": "Мій профіль"
+  "Advanced": "Додаткове",
+  "MyProfile": "Мій профіль",
+  "PhotoCopyrightMessage": "Фото з {0} від {1}. Натисніть щоб відкрити оригінал."
 
 }

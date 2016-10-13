@@ -1,35 +1,32 @@
-<%@ Page Title="Test" Language="C#" MasterPageFile="MasterPage.master" %>
-
+<%@ Page Language="C#"%>
 <%@ Import Namespace="System.IO" %>
+<%@ Import Namespace="System.Text" %>
+<%
+    Guid userId = Tools.GetUserId(this);
+    Response.ContentType = "text/plain";
 
-<asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
-    <script>
- 
-    		$(document).ready(function()
-		{
-		    var url = "https://mw2.google.com/mw-panoramio/photos/medium/12634160.jpg";
+    var files = Directory.GetFiles(@"D:\Projects\__seeyourtravel\seeyourtravel.com\web\data\images", "*.*");
 
-		    //$.ajax({
-		    //        dataType: "jsonp",
-		    //        url: url,
-		    //        success: function (data) {
-		    //        },
-		    //        error: function (XMLHttpRequest, textStatus, errorThrown) {
-		    //            console.log("Status: " + textStatus); console.log("Error: " + errorThrown);
-		    //        }
-		    //});
+    StringBuilder sb = new StringBuilder();
 
-		    getFromCacheOrServer(url, null, function (x, data) {
-		        var i = $("#i");
-		        i.attr("src", data);
-		    });
+    var db = new SeeYourTravelEntities();
+    int i = 0;
+    foreach (var file in files)
+    {
+        string fileName = Path.GetFileName(file);
 
-		});
-	</script>
+        string query = string.Format("select i.filename from image i where filename in ('{0}')", fileName);
 
-</asp:Content>
+        var any = db.Database.SqlQuery<string>(query).Any();
 
-<asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
-<img id="i" src="http://www.html5rocks.com/static/images/profiles/mahemoff.png" />
-</asp:Content>
+        if (!any)
+        {
+            sb.AppendFormat("'{0}'<br/>,", fileName);
 
+            File.Copy(file, file + "xxx");
+        }
+        i++;
+    }
+    Response.Write(sb);
+
+%>    

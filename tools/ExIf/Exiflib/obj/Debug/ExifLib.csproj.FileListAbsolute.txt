@@ -3,3 +3,8 @@ C:\Users\oleksandr.turevskyi\Google Drive\_Projects\seeyourtravel\tools\ExIf\Exi
 C:\Users\oleksandr.turevskyi\Google Drive\_Projects\seeyourtravel\tools\ExIf\ExifLib\obj\Debug\ExifLib.csprojResolveAssemblyReference.cache
 C:\Users\oleksandr.turevskyi\Google Drive\_Projects\seeyourtravel\tools\ExIf\ExifLib\obj\Debug\ExifLib.dll
 C:\Users\oleksandr.turevskyi\Google Drive\_Projects\seeyourtravel\tools\ExIf\ExifLib\obj\Debug\ExifLib.pdb
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLib\bin\Debug\ExifLib.dll
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLib\bin\Debug\ExifLib.pdb
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLib\obj\Debug\ExifLib.csprojResolveAssemblyReference.cache
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLib\obj\Debug\ExifLib.dll
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\ExifLib\obj\Debug\ExifLib.pdb

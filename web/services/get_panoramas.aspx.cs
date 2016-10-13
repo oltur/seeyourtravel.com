@@ -33,10 +33,10 @@ public partial class services_get_panoramas : System.Web.UI.Page
             size = "medium";
         int from = int.Parse(Request.QueryString["from"]);
         int to = int.Parse(Request.QueryString["to"]);
-        double minx = -90;// double.Parse(Request.QueryString["minx"]);
-        double miny = -90;//double.Parse(Request.QueryString["miny"]);
-        double maxx = 90;//double.Parse(Request.QueryString["maxx"]);
-        double maxy = 90;//double.Parse(Request.QueryString["maxy"]);
+        double minx =  double.Parse(Request.QueryString["minx"]);
+        double miny = double.Parse(Request.QueryString["miny"]);
+        double maxx = double.Parse(Request.QueryString["maxx"]);
+        double maxy = double.Parse(Request.QueryString["maxy"]);
         double x = (minx+maxx)/2;
         double y = (miny+maxy)/2;
         StringBuilder items = new StringBuilder();

@@ -83,6 +83,8 @@
         var map;
         var markers;
         var photosList;
+        var markersImages;
+        var markerPhoto;
 
         $(function () {
 
@@ -92,7 +94,6 @@
                 $("#imageLatLng").val("".concat(e.latlng.lat, ";", e.latlng.lng));
                 var options = photosList.val();
                 var parts = options.toString().split(';');
-                var imgPath = "services/get_thumbnail.aspx?size=small&p=" + parts[0];
                 parts[2] = $("#isPublic").prop('checked') ? "1" : "0";
                 parts[3] = e.latlng.lat.toString();
                 parts[4] = e.latlng.lng.toString();
@@ -101,7 +102,7 @@
 
                 updatePhotoData(data);
 
-                updateMap(e.latlng, imgPath);
+                updateMap(e.latlng, parts[0], parts[1]);
             }
 
             var icon = L.icon({
@@ -111,20 +112,23 @@
                 shadowUrl: null
             });
 
-            map = L.map('map', { zoomControl: false }).setView([50.430981, 30.539267], 8);
-            L.control.zoom({ position: 'topright' }).addTo(map);
-            L.control.scale({ position: 'bottomleft' }).addTo(map);
-            tileLayer = L.tileLayer(mapTileUrl, {
-                attribution: 'SeeYourTravel.com &copy; Map data &copy; <a href="https://www.mapbox.com/">MapBox</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
-                maxZoom: 18,
-                id: "mapbox.streets"
-            });
+            init(null);
+            map.setView([50.430981, 30.539267], 8);
 
-            tileLayer.addTo(map);
+            //map = L.map('map', { zoomControl: false }).setView([50.430981, 30.539267], 8);
+            //L.control.zoom({ position: 'topright' }).addTo(map);
+            //L.control.scale({ position: 'bottomleft' }).addTo(map);
+            //tileLayer = L.tileLayer(mapTileUrl, {
+            //    attribution: 'SeeYourTravel.com &copy; Map data &copy; <a href="https://www.mapbox.com/">MapBox</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+            //    maxZoom: 18,
+            //    id: "mapbox.streets"
+            //});
+
+            //tileLayer.addTo(map);
             markerPosition = L.marker(new L.LatLng(1000, 1000), { icon: icon }).addTo(map);
 
-            markers = new L.FeatureGroup();
-            map.addLayer(markers);
+            //markers = new L.FeatureGroup();
+            //map.addLayer(markers);
 
             map.on('click', onMapClick);
 
@@ -152,7 +156,6 @@
                 var oldImageLatLng = $("#imageLatLng").val();
                 var options = photosList.val();
                 var parts = options.toString().split(";");
-                var imgPath = "services/get_thumbnail.aspx?size=small&p=" + parts[0];
                 $("#isPublic").prop('checked', parts[2] == "1");
                 var ll;
                 try {
@@ -161,49 +164,55 @@
                 catch (error) {
                     ll = new L.LatLng(0, 0);
                 }
-
-                updateMap(ll, imgPath);
-            });
-
-            function updateMap(ll, imgPath) {
-                markers.clearLayers();
-                map.panTo(ll);
                 $("#imageLatLng").val("".concat(ll.lat, ";", ll.lng));
 
+                updateMap(ll, parts[0], parts[1]);
+            });
+
+            function updateMap(ll, fileName, text) {
+                //markers.clearLayers();
+                map.panTo(ll);
+
+                var imgPath2 = "services/get_thumbnail.aspx?size=small&p=" + fileName;
+                var imgPath3 = "services/get_thumbnail.aspx?size=medium&p=" + fileName;
 
                 var icon = L.icon({
-                    iconUrl: imgPath,
+                    iconUrl: imgPath2,
                     //    shadowUrl: 'leaf-shadow.png',
 
                     iconSize: [100, 100] // size of the icon
                     //    shadowSize:   [50, 64], // size of the shadow
-                        , iconAnchor: [50, 100] // point of the icon which will correspond to marker's location
+                        , iconAnchor: [50, 50] // point of the icon which will correspond to marker's location
                     //    shadowAnchor: [4, 62],  // the same for the shadow
                     //    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
                 });
 
-                //var text = '<img src>';
-                //var domelem = document.createElement('div');
-                //domelem.innerHTML = text;
+                var domelem = document.createElement('a');
+                domelem.innerHTML = "<p>" + text + "</p><img height='300px' width='300px' src='" + imgPath3 + "'/>";
+                domelem.title = text;
+                domelem.href = "data/images/" + fileName;
+                domelem.target = "_blank";
 
-                var marker = L.marker(ll,
+                if (markerPhoto)
+                    markers.removeLayer(markerPhoto);
+                markerPhoto = L.marker(ll,
                     { icon: icon })
-                //.bindPopup(domelem);
-                markers.addLayer(marker);
+                .bindPopup(domelem);
+
+                markers.addLayer(markerPhoto);
 
             }
 
             $("#isPublic").change(function () {
                 var options = photosList.val();
                 var parts = options.toString().split(';');
-                var imgPath = "services/get_thumbnail.aspx?size=small&p=" + parts[0];
                 parts[2] = $("#isPublic").prop('checked') ? "1" : "0";
                 var data = parts.join(';');
                 $("#photosList option:selected").val(data);
                 updatePhotoData(data);
 
                 var latlng = new L.LatLng(parseFloat(parts[3]), parseFloat(parts[4]));
-                updateMap(latlng, imgPath);
+                updateMap(latlng, parts[0], parts[1]);
             })
 
             function updatePhotoData(data) {
@@ -224,7 +233,7 @@
             $("#buttonDelete").click(function () {
                 if (photosList.val() != null) {
                     var options = photosList.val();
-                    markers.clearLayers();
+                    //markers.clearLayers();
                     var parts = options.toString().split(';');
                     var url = "services/delete_photobyfilename.aspx?fileName=" + parts[0];
                     $.ajax({
@@ -245,6 +254,22 @@
         });
 
         function fillPhotos() {
+
+            if (typeof markersImages == "undefined") {
+                markersImages = new L.markerClusterGroup({
+                    //spiderfyOnMaxZoom: false,
+                    showCoverageOnHover: false,
+                    //zoomToBoundsOnClick: false,
+                    maxClusterRadius: 50,
+                    iconCreateFunction: function (cluster) {
+                        var markersCount = cluster.getChildCount();
+                        return L.divIcon({ html: markersCount, className: 'mycluster', iconSize: L.point(50, 30) });
+                    },
+                });
+            }
+
+            //markersImages.clearLayers();
+
             var fileListString = $.ajax(
             {
                 url: ('services/get_myphotos.aspx' + "?" + Math.random()),
@@ -261,8 +286,64 @@
                 if (!isNullOrEmpty(fileList[i])) {
                     var parts = fileList[i].split(';');
                     photosList.append('<option value="' + fileList[i] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
+
+
+                    //var imgPath = "services/get_thumbnail.aspx?size=small&p=" + parts[0];
+
+                    var ll;
+                    try {
+                        ll = new L.LatLng(parseFloat(parts[3]), parseFloat(parts[4]));
+                    }
+                    catch (error) {
+                        ll = new L.LatLng(0, 0);
+                    }
+
+                    var text = parts[1];
+                    var fileName = parts[0];
+                    var domelem = document.createElement('a');
+                    domelem.className = "autoclick";
+                    var imgPath = "services/get_thumbnail.aspx?size=small&p=" + fileName;
+                    domelem.innerHTML = "<p>" + text + "</p><img height='100px' width='100px' src='" +
+                        ""//imgPath
+                        + "'/>";
+                    domelem.title = text;
+                    domelem.href = "data/images/" + fileName;
+                    domelem.target = "sytbigimage";
+
+                    var iconImage = L.icon({
+                        iconUrl: "img/picture.png",//(imgPath),
+                        //iconUrl: (imgPath),
+                        iconSize: [20, 20],
+                        iconAnchor: [10, 10],
+                        //shadowUrl: null
+                    });
+
+                    var markerImage = L.marker(new L.LatLng(ll.lat, ll.lng),
+                        { icon: iconImage })
+                            .bindPopup(domelem);
+
+                    markersImages.addLayer(markerImage);
+
                 }
             }
+            map.addLayer(markersImages);
+
+            //tileLayer.on('load', function () {
+            //    var x = $('.autoclick');
+
+            //      x.bind('beforeShow', function () {
+            //          alert('beforeShow');
+            //      })
+            //      .bind('afterShow', function () {
+            //          alert('afterShow');
+            //      })
+            //      .show(1000, function () {
+            //          alert('in show callback');
+            //      })
+            //      .show();
+            //});
+
+
         }
 
     </script>

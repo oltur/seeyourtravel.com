@@ -14,22 +14,26 @@ namespace XmlParser
         static void Main(string[] args)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"D:\ot\Projects\seeyourtravel.com-git\seeyourtravel.com\tools\XmlParser\XmlParser\t\photos.xml");
+            doc.Load(@"D:\1\metadata.csv");
+            int i = 0;
             foreach (XmlElement item in doc.SelectNodes("//r"))
             {
-                string oldfilename = Path.GetFileName((item.ChildNodes[0] as XmlElement).InnerText);
+                string oldfilepath = ((item.ChildNodes[0] as XmlElement).InnerText);
+                string oldfilename = Path.GetFileName(oldfilepath);
                 float lat = float.Parse((item.ChildNodes[1] as XmlElement).InnerText);
                 float lng = float.Parse((item.ChildNodes[2] as XmlElement).InnerText);
 
-                string oldpath = @"D:\ot\Projects\seeyourtravel.com-git\seeyourtravel.com\tools\XmlParser\XmlParser\t\images\" + oldfilename;
-                string newfilename = Guid.NewGuid().ToString() + Path.GetExtension(oldfilename);
-                string newpath = @"D:\ot\Projects\seeyourtravel.com-git\seeyourtravel.com\tools\XmlParser\XmlParser\t\n\" + newfilename;
+                var id = Guid.NewGuid().ToString();
+                //string newfilename = id + Path.GetExtension(oldfilepath);
+                string newfilename = oldfilename;
+                string newpath = @"D:\11\" + newfilename;
 
                 Thread.Sleep(10);
-                if (File.Exists(oldpath))
+                if (File.Exists(oldfilepath))
                 {
-                    File.Move(oldpath, newpath);
-                    Console.WriteLine("insert into Images (filename,lat,lng) values ('" + newfilename + "'," + lat + "," + lng + ")");
+                    //File.Copy(oldfilepath, newpath);
+                    Console.WriteLine("insert into Image (ImageID,FileName,IsPublic,Lat,Lng,Description) values ('{0}','{1}',{2},{3},{4},'{5}')",
+                        id, newfilename, 0, lat, lng, oldfilename);
                 }
             }
             Console.ReadLine();

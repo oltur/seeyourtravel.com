@@ -78,10 +78,10 @@
   "Europe": "Europa",
   "Asia": "Asien",
   "America": "Amerika",
-  "Other": "Andere"
-    ,"UploadPhotos": "Fotos hochladen"
-    ,"Upload": "Hochladen"
-    ,"Photocoordinates": "Foto Koordinaten",
+  "Other": "Andere",
+  "UploadPhotos": "Fotos hochladen",
+  "Upload": "Hochladen",
+  "Photocoordinates": "Foto Koordinaten",
   "MyPlaces": "Meine Orte",
   "Placedescription": "Ort Beschreibung",
   "Placelink": "Ort link",
@@ -89,13 +89,15 @@
   "UploadPhoto": "Foto hochladen",
   "Makepublic": "Veröffentlichen",
   "Save": "Speichern",
-    "Checklink": "Überprüfen",
-   "Audiofile": "Audio-Datei",
+  "Checklink": "Überprüfen",
+  "Audiofile": "Audio-Datei",
   "Travelwith": "Reisen mit",
   "TrackName": "Spurname",
   "Trackimage": "Spur image",
   "TextDescriptionFile": "Text-Beschreibungsdatei",
   "Basic": "Basic",
-  "Advanced": "Erweiterte"
-  ,"MyProfile": "Mein Profil"
+  "Advanced": "Erweiterte",
+  "MyProfile": "Mein Profil",
+  "PhotoCopyrightMessage": "Foto aus {0} von {1}. Klicken Sie auf um die Quelle zu öffnen."
+
 }

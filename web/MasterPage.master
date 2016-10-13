@@ -13,6 +13,7 @@
     <script src="libs/jquery.tinycarousel.js"></script>
     <script src="libs/toastr.min.js"></script>
     <script src="libs/leaflet-src.js"></script>
+    <script src="libs/leaflet.markercluster-src.js"></script>
     <script src="libs/i18next.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&key=AIzaSyDKpuHWNX4AL1Beyky-xsegxkh6SihjN30"></script>
     <script src="https://apis.google.com/js/client:platform.js?onload=startApp" async defer></script>
