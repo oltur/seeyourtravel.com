@@ -14,3 +14,5 @@ D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\MassExtract\bin\Debug\M
 D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\MassExtract\bin\Debug\ExifLib.dll
 D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\MassExtract\bin\Debug\ExifLib.pdb
 D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\MassExtract\obj\Debug\MassExtract.csprojResolveAssemblyReference.cache
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\MassExtract\bin\Debug\SYTTools.dll
+D:\Projects\__seeyourtravel\seeyourtravel.com\tools\ExIf\MassExtract\bin\Debug\SYTTools.pdb

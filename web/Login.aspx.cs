@@ -238,8 +238,8 @@ public partial class Login : System.Web.UI.Page
                 2,                                   // version
                 id.ToString(),   // get username  from the form
                 DateTime.Now,                        // issue time is now
-                DateTime.Now.AddMinutes(10),         // expires in 10 minutes
-                RememberMe.Checked,      // cookie is not persistent
+                DateTime.Now.AddMinutes(300),         
+                RememberMe.Checked,      
                 (db.IsAdmin((Guid)id).First().Result == 1)? "admin" : ""                              // role assignment is stored
                                                                          // in userData
                 );

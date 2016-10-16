@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using SYTTools;
 
 namespace MassExtract
 {
@@ -131,23 +132,12 @@ GO
 
 ";
 
-                writer.WriteLine(s, id, newFileName, lat, lon, oldFileName, DateTime.UtcNow.ToString("yyyy-MM-dd"), CalcChecksum(sourcePath));
+                writer.WriteLine(s, id, newFileName, lat, lon, oldFileName, DateTime.UtcNow.ToString("yyyy-MM-dd"), Tools.CalcChecksum(sourcePath));
             }
             catch (Exception ex)
             {
                 // Something didn't work!
                 //MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private static string CalcChecksum(string path)
-        {
-            using (var md5 = MD5.Create())
-            {
-                using (var stream = File.OpenRead(path))
-                {
-                    return string.Concat(md5.ComputeHash(stream).Select(b => b.ToString("X2")).ToArray()).ToLower();
-                }
             }
         }
 

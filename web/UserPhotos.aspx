@@ -74,6 +74,13 @@
 
     <div id="map"></div>
 
+    <div id="dialog" title="Basic dialog">
+        <%--        <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>--%>
+        <a id="dialoglink" href="" title="">
+            <img style="max-width: 100%; max-height: 100%;" id="dialogimage" src="" />
+        </a>
+    </div>
+
     <%--    <div style="position: absolute; left: 10px; top: 50px; z-index: 101;">
     </div>--%>
     <script>
@@ -302,10 +309,8 @@
                     var fileName = parts[0];
                     var domelem = document.createElement('a');
                     domelem.className = "autoclick";
-                    var imgPath = "services/get_thumbnail.aspx?size=small&p=" + fileName;
-                    domelem.innerHTML = "<p>" + text + "</p><img height='100px' width='100px' src='" +
-                        ""//imgPath
-                        + "'/>";
+                    var imgPath = "services/get_thumbnail.aspx?size=medium&p=" + fileName;
+                    domelem.innerHTML = "<p>" + text + "</p><img class='popup-image'  width='300px' src=''/>";
                     domelem.title = text;
                     domelem.href = "data/images/" + fileName;
                     domelem.target = "sytbigimage";
@@ -328,21 +333,19 @@
             }
             map.addLayer(markersImages);
 
-            //tileLayer.on('load', function () {
-            //    var x = $('.autoclick');
+            map.on('popupopen', function (e) {
+                var href = e.popup._content.href;
 
-            //      x.bind('beforeShow', function () {
-            //          alert('beforeShow');
-            //      })
-            //      .bind('afterShow', function () {
-            //          alert('afterShow');
-            //      })
-            //      .show(1000, function () {
-            //          alert('in show callback');
-            //      })
-            //      .show();
-            //});
+                var popupImage = e.popup._content.childNodes[1];
+                popupImage.src = href;
 
+
+                //$("#dialoglink").attr("src", href);
+                //$("#dialoglink").attr("target", "sytbigimage");
+                //$("#dialoglink").attr("title", "TBD");
+                //$("#dialogimage").attr("src", href);
+                //$("#dialog").dialog();
+            });
 
         }
 
