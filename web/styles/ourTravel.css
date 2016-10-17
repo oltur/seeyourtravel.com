@@ -121,7 +121,7 @@ input.glow {
         margin: 0 auto;
         z-index: 100;
         border-width: 2px;
-        height: 35%;
+        height: 25%;
         position: absolute;
         right: 5px;
         left: 5px;
@@ -147,7 +147,7 @@ input.glow {
         margin: 0 auto;
         z-index: 100;
         border-width: 2px;
-        height: 25%;
+        height: 150px;
         position: absolute;
         right: 5px;
         left: 5px;
