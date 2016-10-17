@@ -4,6 +4,7 @@ var tracksFolder = 'tracks/';
 //        var url = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ';      
 var mapTileUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib2x0dXJ1YSIsImEiOiJlODQ4ZTI2MWI4OGZkZjUyNDRiNjY4MDFkZGI0ODc4NyJ9.iiCb_tZgs_ipvEv3s6Zx0A';
 var panoramioUrl = "https://ssl.panoramio.com/map/get_panoramas.php?set=";
+var flickrUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&bbox={0}%2C{1}%2C{2}%2C{3}&per_page={4}&format=json&nojsoncallback=1&api_key=2203a1e292f7b65958730b236c0756fa";
 var MAX_GOOGLE_PLACES = 10;
 var MAX_HERE_PLACES = 50;
 var MAX_GOOGLE_RADIUS = 10000;
@@ -257,24 +258,55 @@ function showPhotos(track, p, tolerancy) {
 
     if ($('#usePanoramioImagesCheckBox').is(':checked') && track.usePanoramioImages != "No") {
         //var set = "7459025";//"full";//"public";
-        var set = "full";
+        //var set = "full";
         var count = 0;
 
         var divHeight = $("#imageDiv").height();
         var size = divHeight > 150 ? "medium" : "small";
-        var urlp = panoramioUrl + set + "&from=0&to=" + track.numOfPhotos.toString() + "&miny="
-            + (p.lat - tolerancy).toString()
-            + "&minx=" + (p.lng - tolerancy).toString()
-            + "&maxy=" + (p.lat + tolerancy).toString()
-            + "&maxx=" + (p.lng + tolerancy).toString()
-            + "&size=" + size + "&mapfilter=true&order=popularity&callback=?";
+        //var urlp = panoramioUrl + set + "&from=0&to=" + track.numOfPhotos.toString() + "&miny="
+        //    + (p.lat - tolerancy).toString()
+        //    + "&minx=" + (p.lng - tolerancy).toString()
+        //    + "&maxy=" + (p.lat + tolerancy).toString()
+        //    + "&maxx=" + (p.lng + tolerancy).toString()
+        //    + "&size=" + size + "&mapfilter=true&order=popularity&callback=?";
+
+        //var flickrUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&bbox={0}%2C{1}%2C{2}%2C{3}&per_page={4}&format=json&nojsoncallback=1&api_key=2203a1e292f7b65958730b236c0756fa";
+
+        var urlp = flickrUrl
+            .replace("{4}", "50")//track.numOfPhotos.toString())
+            .replace("{0}", (p.lng - tolerancy).toString())
+            .replace("{1}", (p.lat - tolerancy).toString())
+            .replace("{2}", (p.lng + tolerancy).toString())
+            .replace("{3}", (p.lat + tolerancy).toString())
 
         $.ajax({
-            dataType: "jsonp",
+            dataType: "json",
             url: urlp,
             success: function (data) {
-                console.log("Panoramio success");
-                get_panoramas_panoramio_success(data, p, tolerancy);
+                var result = { photos: [] };
+
+                for (var i = 0; i < data.photos.photo.length; i++) {
+                    var photoName = "https://farm{0}.staticflickr.com/{1}/{2}_{3}"
+                        .replace("{0}", data.photos.photo[i].farm)
+                        .replace("{1}", data.photos.photo[i].server)
+                        .replace("{2}", data.photos.photo[i].id)
+                        .replace("{3}", data.photos.photo[i].secret)
+                    var photoUrlSmall = photoName + "_q.jpg";
+                    var photoUrlLarge = photoName + ".jpg";
+
+                    var resultPhoto = {
+                        height: 150,
+                        width: 150,
+                        photo_file_url: photoUrlSmall,
+                        photo_url: photoUrlLarge,
+                        photo_title: data.photos.photo[i].title,
+                        owner_name: data.photos.photo[i].owner
+                    };
+                    result.photos.push(resultPhoto);
+                }
+
+                //console.log("Panoramio success");
+                get_panoramas_panoramio_success(result, p, tolerancy);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Panoramio status: " + textStatus); console.log("Error: " + errorThrown);
@@ -357,14 +389,17 @@ function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
 
         //var n = getNatural(nextImage);
 
-        if (isPortrait()) {
-            nextImage.height = photos[i].height * (divWidth / photos[i].width);
-            nextImage.width = divWidth;
-        }
-        else {
-            nextImage.width = photos[i].width * (divHeight / photos[i].height);
-            nextImage.height = divHeight;
-        }
+        nextImage.width = photos[i].width * divHeight / photos[i].height;
+        nextImage.height = divHeight;
+
+        //if (isPortrait()) {
+        //    nextImage.height = photos[i].height * ((divWidth + 0.0) / photos[i].width);
+        //    nextImage.width = divWidth;
+        //}
+        //else {
+        //    nextImage.width = photos[i].width * ((divHeight + 0.0) / photos[i].height);
+        //    nextImage.height = divHeight;
+        //}
         if (cacheImages == true) {
             getFromCacheOrServer(photos[i].photo_file_url, nextImage, function (obj, data) {
                 obj.src = data;
@@ -506,39 +541,42 @@ function fixTrackData(track) {
     track.avgDistM = totalDistance / (i - 1);
 }
 
-function loadTrackSync(path) {
+function loadTrack(path, handler) {
     var url = path + "?" + Math.random();
-    var txt = $.ajax(
-            {
-                url: url,
-                async: false,
-                dataType: 'json'
+    $.ajax({
+        url: url,
+        //async: false,
+        dataType: 'json',
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log("loadTrack error: " + textStatus); console.log("Error: " + errorThrown);
+        },
+        success: function (data) {
+            var tempTrack = data;
+            if (tempTrack.trackGpx) {
+                tempTrack.trackData = $.parseJSON(GPXtoLatLng(translateTracksContentPath(tempTrack.trackGpx)));
             }
-        ).responseText;
-    var track = $.parseJSON(
-       txt);
-    if (track.trackGpx) {
-        track.trackData = $.parseJSON(GPXtoLatLng(translateTracksContentPath(track.trackGpx)));
-    }
 
-    fixTrackData(track);
+            fixTrackData(tempTrack);
 
-    if ($("#textToReadArea").length > 0) {
-        if (!isNullOrEmpty(track.textToRead)) {
-            textToReadArea.innerHTML = $.ajax(
-                {
-                    url: translateTracksContentPath(track.textToRead + "?" + Math.random()),
-                    async: false
+            if ($("#textToReadArea").length > 0) {
+                if (!isNullOrEmpty(tempTrack.textToRead)) {
+                    textToReadArea.innerHTML = $.ajax(
+                        {
+                            url: translateTracksContentPath(tempTrack.textToRead + "?" + Math.random()),
+                            async: false
+                        }
+                    ).responseText;
+                    // COMMENTED THE AUTOREADING
+                    //get_id('textToReadArea', 'en', 'ml');
                 }
-            ).responseText;
-            // COMMENTED THE AUTOREADING
-            //get_id('textToReadArea', 'en', 'ml');
+                else {
+                    textToReadArea.innerHTML = "";
+                }
+            }
+
+            handler(tempTrack);
         }
-        else {
-            textToReadArea.innerHTML = "";
-        }
-    }
-    return track;
+    });
 }
 
 //function clearMap(m) {
@@ -554,7 +592,7 @@ function loadTrackSync(path) {
 //    }
 //}
 
-function init(filename) {
+function init(filename, handler) {
 
     if (typeof map != "undefined") {
         //var mapNode = document.getElementById("map");
@@ -593,7 +631,7 @@ function init(filename) {
         markersTracks = new L.FeatureGroup();
         markers.addLayer(markersTracks);
     }
-    
+
     markerWhereIAm = L.marker(new L.LatLng(1000, 1000), { icon: iconWhereIAm, zIndexOffset: 100 }).bindPopup(globalUserName);
     markers.addLayer(markerWhereIAm);
 
@@ -616,106 +654,114 @@ function init(filename) {
     }
     else {
         var path = translateTracksPath(filename + ".js");
-        track = loadTrackSync(path);
+        loadTrack(path,
+            function (tempTrack) {
 
-        var myIcon = L.icon({
-            iconUrl: translateTracksContentPath(track.icon),
-            iconSize: [markerSize, markerSize],
-            iconAnchor: [1, markerSize],
-            shadowUrl: null
-        });
+                track = tempTrack
 
-        var lastUpdateTime = new Date(2000, 2);
-
-        var amOptions = {
-            distance: track.velocityMetersPerSec, // meters
-            interval: 1000, // milliseconds
-            icon: myIcon, // icon
-            autoStart: false,
-            onEnd: function () {
-                if ($("#loopTrackCheckBox").is(':checked')) {
-                    animatedMarker.start();
-                }
-            },
-            onStep: function (p) {
-                counter++;
-                if (p.hasOwnProperty("syt_text") && p["syt_text"] != "") {
-                    toastr.info(p["syt_text"], "", { timeOut: 5000, extendedTimeOut: 10000 });
-                    //prependToSidePanel(p["syt_text"]);
-                }
-
-                if (p.hasOwnProperty("syt_audio")) {
-                    audio.src = translateTracksContentPath(p["syt_audio"]);
-                    audio.play();
-                }
-                //markerSize = 2 + map.getZoom() * 5;
-
-                var currentDate = new Date();
-                if ((currentDate.getTime() - lastUpdateTime.getTime()) / 1000 > updateIntervalSeconds) {
-
-                    map.setView([p.lat, p.lng], map.getZoom());
-                    showPhotos(track, p);
-                    //                    animatedMarker.bindPopup("".concat(p.lat, ",", p.lng)).openPopup();
-
-                    lastUpdateTime = currentDate;
-                }
-            }
-        };
-
-        for (var i = 0; i < track.trackData.length; i++) {
-            var point = track.trackData[i];
-            if (point.hasOwnProperty("syt_text") && point["syt_text"] != "") {
-
-                var icon = L.icon({
-                    iconUrl: "img/info.png",
-                    //    shadowUrl: 'leaf-shadow.png',
-
-                    iconSize: [25, 25] // size of the icon
-                    //    shadowSize:   [50, 64], // size of the shadow
-                        , iconAnchor: [13, 25] // point of the icon which will correspond to marker's location
-                    //    shadowAnchor: [4, 62],  // the same for the shadow
-                    //    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+                var myIcon = L.icon({
+                    iconUrl: translateTracksContentPath(track.icon),
+                    iconSize: [markerSize, markerSize],
+                    iconAnchor: [1, markerSize],
+                    shadowUrl: null
                 });
 
-                var text = point["syt_text"].toString();
-                var domelem = document.createElement('a');
-                //domelem.href = place.name;
-                domelem.innerHTML = "<p>" + text + "</p>";//<img height='100px' width='100px' src='" + (isGoogle ? photos[0].getUrl({ 'maxWidth': 100, 'maxHeight': 100 }) : photos[0].raw_reference.fife_url) + "'/>";
-                domelem.alt = text;
-                //domelem.onclick = function () {
-                //    window.open("https://www.google.com.ua/search?q=" + place.name, "_blank");
-                //};
-                var marker = L.marker(new L.LatLng(point.lat, point.lng),
-                    { icon: icon }).bindPopup(domelem);
-                markers.addLayer(marker);
-                //    myMarkers.push(marker);
-            }
-        }
-        animatedMarker = L.animatedMarker(track.trackData, amOptions);
-        animatedMarker.setIcon(myIcon);
-        markers.addLayer(animatedMarker);
+                var lastUpdateTime = new Date(2000, 2);
 
-        line = L.polyline(track.trackData, { color: 'green' });
-        markers.addLayer(line);
+                var amOptions = {
+                    distance: track.velocityMetersPerSec, // meters
+                    interval: 1000, // milliseconds
+                    icon: myIcon, // icon
+                    autoStart: false,
+                    onEnd: function () {
+                        if ($("#loopTrackCheckBox").is(':checked')) {
+                            animatedMarker.start();
+                        }
+                    },
+                    onStep: function (p) {
+                        counter++;
+                        if (p.hasOwnProperty("syt_text") && p["syt_text"] != "") {
+                            toastr.info(p["syt_text"], "", { timeOut: 5000, extendedTimeOut: 10000 });
+                            //prependToSidePanel(p["syt_text"]);
+                        }
 
-        markerStart = L.marker(track.trackData[0]).bindPopup("Start");//TODO
-        markers.addLayer(markerStart);
+                        if (p.hasOwnProperty("syt_audio")) {
+                            audio.src = translateTracksContentPath(p["syt_audio"]);
+                            audio.play();
+                        }
+                        //markerSize = 2 + map.getZoom() * 5;
 
-        markerFinish = L.marker(track.trackData[track.trackData.length - 1]).bindPopup("Finish");//TODO
-        markers.addLayer(markerFinish);
+                        var currentDate = new Date();
+                        if ((currentDate.getTime() - lastUpdateTime.getTime()) / 1000 > updateIntervalSeconds) {
 
-        map.setView(track.trackData[0], track.defaultScale ? track.defaultScale : 8);
+                            map.setView([p.lat, p.lng], map.getZoom());
+                            showPhotos(track, p);
+                            //                    animatedMarker.bindPopup("".concat(p.lat, ",", p.lng)).openPopup();
 
-        if (track.audioSrc && track.audioSrc.length > 0) {
-            audio.src = translateTracksContentPath(track.audioSrc);
-            if (track.audioVolume) {
-                audio.volume = track.audioVolume ? track.audioVolume : 0.8;
-                $("#slider").slider("value", audio.volume);
-            }
-        }
+                            lastUpdateTime = currentDate;
+                        }
+                    }
+                };
 
-        addMarkersNearAll(track.trackData, GOOGLE_TYPES);
-        isTrackLoaded = true;
+                for (var i = 0; i < track.trackData.length; i++) {
+                    var point = track.trackData[i];
+                    if (point.hasOwnProperty("syt_text") && point["syt_text"] != "") {
+
+                        var icon = L.icon({
+                            iconUrl: "img/info.png",
+                            //    shadowUrl: 'leaf-shadow.png',
+
+                            iconSize: [25, 25] // size of the icon
+                            //    shadowSize:   [50, 64], // size of the shadow
+                                , iconAnchor: [13, 25] // point of the icon which will correspond to marker's location
+                            //    shadowAnchor: [4, 62],  // the same for the shadow
+                            //    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+                        });
+
+                        var text = point["syt_text"].toString();
+                        var domelem = document.createElement('a');
+                        //domelem.href = place.name;
+                        domelem.innerHTML = "<p>" + text + "</p>";//<img height='100px' width='100px' src='" + (isGoogle ? photos[0].getUrl({ 'maxWidth': 100, 'maxHeight': 100 }) : photos[0].raw_reference.fife_url) + "'/>";
+                        domelem.alt = text;
+                        //domelem.onclick = function () {
+                        //    window.open("https://www.google.com.ua/search?q=" + place.name, "_blank");
+                        //};
+                        var marker = L.marker(new L.LatLng(point.lat, point.lng),
+                            { icon: icon }).bindPopup(domelem);
+                        markers.addLayer(marker);
+                        //    myMarkers.push(marker);
+                    }
+                }
+                animatedMarker = L.animatedMarker(track.trackData, amOptions);
+                animatedMarker.setIcon(myIcon);
+                markers.addLayer(animatedMarker);
+
+                line = L.polyline(track.trackData, { color: 'green' });
+                markers.addLayer(line);
+
+                markerStart = L.marker(track.trackData[0]).bindPopup("Start");//TODO
+                markers.addLayer(markerStart);
+
+                markerFinish = L.marker(track.trackData[track.trackData.length - 1]).bindPopup("Finish");//TODO
+                markers.addLayer(markerFinish);
+
+                map.setView(track.trackData[0], track.defaultScale ? track.defaultScale : 8);
+
+                if (track.audioSrc && track.audioSrc.length > 0) {
+                    audio.src = translateTracksContentPath(track.audioSrc);
+                    if (track.audioVolume) {
+                        audio.volume = track.audioVolume ? track.audioVolume : 0.8;
+                        $("#slider").slider("value", audio.volume);
+                    }
+                }
+
+                addMarkersNearAll(track.trackData, GOOGLE_TYPES);
+                isTrackLoaded = true;
+
+                if (handler) {
+                    handler();
+                }
+            });
     }
 }
 
@@ -793,7 +839,7 @@ function addMarkersNear(nearLat, nearLng, types, odd) {
 }
 
 function callbackGoodlePlacesSearch(results, status) {
-    console.log("GoodlePlaces result: " + status);
+    //console.log("Google Places result: " + status);
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         if (results.length > MAX_GOOGLE_PLACES)
             results = results.slice(0, MAX_GOOGLE_PLACES);
@@ -820,7 +866,7 @@ function get_places_googlehere_success(data) {
             dataType: "jsonp",
             url: urlp,
             success: function (data2) {
-                console.log("get_places success");
+                //console.log("get_places success");
                 get_SYT_getplaces_success(data, data2.results);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -828,7 +874,7 @@ function get_places_googlehere_success(data) {
                     console.log("get_places error status: " + textStatus + ", error: " + errorThrown);
                 }
                 else {
-                    console.log("get_places success");
+                    //console.log("get_places success");
                     get_SYT_getplaces_success(data, []);
                 }
             }

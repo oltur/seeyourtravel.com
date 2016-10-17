@@ -137,16 +137,17 @@
                 $("#divframe").html("");
 
                 var path = translateTracksPath(tracksList.val() + ".js");
-                track = loadTrackSync(path);
+                track = loadTrack(path,
+                    function (tempTrack) {
+                        track = tempTrack;
+                        //markers.clearLayers();
+                        if (line)
+                            markers.removeLayer(line);
+                        line = L.polyline(track.trackData, { color: 'green' });
+                        markers.addLayer(line);
 
-                //markers.clearLayers();
-                if (line)
-                    markers.removeLayer(line);
-                line = L.polyline(track.trackData, { color: 'green' });
-                markers.addLayer(line);
-
-                map.panTo(track.trackData[0]);
-
+                        map.panTo(track.trackData[0]);
+                    });
             });
             $("#buttonShow").click(function () {
                 $("#divframe").html($("#frameUrl").val());

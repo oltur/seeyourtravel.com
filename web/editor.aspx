@@ -92,9 +92,9 @@
                     <tr>
                         <td class="big i" data-i18n="Audiofile">Audio file:</td>
                         <td>
-                            <input type="text" id="audioSrc" name="audioSrc" style="width: 180px;"/>
-                            <input type="file" accept=".mp3" id="fileAudio" name="fileAudio" style="width: 180px;"/>
-        
+                            <input type="text" id="audioSrc" name="audioSrc" style="width: 180px;" />
+                            <input type="file" accept=".mp3" id="fileAudio" name="fileAudio" style="width: 180px;" />
+
                             <input id="defaultScale" name="defaultScale" type="hidden" max="20" min="1" step="1" value="8" style="width: 180px;" />
                         </td>
                     </tr>
@@ -123,7 +123,7 @@
                     <br />
                     <div id="fileOperations">
                         <label for="fileGpx" class="i" data-i18n="[title]ImportGpxFile;ImportGpxFile">Import Gpx file:</label>
-                        <input type="file" accept=".gpx" id="filesGpx" name="filesGpx"  style="width: 180px;"/>
+                        <input type="file" accept=".gpx" id="filesGpx" name="filesGpx" style="width: 180px;" />
                         <%--multiple="multiple"--%>
                         <!--input type="button" value="Import data" id="importGpx"/-->
                     </div>
@@ -178,15 +178,15 @@
                     <tr>
                         <td class="big i" data-i18n="Trackimage">Track image:</td>
                         <td>
-                            <input type="text" id="trackImage" name="trackImage" style="width: 180px;"/>
-                            <input type="file" accept="image/*" id="fileImage" name="fileImage"  style="width: 180px;"/>
+                            <input type="text" id="trackImage" name="trackImage" style="width: 180px;" />
+                            <input type="file" accept="image/*" id="fileImage" name="fileImage" style="width: 180px;" />
                         </td>
                     </tr>
                     <tr>
                         <td class="big i" data-i18n="TextDescriptionFile">Text description file:</td>
                         <td>
-                            <input type="text" id="textToRead" name="textToRead" style="width: 180px;"/>
-                            <input type="file" accept="text/plain" id="fileText" name="fileText"  style="width: 180px;"/>
+                            <input type="text" id="textToRead" name="textToRead" style="width: 180px;" />
+                            <input type="file" accept="text/plain" id="fileText" name="fileText" style="width: 180px;" />
                         </td>
                     </tr>
                     <tr>
@@ -232,9 +232,8 @@
                 runat="server"
                 Text="Submit"
                 data-i18n="TrackDescription"
-                class="i" 
-                OnClientClick="beforeSubmit()"
-                />
+                class="i"
+                OnClientClick="beforeSubmit()" />
             &nbsp;
     <input type="button" value="Cancel" class="i" data-i18n="[title]Cancel;[value]Cancel" id="gotoMain" onclick="window.location = 'index.aspx?trackname=' + trackname" />
         </p>
@@ -388,66 +387,67 @@
                 setAnimatedMarkerIcon("mycar.png");
             }
             else {
-                var initialTrack = loadTrackSync(translateTracksPath(trackname + ".js"));
+                loadTrack(translateTracksPath(trackname + ".js"),
+                    function (tempTrack) {
+                    var initialTrack = tempTrack;
+                    $("#name").val(initialTrack.name);
+                    if (initialTrack.isPublic == "No") {
+                        $("#isPublic").prop('checked', false);
+                    }
+                    else {
+                        $("#isPublic").prop('checked', true);
+                    }
 
-                $("#name").val(initialTrack.name);
-                if (initialTrack.isPublic == "No") {
-                    $("#isPublic").prop('checked', false);
-                }
-                else {
-                    $("#isPublic").prop('checked', true);
-                }
+                    if (!isNullOrEmpty(initialTrack.travelWith)) {
+                        $("#travelWith").val(initialTrack.travelWith);
+                    }
 
-                if (!isNullOrEmpty(initialTrack.travelWith)) {
-                    $("#travelWith").val(initialTrack.travelWith);
-                }
+                    $("#copyright").val(initialTrack.copyright);
+                    $("#category").val(initialTrack.category);
+                    $("#photoLocationTolerancy").val(initialTrack.photoLocationTolerancy);
+                    //                $("#stepsToRedraw").val(initialTrack.stepsToRedraw);
+                    //                $("#stepsToShowPhoto").val(initialTrack.stepsToShowPhoto);
+                    $("#velocityMetersPerSec").val(initialTrack.velocityMetersPerSec);
+                    $("#numOfPhotos").val(initialTrack.numOfPhotos);
+                    $("#icon").val(initialTrack.icon);
+                    setAnimatedMarkerIcon(initialTrack.icon);
+                    $("#trackImage").val(initialTrack.trackImage);
+                    $("#audioSrc").val(initialTrack.audioSrc);
+                    $("#audioVolume").val(initialTrack.audioVolume);
+                    $("#textToRead").val(initialTrack.textToRead);
+                    $("#defaultScale").val(initialTrack.defaultScale);
+                    map.setZoom(initialTrack.defaultScale);
 
-                $("#copyright").val(initialTrack.copyright);
-                $("#category").val(initialTrack.category);
-                $("#photoLocationTolerancy").val(initialTrack.photoLocationTolerancy);
-                //                $("#stepsToRedraw").val(initialTrack.stepsToRedraw);
-                //                $("#stepsToShowPhoto").val(initialTrack.stepsToShowPhoto);
-                $("#velocityMetersPerSec").val(initialTrack.velocityMetersPerSec);
-                $("#numOfPhotos").val(initialTrack.numOfPhotos);
-                $("#icon").val(initialTrack.icon);
-                setAnimatedMarkerIcon(initialTrack.icon);
-                $("#trackImage").val(initialTrack.trackImage);
-                $("#audioSrc").val(initialTrack.audioSrc);
-                $("#audioVolume").val(initialTrack.audioVolume);
-                $("#textToRead").val(initialTrack.textToRead);
-                $("#defaultScale").val(initialTrack.defaultScale);
-                map.setZoom(initialTrack.defaultScale);
-
-                    $("#usePanoramioImages").prop('checked',initialTrack.usePanoramioImages != "No");
+                    $("#usePanoramioImages").prop('checked', initialTrack.usePanoramioImages != "No");
                     $("#useSYTImagesTrack").prop('checked', initialTrack.useSYTImagesTrack != "No");
                     $("#useGooglePlaces").prop('checked', initialTrack.useGooglePlaces != "No");
                     $("#useSYTPlaces").prop('checked', initialTrack.useSYTPlaces != "No");
 
-                if (!isNullOrEmpty(initialTrack.trackGpx)) {
-                    $("#trackGpx").val(initialTrack.trackGpx);
-                }
-                else {
-                    initialTrack.trackData.forEach(function (point) {
-                        if (point.hasOwnProperty("lat") && (point.hasOwnProperty("syt_text") == null || point.hasOwnProperty("syt_text") == ""))
-                            point["syt_text"] = "";
-                        if (!point.hasOwnProperty("lat") && point.length < 3)
-                            point[2] = "";
-                        var t = JSON.stringify(point);
-                        points
-                            .append($("<option></option>")
-                            .attr("value", t)
-                            .text(t));
-                    });
+                    if (!isNullOrEmpty(initialTrack.trackGpx)) {
+                        $("#trackGpx").val(initialTrack.trackGpx);
+                    }
+                    else {
+                        initialTrack.trackData.forEach(function (point) {
+                            if (point.hasOwnProperty("lat") && (point.hasOwnProperty("syt_text") == null || point.hasOwnProperty("syt_text") == ""))
+                                point["syt_text"] = "";
+                            if (!point.hasOwnProperty("lat") && point.length < 3)
+                                point[2] = "";
+                            var t = JSON.stringify(point);
+                            points
+                                .append($("<option></option>")
+                                .attr("value", t)
+                                .text(t));
+                        });
 
-                    if (initialTrack.trackData.length > 0) {
-                        points[0].selectedIndex = 0;
-                        points.change();
+                        if (initialTrack.trackData.length > 0) {
+                            points[0].selectedIndex = 0;
+                            points.change();
+                        }
+
                     }
 
-                }
-
-                drawTrack();
-
+                    drawTrack();
+                });
             }
         });
 
@@ -508,7 +508,6 @@
                 if (polyline)
                     map.removeLayer(polyline);
                 polyline = L.polyline(points, { color: 'green' }).addTo(map);
-
             }
         }
 

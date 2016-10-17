@@ -113,8 +113,7 @@
             slider1.start();
         });
 
-        function makeSideMenuItem(html, href, image)
-        {
+        function makeSideMenuItem(html, href, image) {
             var dynamicCSSId = "dynamicCSS" + (sideMenuNo).toString();
             var sideMenuId = "sideMenuId" + (sideMenuNo).toString();
 
@@ -145,7 +144,7 @@
             return r;
         }
 
-        
+
         function prependToSidePanel(html, href, image) {
             $('.overview').prepend(makeSideMenuItem(html, href, image));
             slider1.update();
@@ -173,7 +172,7 @@
     <div id="splitterContainer">
         <div id='sidePanel' style='display: none; height: 100%; width: 0; float: left;'>
             <div id="slider1">
-<%--                <span data-i18n="Chooseatrack">Choose a track:</span>--%>
+                <%--                <span data-i18n="Chooseatrack">Choose a track:</span>--%>
                 <br />
                 <a class="prev" href="#">
                     <img class="prevImage" alt="Up" src="img/up.png" /></a>
@@ -250,7 +249,10 @@
 
         function loadTrackOnPageLoad() {
             if (tracksList[0].selectedIndex > 0) {
-                init(tracksList.val()); doStartStop();
+                init(tracksList.val(),
+                    function () {
+                        doStartStop();
+                    });
             }
         }
 
@@ -322,73 +324,76 @@
             //    }
             //});
 
-            var fileListString = $.ajax(
+            $.ajax(
             {
                 url: ("services/get_myandpublictracks.aspx?locale=" + $("#langList").val() + "&rnd=" + Math.random()),
-                async: false,
-                dataType: 'json'
-            }
-        ).responseText;
-            var fileList = fileListString.split('\n');
-            tracksList
-                .find('option')
-                .remove()
-                .end()
-            var label = "";
-            tracksList.append('<option value="Choose a track" data-i18n="Chooseatrack">Choose a track:</option>');
-            clearSidePanel();
+                //async: false,
+                //dataType: 'json'
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("get_myandpublictracks error: " + textStatus); console.log("Error: " + errorThrown);
+                },
+                success: function (data) {
+                    var fileList = data.split('\n');
+                    tracksList
+                        .find('option')
+                        .remove()
+                        .end()
+                    var label = "";
+                    tracksList.append('<option value="Choose a track" data-i18n="Chooseatrack">Choose a track:</option>');
+                    clearSidePanel();
 
-            markersTracks.clearLayers();
+                    markersTracks.clearLayers();
 
-            for (var i = 0; i < fileList.length; i++) {
-                var parts = fileList[i].split(';');
-                if (label != parts[3]) {
-                    label = parts[3];
-                    tracksList.append('<optgroup label="' + label + '" style="color: black;"/>');
+                    for (var i = 0; i < fileList.length; i++) {
+                        var parts = fileList[i].split(';');
+                        if (label != parts[3]) {
+                            label = parts[3];
+                            tracksList.append('<optgroup label="' + label + '" style="color: black;"/>');
+                        }
+                        tracksList.append('<option value="' + parts[0] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
+                        var isSelected = (trackParam == parts[0]);
+                        var sidePanelHtml = (isSelected ? '<b>' : '') +
+                            label + ':<br/>' + (parts[2] == 1 ? '' : '*') + parts[1]
+                            + (trackParam == parts[0] ? '</b>' : '');
+                        var sidePanelHref = (isSelected ? '' : 'index.aspx?trackName=' + parts[0]);
+                        appendToSidePanel(sidePanelHtml, sidePanelHref, parts[4]);
+                        if (parts[5].length > 0) {
+                            var location = JSON.parse(parts[5]);
+
+                            var iconTrack = L.icon({
+                                iconUrl: ('img/track.png'),
+                                iconSize: [40, 40],
+                                iconAnchor: [20, 20],
+                                //shadowUrl: null
+                            });
+
+                            var fileName = parts[0];
+                            var text = parts[1];
+                            var imgPath = (parts[4] != "") ? ("tracks/content/" + parts[4]) : ("img/track.png");
+                            var domelem = document.createElement('a');
+                            //domelem.href = place.name;
+                            domelem.innerHTML = "<p>" + text + "</p><img height='100px' width='100px' src='" + imgPath + "'/>";
+                            domelem.alt = text;
+                            domelem.href = "./index.aspx?trackname=" + fileName;
+                            domelem.target = "_blank";
+
+
+                            var markerTrack = L.marker(new L.LatLng(location.lat - 0.0002 + Math.random() * 0.0004, location.lng - 0.0002 + Math.random() * 0.0004),
+                                { icon: iconTrack })
+                                    .bindPopup(domelem);
+
+                            markersTracks.addLayer(markerTrack);
+                        }
+                    }
+
+                    if (trackParam != '') {
+                        tracksList.val(trackParam);
+                        //    $('select[id="tracksList"] option[value="' + trackParam + '"]').attr('selected', 'selected');
+
+                        setTimeout(function () { loadTrackOnPageLoad() }, 100);
+                    }
                 }
-                tracksList.append('<option value="' + parts[0] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
-                var isSelected = (trackParam == parts[0]);
-                var sidePanelHtml = (isSelected?'<b>':'') +
-                    label + ':<br/>' + (parts[2] == 1 ? '' : '*') + parts[1]
-                    + (trackParam == parts[0]?'</b>':'');
-                var sidePanelHref = (isSelected ? '' : 'index.aspx?trackName=' + parts[0]);
-                appendToSidePanel(sidePanelHtml, sidePanelHref, parts[4]);
-                if(parts[5].length > 0)
-                {
-                    var location = JSON.parse(parts[5]);
-
-                    var iconTrack = L.icon({
-                        iconUrl: ('img/track.png'),
-                        iconSize: [40, 40],
-                        iconAnchor: [20, 20],
-                        //shadowUrl: null
-                    });
-
-                    var fileName = parts[0];
-                    var text = parts[1];
-                    var imgPath = (parts[4] != "")?("tracks/content/" + parts[4]) : ("img/track.png");
-                    var domelem = document.createElement('a');
-                    //domelem.href = place.name;
-                    domelem.innerHTML = "<p>" + text + "</p><img height='100px' width='100px' src='" + imgPath + "'/>";
-                    domelem.alt = text;
-                    domelem.href = "./index.aspx?trackname=" + fileName;
-                    domelem.target = "_blank";
-                    
-
-                    var markerTrack = L.marker(new L.LatLng(location.lat - 0.0002 + Math.random() * 0.0004, location.lng - 0.0002 + Math.random() * 0.0004),
-                        { icon: iconTrack })
-                            .bindPopup(domelem);    
-
-                    markersTracks.addLayer(markerTrack);
-                }
-            }
-
-            if (trackParam != '') {
-                tracksList.val(trackParam);
-                //    $('select[id="tracksList"] option[value="' + trackParam + '"]').attr('selected', 'selected');
-
-                setTimeout(function () { loadTrackOnPageLoad() }, 100);
-            }
+            });
 
         });
     </script>

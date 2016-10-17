@@ -181,7 +181,6 @@
                 map.panTo(ll);
 
                 var imgPath2 = "services/get_thumbnail.aspx?size=small&p=" + fileName;
-                var imgPath3 = "services/get_thumbnail.aspx?size=medium&p=" + fileName;
 
                 var icon = L.icon({
                     iconUrl: imgPath2,
@@ -195,7 +194,7 @@
                 });
 
                 var domelem = document.createElement('a');
-                domelem.innerHTML = "<p>" + text + "</p><img height='300px' width='300px' src='" + imgPath3 + "'/>";
+                domelem.innerHTML = "<p>" + text + "</p><img height='300px' width='300px' src='" + imgPath2 + "'/>";
                 domelem.title = text;
                 domelem.href = "data/images/" + fileName;
                 domelem.target = "_blank";
@@ -272,80 +271,89 @@
                         var markersCount = cluster.getChildCount();
                         return L.divIcon({ html: markersCount, className: 'mycluster', iconSize: L.point(50, 30) });
                     },
+                    zIndexOffset: 10000
                 });
             }
 
             //markersImages.clearLayers();
 
-            var fileListString = $.ajax(
+            var url = 'services/get_myphotos.aspx' + "?" + Math.random();
+            $.ajax(
             {
-                url: ('services/get_myphotos.aspx' + "?" + Math.random()),
-                async: false,
-                dataType: 'json'
-            }).responseText;
+                url: url,
+                //async: false,
+                //dataType: 'json',
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("get_my_photos error: " + textStatus); console.log("Error: " + errorThrown);
+                },
+                success: function (data) {
 
-            var fileList = fileListString.split('\n');
-            photosList
-                    .find('option')
-                    .remove()
-                    .end();
-            for (var i = 0; i < fileList.length; i++) {
-                if (!isNullOrEmpty(fileList[i])) {
-                    var parts = fileList[i].split(';');
-                    photosList.append('<option value="' + fileList[i] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
+                    var fileList = data.split('\n');
+                    photosList
+                            .find('option')
+                            .remove()
+                            .end();
+                    for (var i = 0; i < fileList.length; i++) {
+                        if (!isNullOrEmpty(fileList[i])) {
+                            var parts = fileList[i].split(';');
+                            photosList.append('<option value="' + fileList[i] + '">' + parts[1] + '</option>');
 
 
-                    //var imgPath = "services/get_thumbnail.aspx?size=small&p=" + parts[0];
+                            //var imgPath = "services/get_thumbnail.aspx?size=small&p=" + parts[0];
 
-                    var ll;
-                    try {
-                        ll = new L.LatLng(parseFloat(parts[3]), parseFloat(parts[4]));
+                            var ll;
+                            try {
+                                ll = new L.LatLng(parseFloat(parts[3]), parseFloat(parts[4]));
+                            }
+                            catch (error) {
+                                ll = new L.LatLng(0, 0);
+                            }
+
+                            var text = parts[1];
+                            var fileName = parts[0];
+                            var domelem = document.createElement('a');
+                            domelem.className = "autoclick";
+                            var imgPath = "services/get_thumbnail.aspx?size=medium&p=" + fileName;
+                            domelem.innerHTML = "<p>" + text + "</p><img class='popup-image'  width='300px' src=''/>";
+                            domelem.title = text;
+                            domelem.href = "data/images/" + fileName;
+                            domelem.target = "sytbigimage";
+
+                            var iconImage = L.icon({
+                                iconUrl: "img/picture.png",//(imgPath),
+                                //iconUrl: (imgPath),
+                                iconSize: [20, 20],
+                                iconAnchor: [10, 10],
+                                //shadowUrl: null
+                            });
+
+                            var markerImage = L.marker(new L.LatLng(ll.lat, ll.lng),
+                                { icon: iconImage, zIndexOffset: 10000 })
+                                    .bindPopup(domelem);
+
+
+                            markersImages.addLayer(markerImage);
+
+                        }
                     }
-                    catch (error) {
-                        ll = new L.LatLng(0, 0);
-                    }
+                    map.addLayer(markersImages);
 
-                    var text = parts[1];
-                    var fileName = parts[0];
-                    var domelem = document.createElement('a');
-                    domelem.className = "autoclick";
-                    var imgPath = "services/get_thumbnail.aspx?size=medium&p=" + fileName;
-                    domelem.innerHTML = "<p>" + text + "</p><img class='popup-image'  width='300px' src=''/>";
-                    domelem.title = text;
-                    domelem.href = "data/images/" + fileName;
-                    domelem.target = "sytbigimage";
+                    map.on('popupopen', function (e) {
+                        var href = e.popup._content.href;
 
-                    var iconImage = L.icon({
-                        iconUrl: "img/picture.png",//(imgPath),
-                        //iconUrl: (imgPath),
-                        iconSize: [20, 20],
-                        iconAnchor: [10, 10],
-                        //shadowUrl: null
+                        var popupImage = e.popup._content.childNodes[1];
+                        popupImage.src = href;
+
+
+                        //$("#dialoglink").attr("src", href);
+                        //$("#dialoglink").attr("target", "sytbigimage");
+                        //$("#dialoglink").attr("title", "TBD");
+                        //$("#dialogimage").attr("src", href);
+                        //$("#dialog").dialog();
                     });
-
-                    var markerImage = L.marker(new L.LatLng(ll.lat, ll.lng),
-                        { icon: iconImage })
-                            .bindPopup(domelem);
-
-                    markersImages.addLayer(markerImage);
-
                 }
-            }
-            map.addLayer(markersImages);
-
-            map.on('popupopen', function (e) {
-                var href = e.popup._content.href;
-
-                var popupImage = e.popup._content.childNodes[1];
-                popupImage.src = href;
-
-
-                //$("#dialoglink").attr("src", href);
-                //$("#dialoglink").attr("target", "sytbigimage");
-                //$("#dialoglink").attr("title", "TBD");
-                //$("#dialogimage").attr("src", href);
-                //$("#dialog").dialog();
             });
+
 
         }
 

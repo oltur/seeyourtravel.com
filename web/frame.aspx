@@ -40,35 +40,36 @@
     </div>
     <!--Content-->
     <div id='pageContent' style='height: 100%'>
-        <div style="position: absolute; left: 5px; top:15px; z-index:1001">
-            <a id="alogo" href="javascript:window.open('./corporate','_blank')"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
-                <span id="lblCoord" style="visibility:hidden; vertical-align:super; text-shadow: 1px 1px #ffffff;"></span>
+        <div style="position: absolute; left: 5px; top: 15px; z-index: 1001">
+            <a id="alogo" href="javascript:window.open('./corporate','_blank')">
+                <img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+            <span id="lblCoord" style="visibility: hidden; vertical-align: super; text-shadow: 1px 1px #ffffff;"></span>
         </div>
         <script>
             $("#alogo").attr("href", "javascript:window.open('" + window.location.toString().replace("frame.aspx", "index.aspx") + "','_blank')");
         </script>
-        <div id="settingsPanel" style="display: none; position:absolute; padding: 10px; z-index: 100; top: 60px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0 solid #000;">
+        <div id="settingsPanel" style="display: none; position: absolute; padding: 10px; z-index: 100; top: 60px; left: 60px; width: 300px; height: 200px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0 solid #000;">
             <input id="scriptTextCheckBox" type="checkbox" title="Description" onchange="$('#textToReadArea0').toggle('fold', 1000);" />
             <label for="scriptTextCheckBox" class="i" data-i18n="Description">Description</label>
             <br />
             <input id="imagesCheckBox" type="checkbox" checked="checked" title="Images" onchange=" $('#imageDiv0').toggle('fold', 1000);" />
             <label for="imagesCheckBox" class="i" data-i18n="Images">Images</label>
             <br />
-            <input id="loopTrackCheckBox" type="checkbox" checked="checked" title="Loop track infinitely"  onchange=""/>
+            <input id="loopTrackCheckBox" type="checkbox" checked="checked" title="Loop track infinitely" onchange="" />
             <label for="loopTrackCheckBox" class="i" data-i18n="LoopTrack">Loop track infinitely</label>
             <br />
-            <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" title="Use Panoramio images"  onchange=""/>
+            <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" title="Use Panoramio images" onchange="" />
             <label for="usePanoramioImagesCheckBox" class="i" data-i18n="UsePanoramioImages">Use Panoramio images</label>
             <br />
-            <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" title="Use SeeYourTravel images"  onchange=""/>
+            <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" title="Use SeeYourTravel images" onchange="" />
             <label for="useSYTImagesCheckBox" class="i" data-i18n="UseCYTImages">Use SeeYourTravel images</label>
             <br />
-            <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" title="Use Google Places"  onchange=""/>
+            <input id="useGooglePlacesCheckBox" type="checkbox" checked="checked" title="Use Google Places" onchange="" />
             <label for="useGooglePlacesCheckBox" class="i" data-i18n="UseGooglePlaces">Use Google Places</label>
             <br />
-            <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" title="Use SeeYourTravel places"  onchange=""/>
+            <input id="useSYTPlacesCheckBox" type="checkbox" checked="checked" title="Use SeeYourTravel places" onchange="" />
             <label for="useSYTPlacesCheckBox" class="i" data-i18n="UseCYTPlaces">Use SeeYourTravel places</label>
-<%--            <br />
+            <%--            <br />
             <label for="pictureHeight">Max Picture Height</label>
             <input id="pictureMaxHeight" type="number" value="100" />--%>
             <br />
@@ -92,13 +93,13 @@
             <br />
             <span class="i" data-i18n="Volume">Volume:</span>
             <br />
-            <div id="slider" style="left: 10%; width: 80%; vertical-align: top" ></div>
+            <div id="slider" style="left: 10%; width: 80%; vertical-align: top"></div>
         </div>
-         <div style="position: absolute; right: 5px; top:75px; z-index:1001">
+        <div style="position: absolute; right: 5px; top: 75px; z-index: 1001">
             <div>
-                <button type="button" id="mute" style="width:15px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute();"></button>
+                <button type="button" id="mute" style="width: 15px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute();"></button>
                 <br />
-                <button type="button" id="continuePauseButton" disabled="disabled" class="headerButton" style="width:15px; background-image: url(img/play.png );" onclick="doStartStop();" ></button>
+                <button type="button" id="continuePauseButton" disabled="disabled" class="headerButton" style="width: 15px; background-image: url(img/play.png );" onclick="doStartStop();"></button>
             </div>
         </div>
 
@@ -128,7 +129,10 @@
     <script>
 
         function loadTrackOnPageLoad() {
-            init(trackParam); doStartStop();
+            init(trackParam,
+                function () {
+                    doStartStop();
+                });
         }
 
     </script>
