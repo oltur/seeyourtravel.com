@@ -25,15 +25,15 @@ function fblogout() {
                 if (response.status != "unknown") {
                     try {
                         FB.logout(function (response) {
-                            window.location = "login.aspx";
+                            window.location = "login.aspx?ReturnURL=" + returnURL;
                         });
                     }
                     catch (err) {
-                        window.location = "login.aspx";
+                        window.location = "login.aspx?ReturnURL=" + returnURL;
                     }
                 }
                 else {
-                    window.location = "login.aspx";
+                    window.location = "login.aspx?ReturnURL=" + returnURL;
                 }
             });
         }

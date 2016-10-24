@@ -2,6 +2,7 @@
 
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
     <script>    
+        var returnURL = '<%=Request["ReturnURL"].ToString()%>';
         $(function () {
             fblogout();
         });
