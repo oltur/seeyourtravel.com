@@ -19,7 +19,7 @@ public partial class services_get_thumbnail : System.Web.UI.Page
 {
     private Regex validChars = new Regex("[^a-zA-Z0-9-_. ]");
 
-    private int _maximumDimensionSmall = 100;
+    private int _maximumDimensionSmall = 150;
     private int _maximumDimensionMedium = 300;
 
     private static object _timingLock = new Object();

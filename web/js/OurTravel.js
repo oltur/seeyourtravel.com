@@ -213,10 +213,11 @@ function clickMute() {
         audio.muted = true;
         $('#mute').css('background-image', 'url(img/mute.png )');
     }
-};
+}
 
 var isTrackLoaded = false;
-var isTrackPaused = true;
+var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+var isTrackPaused = !iOS;
 
 function doStartStop() {
     if (isTrackLoaded) {
