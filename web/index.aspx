@@ -30,9 +30,10 @@
         function translateAll(err, t) {
             $(".i").i18n();
             $("option.i").i18n();
-            $("#profile").text($.t("Profile") + ": " + globalUserName);
+            $("#profile").text($.t("Profile").replace("{0}", globalUserName));
+
             if ("True" == "<%=Tools.IsGuest(this)%>") {
-                $("#login").text($.t("Login"));
+                $("#logout").text($.t("Login"));
             }
             else {
                 $("#logout").text($.t("Logout"));
@@ -263,6 +264,7 @@
 
             if ("True" == "<%=Tools.IsGuest(this)%>") {
                 $("#newTrackButton").attr("disabled", "disabled");
+                $("#profile").attr("disabled", "disabled");
             }
 
             if (trackParam == "" || "True" == "<%=Tools.IsGuest(this)%>") {

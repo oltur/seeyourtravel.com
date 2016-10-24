@@ -12,7 +12,7 @@
         function translateAll(err, t) {
             $(".i").i18n();
             $("option.i").i18n();
-            $("#profile").text($.t("Profile") + ": " + globalUserName);
+            $("#profile").text($.t("Profile").replace("{0}",globalUserName));
         }
 
     </script>

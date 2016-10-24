@@ -11,7 +11,7 @@
   "Cancel": "בטל",
   "Settings": "הגדרות",
   "AboutSeeYourTravel": "SeeYourTravel אודות",
-  "Profile": "פרופיל",
+  "Profile": "{0} :החשבון שלי",
   "Logout": "התנתק",
   "Help": "עזרה",
   "help_content": "<br /><br /><h2>ברוך הבא לעולם חוויית הנסיעה</h2><p>SeeYourTravel.com היא קהילה שבה תוכלו לשתף, לרענן, לתכנן את נתיבי הנסיעה והזיכרונות שלך עם חבריך, עם גישה לתמונות ולמידע מכל העולם.</p> <ul><li>התחבר עם חשבון פייסבוק או באמצעות חשבון SeeYourTravel כדי להיות חלק מהקהילה שלנו</li><li> סקור את המסלולים שלך ושל חבריך</li><li> צור מסלולים משלך על-ידי העלאת הנתונים ממכשירי ניווט, או הקלט את המסע שלך</li><li> ערוך והתקן מסלולים באמצעות כמה לחיצות עכבר</li><li>ושתף את החוויה שלך עם העולם!</li></ul>",
@@ -42,7 +42,7 @@
   "Description": "תיאור",
   "Images": "תמונות",
   "LoopTrack": "מסלול מעגלי אינסופי",
-  "UsePanoramioImages": "שימוש בתמונות פנורמיות",
+  "UsePanoramioImages": "Flickr שימוש בתמונות ",
   "UseCYTImages": "SeeYourTravel שימוש בתמונות",
   "UseGooglePlaces": "Google Places השתמש ב",
   "UseCYTPlaces": "SeeYourTravel Places השתמש ב",
@@ -67,6 +67,6 @@
   "Basic": "Basic",
   "Advanced": "Advanced",
   "MyProfile": "My Profile",
-  
+
   "PhotoCopyrightMessage": "תמונה מ {0} על ידי {1}. לחץ כדי לפתוח את המקור."
 }

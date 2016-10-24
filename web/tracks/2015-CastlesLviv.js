@@ -1,8 +1,8 @@
 {
-"name":""
+"name":"2015-Castles of Lviv"
 ,"copyright":"(c) Oleksandr Turevskiy"
 ,"defaultScale":10
-,"photoLocationTolerancy":50
+,"photoLocationTolerancy":200
 ,"stepsToRedraw":100
 ,"stepsToShowPhoto":50
 ,"numOfPhotos":20
