@@ -94,7 +94,7 @@
         }
 
         var slider1;
-        $(document).ready(function () {
+        $(function () {
             map2 = document.getElementById("map2");
             audio = document.getElementById("audio");
             imageDiv = $("#imageDiv");

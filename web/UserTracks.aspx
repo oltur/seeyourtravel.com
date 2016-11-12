@@ -12,7 +12,7 @@
         function translateAll(err, t) {
             $(".i").i18n();
             $("option.i").i18n();
-                        $("#profile").text($.t("Profile").replace("{0}",globalUserName));
+            $("#profile").text($.t("Profile").replace("{0}", globalUserName));
         }
 
     </script>
@@ -28,7 +28,7 @@
     <!-- #Include virtual="include/settingsPanel.inc" -->
 
 
-    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 800px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0 solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 950px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0 solid #000;">
         <table border="0">
             <tr>
                 <td>
@@ -44,17 +44,15 @@
                     <br />
                     <select style="vertical-align: central; width: 330px;" id="tracksList" size="15"></select>
                     <br />
-                    <br />
                     <button type="button" id="buttonNew" class="i" data-i18n="[title]New;New">New</button>
                     <button type="button" id="buttonEdit" class="i" data-i18n="[title]Edit;Edit">Edit</button>
                     <button type="button" id="buttonDelete" class="i" data-i18n="[title]DeleteSelected;DeleteSelected">Delete Selected</button>
                     <br />
                     <br />
-                    <span class="i" data-i18n="SiteComponentHTML">Site component HTML:</span>
-                    <br />
+                    <div id="elevationChartDiv">
+                    </div>
                     <input type="text" id="frameUrl" value="" style="width: 250px" />
                     <button type="button" id="buttonShow" class="i" data-i18n="[title]Show;Show">Show</button>
-                    <br />
                     <br />
                     <div id="divframe"></div>
                 </td>
@@ -81,19 +79,86 @@
         var markersTracks;
         var line;
 
-        $(function () {
+        var myBarChart = null;
 
-            function onMapClick(e) {
-                //updateTrackData(e);
-                //updateMap();
+        function onMapClick(e) {
+            //updateTrackData(e);
+            //updateMap();
+        }
+
+        var icon = L.icon({
+            iconUrl: ("tracks/content/mycar.png"),
+            iconSize: [50, 50],
+            iconAnchor: [1, 50],
+            shadowUrl: null
+        });
+
+        function compactTrackData(trackData) {
+            var result = [];
+            var maxSize = 256;
+            if (trackData.length <= maxSize)
+                return trackData;
+
+            for (var i = 0; i < maxSize; i++) {
+                var j = Math.round(i * trackData.length / maxSize);
+                result.push(trackData[j]);
             }
+            return result;
+        }
 
-            var icon = L.icon({
-                iconUrl: ("tracks/content/mycar.png"),
-                iconSize: [50, 50],
-                iconAnchor: [1, 50],
-                shadowUrl: null
+        function fillTracks() {
+            $.ajax(
+            {
+                url: ('services/get_mytracks.aspx' + "?" + Math.random()),
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("fillTracks error: " + textStatus); console.log("Error: " + errorThrown);
+                    toastr.error(textStatus + "," + errorThrown, "ERROR", { timeOut: 5000, extendedTimeOut: 10000 });
+                },
+                success: function (data) {
+                    var fileListString = data;
+                    markersTracks.clearLayers();
+
+                    var fileList = fileListString.split('\n');
+                    tracksList
+                            .find('option')
+                            .remove()
+                            .end();
+                    for (var i = 0; i < fileList.length; i++) {
+                        if (!isNullOrEmpty(fileList[i])) {
+                            var parts = fileList[i].split(';');
+                            tracksList.append('<option value="' + parts[0] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
+
+                            var location = JSON.parse(parts[3]);
+
+                            var text = parts[1];
+                            var fileName = parts[0];
+                            var imgPath = (parts[4]) ? ("tracks/content/" + parts[4]) : ("img/track.png");
+                            var domelem = document.createElement('a');
+                            //domelem.href = place.name;
+                            domelem.innerHTML = "<p>" + text + "</p><img height='100px' width='100px' src='" + imgPath + "'/>";
+                            domelem.alt = text;
+                            domelem.href = "./index.aspx?trackname=" + fileName;
+                            domelem.target = "_blank";
+
+                            var iconTrack = L.icon({
+                                iconUrl: ('img/track.png'),
+                                iconSize: [40, 40],
+                                iconAnchor: [20, 20],
+                                //shadowUrl: null
+                            });
+
+                            var markerTrack = L.marker(new L.LatLng(location.lat - 0.0002 + Math.random() * 0.0004, location.lng - 0.0002 + Math.random() * 0.0004),
+                                { icon: iconTrack })
+                                    .bindPopup(domelem);
+
+                            markersTracks.addLayer(markerTrack);
+                        }
+                    }
+                }
             });
+
+        }
+        $(function () {
 
             init(null);
             map.setView([50.430981, 30.539267], 8);
@@ -131,8 +196,76 @@
 
             fillTracks();
 
+            function plotElevation(elevations, status) {
+
+                var chartDiv = document.getElementById('elevationChartDiv');
+                if (status !== 'OK') {
+                    // Show the error code inside the chartDiv.
+                    chartDiv.innerHTML = 'Cannot show elevation: request failed because ' +
+                        status;
+                    return;
+                }
+
+                chartDiv.innerHTML = "<canvas id=\"elevationChartCanvas\" height=\"250\"></canvas>";
+                var elevationChartCanvas = document.getElementById('elevationChartCanvas');
+
+                var data = {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: "Elevation",
+                            data: [],
+                        }
+                    ]
+                };
+
+                for (var i = 0; i < elevations.length; i++) {
+                    var label = 
+                          (Math.round(elevations[i].location.lat() * 10000) / 10000).toString()
+                        + ", "
+                        + (Math.round(elevations[i].location.lng() * 10000) / 10000).toString();
+                    data.labels.push(label);
+                    data.datasets[0].data.push(Math.round(elevations[i].elevation));
+                }
+
+                if (myBarChart)
+                    delete myBarChart;
+
+                myBarChart = new Chart(elevationChartCanvas, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        hover: {
+                            // Overrides the global setting
+                            mode: 'nearest'
+                        }
+                    }
+                });
+
+                // Create a new chart in the elevation_chart DIV.
+                //var chart = new google.visualization.ColumnChart(chartDiv);
+
+                // Extract the data from which to populate the chart.
+                // Because the samples are equidistant, the 'Sample'
+                // column here does double duty as distance along the
+                // X axis.
+                //var data = new google.visualization.DataTable();
+                //data.addColumn('string', 'Sample');
+                //data.addColumn('number', 'Elevation');
+                //for (var i = 0; i < elevations.length; i++) {
+                //    data.addRow(['', elevations[i].elevation]);
+                //}
+
+                //// Draw the chart using the data within its DIV.
+                //chart.draw(data, {
+                //    height: 150,
+                //    legend: 'none',
+                //    titleY: 'Elevation (m)'
+                //});
+            }
+
             tracksList.change(function () {
-                var s = '<iframe style="width: 330px; height: 300px;" src="' + '<%=Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath%>' + "frame.aspx?trackname=" + tracksList.val() + '"></iframe>'
+                var s = '<iframe style="width: 330px; height: 250px;" src="' + '<%=Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath%>' + "frame.aspx?trackname=" + tracksList.val() + '"></iframe>'
                 $("#frameUrl").val(s);
                 $("#divframe").html("");
 
@@ -143,6 +276,13 @@
                         //markers.clearLayers();
                         if (line)
                             markers.removeLayer(line);
+
+                        var elevator = new google.maps.ElevationService;
+                        elevator.getElevationAlongPath({
+                            'path': compactTrackData(track.trackData),
+                            'samples':128
+                        }, plotElevation);
+
                         line = L.polyline(track.trackData, { color: 'green' });
                         markers.addLayer(line);
 
@@ -178,55 +318,6 @@
                 }
             });
         });
-
-        function fillTracks() {
-            var fileListString = $.ajax(
-        {
-            url: ('services/get_mytracks.aspx' + "?" + Math.random()),
-            async: false,
-            dataType: 'json'
-        }
-        ).responseText;
-
-            markersTracks.clearLayers();
-
-            var fileList = fileListString.split('\n');
-            tracksList
-                    .find('option')
-                    .remove()
-                    .end();
-            for (var i = 0; i < fileList.length; i++) {
-                if (!isNullOrEmpty(fileList[i])) {
-                    var parts = fileList[i].split(';');
-                    tracksList.append('<option value="' + parts[0] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
-
-                    var location = JSON.parse(parts[3]);
-
-                    var text = parts[1];
-                    var fileName = parts[0];
-                    var imgPath = (parts[4]) ? ("tracks/content/" + parts[4]) : ("img/track.png");
-                    var domelem = document.createElement('a');
-                    //domelem.href = place.name;
-                    domelem.innerHTML = "<p>" + text + "</p><img height='100px' width='100px' src='" + imgPath + "'/>";
-                    domelem.alt = text;
-                    domelem.href = "./index.aspx?trackname=" + fileName;
-                    domelem.target = "_blank";
-
-                    var iconTrack = L.icon({
-                        iconUrl: ('img/track.png'),
-                        iconSize: [40, 40],
-                        iconAnchor: [20, 20],
-                        //shadowUrl: null
-                    });
-
-                    var markerTrack = L.marker(new L.LatLng(location.lat - 0.0002 + Math.random() * 0.0004, location.lng - 0.0002 + Math.random() * 0.0004),
-                        { icon: iconTrack })
-                            .bindPopup(domelem);
-
-                    markersTracks.addLayer(markerTrack);
-                }
-            }
-        }
 
     </script>
 </asp:Content>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "https://local.seeyourtravel.com", "https://local.seeyourtravel.com", "{53FAB1A0-AD58-4C2D-8CBF-D50E1B238539}"
 	ProjectSection(WebsiteProperties) = preProject
@@ -22,6 +22,12 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "https://local.seeyourtravel
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		SlnRelativePath = "..\web\"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{49DB7996-5600-4182-B0D2-71C8568C4BB6}"
+	ProjectSection(SolutionItems) = preProject
+		WE-Palette.css = WE-Palette.css
+		WebEssentials2015-Settings.json = WebEssentials2015-Settings.json
 	EndProjectSection
 EndProject
 Global
