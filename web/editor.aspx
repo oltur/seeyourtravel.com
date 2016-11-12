@@ -12,7 +12,7 @@
         function translateAll(err, t) {
             $(".i").i18n();
             $("option.i").i18n();
-            $("#profile").text($.t("Profile").replace("{0}",globalUserName));
+            $("#profile").text($.t("Profile").replace("{0}", globalUserName));
         }
 
     </script>
@@ -29,7 +29,7 @@
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="overflow: auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 720px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0 solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="overflow: auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 750px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0 solid #000;">
 
         <input type="hidden" id="trackId" name="trackId" value="<%=this.TrackId%>" />
         <input type="hidden" id="trackFileName" name="trackFileName" value="<%=this.TrackFileName%>" />
@@ -119,6 +119,24 @@
                     <input id="pointDescr" name="pointDescr" type="text" value="" style="width: 250px" />
                 </p>
                 <input type="button" value="Delete selected" id="buttonDeleteSelected" class="i" data-i18n="[title]DeleteSelected;[value]DeleteSelected" />
+                <div class="big">
+                    <br />
+                    <table>
+                        <tr>
+                            <td>From:</td>
+                            <td>
+                                <input id="fromLocation" type="text" value="Traktorostroiteley prospekt 134A, Kharkiv, Ukraine" style="width: 200px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To:</td>
+                            <td>
+                                <input id="toLocation" type="text" value="Sadovyi Lane 19, Bohodukhiv, Kharkiv Oblast, Ukraine" style="width: 200px" />
+                            </td>
+                        </tr>
+                    </table>
+                    <button type="button" id="createByRoute" class="i" data-i18n="[title]CreateByRoute;CreateByRoute">Create by Route</button>
+                </div>
                 <div class="big">
                     <br />
                     <div id="fileOperations">
@@ -275,6 +293,53 @@
             }
         }
 
+        function setDirections(directions) {
+            var i = 0;
+            for (; i < directions.routes[0].overview_path.length; i++) {
+                if (i == 0) {
+                    points
+                        .find('option')
+                        .remove()
+                        .end();
+                }
+                var p = directions.routes[0].overview_path[i];
+                var p2 = new L.LatLng(p.lat(), p.lng());
+
+                var t = JSON.stringify(p2);
+
+                points
+                    .append($("<option></option>")
+                    .attr("value", t)
+                    .text(t));
+            }
+
+            if (i > 0) {
+                points[0].selectedIndex = 0;
+                points.change();
+
+                updateMap();
+            }
+        }
+
+        function createTrackByRoute() {
+
+            var directionsService = new google.maps.DirectionsService();
+
+            var request = {
+                origin: $("#fromLocation").val(),
+                destination: $("#toLocation").val(),
+                provideRouteAlternatives: false,
+                travelMode: 'DRIVING',
+                unitSystem: google.maps.UnitSystem.METRIC
+            };
+
+            directionsService.route(request, function (result, status) {
+                if (status == 'OK') {
+                    setDirections(result);
+                }
+            });
+        }
+
         $(function () {
 
             points = $("#points");
@@ -349,9 +414,14 @@
                 });
 
             document.getElementById('filesGpx').addEventListener('change', handleFileSelect, false);
+
             $('#buttonDeleteSelected').click(function () {
                 $('#points option:selected').remove();
                 updateMap();
+            });
+
+            $("#createByRoute").click(function () {
+                createTrackByRoute();
             });
 
             // Check for the various File API support.
@@ -389,65 +459,65 @@
             else {
                 loadTrack(translateTracksPath(trackname + ".js"),
                     function (tempTrack) {
-                    var initialTrack = tempTrack;
-                    $("#name").val(initialTrack.name);
-                    if (initialTrack.isPublic == "No") {
-                        $("#isPublic").prop('checked', false);
-                    }
-                    else {
-                        $("#isPublic").prop('checked', true);
-                    }
-
-                    if (!isNullOrEmpty(initialTrack.travelWith)) {
-                        $("#travelWith").val(initialTrack.travelWith);
-                    }
-
-                    $("#copyright").val(initialTrack.copyright);
-                    $("#category").val(initialTrack.category);
-                    $("#photoLocationTolerancy").val(initialTrack.photoLocationTolerancy);
-                    //                $("#stepsToRedraw").val(initialTrack.stepsToRedraw);
-                    //                $("#stepsToShowPhoto").val(initialTrack.stepsToShowPhoto);
-                    $("#velocityMetersPerSec").val(initialTrack.velocityMetersPerSec);
-                    $("#numOfPhotos").val(initialTrack.numOfPhotos);
-                    $("#icon").val(initialTrack.icon);
-                    setAnimatedMarkerIcon(initialTrack.icon);
-                    $("#trackImage").val(initialTrack.trackImage);
-                    $("#audioSrc").val(initialTrack.audioSrc);
-                    $("#audioVolume").val(initialTrack.audioVolume);
-                    $("#textToRead").val(initialTrack.textToRead);
-                    $("#defaultScale").val(initialTrack.defaultScale);
-                    map.setZoom(initialTrack.defaultScale);
-
-                    $("#usePanoramioImages").prop('checked', initialTrack.usePanoramioImages != "No");
-                    $("#useSYTImagesTrack").prop('checked', initialTrack.useSYTImagesTrack != "No");
-                    $("#useGooglePlaces").prop('checked', initialTrack.useGooglePlaces != "No");
-                    $("#useSYTPlaces").prop('checked', initialTrack.useSYTPlaces != "No");
-
-                    if (!isNullOrEmpty(initialTrack.trackGpx)) {
-                        $("#trackGpx").val(initialTrack.trackGpx);
-                    }
-                    else {
-                        initialTrack.trackData.forEach(function (point) {
-                            if (point.hasOwnProperty("lat") && (point.hasOwnProperty("syt_text") == null || point.hasOwnProperty("syt_text") == ""))
-                                point["syt_text"] = "";
-                            if (!point.hasOwnProperty("lat") && point.length < 3)
-                                point[2] = "";
-                            var t = JSON.stringify(point);
-                            points
-                                .append($("<option></option>")
-                                .attr("value", t)
-                                .text(t));
-                        });
-
-                        if (initialTrack.trackData.length > 0) {
-                            points[0].selectedIndex = 0;
-                            points.change();
+                        var initialTrack = tempTrack;
+                        $("#name").val(initialTrack.name);
+                        if (initialTrack.isPublic == "No") {
+                            $("#isPublic").prop('checked', false);
+                        }
+                        else {
+                            $("#isPublic").prop('checked', true);
                         }
 
-                    }
+                        if (!isNullOrEmpty(initialTrack.travelWith)) {
+                            $("#travelWith").val(initialTrack.travelWith);
+                        }
 
-                    drawTrack();
-                });
+                        $("#copyright").val(initialTrack.copyright);
+                        $("#category").val(initialTrack.category);
+                        $("#photoLocationTolerancy").val(initialTrack.photoLocationTolerancy);
+                        //                $("#stepsToRedraw").val(initialTrack.stepsToRedraw);
+                        //                $("#stepsToShowPhoto").val(initialTrack.stepsToShowPhoto);
+                        $("#velocityMetersPerSec").val(initialTrack.velocityMetersPerSec);
+                        $("#numOfPhotos").val(initialTrack.numOfPhotos);
+                        $("#icon").val(initialTrack.icon);
+                        setAnimatedMarkerIcon(initialTrack.icon);
+                        $("#trackImage").val(initialTrack.trackImage);
+                        $("#audioSrc").val(initialTrack.audioSrc);
+                        $("#audioVolume").val(initialTrack.audioVolume);
+                        $("#textToRead").val(initialTrack.textToRead);
+                        $("#defaultScale").val(initialTrack.defaultScale);
+                        map.setZoom(initialTrack.defaultScale);
+
+                        $("#usePanoramioImages").prop('checked', initialTrack.usePanoramioImages != "No");
+                        $("#useSYTImagesTrack").prop('checked', initialTrack.useSYTImagesTrack != "No");
+                        $("#useGooglePlaces").prop('checked', initialTrack.useGooglePlaces != "No");
+                        $("#useSYTPlaces").prop('checked', initialTrack.useSYTPlaces != "No");
+
+                        if (!isNullOrEmpty(initialTrack.trackGpx)) {
+                            $("#trackGpx").val(initialTrack.trackGpx);
+                        }
+                        else {
+                            initialTrack.trackData.forEach(function (point) {
+                                if (point.hasOwnProperty("lat") && (point.hasOwnProperty("syt_text") == null || point.hasOwnProperty("syt_text") == ""))
+                                    point["syt_text"] = "";
+                                if (!point.hasOwnProperty("lat") && point.length < 3)
+                                    point[2] = "";
+                                var t = JSON.stringify(point);
+                                points
+                                    .append($("<option></option>")
+                                    .attr("value", t)
+                                    .text(t));
+                            });
+
+                            if (initialTrack.trackData.length > 0) {
+                                points[0].selectedIndex = 0;
+                                points.change();
+                            }
+
+                        }
+
+                        drawTrack();
+                    });
             }
         });
 
