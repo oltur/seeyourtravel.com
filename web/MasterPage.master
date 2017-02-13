@@ -80,6 +80,19 @@
 
     <asp:ContentPlaceHolder ID="HeadPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "url": "https://www.seeyourtravel.com/corporate",
+  "contactPoint": [{
+    "@type": "ContactPoint",
+    "telephone": "+972-58-7786365",
+    "contactType": "sales"
+  }]
+}
+</script>
 </head>
 <body onresize="onBodyResize()">
     <form id="form1" method="POST" enctype="multipart/form-data" runat="server">

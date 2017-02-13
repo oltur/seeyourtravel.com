@@ -4,7 +4,7 @@
 ,"travelWith":"Car"
 ,"copyright":"(c)"
 ,"defaultScale":12
-,"photoLocationTolerancy":10
+,"photoLocationTolerancy":100
 ,"numOfPhotos":10
 ,"velocityMetersPerSec":200
 ,"icon":"mybike.png"
