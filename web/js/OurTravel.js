@@ -37,6 +37,29 @@ var iconFriend = L.icon({
 });
 //#endregion
 
+function showDialog(id)
+{
+    if (facebookAPIIsLoaded) {
+        $('#' + id).dialog({
+//            dialogClass: "no-close",
+            width: 550,
+            minHeight: 400,
+            maxHeight: 600
+            //,buttons: [
+            //  {
+            //      text: "OK",
+            //      click: function () {
+            //          $(this).dialog("close");
+            //      }
+            //  }
+            //]
+        });
+    }
+    else {
+        toastr.warning("Please wait, Facebook code is not loaded yet", "", { timeOut: 1000, extendedTimeOut: 2000 });
+    }
+}
+
 // #region Utils
 function pointToLatLng(point) {
     var result;
@@ -575,6 +598,14 @@ function init(filename, handler) {
         tileLayer.addTo(map);
         L.control.scale({ position: 'bottomleft' }).addTo(map);
         L.control.zoom({ position: 'topright' }).addTo(map);
+
+        //Routing example
+        //L.Routing.control({
+        //    waypoints: [
+        //      L.latLng(50.45, 30.52),
+        //      L.latLng(50.56, 30.31)
+        //    ]
+        //}).addTo(map);
     }
 
     markers = new L.FeatureGroup();

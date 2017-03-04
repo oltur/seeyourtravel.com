@@ -195,13 +195,18 @@
             </div>
             <div style="position: absolute; left: 270px; top: 20px; z-index: 1001">
                 <div id="wrapper">
-                    <img id="imgCoord" src="img/location.png" />
+                    <img id="imgComments" src="img/comments.png" onclick="showDialog('dialog')" title="Comments" />
                     <span id="lblCoord" style="vertical-align: super; text-shadow: 1px 1px #ffffff;"></span>
+    <div id="dialog" title="Facebook" style="display:none">
+        <div class="fb-comments" data-href="<%=Request.Url.ToString()%>" data-width="450" data-numposts="5"></div>
+    </div>
+
                 </div>
             </div>
             <div style="position: absolute; right: 5px; bottom: 15px; z-index: 1001">
                 <div class="fb-like" data-width="50" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
-                <a href="https://twitter.com/share" class="twitter-share-button" data-via="turevskiy">Tweet</a>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-via="turevskiy" data-lang="es">Tweet</a>
+                <script>$(".twitter-share-button").attr("data-lang", getTwitterLanguage());</script>
                 <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
             </div>
 

@@ -17,7 +17,9 @@
     <script src="libs/toastr.min.js"></script>
     <script src="libs/leaflet-src.js"></script>
     <script src="libs/leaflet.markercluster-src.js"></script>
+    <%--<script src="libs/leaflet-routing-machine.js"></script>--%>
     <script src="libs/i18next.js"></script>
+    <script src="js/facebook.js"></script>
 
  <%--   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKpuHWNX4AL1Beyky-xsegxkh6SihjN30"></script>
  --%>
@@ -34,11 +36,12 @@
     <link rel="stylesheet" href="styles/tinycarousel.css" />
     <link rel="stylesheet" href="styles/toastr.min.css" />
 
-    <script src="js/facebook.js"></script>
     <script src="js/OurTravel.Common.js"></script>
     <script src="js/OurTravel.js"></script>
     <script src="js/AnimatedMarker.js"></script>
     <script src="js/get_text.js"></script>
+
+    <%--<link rel="stylesheet" href="styles/leaflet-routing-machine.css" />--%>
 
     <link rel="stylesheet" href="styles/ourTravel.common.css" />
     <link rel="stylesheet" href="styles/ourTravel.css" />
@@ -60,6 +63,8 @@
     <script>
         var globalUserId = '<%=Context.User.Identity.Name%>';
         var globalUserName = '<%=string.IsNullOrWhiteSpace((string)Session["UserName"])?"Guest":Session["UserName"].ToString()%>';
+        var globalFacebookLanguage = "en_US";
+        var facebookAPIIsLoaded = false;
 
         ga('set', '&uid', globalUserId); // Set the user ID using signed-in user_id.
 
@@ -69,12 +74,15 @@
             sel.append('<option value="en-US" >En</option>');
             sel.append('<option value="de-DE" >De</option>');
             sel.append('<option value="he" >עברית</option>');
-            sel.append('<option value="ua-UA" >Укр</option>');
+            sel.append('<option value="uk-UA" >Укр</option>');
 
             var c = $.cookie("i18next");
             if (typeof c != "undefined" && c != null && c != "") {
                 sel.val(c);
             }
+            globalFacebookLanguage = getFacebookLanguage();
+
+            initFacebook();
         });
     </script>
 

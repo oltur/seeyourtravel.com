@@ -186,3 +186,12 @@ input.glow {
     /*height: 100%;*/
     margin: 0 0 0 0;
 }
+
+.no-close .ui-dialog-titlebar-close {
+    display: none;
+}
+
+#imgComments {
+    width: 36px;
+    height: 36px;
+}

@@ -1,22 +1,22 @@
-<%@ Page Title="Please login to start" Language="C#" MasterPageFile="MasterPage.master" CodeFile="Login.aspx.cs" Inherits="Login"%>
+<%@ Page Title="Please login to start" Language="C#" MasterPageFile="MasterPage.master" CodeFile="Login.aspx.cs" Inherits="Login" %>
 
 <%@ Import Namespace="System.IO" %>
 
 <asp:Content ID="headContent" ContentPlaceHolderID="HeadPlaceholder" runat="Server">
-        <script>
-            var messageId = "<%=Message.ClientID%>";
-            // This is called with the results from from FB.getLoginStatus().
-            function statusChangeCallback(response) {
-//                debugger;
-                console.log('statusChangeCallback');
-                console.log(response);
-                // The response object is returned with a status field that lets the
-                // app know the current login status of the person.
-                // Full docs on the response object can be found in the documentation
-                // for FB.getLoginStatus().
-                if (response.status === 'connected') {
-                    // Logged into your app and Facebook.
-                    document.getElementById("<%=Token.ClientID%>").value = response.authResponse.accessToken;
+    <script>
+        var messageId = "<%=Message.ClientID%>";
+        // This is called with the results from from FB.getLoginStatus().
+        function statusChangeCallback(response) {
+            //                debugger;
+            console.log('statusChangeCallback');
+            console.log(response);
+            // The response object is returned with a status field that lets the
+            // app know the current login status of the person.
+            // Full docs on the response object can be found in the documentation
+            // for FB.getLoginStatus().
+            if (response.status === 'connected') {
+                // Logged into your app and Facebook.
+                document.getElementById("<%=Token.ClientID%>").value = response.authResponse.accessToken;
                     FB.api('/me', function (response2) {
                         document.getElementById("<%=Data.ClientID%>").value = JSON.stringify(response2);
                         document.getElementById("<%=LoginButton.ClientID%>").click();
@@ -29,8 +29,8 @@
                 } else {
                     // The person is not logged into Facebook, so we're not sure if
                     // they are logged into this app or not.
-                //    document.getElementById(messageId).innerHTML = 'Please log ' +
-                //      'into Facebook.';
+                    //    document.getElementById(messageId).innerHTML = 'Please log ' +
+                    //      'into Facebook.';
                 }
             }
 
@@ -64,7 +64,7 @@
                 //
                 // These three cases are handled in the callback function.
 
-                $(function(){
+                $(function () {
                     FB.getLoginStatus(function (response) {
                         statusChangeCallback(response);
                     });
@@ -97,94 +97,93 @@
                 $("option.i").i18n();
             }
 
-        </script>
+    </script>
 
     <style type="text/css">
         #loginform {
-        width: 300px;
-        height: 300px;
-
-        position:absolute; /*it can be fixed too*/
-        left:0; right:0;
-        top:0; bottom:0;
-        margin:auto;
-
-        /*this to solve "the content will not be cut when the window is smaller than the content": */
-        max-width:100%;
-        max-height:100%;
-        overflow:hidden;
-    }
+            width: 300px;
+            height: 300px;
+            position: absolute; /*it can be fixed too*/
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            /*this to solve "the content will not be cut when the window is smaller than the content": */
+            max-width: 100%;
+            max-height: 100%;
+            overflow: hidden;
+        }
     </style>
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
+
     <div style="position: absolute; right: 55px; top: 5px; z-index: 1003">
         <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
     </div>
     <div class="mapheader">
         <span style="position: absolute; left: 0;">
-            <a href="./corporate" target="_blank"><img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+            <a href="./corporate" target="_blank">
+                <img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
         </span>
-        <span style="position: absolute; right: 0;"><a href="#"><img src="img/help.png" style="height:50px; width:50px" alt="Need assistance?" onclick="$('#helpPanel').toggle('fold', 1000);" /></a>&nbsp;</span>
-        <span style="position: absolute; left: 70px;">
-        </span>
+        <span style="position: absolute; right: 0;"><a href="#">
+            <img src="img/help.png" style="height: 50px; width: 50px" alt="Need assistance?" onclick="$('#helpPanel').toggle('fold', 1000);" /></a>&nbsp;</span>
+        <span style="position: absolute; left: 70px;"></span>
     </div>
     <!-- #Include virtual="include/profileHelpPanel.inc" -->
 
-<div id="loginform" title="Login" >
+    <div id="loginform" title="Login">
 
-    <table>
-        <tr>
-            <td class="i" data-i18n="Username_">
-                Username:
-            </td>
-            <td>
-                <asp:TextBox ID="UserName" runat="server" class="i glow" data-i18n></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td class="i glow" data-i18n="Password_">
-                Password:
-            </td>
-            <td>
-                <asp:TextBox ID="Password" runat="server" TextMode="Password" class="i glow" data-i18n></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td>
-            </td>
-            <td>
-                <asp:CheckBox ID="RememberMe" class="glow" runat="server"/>
-                <span class="i" data-i18n="RememberMe">Remember Me</span>
-                <asp:HiddenField ID="Token" runat="server"/>
-                <asp:HiddenField ID="Data" runat="server"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <asp:Button ID="LoginButton"  runat="server" Text="Login" OnClick="LoginButton_Click" class="i" data-i18n="[value]Login;"/> 
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div style="width:100px;">
-                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+        <table>
+            <tr>
+                <td class="i" data-i18n="Username_">Username:
+                </td>
+                <td>
+                    <asp:TextBox ID="UserName" runat="server" class="i glow" data-i18n></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td class="i glow" data-i18n="Password_">Password:
+                </td>
+                <td>
+                    <asp:TextBox ID="Password" runat="server" TextMode="Password" class="i glow" data-i18n></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <asp:CheckBox ID="RememberMe" class="glow" runat="server" />
+                    <span class="i" data-i18n="RememberMe">Remember Me</span>
+                    <asp:HiddenField ID="Token" runat="server" />
+                    <asp:HiddenField ID="Data" runat="server" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Button ID="LoginButton" runat="server" Text="Login" OnClick="LoginButton_Click" class="i" data-i18n="[value]Login;" />
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div style="width: 100px;">
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
                     </fb:login-button>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <asp:Label ID="Message" runat="server" ForeColor="Red" Text="" class="i" data-i18n></asp:Label> </p>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align:center; padding-top:30px;">
-                <asp:Button ID="DemoButton"  runat="server" Text="Try it now!" OnClick="DemoButton_Click" style="width:200px; height: 70px; font-size:large" class="i" data-i18n="[value]Demo;"/> 
-            </td>
-        </tr>
-    </table>
-</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <asp:Label ID="Message" runat="server" ForeColor="Red" Text="" class="i" data-i18n></asp:Label>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center; padding-top: 30px;">
+                    <asp:Button ID="DemoButton" runat="server" Text="Try it now!" OnClick="DemoButton_Click" Style="width: 200px; height: 70px; font-size: large" class="i" data-i18n="[value]Demo;" />
+                </td>
+            </tr>
+        </table>
+    </div>
 </asp:Content>

@@ -3,11 +3,36 @@
 function selectLang() {
     var val = getLanguage();
     $.i18n.setLng(val, function () { if (typeof translateAll != "undefined") translateAll(); });
+    location.reload();
 }
 
 function getLanguage() {
     var sel = $("#langList");
     return sel.val();
+}
+
+function getFacebookLanguage() {
+    var result;
+
+    var sel = $("#langList");
+    if (sel && sel.val())
+        result = sel.val();
+    else if ($.cookie("i18next"))
+        result = $.cookie("i18next");
+    else
+        result = "en_US";
+
+    if (result == "he")
+        result = "he_IL";
+    else result = result.replace("-", "_");
+
+    return result;
+}
+
+function getTwitterLanguage() {
+    var result = getFacebookLanguage();
+
+    return result.substring(0, 2);
 }
 
 function isNullOrEmpty(s) {

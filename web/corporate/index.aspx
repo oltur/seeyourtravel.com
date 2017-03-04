@@ -68,7 +68,7 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
             sel.append('<option value="en-US" >En</option>');
             sel.append('<option value="de-DE" >De</option>');
             sel.append('<option value="he" >עברית</option>');
-            sel.append('<option value="ua-UA" >Укр</option>');
+            sel.append('<option value="uk-UA" >Укр</option>');
 
             var c = $.cookie("i18next");
             if (typeof c != "undefined" && c != null && c != "") {

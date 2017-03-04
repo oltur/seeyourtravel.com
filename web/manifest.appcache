@@ -27,7 +27,7 @@ img/friendlocation.png
 img/help.png
 img/info.png
 img/load.png
-img/location.png
+img/comments.png
 img/lodging.png
 img/logo.png
 img/logo2.png
@@ -52,7 +52,7 @@ img/settings.png
 img/settings1.png
 img/something.png
 img/start.png
-img/ua-UA.png
+img/uk-UA.png
 img/ua.png
 img/unmute.png
 img/up.png
@@ -119,8 +119,8 @@ locales/de-DE/translation.json
 locales/de/translation.json
 locales/en-US/translation.json
 locales/en/translation.json
-locales/ua/translation.json
-locales/ua-UA/translation.json
+locales/uk/translation.json
+locales/uk-UA/translation.json
 
 NETWORK:
 *
