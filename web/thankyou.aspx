@@ -17,7 +17,7 @@
     <div class="mapheader">
         &nbsp;
        <a href="#">
-           <img src="img/logosmall.png" style="height: 24px; width: 24px; vertical-align: middle;" /></a>
+           <img src="img/SiteLogo.png" style="height: 50px; vertical-align: middle;" /></a>
         &nbsp;
        Thank you for your feedback! You will be back to <a href="index.aspx">Main page</a> in 10 seconds, or click the link.
         &nbsp;

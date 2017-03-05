@@ -42,22 +42,30 @@ var iconFriend = L.icon({
 function showDialog(id) {
     if (facebookAPIIsLoaded) {
         $('#' + id).dialog({
-            //            dialogClass: "no-close",
+            //draggable: false,
+            //resizable: false,
+            //show: 'fade',
+            //hide: 'fade',
+            //modal: true,
+            dialogClass: "no-title",
             width: 550,
             minHeight: 400,
-            maxHeight: 600
-            //,buttons: [
-            //  {
-            //      text: "OK",
-            //      click: function () {
-            //          $(this).dialog("close");
-            //      }
-            //  }
-            //]
+            maxHeight: 600,
+            //position: ['center', 35],
+            open: function open() {
+                $('#tabs-movie').tabs({
+                    create: function create(e, ui) {
+                        $('#closeBtn').click(function () {
+                            $('#dialog-movie-info').dialog('close');
+                        });
+                    }
+                });
+                $(this).parent().children('.ui-dialog-titlebar').remove();
+            }
         });
     } else {
-            toastr.warning("Please wait, Facebook code is not loaded yet", "", { timeOut: 1000, extendedTimeOut: 2000 });
-        }
+        toastr.warning("Please wait, Facebook code is not loaded yet", "", { timeOut: 1000, extendedTimeOut: 2000 });
+    }
 }
 
 // #region Utils

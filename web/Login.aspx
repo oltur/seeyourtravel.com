@@ -118,14 +118,16 @@
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
-
+    <script>
+        document.body.style.backgroundImage = "url('img/PipIvanDimmed.jpg')";
+    </script>
     <div style="position: absolute; right: 55px; top: 5px; z-index: 1003">
         <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
     </div>
     <div class="mapheader">
         <span style="position: absolute; left: 0;">
             <a href="./corporate" target="_blank">
-                <img src="img/logo3.png" style="height: 50px; width: 50px; vertical-align: middle;" /></a>
+                <img src="img/SiteLogo.png" style="height: 50px; vertical-align: middle;" /></a>
         </span>
         <span style="position: absolute; right: 0;"><a href="#">
             <img src="img/help.png" style="height: 50px; width: 50px" alt="Need assistance?" onclick="$('#helpPanel').toggle('fold', 1000);" /></a>&nbsp;</span>

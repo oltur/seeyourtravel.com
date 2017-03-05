@@ -93,19 +93,6 @@
             shadowUrl: null
         });
 
-        function compactTrackData(trackData) {
-            var result = [];
-            var maxSize = 256;
-            if (trackData.length <= maxSize)
-                return trackData;
-
-            for (var i = 0; i < maxSize; i++) {
-                var j = Math.round(i * trackData.length / maxSize);
-                result.push(trackData[j]);
-            }
-            return result;
-        }
-
         function fillTracks() {
             $.ajax(
             {
@@ -156,74 +143,6 @@
                     }
                 }
             });
-        }
-
-        function plotElevation(elevations, status) {
-
-            var chartDiv = document.getElementById('elevationChartDiv');
-            if (status !== 'OK') {
-                // Show the error code inside the chartDiv.
-                chartDiv.innerHTML = 'Cannot show elevation: request failed because ' +
-                    status;
-                return;
-            }
-
-            chartDiv.innerHTML = "<canvas id=\"elevationChartCanvas\" height=\"250\"></canvas>";
-            var elevationChartCanvas = document.getElementById('elevationChartCanvas');
-
-            var data = {
-                labels: [],
-                datasets: [
-                    {
-                        label: "Elevation",
-                        data: [],
-                    }
-                ]
-            };
-
-            for (var i = 0; i < elevations.length; i++) {
-                var label =
-                      (Math.round(elevations[i].location.lat() * 10000) / 10000).toString()
-                    + ", "
-                    + (Math.round(elevations[i].location.lng() * 10000) / 10000).toString();
-                data.labels.push(label);
-                data.datasets[0].data.push(Math.round(elevations[i].elevation));
-            }
-
-            if (myBarChart)
-                delete myBarChart;
-
-            myBarChart = new Chart(elevationChartCanvas, {
-                type: 'bar',
-                data: data,
-                options: {
-                    hover: {
-                        // Overrides the global setting
-                        mode: 'nearest'
-                    }
-                }
-            });
-
-            // Create a new chart in the elevation_chart DIV.
-            //var chart = new google.visualization.ColumnChart(chartDiv);
-
-            // Extract the data from which to populate the chart.
-            // Because the samples are equidistant, the 'Sample'
-            // column here does double duty as distance along the
-            // X axis.
-            //var data = new google.visualization.DataTable();
-            //data.addColumn('string', 'Sample');
-            //data.addColumn('number', 'Elevation');
-            //for (var i = 0; i < elevations.length; i++) {
-            //    data.addRow(['', elevations[i].elevation]);
-            //}
-
-            //// Draw the chart using the data within its DIV.
-            //chart.draw(data, {
-            //    height: 150,
-            //    legend: 'none',
-            //    titleY: 'Elevation (m)'
-            //});
         }
 
         $(function () {

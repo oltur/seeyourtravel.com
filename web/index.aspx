@@ -197,17 +197,35 @@
                 <div id="wrapper">
                     <img id="imgComments" src="img/comments.png" onclick="showDialog('dialog')" title="Comments" />
                     <span id="lblCoord" style="vertical-align: super; text-shadow: 1px 1px #ffffff;"></span>
-    <div id="dialog" title="Facebook" style="display:none">
-        <div class="fb-comments" data-href="<%=Request.Url.ToString()%>" data-width="450" data-numposts="5"></div>
-    </div>
+
+
+                    <div id="dialog" style="display: none" class="ui-helper-hidden">
+                        <div id="tabs-movie">
+                            <ul>
+                                <li><a href="#tab-info">Track info</a></li>
+                                <li><a href="#tab-cast">Comments</a></li>
+                                <li class="ui-tabs-close-button">
+                                    <button id="closeBtn">X</button></li>
+                            </ul>
+                            <div id="tab-info">
+                                <div id="elevationChartDiv">
+                                </div>
+                            </div>
+                            <div id="tab-cast">
+                                <div class="fb-comments" data-href="<%=Request.Url.ToString()%>" data-width="450" data-numposts="5"></div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>
             <div style="position: absolute; right: 5px; bottom: 15px; z-index: 1001">
                 <div class="fb-like" data-width="50" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+                <div class="fb-save" data-uri="<%=Request.Url.ToString()%>" data-size="small"></div>
                 <a href="https://twitter.com/share" class="twitter-share-button" data-via="turevskiy" data-lang="es">Tweet</a>
                 <script>$(".twitter-share-button").attr("data-lang", getTwitterLanguage());</script>
                 <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+                <div class="g-plusone" data-size="small" data-annotation="none"></div>
             </div>
 
             <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; top: 10px; left: 0; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0 solid #000;">
@@ -217,7 +235,7 @@
                     <button type="button" data-i18n="[title]Settings;Settings" id="settingsCheckBox" title="Settings" class="i headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
                     <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site" class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')">About SeeYourTravel</button>
                     <button type="button" <%--data-i18n="[title]Profile;Profile" --%>id="profile" title="Profile" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = 'UserProfile.aspx'"></button>
-                    <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout" class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx?ReturnURL='+window.location.href">Logout</button> 
+                    <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout" class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx?ReturnURL='+window.location.href">Logout</button>
                     <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>
                 </div>
             </div>

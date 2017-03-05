@@ -8,7 +8,8 @@
 }
 
 .mapheader {
-    height: 50px;
+    min-height: 100%;
+    height: 100%;
     background: url('../img/ua.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -187,8 +188,26 @@ input.glow {
     margin: 0 0 0 0;
 }
 
-.no-close .ui-dialog-titlebar-close {
+/*.no-close .ui-dialog-titlebar-close {
     display: none;
+}*/
+
+.no-title .ui-dialog-title {
+    display:none;
+}
+
+.no-title .ui-dialog-titlebar {
+    background:transparent;
+    border:none;
+}
+
+.no-title .ui-dialog .ui-dialog-titlebar-close {
+    right:0;
+}
+
+.ui-tabs-nav li.ui-tabs-close-button {
+    float: right;
+    margin-top: 3px;
 }
 
 #imgComments {

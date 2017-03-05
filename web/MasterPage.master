@@ -7,6 +7,10 @@
 
     <link rel="SHORTCUT ICON" href="favicon.ico" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta property="og:image" content="//seeyourtravel.com/img/SiteLogo.png"/>
+    <meta property="og:image:type" content="image/png"/>
+    <meta property="og:image:width" content="741"/>
+    <meta property="og:image:height" content="555"/>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
 
@@ -86,6 +90,14 @@
         });
     </script>
 
+        <script >
+  window.___gcfg = {
+    lang: getTwitterLanguage(),
+    parsetags: 'onload'
+  };
+</script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
     <asp:ContentPlaceHolder ID="HeadPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
 
@@ -102,7 +114,7 @@
 }
 </script>
 </head>
-<body onresize="onBodyResize()">
+<body onresize="onBodyResize()" style="background-size:cover">
     <form id="form1" method="POST" enctype="multipart/form-data" runat="server">
         <div>
             <asp:ContentPlaceHolder ID="BodyPlaceholder" runat="server">
