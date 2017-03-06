@@ -79,8 +79,6 @@
         var markersTracks;
         var line;
 
-        var myBarChart = null;
-
         function onMapClick(e) {
             //updateTrackData(e);
             //updateMap();
