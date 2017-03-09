@@ -209,10 +209,10 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="usePanoramioImages" class="i" data-i18n="UsePanoramioImages">Use Panoramio images</label>
+                            <label for="useFlickrImages" class="i" data-i18n="useFlickrImages">Use Panoramio images</label>
                         </td>
                         <td>
-                            <input id="usePanoramioImages" name="usePanoramioImages" type="checkbox" checked="checked" title="Use Panoramio images" onchange="SaveSettings();" />
+                            <input id="useFlickrImages" name="useFlickrImages" type="checkbox" checked="checked" title="Use Panoramio images" onchange="SaveSettings();" />
                         </td>
                     </tr>
                     <tr>
@@ -488,7 +488,7 @@
                         $("#defaultScale").val(initialTrack.defaultScale);
                         map.setZoom(initialTrack.defaultScale);
 
-                        $("#usePanoramioImages").prop('checked', initialTrack.usePanoramioImages != "No");
+                        $("#useFlickrImages").prop('checked', initialTrack.useFlickrImages != "No");
                         $("#useSYTImagesTrack").prop('checked', initialTrack.useSYTImagesTrack != "No");
                         $("#useGooglePlaces").prop('checked', initialTrack.useGooglePlaces != "No");
                         $("#useSYTPlaces").prop('checked', initialTrack.useSYTPlaces != "No");

@@ -309,7 +309,7 @@
             $("#textToReadArea0").draggable().resizable({ minHeight: 50, minWidth: 50 }).hide();
             //$("#scriptTextCheckBox").button();
             //$("#imagesCheckBox").button();
-            //$("#usePanoramioImagesCheckBox").button();
+            //$("#useFlickrImagesCheckBox").button();
             //$("#useSYTImagesCheckBox").button();
             //$("#useGooglePlacesCheckBox").button();
             //$("#useSYTPlacesCheckBox").button();

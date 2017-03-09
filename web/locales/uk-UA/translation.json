@@ -43,7 +43,7 @@
   "Description": "Опис",
   "Images": "Фото",
   "LoopTrack": "Повторювати трек",
-  "UsePanoramioImages": "Фото з Panoramio",
+  "UseFlickrImages": "Фото з Flickr",
   "UseCYTImages": "Фото з SeeYourTravel",
   "UseGooglePlaces": "Місця Google",
   "UseCYTPlaces": "Місця SeeYourTravel",

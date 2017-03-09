@@ -8,7 +8,7 @@
 ,"numOfPhotos":10
 ,"velocityMetersPerSec":200
 ,"icon":"mybike.png"
-,"usePanoramioImages":"Yes"
+,"useFlickrImages":"Yes"
 ,"useSYTImagesTrack":"Yes"
 ,"useGooglePlaces":"Yes"
 ,"useSYTPlaces":"Yes"

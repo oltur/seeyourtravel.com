@@ -8,7 +8,7 @@
 ,"numOfPhotos":10
 ,"velocityMetersPerSec":200
 ,"icon":"aman.gif"
-,"usePanoramioImages":"No"
+,"useFlickrImages":"No"
 ,"useSYTImagesTrack":"Yes"
 ,"useGooglePlaces":"Yes"
 ,"useSYTPlaces":"Yes"

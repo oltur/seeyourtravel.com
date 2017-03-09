@@ -8,7 +8,7 @@
 ,"numOfPhotos":20
 ,"velocityMetersPerSec":3000
 ,"icon":"mycar.png"
-,"usePanoramioImages":"Yes"
+,"useFlickrImages":"Yes"
 ,"useSYTImagesTrack":"Yes"
 ,"useGooglePlaces":"Yes"
 ,"useSYTPlaces":"Yes"

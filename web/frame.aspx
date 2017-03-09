@@ -58,8 +58,8 @@
             <input id="loopTrackCheckBox" type="checkbox" checked="checked" title="Loop track infinitely" onchange="" />
             <label for="loopTrackCheckBox" class="i" data-i18n="LoopTrack">Loop track infinitely</label>
             <br />
-            <input id="usePanoramioImagesCheckBox" type="checkbox" checked="checked" title="Use Panoramio images" onchange="" />
-            <label for="usePanoramioImagesCheckBox" class="i" data-i18n="UsePanoramioImages">Use Panoramio images</label>
+            <input id="useFlickrImagesCheckBox" type="checkbox" checked="checked" title="Use Flickr images" onchange="" />
+            <label for="useFlickrImagesCheckBox" class="i" data-i18n="useFlickrImages">Use Flickr images</label>
             <br />
             <input id="useSYTImagesCheckBox" type="checkbox" checked="checked" title="Use SeeYourTravel images" onchange="" />
             <label for="useSYTImagesCheckBox" class="i" data-i18n="UseCYTImages">Use SeeYourTravel images</label>

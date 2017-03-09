@@ -96,7 +96,7 @@ public partial class SaveTrack : System.Web.UI.Page
                 }
 
                 writer.Write(",");
-                writer.WriteLine("\"usePanoramioImages\":\"" + ((Request.Form["usePanoramioImages"] == "on") ? "Yes" : "No") + "\"");
+                writer.WriteLine("\"useFlickrImages\":\"" + ((Request.Form["useFlickrImages"] == "on") ? "Yes" : "No") + "\"");
                 writer.Write(",");
                 writer.WriteLine("\"useSYTImagesTrack\":\"" + ((Request.Form["useSYTImagesTrack"] == "on") ? "Yes" : "No") + "\"");
                 writer.Write(",");

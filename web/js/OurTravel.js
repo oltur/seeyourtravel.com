@@ -38,41 +38,40 @@ var iconFriend = L.icon({
 });
 //#endregion
 
-function showDialog(id)
-{
+function showDialog(id) {
     var $dialog = $('#' + id);
-//    if (facebookAPIIsLoaded) {
+    //    if (facebookAPIIsLoaded) {
     $dialog.dialog({
-            //draggable: false,
-            //resizable: false,
-            //show: 'fade',
-            //hide: 'fade',
-            //modal: true,
-            dialogClass: "no-title",
-            width: 550,
-            minHeight: 400,
-            maxHeight: 600,
-            //position: ['center', 35],
-            open: function () {
+        //draggable: false,
+        //resizable: false,
+        //show: 'fade',
+        //hide: 'fade',
+        //modal: true,
+        dialogClass: "no-title",
+        width: 550,
+        minHeight: 400,
+        maxHeight: 600,
+        //position: ['center', 35],
+        open: function () {
 
-                if (track) {
-                    var elevator = new google.maps.ElevationService;
-                    elevator.getElevationAlongPath({
-                        'path': compactTrackData(track.trackData),
-                        'samples': 128
-                    }, plotElevation);
-                }
-
-                $('#tabs-movie').tabs({
-                    create: function (e, ui) {
-                        $('#closeBtn').click(function () {
-                            $dialog.dialog('close');
-                        });
-                    }
-                });
-                $(this).parent().children('.ui-dialog-titlebar').remove();
+            if (track) {
+                var elevator = new google.maps.ElevationService;
+                elevator.getElevationAlongPath({
+                    'path': compactTrackData(track.trackData),
+                    'samples': 128
+                }, plotElevation);
             }
-        });
+
+            $('#tabs-movie').tabs({
+                create: function (e, ui) {
+                    $('#closeBtn').click(function () {
+                        $dialog.dialog('close');
+                    });
+                }
+            });
+            $(this).parent().children('.ui-dialog-titlebar').remove();
+        }
+    });
     //}
     //else {
     //    toastr.warning("Please wait, Facebook code is not loaded yet", "", { timeOut: 1000, extendedTimeOut: 2000 });
@@ -219,7 +218,7 @@ function SaveSettings() {
     $.cookie("settings_scriptTextCheckBox", $("#scriptTextCheckBox").is(':checked'));
     $.cookie("settings_imagesCheckBox", $("#imagesCheckBox").is(':checked'));
     $.cookie("settings_loopTrackCheckBox", $("#loopTrackCheckBox").is(':checked'));
-    $.cookie("settings_usePanoramioImagesCheckBox", $("#usePanoramioImagesCheckBox").is(':checked'));
+    $.cookie("settings_useFlickrImagesCheckBox", $("#useFlickrImagesCheckBox").is(':checked'));
     $.cookie("settings_useSYTImagesCheckBox", $("#useSYTImagesCheckBox").is(':checked'));
     $.cookie("settings_useGooglePlacesCheckBox", $("#useGooglePlacesCheckBox").is(':checked'));
     $.cookie("settings_useSYTPlacesCheckBox", $("#useSYTPlacesCheckBox").is(':checked'));
@@ -238,7 +237,7 @@ function LoadSettings() {
         $("#scriptTextCheckBox").prop("checked", a);
         $("#imagesCheckBox").prop("checked", b);
         $("#loopTrackCheckBox").prop("checked", d);
-        $("#usePanoramioImagesCheckBox").prop("checked", $.cookie("settings_usePanoramioImagesCheckBox") == "true");
+        $("#useFlickrImagesCheckBox").prop("checked", $.cookie("settings_useFlickrImagesCheckBox") == "true");
         $("#useSYTImagesCheckBox").prop("checked", $.cookie("settings_useSYTImagesCheckBox") == "true");
         $("#useGooglePlacesCheckBox").prop("checked", $.cookie("settings_useGooglePlacesCheckBox") == "true");
         $("#useSYTPlacesCheckBox").prop("checked", $.cookie("settings_useSYTPlacesCheckBox") == "true");
@@ -312,124 +311,17 @@ function showPhotos(track, p, tolerancy) {
     if (!tolerancy)
         tolerancy = 0.1;
 
-    if ($('#usePanoramioImagesCheckBox').is(':checked') && track.usePanoramioImages != "No") {
-        //var set = "7459025";//"full";//"public";
-        //var set = "full";
-        var count = 0;
-
-        var divHeight = $("#imageDiv").height();
-        var size = divHeight > 150 ? "medium" : "small";
-        //var urlp = panoramioUrl + set + "&from=0&to=" + track.numOfPhotos.toString() + "&miny="
-        //    + (p.lat - tolerancy).toString()
-        //    + "&minx=" + (p.lng - tolerancy).toString()
-        //    + "&maxy=" + (p.lat + tolerancy).toString()
-        //    + "&maxx=" + (p.lng + tolerancy).toString()
-        //    + "&size=" + size + "&mapfilter=true&order=popularity&callback=?";
-
-        //var flickrUrl =  "https://api.flickr.com/services/rest/?method=flickr.photos.search&bbox={0}%2C{1}%2C{2}%2C{3}&per_page={4}&format=json&nojsoncallback=1&api_key=2203a1e292f7b65958730b236c0756fa";
-
-        var urlp = flickrUrl
-            .replace("{4}", "50")//track.numOfPhotos.toString())
-            .replace("{0}", (p.lng - tolerancy).toString())
-            .replace("{1}", (p.lat - tolerancy).toString())
-            .replace("{2}", (p.lng + tolerancy).toString())
-            .replace("{3}", (p.lat + tolerancy).toString())
-
-        $.ajax({
-            dataType: "json",
-            url: urlp,
-            success: function (data) {
-                var result = { photos: [] };
-
-                for (var i = 0; i < data.photos.photo.length; i++) {
-                    var photoName = "https://farm{0}.staticflickr.com/{1}/{2}_{3}"
-                        .replace("{0}", data.photos.photo[i].farm)
-                        .replace("{1}", data.photos.photo[i].server)
-                        .replace("{2}", data.photos.photo[i].id)
-                        .replace("{3}", data.photos.photo[i].secret)
-                    var photoUrlSmall = photoName + "_q.jpg";
-                    var photoUrlLarge = photoName + ".jpg";
-
-                    var resultPhoto = {
-                        height: 150,
-                        width: 150,
-                        photo_file_url: photoUrlSmall,
-                        photo_url: photoUrlLarge,
-                        photo_title: data.photos.photo[i].title,
-                        owner_name: data.photos.photo[i].owner
-                    };
-                    result.photos.push(resultPhoto);
-                }
-
-                //console.log("Panoramio success");
-                get_panoramas_panoramio_success(result, p, tolerancy);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Panoramio status: " + textStatus); console.log("Error: " + errorThrown);
-
-                var data = { photos: [] };
-                get_panoramas_panoramio_success(data, p, tolerancy);
-
-            }
-        });
-    }
-    else {
-        var data = { photos: [] };
-        get_panoramas_panoramio_success(data, p, tolerancy);
-    }
+    Promise.all([syt.api.searchSYTImages(track, p, tolerancy), syt.api.searchFlickrImages(track, p, tolerancy)]).then(values => {
+        get_photos_success(values[0].photos.concat(values[1].photos), p, tolerancy);
+    });
 }
 
-function get_panoramas_panoramio_success(data, p, tolerancy) {
-
-    //var urlp = "http://localhost/seeyourtravel/services/get_panoramas.aspx?x=x&set=full&from=0&to=10&miny=47.955776&minx=10.096568999999999&maxy=48.055775999999994&maxx=10.196569&size=medium&mapfilter=true&order=popularity";
-
-    if ($('#useSYTImagesCheckBox').is(':checked') && track.useSYTImages != "No") {
-        //var set = "7459025";//"full";//"public";
-        var set = "full";
-        var count = 0;
-
-        var divHeight = $("#imageDiv").height();
-        var size = divHeight > 150 ? "medium" : "small";
-        var urlp = "services/get_panoramas.aspx?set=" + set + "&from=0&to=" + track.numOfPhotos.toString() + "&miny="
-            + (p.lat - tolerancy).toString()
-            + "&minx=" + (p.lng - tolerancy).toString()
-            + "&maxy=" + (p.lat + tolerancy).toString()
-            + "&maxx=" + (p.lng + tolerancy).toString()
-            + "&size=" + size + "&mapfilter=true&order=popularity&callback=?";
-
-        $.ajax({
-            dataType: "jsonp",
-            url: urlp,
-            success: function (data2) {
-                get_panoramas_seeyourtravel_success(data, data2, p, tolerancy);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Status: " + textStatus); console.log("Error: " + errorThrown);
-
-                var data2 = { photos: [] };
-                get_panoramas_seeyourtravel_success(data, data2, tolerancy);
-            }
-        });
-    }
-    else {
-        var data2 = { photos: [] };
-        get_panoramas_seeyourtravel_success(data, data2, tolerancy);
-    }
-}
-
-function isPortrait() {
-    var w = window.innerWidth;
-    var h = window.innerHeight;
-    return w < h;
-}
-
-function get_panoramas_seeyourtravel_success(data, data2, p, tolerancy) {
+function get_photos_success(photos, p, tolerancy) {
 
     // remove?
     var divHeight = $("#imageDiv").height();
     var divWidth = $("#imageDiv").width();
 
-    var photos = data2.photos.concat(data.photos);
     shuffle(photos);
     count = photos.length;
     $("#lblCoord").text(p.lat + " " + p.lng);
@@ -832,98 +724,22 @@ function addMarkersNear(nearLat, nearLng, types, odd) {
     //    });
     //}
     //else {
-    if ($('#useGooglePlacesCheckBox').is(':checked') && track.useGooglePlaces != "No") {
 
-        var service = new google.maps.places.PlacesService(map2);
+    var googlePlacesService = new google.maps.places.PlacesService(map2);
+    Promise.all([syt.api.searchSYTPlaces(request), syt.api.searchWikiPlaces(request), syt.api.searchGooglePlaces(googlePlacesService, request)]).then(values => {
+        getplaces_success(values[0].concat(values[1]).concat(values[2]));
+    });
 
-        service.nearbySearch(request, callbackGoodlePlacesSearch);
-    }
-    else {
-        get_places_googlehere_success([]);
-    }
     //    }
 }
 
-function callbackGoodlePlacesSearch(results, status) {
-    //console.log("Google Places result: " + status);
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-        if (results.length > MAX_GOOGLE_PLACES)
-            results = results.slice(0, MAX_GOOGLE_PLACES);
-        get_places_googlehere_success(results);
-    }
-    else {
-        get_places_googlehere_success([]);
+function getplaces_success(data) {
+    for (var i = 0; i < Math.min(data.length, 100) ; i++) {
+        createPhotoMarker(data[i]);
     }
 }
 
-function callbackHerePlacesSearch(results) {
-    if (results.length > MAX_HERE_PLACES)
-        results = results.slice(0, MAX_HERE_PLACES);
-    get_places_googlehere_success(results);
-}
-
-
-function get_places_googlehere_success(data) {
-
-    if ($('#useSYTPlacesCheckBox').is(':checked') && track.useSYTPlaces != "No") {
-        var urlp = "services/get_places.aspx?callback=?";
-
-        $.ajax({
-            dataType: "jsonp",
-            url: urlp,
-            success: function (data2) {
-                //console.log("get_places success");
-                get_SYT_getplaces_success(data, data2.results);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                if (errorThrown.toString().indexOf("not called") == -1) {
-                    console.log("get_places error status: " + textStatus + ", error: " + errorThrown);
-                }
-                else {
-                    //console.log("get_places success");
-                    get_SYT_getplaces_success(data, []);
-                }
-            }
-        });
-    }
-    else {
-        get_SYT_getplaces_success(data, []);
-    }
-}
-
-function get_SYT_getplaces_success(data, data2) {
-
-    var i;
-
-    for (i = 0; i < Math.min(data.length, 100) ; i++) {
-        createPhotoMarker(data[i], true);
-    }
-
-    for (i = 0; i < Math.min(data2.length, 100) ; i++) {
-        createPhotoMarker(data2[i], false);
-    }
-}
-
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-}
-
-function createPhotoMarker(place, isGoogle) {
+function createPhotoMarker(place) {
 
     if (allMarkers.indexOf(place.id) < 0)
         allMarkers.push(place.id);
@@ -937,6 +753,9 @@ function createPhotoMarker(place, isGoogle) {
         return;
     }
 
+    var isGoogle = photos[0].getUrl ? true : false;
+    var isWiki = place.types.indexOf("wiki") >= 0;
+
     var icon = L.icon({
         iconUrl: (
             place.types.indexOf("lodging") >= 0 ? "img/lodging.png" :
@@ -945,10 +764,11 @@ function createPhotoMarker(place, isGoogle) {
             place.types.indexOf("park") >= 0 ? "img/park.png" :
             place.types.indexOf("bakery") >= 0 ? "img/bakery.png" :
             place.types.indexOf("zoo") >= 0 ? "img/zoo.png" :
+            isWiki ? "img/wiki.png" :
             "img/something.png"),
         //    shadowUrl: 'leaf-shadow.png',
 
-        iconSize: [26, 35] // size of the icon
+        iconSize: isWiki? [26, 26]:[26, 35] // size of the icon
         //    shadowSize:   [50, 64], // size of the shadow
         //    iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
         //    shadowAnchor: [4, 62],  // the same for the shadow
@@ -960,7 +780,9 @@ function createPhotoMarker(place, isGoogle) {
     domelem.innerHTML = "<p>" + place.name + "</p><img height='100px' width='100px' src='" + (isGoogle ? photos[0].getUrl({ 'maxWidth': 100, 'maxHeight': 100 }) : photos[0].raw_reference.fife_url) + "'/>";
     domelem.alt = place.name;
     domelem.onclick = function () {
-        window.open("https://www.google.com.ua/search?q=" + place.name, "_blank");
+        window.open(isWiki ?
+            "https://" + getTwitterLanguage() + ".wikipedia.org/?curid=" + place.id :
+            "https://www.google.com.ua/search?q=" + place.name, "_blank");
         // do whatever else you want to do - open accordion etc
     };
     var marker = L.marker(new L.LatLng(
@@ -1046,9 +868,6 @@ function plotElevation(elevations, status) {
         data.labels.push(label);
         data.datasets[0].data.push(Math.round(elevations[i].elevation));
     }
-
-    if (myBarChart)
-        delete myBarChart;
 
     myBarChart = new Chart(elevationChartCanvas, {
         type: 'bar',

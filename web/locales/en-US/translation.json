@@ -43,7 +43,7 @@
   "Description": "Description",
   "Images": "Images",
   "LoopTrack": "Loop track infinitely",
-  "UsePanoramioImages": "Use Panoramio images",
+  "UseFlickrImages": "Use Flickr images",
   "UseCYTImages": "Use SeeYourTravel images",
   "UseGooglePlaces": "Use Google Places",
   "UseCYTPlaces": "Use SeeYourTravel places",

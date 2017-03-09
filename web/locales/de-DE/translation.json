@@ -42,7 +42,7 @@
   "Description": "Beschreibung",
   "Images": "Bilder",
   "LoopTrack": "Schleife Spur stufenlos",
-  "UsePanoramioImages": "Benutzen Panoramio Bilder",
+  "UseFlickrImages": "Benutzen Flickr Bilder",
   "UseCYTImages": "Benutzen SeeYourTravel Bilder",
   "UseGooglePlaces": "Benutzen Google Places",
   "UseCYTPlaces": "Benutzen SeeYourTravel Orte",

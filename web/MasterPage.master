@@ -41,6 +41,7 @@
     <link rel="stylesheet" href="styles/toastr.min.css" />
 
     <script src="js/OurTravel.Common.js"></script>
+    <script src="js/api.js"></script>
     <script src="js/OurTravel.js"></script>
     <script src="js/AnimatedMarker.js"></script>
     <script src="js/get_text.js"></script>

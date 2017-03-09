@@ -8,7 +8,7 @@
 ,"numOfPhotos":10
 ,"velocityMetersPerSec":2500
 ,"icon":"myyacht.png"
-,"usePanoramioImages":"Yes"
+,"useFlickrImages":"Yes"
 ,"useSYTImagesTrack":"Yes"
 ,"useGooglePlaces":"Yes"
 ,"useSYTPlaces":"Yes"
