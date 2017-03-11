@@ -12,7 +12,8 @@
     <meta property="og:image:width" content="741"/>
     <meta property="og:image:height" content="555"/>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
+    <script src="libs/Chart.bundle.js"></script>
+<%--    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>--%>
 
     <script src="libs/jquery.js"></script>
     <script src="libs/jquery-ui.js"></script>
@@ -25,8 +26,6 @@
     <script src="libs/i18next.js"></script>
     <script src="js/facebook.js"></script>
 
- <%--   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKpuHWNX4AL1Beyky-xsegxkh6SihjN30"></script>
- --%>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKpuHWNX4AL1Beyky-xsegxkh6SihjN30&libraries=places"></script>
     <script src="https://apis.google.com/js/client:platform.js?onload=startApp" async defer></script>
     <script src="libs/json2.js"></script>

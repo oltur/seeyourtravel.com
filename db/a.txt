@@ -1,1 +1,0 @@
-Data Source=SeeYourTravel.db.5387543.hostedresource.com; Initial Catalog=SeeYourTravel; User ID=SeeYourTravel; Password=ProBook#6550b;
