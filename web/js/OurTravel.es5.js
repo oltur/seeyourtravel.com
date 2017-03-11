@@ -1,4 +1,5 @@
-﻿//#region Variables
+﻿
+//#region Variables
 'use strict';
 
 var tracksFolder = 'tracks/';
