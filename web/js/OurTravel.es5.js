@@ -44,6 +44,9 @@ var iconFriend = L.icon({
 function showDialog(id) {
     var $dialog = $('#' + id);
     //    if (facebookAPIIsLoaded) {
+
+    $(".fb-comments").attr("data-width", getWidth() > 400 ? getWidth() * 7 / 10 : 280);
+
     $dialog.dialog({
         //draggable: false,
         //resizable: false,
@@ -66,7 +69,6 @@ function showDialog(id) {
 
             $('#tabs-movie').tabs({
                 create: function create(e, ui) {
-                    $(".fb-comments").attr("data-width", getWidth() > 400 ? getWidth() * 7 / 10 : 280);
                     //$('#closeBtn').click(function () {
                     //    $dialog.dialog('close');
                     //});
@@ -802,7 +804,7 @@ function plotElevation(elevations, status) {
         return;
     }
 
-    chartDiv.innerHTML = "<canvas id=\"elevationChartCanvas\" height=\"250\"></canvas>";
+    chartDiv.innerHTML = "<canvas id=\"elevationChartCanvas\" style=\"max-height:" + (getHeight() > 300 ? getHeight() * 6 / 10 : 150) + "px\"></canvas>";
     var elevationChartCanvas = document.getElementById('elevationChartCanvas');
 
     var data = {
@@ -822,6 +824,8 @@ function plotElevation(elevations, status) {
     myBarChart = new Chart(elevationChartCanvas, {
         type: 'bar',
         data: data,
+        maintainAspectRatio: true,
+        //responsive:true,
         options: {
             hover: {
                 // Overrides the global setting
