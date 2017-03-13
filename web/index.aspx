@@ -193,7 +193,7 @@
                     <img src="img/3lines.png" style="height: 30px; width: 30px; vertical-align: middle;" /></a>
                 <select style="vertical-align: central; width: 200px; height: 35px" id="tracksList" class="i graySelect" onchange="clickStart()"></select>
             </div>
-            <div style="position: absolute; left: 270px; top: 20px; z-index: 1001">
+            <div style="position: absolute; left: 240px; top: 15px; z-index: 1001">
                 <div id="wrapper">
                     <img id="imgComments" src="img/comments.png" onclick="showDialog('dialog')" title="Comments" />
                     <span id="lblCoord" style="vertical-align: super; text-shadow: 1px 1px #ffffff;"></span>
@@ -204,15 +204,17 @@
                             <ul>
                                 <li><a href="#tab-info">Track info</a></li>
                                 <li><a href="#tab-cast">Comments</a></li>
-                                <li class="ui-tabs-close-button">
-                                    <button id="closeBtn">X</button></li>
+<%--                                <li class="ui-tabs-close-button">
+                                    <button id="closeBtn">X</button></li>--%>
                             </ul>
                             <div id="tab-info">
                                 <div id="elevationChartDiv">
                                 </div>
                             </div>
                             <div id="tab-cast">
-                                <div class="fb-comments" data-href="<%=Request.Url.ToString()%>" data-width="450" data-numposts="5"></div>
+                                <div class="fb-comments" data-href="<%=Request.Url.ToString()%>" 
+                                    data-width="280" 
+                                    data-numposts="5"></div>
                             </div>
                         </div>
                     </div>
