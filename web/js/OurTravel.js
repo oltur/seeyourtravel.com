@@ -48,10 +48,9 @@ function showDialog(id) {
         //show: 'fade',
         //hide: 'fade',
         //modal: true,
-        dialogClass: "no-title",
-        width: 550,
-        minHeight: 400,
-        maxHeight: 600,
+        //dialogClass: "no-title",
+        width: getWidth() > 400 ? getWidth() * 8 / 10 : 310,
+        height: getHeight() > 300 ? getHeight() * 7.5 / 10 : 200,
         //position: ['center', 35],
         open: function () {
 
@@ -65,12 +64,13 @@ function showDialog(id) {
 
             $('#tabs-movie').tabs({
                 create: function (e, ui) {
-                    $('#closeBtn').click(function () {
-                        $dialog.dialog('close');
-                    });
+                    $(".fb-comments").attr("data-width", getWidth() > 400 ? getWidth() * 7 / 10 : 280);
+                    //$('#closeBtn').click(function () {
+                    //    $dialog.dialog('close');
+                    //});
                 }
             });
-            $(this).parent().children('.ui-dialog-titlebar').remove();
+            //$(this).parent().children('.ui-dialog-titlebar').remove();
         }
     });
     //}
@@ -769,7 +769,7 @@ function createPhotoMarker(place) {
             "img/something.png"),
         //    shadowUrl: 'leaf-shadow.png',
 
-        iconSize: isWiki? [26, 26]:[26, 35] // size of the icon
+        iconSize: isWiki ? [26, 26] : [26, 35] // size of the icon
         //    shadowSize:   [50, 64], // size of the shadow
         //    iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
         //    shadowAnchor: [4, 62],  // the same for the shadow
