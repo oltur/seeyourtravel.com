@@ -4,6 +4,14 @@
     return w < h;
 }
 
+function getWidth() {
+    return window.innerWidth;
+}
+
+function getHeight() {
+    return window.innerWidth;
+}
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 

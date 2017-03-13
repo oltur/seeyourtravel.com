@@ -188,10 +188,6 @@ input.glow {
     margin: 0 0 0 0;
 }
 
-/*.no-close .ui-dialog-titlebar-close {
-    display: none;
-}*/
-
 .no-title .ui-dialog-title {
     display:none;
 }

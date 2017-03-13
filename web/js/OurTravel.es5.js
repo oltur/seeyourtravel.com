@@ -50,10 +50,9 @@ function showDialog(id) {
         //show: 'fade',
         //hide: 'fade',
         //modal: true,
-        dialogClass: "no-title",
-        width: 550,
-        minHeight: 400,
-        maxHeight: 600,
+        //dialogClass: "no-title",
+        width: getWidth() > 400 ? getWidth() * 8 / 10 : 310,
+        height: getHeight() > 300 ? getHeight() * 7.5 / 10 : 200,
         //position: ['center', 35],
         open: function open() {
 
@@ -67,12 +66,13 @@ function showDialog(id) {
 
             $('#tabs-movie').tabs({
                 create: function create(e, ui) {
-                    $('#closeBtn').click(function () {
-                        $dialog.dialog('close');
-                    });
+                    $(".fb-comments").attr("data-width", getWidth() > 400 ? getWidth() * 7 / 10 : 280);
+                    //$('#closeBtn').click(function () {
+                    //    $dialog.dialog('close');
+                    //});
                 }
             });
-            $(this).parent().children('.ui-dialog-titlebar').remove();
+            //$(this).parent().children('.ui-dialog-titlebar').remove();
         }
     });
     //}
