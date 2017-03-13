@@ -9,7 +9,7 @@ function getWidth() {
 }
 
 function getHeight() {
-    return window.innerWidth;
+    return window.innerHeight;
 }
 
 function shuffle(array) {
