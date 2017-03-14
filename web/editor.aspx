@@ -29,7 +29,7 @@
 
     <div id="map"></div>
 
-    <div id="textToReadArea0" class="ui-widget-content" style="overflow: auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 750px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0 solid #000;">
+    <div id="textToReadArea0" class="ui-widget-content" style="overflow: auto; position: absolute; padding: 10px; z-index: 1001; top: 40px; right: 50px; width: 350px; height: 770px; background: rgba(255,255,255,0.8); border-radius: 12px; border: 0 solid #000;">
 
         <input type="hidden" id="trackId" name="trackId" value="<%=this.TrackId%>" />
         <input type="hidden" id="trackFileName" name="trackFileName" value="<%=this.TrackFileName%>" />
