@@ -45,7 +45,7 @@ function showDialog(id) {
 
     var isMobile = Math.min(getWidth(), getHeight()) < 450;
 
-    $(".fb-comments").attr("data-width", !isMobile ? 580 : getWidth() - 50);
+    $(".fb-comments").attr("data-width", !isMobile ? 550 : getWidth() - 80);
 
     $dialog.dialog({
         //draggable: false,
