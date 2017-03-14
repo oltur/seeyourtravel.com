@@ -45,7 +45,9 @@ function showDialog(id) {
     var $dialog = $('#' + id);
     //    if (facebookAPIIsLoaded) {
 
-    $(".fb-comments").attr("data-width", getWidth() > 400 ? getWidth() * 7 / 10 : 280);
+    var isMobile = Math.min(getWidth(), getHeight()) < 450;
+
+    $(".fb-comments").attr("data-width", !isMobile ? 580 : getWidth() - 50);
 
     $dialog.dialog({
         //draggable: false,
@@ -54,8 +56,9 @@ function showDialog(id) {
         //hide: 'fade',
         //modal: true,
         //dialogClass: "no-title",
-        width: getWidth() > 400 ? getWidth() * 8 / 10 : 310,
-        height: getHeight() > 300 ? getHeight() * 7.5 / 10 : 200,
+        closeOnEscape: true,
+        width: !isMobile ? 630 : getWidth(),
+        height: !isMobile ? 430 : getHeight() - 10,
         //position: ['center', 35],
         open: function open() {
 
