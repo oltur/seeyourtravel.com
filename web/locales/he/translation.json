@@ -1,7 +1,8 @@
 ﻿{
   "Username_": "שם משתמש",
-  "Password_": "ססמה",
-  "Login": "התחברות למערכת",
+  "Password_": "סיסמה",
+  "Login": "למערבת התחברות",
+  "LoginWithPassword": "למערבת התחברות עם סיסמה",
   "RememberMe": "זכור אותי",
   "Chooseatrack": "בחר מסלול",
   "New": "חדש",

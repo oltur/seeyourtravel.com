@@ -17,25 +17,11 @@
             $("option.i").i18n();
         }
 
-        //$(document).click(function (e) {
-        //    if ((e.target.id != 'alogo' && !$('#alogo').find(e.target).length)
-        //        && (e.target.id != 'menuPanel' && !$('#menuPanel').find(e.target).length)){
-        //        $("#menuPanel").hide('slide', 500);
-
-        //        if (e.target.id != 'helpPanel' && !$('#helpPanel').find(e.target).length) {
-        //            $("#helpPanel").hide('slide', { direction: "right" }, 500);
-        //        }
-
-        //        if (e.target.id != 'settingsPanel' && !$('#settingsPanel').find(e.target).length) {
-        //            $("#settingsPanel").hide('slide', { direction: "up" }, 500);
-        //        }
-        //    }
-        //});
     </script>
 </asp:Content>
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
-    <div style="position: absolute; right: 5px; top: 5px; z-index: 1003">
+    <div class="langButton">
         <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
     </div>
     <!--Content-->
@@ -95,11 +81,11 @@
             <br />
             <div id="slider" style="left: 10%; width: 80%; vertical-align: top"></div>
         </div>
-        <div style="position: absolute; right: 5px; top: 75px; z-index: 1001">
+        <div style="position: absolute; right: 0px; top: 75px; z-index: 1001">
             <div>
-                <button type="button" id="mute" style="width: 15px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute();"></button>
+                <button type="button" id="mute" style="width: 15px; background-image: url(img/unmute.png );" class="sideButton" onclick="clickMute();"></button>
                 <br />
-                <button type="button" id="continuePauseButton" disabled="disabled" class="headerButton" style="width: 15px; background-image: url(img/play.png );" onclick="doStartStop();"></button>
+                <button type="button" id="continuePauseButton" disabled="disabled" class="sideButton" style="width: 15px; background-image: url(img/play.png );" onclick="doStartStop();"></button>
             </div>
         </div>
 

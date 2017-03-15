@@ -31,6 +31,7 @@
     <script src="libs/json2.js"></script>
     <script src="libs/jstorage.js"></script>
 
+    <link href="corporate/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="styles/leaflet.css" />
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="styles/leaflet.ie.css"/>

@@ -204,6 +204,7 @@
                         markers.addLayer(line);
 
                         map.panTo(track.trackData[0]);
+
                     });
             });
             $("#buttonShow").click(function () {
