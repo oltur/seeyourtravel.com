@@ -229,7 +229,7 @@ public partial class Login : System.Web.UI.Page
     {
         Session["UserId"] = id;
         Session["UserName"] = name;
-        // Success, create non-persistent authentication cookie.
+        // Success, create authentication cookie.
         FormsAuthentication.SetAuthCookie(
                 id.ToString(), RememberMe.Checked);
 
@@ -238,7 +238,7 @@ public partial class Login : System.Web.UI.Page
                 2,                                   // version
                 id.ToString(),   // get username  from the form
                 DateTime.Now,                        // issue time is now
-                DateTime.Now.AddMinutes(300),         
+                DateTime.Now.AddMinutes(3000),         
                 RememberMe.Checked,      
                 (db.IsAdmin((Guid)id).First().Result == 1)? "admin" : ""                              // role assignment is stored
                                                                          // in userData

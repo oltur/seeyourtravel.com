@@ -121,7 +121,7 @@
     <script>
         document.body.style.backgroundImage = "url('img/PipIvanDimmed.jpg')";
     </script>
-    <div style="position: absolute; right: 55px; top: 5px; z-index: 1003">
+    <div class="langButton">
         <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
     </div>
     <div class="mapheader">
@@ -129,9 +129,9 @@
             <a href="./corporate" target="_blank">
                 <img src="img/SiteLogo.png" style="height: 50px; vertical-align: middle;" /></a>
         </span>
-        <span style="position: absolute; right: 0;"><a href="#">
-            <img src="img/help.png" style="height: 50px; width: 50px" alt="Need assistance?" onclick="$('#helpPanel').toggle('fold', 1000);" /></a>&nbsp;</span>
-        <span style="position: absolute; left: 70px;"></span>
+    <%--        <span style="position: absolute; right: 0;"><a href="#">
+                <img src="img/help.png" style="height: 50px; width: 50px" alt="Need assistance?" onclick="$('#helpPanel').toggle('fold', 1000);" /></a>&nbsp;</span>
+            <span style="position: absolute; left: 70px;"></span>--%>
     </div>
     <!-- #Include virtual="include/profileHelpPanel.inc" -->
 
@@ -162,28 +162,25 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    <asp:Button ID="LoginButton" runat="server" Text="Login" OnClick="LoginButton_Click" class="i" data-i18n="[value]Login;" />
+                <td colspan="2" style="text-align:center">
+                    <fb:login-button data-size="xlarge" scope="public_profile,email" onlogin="checkLoginState();">
+                    </fb:login-button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center">
+                    <asp:Button ID="LoginButton" Style="font-size: large" runat="server" Text="LoginWithPassword" OnClick="LoginButton_Click" class="i" data-i18n="[value]LoginWithPassword;" />
                 </td>
                 <td></td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <div style="width: 100px;">
-                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-                    </fb:login-button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
                     <asp:Label ID="Message" runat="server" ForeColor="Red" Text="" class="i" data-i18n></asp:Label>
-                    </p>
                 </td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align: center; padding-top: 30px;">
-                    <asp:Button ID="DemoButton" runat="server" Text="Try it now!" OnClick="DemoButton_Click" Style="width: 200px; height: 70px; font-size: large" class="i" data-i18n="[value]Demo;" />
+                    <asp:Button ID="DemoButton" runat="server" Text="Try it now!" OnClick="DemoButton_Click" style="width: 100px; height: 50px; font-size: large" class="i" data-i18n="[value]Demo;" />
                 </td>
             </tr>
         </table>
