@@ -7,7 +7,7 @@
         var sideMenuNo = 0;
         var errorMessage = '<%=Request["errorMessage"]%>';
         var trackParam = '<%=this.TrackFileName%>';
-        var showSidePanel = '<%=Request["showSidePanel"]%>';
+        var showSidePanel = "no";//'<%=Request["showSidePanel"]%>';
 
         var audio;
         var imageDiv;
@@ -62,8 +62,10 @@
                 && (e.target.id != 'menuPanel' && !$('#menuPanel').find(e.target).length)) {
                 $("#menuPanel").hide('slide', 500);
 
-                if (e.target.id != 'helpPanel' && !$('#helpPanel').find(e.target).length) {
-                    $("#helpPanel").hide('slide', { direction: "right" }, 500);
+                if (e.target.id != 'helpPanel' && !$('#helpPanel').find(e.target).length &&
+                    e.target.id != 'imgComments' && !$('#imgComments').find(e.target).length
+                    ) {
+                    showHelpPanel(false);
                 }
 
                 if (e.target.id != 'settingsPanel' && !$('#settingsPanel').find(e.target).length) {
@@ -166,7 +168,7 @@
 
 <asp:Content ID="bodyContent" ContentPlaceHolderID="BodyPlaceholder" runat="Server">
     <!--Content-->
-    <div style="position: absolute; right: 40px; top: 5px; z-index: 1003">
+    <div class="langButton">
         <select style="" id="langList" class="graySelect" onchange="selectLang()"></select>
     </div>
     <input id="showGoesOn" type="hidden" value="0" />
@@ -188,37 +190,15 @@
             </div>
         </div>
         <div id='pageContent' style='height: 100%; position: relative; margin-left: 0;'>
-            <div style="position: absolute; left: 5px; top: 15px; z-index: 1001">
-                <a id="alogo" href="javascript:clickMenu()">
-                    <img src="img/3lines.png" style="height: 30px; width: 30px; vertical-align: middle;" /></a>
+            <div style="position: absolute; left: 5px; top: 2px; z-index: 1001">
+                <a id="alogo" href="javascript:clickMenu()" class="menu3lines"><i class="fa fa-bars" aria-hidden="true"></i></a>
+            </div>
+            <div style="position: absolute; left: 42px; top: -2px; z-index: 1001">
                 <select style="vertical-align: central; width: 200px; height: 35px" id="tracksList" class="i graySelect" onchange="clickStart()"></select>
             </div>
             <div style="position: absolute; left: 240px; top: 15px; z-index: 1001">
                 <div id="wrapper">
-                    <img id="imgComments" src="img/comments.png" onclick="showDialog('dialog')" title="Comments" />
                     <span id="lblCoord" style="vertical-align: super; text-shadow: 1px 1px #ffffff;"></span>
-
-
-                    <div id="dialog" style="display: none" class="ui-helper-hidden">
-                        <div id="tabs-movie">
-                            <ul>
-                                <li><a href="#tab-info">Track info</a></li>
-                                <li><a href="#tab-cast">Comments</a></li>
-<%--                                <li class="ui-tabs-close-button">
-                                    <button id="closeBtn">X</button></li>--%>
-                            </ul>
-                            <div id="tab-info">
-                                <div id="elevationChartDiv">
-                                </div>
-                            </div>
-                            <div id="tab-cast">
-                                <div class="fb-comments" data-href="<%=Request.Url.ToString()%>" 
-                                    data-width="280" 
-                                    data-numposts="5"></div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
             <div style="position: absolute; right: 5px; bottom: 15px; z-index: 1001">
@@ -230,26 +210,28 @@
                 <div class="g-plusone" data-size="small" data-annotation="none"></div>
             </div>
 
-            <div id="menuPanel" style="display: none; position: absolute; z-index: 1000; top: 10px; left: 0; width: 265px; height: 570px; background: rgba(255,255,255,0); border: 0 solid #000;">
-                <div style="position: absolute; left: 10px; top: 50px;">
+            <div id="menuPanel" class="menuPanel">
+                <div>
                     <button type="button" data-i18n="[title]New;New" id="newTrackButton" title="New" class="i headerButton" style="background-image: url(img/new.png );" onclick="clickNew()">New</button>
                     <button type="button" data-i18n="[title]Edit;Edit" id="editTrackButton" title="Edit" class="i headerButton" style="background-image: url(img/edit.png );" onclick="clickEdit()">Edit</button>
                     <button type="button" data-i18n="[title]Settings;Settings" id="settingsCheckBox" title="Settings" class="i headerButton" style="background-image: url(img/settings1.png );" onclick="clickSettings()">Settings</button>
                     <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site" class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')">About SeeYourTravel</button>
                     <button type="button" <%--data-i18n="[title]Profile;Profile" --%>id="profile" title="Profile" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = 'UserProfile.aspx'"></button>
                     <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout" class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx?ReturnURL='+window.location.href">Logout</button>
-                    <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>
+<%--                    <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>--%>
                 </div>
             </div>
             <!-- #Include virtual="include/profileHelpPanel.inc" -->
             <!-- #Include virtual="include/settingsPanel.inc" -->
 
-            <div style="position: absolute; right: 5px; top: 75px; z-index: 1001">
-                <div>
-                    <button type="button" id="mute" style="padding-left: 0; width: 46px; background-image: url(img/unmute.png );" class="headerButton" onclick="clickMute();SaveSettings();"></button>
-                    <br />
-                    <button type="button" id="continuePauseButton" disabled="disabled" class="headerButton" style="padding-left: 0; width: 46px; background-image: url(img/play.png );" onclick="doStartStop();"></button>
-                </div>
+            <div style="position: absolute; right: 0px; top: 75px; z-index: 1001">
+                    <img id="imgComments" src="img/comments.png" onclick="clickHelp()" title="Comments" />
+            </div>
+
+            <div style="position: absolute; right: 0px; top: 120px; z-index: 1001">
+                <button type="button" id="mute" style="padding-left: 0; background-image: url(img/unmute.png );" class="sideButton" onclick="clickMute();SaveSettings();"></button>
+                <br />
+                <button type="button" id="continuePauseButton" disabled="disabled" class="sideButton" style="padding-left: 0; background-image: url(img/play.png );" onclick="doStartStop();"></button>
             </div>
 
 
@@ -258,7 +240,6 @@
             <div id="map2"></div>
 
             <div id="textToReadArea0" class="ui-widget-content" style="z-index: 100; min-height: 50px; min-width: 50px; background: rgba(100,100,100,0.2); border-width: 0; width: 25%; height: 25%; position: absolute; left: 2%; top: 35%">
-                <%-- <br />--%>
                 <div id="textToReadArea" style="position: absolute; overflow: scroll; background: rgba(240,240,240,0.9); padding: 0; top: 2px; bottom: 2px; left: 2px; right: 2px; margin: 0 auto; resize: none;"></div>
             </div>
 
@@ -297,14 +278,9 @@
             }
 
             var visited = $.cookie('visited'); // create cookie 'visited' with no value
-            //if (visited != 'yes') {
-            //    $("#dialog").dialog("option", "width", 450);
-            //    $("#dialog").dialog("option", "height", 300);
-            //    $("#dialog").dialog("option", "minwidth", 450);
-            //    $("#dialog").dialog("option", "minheight", 300);
-            //    $("#dialog").dialog("option", "resizable", false);
-            //    $("#dialog").dialog("open");
-            //}
+            if (visited != 'yes') {
+                clickHelp();
+            }
             init();
 
             $("#imageDiv0").draggable().resizable({ minHeight: 50, minWidth: 50 });

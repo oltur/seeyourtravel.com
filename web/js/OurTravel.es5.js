@@ -40,53 +40,8 @@ var iconFriend = L.icon({
 });
 //#endregion
 
-//shadowUrl: null
-function showDialog(id) {
-    var $dialog = $('#' + id);
-    //    if (facebookAPIIsLoaded) {
-
-    var isMobile = Math.min(getWidth(), getHeight()) < 450;
-
-    $(".fb-comments").attr("data-width", !isMobile ? 550 : getWidth() - 80);
-
-    $dialog.dialog({
-        //draggable: false,
-        //resizable: false,
-        //show: 'fade',
-        //hide: 'fade',
-        //modal: true,
-        //dialogClass: "no-title",
-        closeOnEscape: true,
-        width: !isMobile ? 630 : getWidth(),
-        height: !isMobile ? 430 : getHeight() - 10,
-        //position: ['center', 35],
-        open: function open() {
-
-            if (track) {
-                var elevator = new google.maps.ElevationService();
-                elevator.getElevationAlongPath({
-                    'path': compactTrackData(track.trackData),
-                    'samples': 128
-                }, plotElevation);
-            }
-
-            $('#tabs-movie').tabs({
-                create: function create(e, ui) {
-                    //$('#closeBtn').click(function () {
-                    //    $dialog.dialog('close');
-                    //});
-                }
-            });
-            //$(this).parent().children('.ui-dialog-titlebar').remove();
-        }
-    });
-    //}
-    //else {
-    //    toastr.warning("Please wait, Facebook code is not loaded yet", "", { timeOut: 1000, extendedTimeOut: 2000 });
-    //}
-}
-
 // #region Utils
+//shadowUrl: null
 function pointToLatLng(point) {
     var result;
     if (point.hasOwnProperty("lat")) {
@@ -121,17 +76,35 @@ function translateTracksContentPath(path) {
 }
 //#endregion
 
+function showHelpPanel(show) {
+    if (show) {
+        $(".fb-comments").attr("data-width", !getIsMobile() ? 400 : getScreenWidth() - 80);
+        if (track) {
+            var elevator = new google.maps.ElevationService();
+            elevator.getElevationAlongPath({
+                'path': compactTrackData(track.trackData),
+                'samples': 128
+            }, plotElevation);
+        }
+        $('#helpPanel').show('slide', { direction: "left" }, 500);
+    } else {
+        clearElevation();
+        myBarChart = null;
+        $("#helpPanel").hide('slide', { direction: "right" }, 500);
+    }
+}
+
 //#region Handlers
 function clickHelp() {
     $("#menuPanel").hide('slide', 500);
-    $('#helpPanel').show('slide', { direction: "right" }, 500);
+    showHelpPanel(!$("#helpPanel").is(":visible"));
 }
 function clickSettings() {
     $("#menuPanel").hide('slide', 500);
     $('#settingsPanel').show('slide', { direction: "up" }, 500);
 }
 function clickMenu() {
-    $("#helpPanel").hide('slide', { direction: "right" }, 500);
+    showHelpPanel(false);
     $('#settingsPanel').hide('slide', { direction: "up" }, 500);
     $('#menuPanel').toggle('slide', 500);
 }
@@ -148,7 +121,7 @@ function onBodyResize() {
     }
 
     if (typeof switchSidePanel != "undefined") {
-        if (window.innerWidth < 800 && showSidePanel != "no") {
+        if (window.innerWidth < 800 || showSidePanel == "no") {
             switchSidePanel(false);
         } else {
             switchSidePanel(true);
@@ -632,6 +605,15 @@ function init(filename, handler) {
             }
 
             addMarkersNearAll(track.trackData, GOOGLE_TYPES);
+
+            if (track) {
+                var elevator = new google.maps.ElevationService();
+                elevator.getElevationAlongPath({
+                    'path': compactTrackData(track.trackData),
+                    'samples': 128
+                }, plotElevation);
+            }
+
             isTrackLoaded = true;
 
             if (handler) {
@@ -798,16 +780,32 @@ function getFromCacheOrServer(url, obj, handler) {
     }
 }
 
-function plotElevation(elevations, status) {
+function clearElevation() {
 
     var chartDiv = document.getElementById('elevationChartDiv');
-    if (status !== 'OK') {
-        // Show the error code inside the chartDiv.
-        chartDiv.innerHTML = 'Cannot show elevation: request failed because ' + status;
-        return;
-    }
+    //if (status !== 'OK') {
+    //    // Show the error code inside the chartDiv.
+    //    chartDiv.innerHTML = 'Cannot show elevation: request failed because ' +
+    //        status;
+    //    return;
+    //}
 
-    chartDiv.innerHTML = "<canvas id=\"elevationChartCanvas\" style=\"max-height:" + (getHeight() > 300 ? getHeight() * 6 / 10 : 150) + "px\"></canvas>";
+    if (!chartDiv) return;
+    chartDiv.innerHTML = "<canvas id=\"elevationChartCanvas\" style=\"max-height:" + (getIsMobile() ? 450 : 450) + "px\"></canvas>";
+}
+
+function plotElevation(elevations) {
+
+    var chartDiv = document.getElementById('elevationChartDiv');
+    //if (status !== 'OK') {
+    //    // Show the error code inside the chartDiv.
+    //    chartDiv.innerHTML = 'Cannot show elevation: request failed because ' +
+    //        status;
+    //    return;
+    //}
+    if (!chartDiv) return;
+
+    chartDiv.innerHTML = "<canvas id=\"elevationChartCanvas\" style=\"max-height:" + (getIsMobile() ? 450 : 450) + "px\"></canvas>";
     var elevationChartCanvas = document.getElementById('elevationChartCanvas');
 
     var data = {

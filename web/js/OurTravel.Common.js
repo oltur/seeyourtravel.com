@@ -4,12 +4,16 @@
     return w < h;
 }
 
-function getWidth() {
+function getScreenWidth() {
     return window.innerWidth;
 }
 
-function getHeight() {
+function getScreenHeight() {
     return window.innerHeight;
+}
+
+function getIsMobile() {
+    return Math.min(getScreenWidth(), getScreenHeight()) < 450;
 }
 
 function shuffle(array) {
