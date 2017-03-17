@@ -162,7 +162,7 @@
         var tracksList;
         var textToReadArea;
         var counter = 0;
-        var markerSize = 50;
+        var markerSize = 30;
         var track;
         var map = undefined;
         var map2;

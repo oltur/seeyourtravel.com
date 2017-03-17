@@ -113,7 +113,7 @@
             }
 
             var icon = L.icon({
-                iconUrl: ("tracks/content/mycar.png"),
+                iconUrl: ("tracks/content/currentposition.png"),
                 iconSize: [50, 50],
                 iconAnchor: [1, 50],
                 shadowUrl: null

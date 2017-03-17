@@ -243,6 +243,11 @@ function clickMute() {
 var isTrackLoaded = false;
 var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 var isTrackPaused = !iOS;
+$(function () {
+    if (iOS) {
+        toastr.warning("Please press the Play button to start the track", "", { timeOut: 5000, extendedTimeOut: 10000 });
+    }
+});
 
 function doStartStop() {
     if (isTrackLoaded) {
@@ -510,9 +515,9 @@ function init(filename, handler) {
             track = tempTrack;
 
             var myIcon = L.icon({
-                iconUrl: translateTracksContentPath(track.icon),
-                iconSize: [markerSize, markerSize],
-                iconAnchor: [1, markerSize],
+                iconUrl: translateTracksContentPath("currentposition.png"), //track.icon),
+                iconSize: [markerSize * 2, markerSize * 2],
+                iconAnchor: [markerSize, markerSize],
                 shadowUrl: null
             });
 
@@ -919,4 +924,64 @@ $(function () {
     tweenToNewSpeed(controller.fullSpeed);
 });
 //#endregion ImmediateExecute
+
+var tourSteps = [{
+    "msg": "Welcome to See Your Travel. Let's take a simple tour!<br/>Click through the popups", // tour bubble / dialog text
+    "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
+    "selector": "body", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
+    "position": "center", // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "btnMsg": "Start Tour &raquo", // if you'd like a button on the dialog simply add a message here
+    "nextSelector": "#tour_dialog_btn", // does the user need to do something specific to advance? For example, clicking the tour bubble ok button. Omit for any action click to advance.
+    "waitForTrigger": false // should we pause the tour here? while the user does something? Pass a seletor as the trigger to resume the tour from this point
+}, {
+    "msg": "Choose your track", // tour bubble / dialog text
+    "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
+    "selector": "#tracksList", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
+    "position": "bottom" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+{
+    "msg": "Pause and resume the track, or press Space button", // tour bubble / dialog text
+    "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
+    "selector": "#continuePauseButton ", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
+    "position": "left" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+{
+    "msg": "Here you can mute and unmute the sound", // tour bubble / dialog text
+    "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
+    "selector": "#mute", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
+    "position": "left" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+{
+    "msg": "Here you can choose the language for the site", // tour bubble / dialog text
+    "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
+    "selector": "#langList", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
+    "position": "bottom" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+{
+    "msg": "Sideseeings from where in a track you are now", // tour bubble / dialog text
+    "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
+    "selector": "#imageDiv0", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
+    "position": "top" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+{
+    "msg": "The main menu: login to edit and create your tracks", // tour bubble / dialog text
+    "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
+    "selector": "#alogo", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
+    "position": "right" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+{
+    "msg": "Scale the map in our out. Drag or swap to move", // tour bubble / dialog text
+    "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
+    "selector": ".leaflet-control-zoom-out", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
+    "position": "left" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+{
+    "msg": "Take this tour again, see track information, <br/>and discuss it with friends", // tour bubble / dialog text
+    "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
+    "selector": "#imgComments", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
+    "position": "left" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+{
+    "msg": "Share and save the track in Facebook, Twitter or Google", // tour bubble / dialog text
+    "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
+    "selector": "#twitter-widget-0", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
+    "position": "top" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+{
+    "msg": "Good luck!!", // tour bubble / dialog text
+    "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
+    "selector": "body", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
+    "position": "center" }];
+// dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 
