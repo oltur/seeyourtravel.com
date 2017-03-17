@@ -125,13 +125,13 @@
                         <tr>
                             <td>From:</td>
                             <td>
-                                <input id="fromLocation" type="text" value="Traktorostroiteley prospekt 134A, Kharkiv, Ukraine" style="width: 200px" />
+                                <input id="fromLocation" type="text" value="Champs Elysee 1 Paris" style="width: 200px" />
                             </td>
                         </tr>
                         <tr>
                             <td>To:</td>
                             <td>
-                                <input id="toLocation" type="text" value="Sadovyi Lane 19, Bohodukhiv, Kharkiv Oblast, Ukraine" style="width: 200px" />
+                                <input id="toLocation" type="text" value="Bukingham Palace London" style="width: 200px" />
                             </td>
                         </tr>
                     </table>
