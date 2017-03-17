@@ -115,7 +115,7 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
 
     </script>
 
-    <div style="position: fixed; right: 55px; top: 5px; z-index: 1003">
+    <div style="position: fixed; right: 55px; top: -2px; z-index: 1003">
         <select id="langList" class="graySelect" onchange="selectLang()"></select>
     </div>
 
@@ -281,7 +281,7 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
 
                 <div align="center">
                     <p>&nbsp;</p>
-<iframe src="https://www.youtube.com/embed/2bSKNKqO2Uo"  width="560" height="315" allowfullscreen style="align:center; display:block"></iframe>
+<iframe src="https://www.youtube.com/embed/2bSKNKqO2Uo"  width="300" height="315" allowfullscreen style="align:center; display:block"></iframe>
                     <p>&nbsp;</p>
                     <div id="fb-root"></div>
                     <script>

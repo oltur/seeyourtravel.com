@@ -14,7 +14,7 @@
         var tracksList;
         var textToReadArea;
         var counter = 0;
-        var markerSize = 50;
+        var markerSize = 30;
         var track;
         var map = undefined;
         var map2;
@@ -218,14 +218,14 @@
                     <button type="button" data-i18n="[title]AboutSeeYourTravel;AboutSeeYourTravel" id="corporateSite" title="Corporate site" class="i headerButton" style="background-image: url(img/corporate.png );" onclick="window.open('./corporate','_blank')">About SeeYourTravel</button>
                     <button type="button" <%--data-i18n="[title]Profile;Profile" --%>id="profile" title="Profile" class="headerButton" style="background-image: url(img/profile.png );" onclick="window.location = 'UserProfile.aspx'"></button>
                     <button type="button" data-i18n="[title]Logout;Logout" id="logout" title="Logout" class="i headerButton" style="background-image: url(img/logoff.png );" onclick="window.location = 'Logout.aspx?ReturnURL='+window.location.href">Logout</button>
-<%--                    <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>--%>
+                    <%--                    <button type="button" data-i18n="[title]Help;Help" id="helpButton" style="background-image: url(img/help.png);" class="i headerButton" title="Need help?" onclick="clickHelp()">Help</button>--%>
                 </div>
             </div>
             <!-- #Include virtual="include/profileHelpPanel.inc" -->
             <!-- #Include virtual="include/settingsPanel.inc" -->
 
             <div style="position: absolute; right: 0px; top: 75px; z-index: 1001">
-                    <img id="imgComments" src="img/comments.png" onclick="clickHelp()" title="Comments" />
+                <img id="imgComments" src="img/comments.png" onclick="clickHelp()" title="Comments" />
             </div>
 
             <div style="position: absolute; right: 0px; top: 120px; z-index: 1001">
@@ -277,11 +277,13 @@
                 $("#editTrackButton").attr("disabled", "disabled");
             }
 
+            init();
+
             var visited = $.cookie('visited'); // create cookie 'visited' with no value
             if (visited != 'yes') {
+                //jQuery.tour(tourSteps);
                 clickHelp();
             }
-            init();
 
             $("#imageDiv0").draggable().resizable({ minHeight: 50, minWidth: 50 });
             $("#textToReadArea0").draggable().resizable({ minHeight: 50, minWidth: 50 }).hide();

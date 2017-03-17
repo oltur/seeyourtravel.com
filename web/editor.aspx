@@ -350,9 +350,9 @@
             });
 
             icon = L.icon({
-                iconUrl: ("tracks/content/mycar.png"),
+                iconUrl: ("tracks/content/currentposition.png"),
                 iconSize: [50, 50],
-                iconAnchor: [1, 50],
+                iconAnchor: [25, 25],
                 shadowUrl: null
             });
 
@@ -525,37 +525,37 @@
 
             var x = $('#travelWith').find(":selected").val();
             if (x == "WalkingMan") {
-                var t = ("aman.gif");
+                var t = "currentposition.png";//("aman.gif");
                 $("#velocityMetersPerSec").val(Math.round(5 * 10 * 1000 / 3660));
                 $("#icon").val(t);
                 setAnimatedMarkerIcon(t);
             }
             else if (x == "Bike") {
-                var t = ("mybike.png");
+                var t = "currentposition.png";//("mybike.png");
                 $("#velocityMetersPerSec").val(Math.round(15 * 50 * 1000 / 3660));
                 $("#icon").val(t);
                 setAnimatedMarkerIcon(t);
             }
             else if (x == "Car") {
-                var t = "mycar.png";
+                var t = "currentposition.png";//"mycar.png";
                 $("#velocityMetersPerSec").val(Math.round(100 * 100 * 1000 / 3660));
                 $("#icon").val(t);
                 setAnimatedMarkerIcon(t);
             }
             else if (x == "Bus") {
-                var t = ("mybus.png");
+                var t = "currentposition.png";//("mybus.png");
                 $("#velocityMetersPerSec").val(Math.round(80 * 100 * 1000 / 3660));
                 $("#icon").val(t);
                 setAnimatedMarkerIcon(t);
             }
             else if (x == "Yacht") {
-                var t = ("myyacht.png");
+                var t = "currentposition.png";//("myyacht.png");
                 $("#velocityMetersPerSec").val(Math.round(40 * 100 * 1000 / 3660));
                 $("#icon").val(t);
                 setAnimatedMarkerIcon(t);
             }
             else if (x == "Plane") {
-                var t = ("myplane.png");
+                var t = "currentposition.png";//("myplane.png");
                 $("#velocityMetersPerSec").val(Math.round(800 * 100 * 1000 / 3660));
                 $("#icon").val(t);
                 setAnimatedMarkerIcon(t);
