@@ -110,6 +110,19 @@ function clickMenu() {
     $('#menuPanel').toggle('slide', 500);
 }
 
+function search($input)
+{
+    var service = new google.maps.Geocoder();
+    service.geocode({ 'address': $input.val() }, function (results, status) {
+        if (status === 'OK') {
+            map.panTo(new L.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()));
+        } else {
+            toastr.error('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+    event.stopPropagation();
+}
+
 function onBodyResize() {
     if ($("#map").length) {
         $("#map").height(window.innerHeight);
