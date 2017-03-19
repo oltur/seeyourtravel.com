@@ -1,9 +1,9 @@
 {
 "name":"From There To Here"
-,"isPublic":"Yes"
+,"isPublic":"No"
 ,"travelWith":"Car"
 ,"copyright":"(c)"
-,"defaultScale":7
+,"defaultScale":8
 ,"photoLocationTolerancy":100
 ,"numOfPhotos":20
 ,"velocityMetersPerSec":10000
