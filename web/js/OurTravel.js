@@ -546,8 +546,8 @@ function init(filename, handler) {
 
                 var myIcon = L.icon({
                     iconUrl: translateTracksContentPath("currentposition.png"),//track.icon),
-                    iconSize: [markerSize * 2, markerSize * 2],
-                    iconAnchor: [markerSize, markerSize],
+                    iconSize: [markerSize * 1.5, markerSize * 1.5],
+                    iconAnchor: [markerSize * 0.75, markerSize * 0.75],
                     shadowUrl: null
                 });
 
@@ -752,9 +752,10 @@ function createPhotoMarker(place) {
     var isGoogle = photos[0].getUrl ? true : false;
     var isWiki = place.types.indexOf("wiki") >= 0;
 
+    var isPremium = Math.random() < 0.1;
     var icon = L.icon({
         iconUrl: (
-            place.types.indexOf("lodging") >= 0 ? "img/lodging.png" :
+            place.types.indexOf("lodging") >= 0 ? (!isPremium? "img/lodging.png" : "img/lodgingplus.png") :
             place.types.indexOf("restaurant") >= 0 ? "img/restaurant1.png" :
             place.types.indexOf("museum") >= 0 ? "img/museum.png" :
             place.types.indexOf("park") >= 0 ? "img/park.png" :
@@ -764,7 +765,7 @@ function createPhotoMarker(place) {
             "img/something.png"),
         //    shadowUrl: 'leaf-shadow.png',
 
-        iconSize: isWiki ? [26, 26] : [26, 35] // size of the icon
+        iconSize: isWiki ? [26, 26] : (!isPremium ? [26, 35] : [52, 70]) // size of the icon
         //    shadowSize:   [50, 64], // size of the shadow
         //    iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
         //    shadowAnchor: [4, 62],  // the same for the shadow
