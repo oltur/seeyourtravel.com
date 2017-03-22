@@ -5,9 +5,9 @@
 L.AnimatedMarker = L.Marker.extend({
     options:{
         // meters
-        distance:200,
+        distance:400,
         // ms
-        interval:1000,
+        interval:2000,
         // animate on add?
         autoStart:true,
         // callback onend
@@ -17,9 +17,9 @@ L.AnimatedMarker = L.Marker.extend({
         },
         clickable:false
     },
-
+    useTransition: true,
     initialize:function (latlngs, options) {
-        if (L.DomUtil.TRANSITION) {
+        if (this.useTransition && L.DomUtil.TRANSITION) {
             // No need to to check up the line if we can animate using CSS3
             this._latlngs = latlngs;
         } else {
@@ -74,7 +74,7 @@ L.AnimatedMarker = L.Marker.extend({
         this._i = 0;
 
         var t = this._latlngs[0];
-        if (L.DomUtil.TRANSITION) {
+        if (this.useTransition && L.DomUtil.TRANSITION) {
             if (this._icon) {
                 this._icon.style[L.DomUtil.TRANSITION] = '';
             }
@@ -105,7 +105,7 @@ L.AnimatedMarker = L.Marker.extend({
         }
 
         // Only if CSS3 transitions are supported
-        if (L.DomUtil.TRANSITION) {
+        if (this.useTransition && L.DomUtil.TRANSITION) {
             if (this._icon) {
                 this._icon.style[L.DomUtil.TRANSITION] = ('all ' + speed + 'ms linear');
             }

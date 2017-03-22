@@ -202,9 +202,9 @@
                 </div>
             </div>
             <div style="position: absolute; right: 5px; bottom: 15px; z-index: 1001">
-                <div class="fb-like" data-width="50" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
-                <div class="fb-save" data-uri="<%=Request.Url.ToString()%>" data-size="small"></div>
-                <a href="https://twitter.com/share" class="twitter-share-button" data-via="turevskiy" data-lang="es">Tweet</a>
+                <div class="fb-like" data-width="50" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
+                <%--<div class="fb-save" data-uri="<%=Request.Url.ToString()%>" data-size="small"></div>--%>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-via="turevskiy" data-lang="en">Tweet</a>
                 <script>$(".twitter-share-button").attr("data-lang", getTwitterLanguage());</script>
                 <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
                 <div class="g-plusone" data-size="small" data-annotation="none"></div>
@@ -255,20 +255,6 @@
         </div>
     </div>
 
-    <!-- Welcome splash -->
-    <script>
-
-        function loadTrackOnPageLoad() {
-            if (tracksList[0].selectedIndex > 0) {
-                init(tracksList.val(),
-                    function () {
-                        doStartStop();
-                    });
-            }
-        }
-
-    </script>
-
     <script>
         $(function () {
 
@@ -277,11 +263,22 @@
                 $("#profile").attr("disabled", "disabled");
             }
 
+            //init();
+            loadTrackOnPageLoad()
+            //init(null, function () {
+            //    doStartStop();
+            //});
+            //if (trackParam != '') {
+            //    //loadTrackOnPageLoad();
+            //}
+            //else {
+            //    //init();
+            //}
+
+
             if (trackParam == "" || "True" == "<%=Tools.IsGuest(this)%>") {
                 $("#editTrackButton").attr("disabled", "disabled");
             }
-
-            init();
 
             var visited = $.cookie('visited'); // create cookie 'visited' with no value
             if (visited != 'yes') {
@@ -361,18 +358,18 @@
                         }
                         tracksList.append('<option value="' + parts[0] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
                         var isSelected = (trackParam == parts[0]);
-                        var sidePanelHtml = (isSelected ? '<b>' : '') +
-                            label + ':<br/>' + (parts[2] == 1 ? '' : '*') + parts[1]
-                            + (trackParam == parts[0] ? '</b>' : '');
-                        var sidePanelHref = (isSelected ? '' : 'index.aspx?trackName=' + parts[0]);
-                        appendToSidePanel(sidePanelHtml, sidePanelHref, parts[4]);
+//                        var sidePanelHtml = (isSelected ? '<b>' : '') +
+//                            label + ':<br/>' + (parts[2] == 1 ? '' : '*') + parts[1]
+//                            + (trackParam == parts[0] ? '</b>' : '');
+//                        var sidePanelHref = (isSelected ? '' : 'index.aspx?trackName=' + parts[0]);
+//                        appendToSidePanel(sidePanelHtml, sidePanelHref, parts[4]);
                         if (parts[5].length > 0) {
                             var location = JSON.parse(parts[5]);
 
                             var iconTrack = L.icon({
                                 iconUrl: ('img/track.png'),
-                                iconSize: [40, 40],
-                                iconAnchor: [20, 20],
+                                iconSize: [30, 30],
+                                iconAnchor: [15, 15],
                                 //shadowUrl: null
                             });
 
@@ -396,10 +393,8 @@
                     }
 
                     if (trackParam != '') {
+//                        setTimeout(loadTrackOnPageLoad, 1);
                         tracksList.val(trackParam);
-                        //    $('select[id="tracksList"] option[value="' + trackParam + '"]').attr('selected', 'selected');
-
-                        setTimeout(function () { loadTrackOnPageLoad() }, 100);
                     }
                 }
             });
