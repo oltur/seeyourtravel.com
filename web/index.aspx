@@ -38,6 +38,9 @@
             else {
                 $("#logout").text($.t("Logout"));
             }
+
+            $("#helpContext").html($.t("help_content"));
+
         }
 
         function clickStart() {

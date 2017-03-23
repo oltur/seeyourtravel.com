@@ -186,6 +186,7 @@ function showPosition(position) {
         if (typeof track == "undefined")
             map.setView(newLatLng, 8);
 
+        //console.log(window.navigator.standalone);
         var urlp = "services/user_locations.aspx?action=senduserlocation&userId=" + globalUserId + "&lat=" + position.coords.latitude.toString() + "&lng=" + position.coords.longitude.toString()
         $.ajax({
             dataType: "jsonp",
