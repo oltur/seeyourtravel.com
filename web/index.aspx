@@ -67,7 +67,7 @@
 
                 if (e.target.id != 'helpPanel' && !$('#helpPanel').find(e.target).length &&
                     e.target.id != 'imgComments' && !$('#imgComments').find(e.target).length
-                    ) {
+                ) {
                     showHelpPanel(false);
                 }
 
@@ -113,7 +113,7 @@
             $('#slider1').tinycarousel({
                 axis: 'y'
                 //,interval: true
-		        , infinite: false
+                , infinite: false
             });
             slider1 = $("#slider1").data("plugin_tinycarousel");
             slider1.start();
@@ -215,9 +215,9 @@
 
             <div id="menuPanel" class="menuPanel">
                 <div>
-                    <div style="background-image: url(img/search.png);white-space: nowrap; width:190px" class="headerButton">
-                        <input type="text" id="searchForPlace" data-i18n="[placeholder]Search for places" class="i" style="width:130px; margin-top:10px" placeholder="Search for place" onkeydown="if(event.keyCode == 13) {search($(this)); return false;} return true;"/>
-                        <button type="button" onclick="search($('#searchForPlace'));return false;" data-i18n="Go" id="searchButton" title="Search" class="i" style="margin-left:10px;">Go</button>
+                    <div style="background-image: url(img/search.png); white-space: nowrap; width: 190px" class="headerButton">
+                        <input type="text" id="searchForPlace" data-i18n="[placeholder]Search for places" class="i" style="width: 130px; margin-top: 10px" placeholder="Search for place" onkeydown="if(event.keyCode == 13) {search($(this)); return false;} return true;" />
+                        <button type="button" onclick="search($('#searchForPlace'));return false;" data-i18n="Go" id="searchButton" title="Search" class="i" style="margin-left: 10px;">Go</button>
                     </div>
                     <button type="button" data-i18n="[title]New;New" id="newTrackButton" title="New" class="i headerButton" style="background-image: url(img/new.png );" onclick="clickNew()">New</button>
                     <button type="button" data-i18n="[title]Edit;Edit" id="editTrackButton" title="Edit" class="i headerButton" style="background-image: url(img/edit.png );" onclick="clickEdit()">Edit</button>
@@ -334,73 +334,77 @@
             //});
 
             $.ajax(
-            {
-                url: ("services/get_myandpublictracks.aspx?locale=" + $("#langList").val() + "&rnd=" + Math.random()),
-                //async: false,
-                //dataType: 'json'
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    console.log("get_myandpublictracks error: " + textStatus); console.log("Error: " + errorThrown);
-                },
-                success: function (data) {
-                    var fileList = data.split('\n');
-                    tracksList
-                        .find('option')
-                        .remove()
-                        .end()
-                    var label = "";
-                    tracksList.append('<option value="Choose a track" data-i18n="Chooseatrack">Choose a track:</option>');
-                    clearSidePanel();
+                {
+                    url: ("services/get_myandpublictracks.aspx?locale=" + $("#langList").val() + "&rnd=" + Math.random()),
+                    //async: false,
+                    //dataType: 'json'
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log("get_myandpublictracks error: " + textStatus); console.log("Error: " + errorThrown);
+                    },
+                    success: function (data) {
+                        var fileList = data.split('\n');
+                        tracksList
+                            .find('option')
+                            .remove()
+                            .end()
+                        var label = "";
+                        tracksList.append('<option value="Choose a track" data-i18n="Chooseatrack">Choose a track:</option>');
+                        clearSidePanel();
 
-                    markersTracks.clearLayers();
+                        markersTracks.clearLayers();
 
-                    for (var i = 0; i < fileList.length; i++) {
-                        var parts = fileList[i].split(';');
-                        if (label != parts[3]) {
-                            label = parts[3];
-                            tracksList.append('<optgroup label="' + label + '" style="color: black;"/>');
-                        }
-                        tracksList.append('<option value="' + parts[0] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
-                        var isSelected = (trackParam == parts[0]);
-//                        var sidePanelHtml = (isSelected ? '<b>' : '') +
-//                            label + ':<br/>' + (parts[2] == 1 ? '' : '*') + parts[1]
-//                            + (trackParam == parts[0] ? '</b>' : '');
-//                        var sidePanelHref = (isSelected ? '' : 'index.aspx?trackName=' + parts[0]);
-//                        appendToSidePanel(sidePanelHtml, sidePanelHref, parts[4]);
-                        if (parts[5].length > 0) {
-                            var location = JSON.parse(parts[5]);
+                        for (var i = 0; i < fileList.length; i++) {
+                            var parts = fileList[i].split(';');
+                            if (label != parts[3]) {
+                                label = parts[3];
+                                tracksList.append('<optgroup label="' + label + '" style="color: black;"/>');
+                            }
+                            tracksList.append('<option value="' + parts[0] + '">' + (parts[2] == 1 ? "" : "*") + parts[1] + '</option>');
+                            var isSelected = (trackParam == parts[0]);
+                            //                        var sidePanelHtml = (isSelected ? '<b>' : '') +
+                            //                            label + ':<br/>' + (parts[2] == 1 ? '' : '*') + parts[1]
+                            //                            + (trackParam == parts[0] ? '</b>' : '');
+                            //                        var sidePanelHref = (isSelected ? '' : 'index.aspx?trackName=' + parts[0]);
+                            //                        appendToSidePanel(sidePanelHtml, sidePanelHref, parts[4]);
+                            if (parts[5].length > 0) {
+                                var location = JSON.parse(parts[5]);
 
-                            var iconTrack = L.icon({
-                                iconUrl: ('img/track.png'),
-                                iconSize: [30, 30],
-                                iconAnchor: [15, 15],
-                                //shadowUrl: null
-                            });
+                                var iconTrack = L.icon({
+                                    iconUrl: ('img/track.png'),
+                                    iconSize: [30, 30],
+                                    iconAnchor: [15, 15],
+                                    //shadowUrl: null
+                                });
 
-                            var fileName = parts[0];
-                            var text = parts[1];
-                            var imgPath = (parts[4] != "") ? ("tracks/content/" + parts[4]) : ("img/track.png");
-                            var domelem = document.createElement('a');
-                            //domelem.href = place.name;
-                            domelem.innerHTML = "<p>" + text + "</p><img height='100px' width='100px' src='" + imgPath + "'/>";
-                            domelem.alt = text;
-                            domelem.href = "./index.aspx?trackname=" + fileName;
-                            domelem.target = "_blank";
+                                var fileName = parts[0];
+                                var text = parts[1];
+                                var imgPath = (parts[4] != "") ? ("tracks/content/" + parts[4]) : ("img/track.png");
+                                var domelem = document.createElement('a');
+                                //domelem.href = place.name;
+                                domelem.innerHTML = "<p>" + text + "</p><img height='100px' width='100px' src='" + imgPath + "'/>";
+                                domelem.alt = text;
+                                domelem.href = "./index.aspx?trackname=" + fileName;
+                                domelem.target = "_blank";
 
 
-                            var markerTrack = L.marker(new L.LatLng(location.lat - 0.0002 + Math.random() * 0.0004, location.lng - 0.0002 + Math.random() * 0.0004),
-                                { icon: iconTrack })
+                                var markerTrack = L.marker(new L.LatLng(location.lat - 0.0002 + Math.random() * 0.0004, location.lng - 0.0002 + Math.random() * 0.0004),
+                                    { icon: iconTrack })
                                     .bindPopup(domelem);
 
-                            markersTracks.addLayer(markerTrack);
+                                markersTracks.addLayer(markerTrack);
+                            }
                         }
-                    }
 
-                    if (trackParam != '') {
-//                        setTimeout(loadTrackOnPageLoad, 1);
-                        tracksList.val(trackParam);
+                        if (trackParam != '') {
+                            //                        setTimeout(loadTrackOnPageLoad, 1);
+                            tracksList.val(trackParam);
+                        }
+
+                        if (window.JSInterface && window.JSInterface.notifyPageLoaded)
+                            window.JSInterface.notifyPageLoaded();
+
                     }
-                }
-            });
+                });
 
         });
     </script>

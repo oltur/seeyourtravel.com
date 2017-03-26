@@ -14,7 +14,7 @@ public partial class services_user_locations : System.Web.UI.Page
         // http://localhost:88/seeyourtravel/services/user_locations.aspx?action=getuserlocations&userId=ttt&lat=50&lng=50
         // http://localhost:88/seeyourtravel/services/get_places.aspx?types=restaurant%2Clodging&set=full&from=0&to=10&miny=47.955776&minx=10.096568999999999&maxy=48.055775999999994&maxx=10.196569&callback=abc
 
-        Debug.WriteLine(Request.Headers["X-Requested-With"]);
+        Debug.WriteLine(Request.Cookies["AndroidWebView"] != null? Request.Cookies["AndroidWebView"].Value:"0");
 
         //Response.Cache.SetNoStore();
         //Response.Cache.SetNoServerCaching();
@@ -63,20 +63,32 @@ public partial class services_user_locations : System.Web.UI.Page
         else if (string.Compare(action, "senduserlocation", true) == 0)
         {
 
-            string userId = Request.QueryString["userId"];
+            Guid userId = Guid.Empty;
+            if (!Guid.TryParse(Request.QueryString["userId"], out userId))
+                userId = Guid.Empty;
             string lat = Request.QueryString["lat"];
             string lng = Request.QueryString["lng"];
+            int source = int.Parse(Request.QueryString["source"] ?? "1");
 
-            if (!string.IsNullOrEmpty(userId))
+            //if (userId == Guid.Empty)
             {
-                Dictionary<string, Location> locations;
+                Dictionary<Guid, Location> locations;
                 if (this.Application["UserLocations"] != null)
                 {
-                    locations = (Dictionary<string, Location>)this.Application["UserLocations"];
+                    try
+                    {
+                        locations = (Dictionary<Guid, Location>)this.Application["UserLocations"];
+                        if(locations == null)
+                            locations = new Dictionary<Guid, Location>();
+                    }
+                    catch
+                    {
+                        locations = new Dictionary<Guid, Location>();
+                    }
                 }
                 else
                 {
-                    locations = new Dictionary<string, Location>();
+                    locations = new Dictionary<Guid, Location>();
                 }
 
                 if (locations.ContainsKey(userId))
@@ -87,10 +99,11 @@ public partial class services_user_locations : System.Web.UI.Page
 
                 UserLocation userLocation = new UserLocation();
                 userLocation.UserLocationID = Guid.NewGuid();
-                userLocation.UserID = Guid.Parse(userId);
+                userLocation.UserID = userId;
                 userLocation.Lat = double.Parse(lat);
                 userLocation.Lng = double.Parse(lng);
                 userLocation.Time = DateTime.UtcNow;
+                userLocation.Source = source;
                 db.UserLocations.Add(userLocation);
                 db.SaveChanges();
             }

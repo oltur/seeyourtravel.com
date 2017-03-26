@@ -16,7 +16,7 @@ syt.api.searchWikiPlaces = function (request) {
         success: function (data2) {
             //console.log("get_places success");
             var result = [];
-            for (var i = 0; i < Math.min(5, data2.query.geosearch.length); i++) {
+            for (var i = 0; i < Math.min(MAX_GOOGLE_PLACES, data2.query.geosearch.length); i++) {
                 var item = data2.query.geosearch[i];
                 result.push({
                     id: item.pageid,
@@ -60,7 +60,7 @@ syt.api.searchGooglePlaces = function (googlePlacesService, request) {
 
         googlePlacesService.nearbySearch(request, function (results, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-                deferred.resolve(results.slice(0, 5));
+                deferred.resolve(results.slice(0, MAX_GOOGLE_PLACES));
             } else {
                 deferred.resolve([]);
             }
@@ -88,7 +88,7 @@ syt.api.searchSYTPlaces = function (request) {
         url: urlp,
         success: function (data2) {
             //console.log("get_places success");
-            deferred.resolve(data2.results.slice(0, 20));
+            deferred.resolve(data2.results.slice(0, MAX_GOOGLE_PLACES));
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             if (errorThrown.toString().indexOf("not called") == -1) {
