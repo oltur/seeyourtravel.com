@@ -3,10 +3,13 @@
 var tracksFolder = 'tracks/';
 //        var url = 'http://{s}.tile.cloudmade.com/5bcd2fc5d5714bd48096c7478324e0fe/997/256/{z}/{x}/{y}.png';
 //        var url = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ';      
-var mapTileUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib2x0dXJ1YSIsImEiOiJlODQ4ZTI2MWI4OGZkZjUyNDRiNjY4MDFkZGI0ODc4NyJ9.iiCb_tZgs_ipvEv3s6Zx0A';
+var mapTileUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token=pk.eyJ1Ijoib2x0dXJ1YSIsImEiOiJlODQ4ZTI2MWI4OGZkZjUyNDRiNjY4MDFkZGI0ODc4NyJ9.iiCb_tZgs_ipvEv3s6Zx0A';
 //var panoramioUrl = "https://ssl.panoramio.com/map/get_panoramas.php?set=";
 var flickrUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&bbox={0}%2C{1}%2C{2}%2C{3}&per_page={4}&format=json&nojsoncallback=1&api_key=2203a1e292f7b65958730b236c0756fa";
-var MAX_GOOGLE_PLACES = 10;
+
+var MAX_GOOGLE_PLACES = IS_MOBILE_LIGHTWEIGHT ? 3 : 5;
+var STEPS_PER_PIECE = IS_MOBILE_LIGHTWEIGHT? 10 : 20;
+var PIECES_COUNT = 5;
 var MAX_HERE_PLACES = 50;
 var MAX_GOOGLE_RADIUS = 10000;
 var GOOGLE_TYPES = ['lodging', 'restaurant', 'museum', 'park', 'bakery', 'zoo']
@@ -76,6 +79,15 @@ function translateTracksContentPath(path) {
 }
 //#endregion
 
+function loadTrackOnPageLoad() {
+    //if (trackParam) {
+        init(trackParam,
+            function () {
+                toastr.warning("Let's go!", "", { timeOut: 3000, extendedTimeOut: 5000 });
+                setTimeout(doStartStop, 3000);
+            });
+    //}
+}
 function showHelpPanel(show) {
     if (show) {
         $(".fb-comments").attr("data-width", !getIsMobile() ? 400 : getScreenWidth() - 80);
@@ -147,22 +159,24 @@ function onBodyResize() {
 //#endregion
 
 function showLocation() {
+//    console.log("before getting location");
     if (navigator.geolocation) {
         var options = {
             enableHighAccuracy: true,
-            timeout: 30000,
+            timeout: 5000,
             maximumAge: 300000
         };
         navigator.geolocation.getCurrentPosition(showPosition, errorPosition, options);
-        setTimeout(arguments.callee, 300000);
+        setTimeout(arguments.callee, 60000);
     } else {
-        //x.innerHTML = "Geolocation is not supported by this browser.";
+        console.log("Geolocation is not supported by this browser");
     }
 }
 function errorPosition(err) {
     console.warn('Cannot get position(' + err.code + '): ' + err.message);
 };
 function showPosition(position) {
+//    console.log("position: " + position.coords.latitude + ", " + position.coords.longitude);
     if ($("#map").length) {
         //x.innerHTML = "Latitude: " + position.coords.latitude +
         //"<br>Longitude: " + position.coords.longitude;
@@ -175,7 +189,8 @@ function showPosition(position) {
         if (typeof track == "undefined")
             map.setView(newLatLng, 8);
 
-        var urlp = "services/user_locations.aspx?action=senduserlocation&userId=" + globalUserId + "&lat=" + position.coords.latitude.toString() + "&lng=" + position.coords.longitude.toString()
+        //console.log(window.navigator.standalone);
+        var urlp = "services/user_locations.aspx?action=senduserlocation&source=2&userId=" + globalUserId + "&lat=" + position.coords.latitude.toString() + "&lng=" + position.coords.longitude.toString()
         $.ajax({
             dataType: "jsonp",
             url: urlp,
@@ -264,10 +279,9 @@ function clickMute() {
 }
 
 var isTrackLoaded = false;
-var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-var isTrackPaused = !iOS;
+var isTrackPaused = !IS_IOS;
 $(function () {
-    if (iOS) {
+    if (IS_IOS) {
         toastr.warning("Please press the Play button to start the track", "", { timeOut: 5000, extendedTimeOut: 10000 });
     }
 });
@@ -311,7 +325,7 @@ function showPhotos(track, p, tolerancy) {
     if (!tolerancy)
         tolerancy = 0.1;
 
-    Promise.all([syt.api.searchSYTImages(track, p, tolerancy), syt.api.searchFlickrImages(track, p, tolerancy)]).then(values => {
+    Promise.all([syt.api.searchSYTImages(track, p, tolerancy), syt.api.searchFlickrImages(track, p, tolerancy)]).then(function (values) {
         get_photos_success(values[0].photos.concat(values[1].photos), p, tolerancy);
     });
 }
@@ -686,12 +700,10 @@ function addMarkersNearAll(allData, types) {
     myMarkers = [];
     allMarkers = [];
 
-    var pieces = 3;
-
-    for (var i = 0; i < pieces; i++) {
-        var from = Math.round(allData.length * i / 3);
-        var to = Math.round(allData.length * (i + 1) / 3);
-        var step = Math.round(allData.length / (10 * pieces));
+    for (var i = 0; i < PIECES_COUNT; i++) {
+        var from = Math.round(allData.length * i / PIECES_COUNT);
+        var to = Math.round(allData.length * (i + 1) / PIECES_COUNT);
+        var step = Math.round(allData.length / (STEPS_PER_PIECE * PIECES_COUNT));
         if (step == 0)
             step = 1;
         doSetTimeout(allData, types, from, to, step, i);
@@ -699,7 +711,7 @@ function addMarkersNearAll(allData, types) {
 }
 
 function doSetTimeout(allData, types, from, to, step, i) {
-    setTimeout(function () { addMarkersNearRange(allData, types, from, to, step, (i % 2) == 1) }, i * 5000 + 1);
+    setTimeout(function () { addMarkersNearRange(allData, types, from, to, step, (i % 2) == 1) }, i * 2000 + 1);
 }
 
 function addMarkersNearRange(allData, types, from1, to1, step1, odd) {
@@ -735,7 +747,8 @@ function addMarkersNear(nearLat, nearLng, types, odd) {
     //else {
 
     var googlePlacesService = new google.maps.places.PlacesService(map2);
-    Promise.all([syt.api.searchSYTPlaces(request), syt.api.searchWikiPlaces(request), syt.api.searchGooglePlaces(googlePlacesService, request)]).then(values => {
+    Promise.all([syt.api.searchSYTPlaces(request), syt.api.searchWikiPlaces(request), syt.api.searchGooglePlaces(googlePlacesService, request)]).then(
+        function (values) {
         getplaces_success(values[0].concat(values[1]).concat(values[2]));
     });
 
@@ -743,7 +756,7 @@ function addMarkersNear(nearLat, nearLng, types, odd) {
 }
 
 function getplaces_success(data) {
-    for (var i = 0; i < Math.min(data.length, 100) ; i++) {
+    for (var i = 0; i < Math.min(data.length, MAX_GOOGLE_PLACES * 3); i++) {
         createPhotoMarker(data[i]);
     }
 }

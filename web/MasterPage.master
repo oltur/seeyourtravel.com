@@ -191,6 +191,13 @@
     <link rel="stylesheet" href="styles/tinycarousel.css" />
     <link rel="stylesheet" href="styles/toastr.min.css" />
 
+    <script>
+        var IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream; 
+        var IS_ANDROID = /android/i.test(navigator.userAgent);
+        var IS_MOBILE_LIGHTWEIGHT = IS_IOS || IS_ANDROID;
+        var IS_ANDROID_WEBVIEW = !!window.JSInterface;
+    </script>
+
     <script src="js/OurTravel.Common.js"></script>
     <script src="js/api.js"></script>
     <script src="js/OurTravel.js"></script>
@@ -218,6 +225,18 @@
 
     <script>
         var globalUserId = '<%=Context.User.Identity.Name%>';
+
+        if (IS_ANDROID_WEBVIEW) {
+            $.cookie("AndroidWebView", "1");
+        }
+        else {
+            $.cookie("AndroidWebView", "0");
+        }
+
+        if (window.JSInterface && window.JSInterface.setUserId)
+            window.JSInterface.setUserId(globalUserId);
+
+       
         var globalUserName = '<%=string.IsNullOrWhiteSpace((string)Session["UserName"])?"Guest":Session["UserName"].ToString()%>';
         var globalFacebookLanguage = "en_US";
         var facebookAPIIsLoaded = false;

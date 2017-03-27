@@ -35,6 +35,7 @@ public partial class Image
     public Nullable<double> Lng { get; set; }
     public string Description { get; set; }
     public System.DateTime Created { get; set; }
+    public string Checksum { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<ImageUser> ImageUsers { get; set; }
@@ -221,6 +222,7 @@ public partial class UserLocation
     public double Lat { get; set; }
     public double Lng { get; set; }
     public System.DateTime Time { get; set; }
+    public int Source { get; set; }
 
     public virtual User User { get; set; }
 }
