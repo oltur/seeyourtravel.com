@@ -17,7 +17,7 @@
       <div id="helpContext">
 	  <!-- class="i" data-i18n="[html]help_content"-->
       </div>
-      <input id="dontShowOnStartup" type="checkbox" title="Don't show on startup" onchange="$.cookie('visited',$('#dontShowOnStartup').prop('checked')?'yes':'no')"/>
+      <input id="dontShowOnStartup" type="checkbox" title="Don't show on startup" onchange="$.cookie('visited',$('#dontShowOnStartup').prop('checked')?'yes':'no');if(IS_MOBILE_LIGHTWEIGHT) { clickHelp(); }"/>
       <label for="dontShowOnStartup">
         <b>Don't show a tour and welcome message on startup</b>
       </label>
