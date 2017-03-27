@@ -386,6 +386,10 @@
                                 domelem.href = "./index.aspx?trackname=" + fileName;
                                 domelem.target = "_blank";
 
+                                if (!location.lat && !location.lng) {
+                                    location.lat = location[0];
+                                    location.lng = location[1];
+                                }
 
                                 var markerTrack = L.marker(new L.LatLng(location.lat - 0.0002 + Math.random() * 0.0004, location.lng - 0.0002 + Math.random() * 0.0004),
                                     { icon: iconTrack })

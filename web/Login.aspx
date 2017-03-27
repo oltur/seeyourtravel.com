@@ -163,8 +163,13 @@
             </tr>
             <tr>
                 <td colspan="2" style="text-align:center">
-                    <fb:login-button data-size="xlarge" scope="public_profile,email" onlogin="checkLoginState();">
-                    </fb:login-button>
+                    <script>
+                        var fbButtonHtml = '<fb:login-button data-size="xlarge" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>';
+                        if (!IS_ANDROID_WEBVIEW) {
+                            document.writeln(fbButtonHtml);
+                        }
+                    </script>
+                    
                 </td>
             </tr>
             <tr>

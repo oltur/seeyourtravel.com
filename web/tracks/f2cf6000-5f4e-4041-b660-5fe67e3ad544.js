@@ -2,7 +2,7 @@
 "name":"Israel National Track"
 ,"isPublic":"Yes"
 ,"travelWith":"Car"
-,"copyright":"(c)"
+,"copyright":"(c) http://www.gpsies.com/"
 ,"defaultScale":8
 ,"photoLocationTolerancy":100
 ,"numOfPhotos":20
