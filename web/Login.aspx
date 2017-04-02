@@ -168,6 +168,17 @@
                         if (!IS_ANDROID_WEBVIEW) {
                             document.writeln(fbButtonHtml);
                         }
+                        else {
+                            if (window.JSInterface && window.JSInterface.getFacebookToken) {
+                                var token = window.JSInterface.getFacebookToken();
+                                var info = window.JSInterface.getFacebookInfo();
+                                if (info != "") {
+                                    document.getElementById("<%=Token.ClientID%>").value = token;
+                                    document.getElementById("<%=Data.ClientID%>").value = info;
+                                    document.getElementById("<%=LoginButton.ClientID%>").click();
+                                }
+                            }
+                        }
                     </script>
                     
                 </td>

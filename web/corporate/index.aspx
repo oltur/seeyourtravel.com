@@ -2,15 +2,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>
-        SeeYourTravel.com Corporate Site - Your travel planning community
+    <title>SeeYourTravel.com Corporate Site - Your travel planning community
     </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link rel="stylesheet" href="../styles/jquery-ui.css" />
     <script src="../libs/jquery.js"></script>
     <script src="../libs/jquery-ui.js"></script>
     <script src="../libs/jquery.cookie.js"></script>
-    <LINK REL="SHORTCUT ICON" HREF="favicon.ico">
+    <link rel="SHORTCUT ICON" href="favicon.ico">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/animate.min.css" rel="stylesheet">
@@ -26,7 +25,7 @@
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
             }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
         ga('create', 'UA-66626682-1', 'auto');
@@ -36,15 +35,16 @@
     <script src="../libs/i18next.js"></script>
     <script src="../js/OurTravel.Common.js"></script>
 
-<!-- Start Alexa Certify Javascript -->
-<script type="text/javascript">
-_atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: true};
-(function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();
-</script>
-<noscript><img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=va3Jo1IWhe10mh" style="display:none" height="1" width="1" alt="" /></noscript>
-<!-- End Alexa Certify Javascript -->  
+    <!-- Start Alexa Certify Javascript -->
+    <script type="text/javascript">
+        _atrk_opts = { atrk_acct: "va3Jo1IWhe10mh", domain: "seeyourtravel.com", dynamic: true };
+        (function () { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(as, s); })();
+    </script>
+    <noscript>
+        <img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=va3Jo1IWhe10mh" style="display: none" height="1" width="1" alt="" /></noscript>
+    <!-- End Alexa Certify Javascript -->
 
-<script type="application/ld+json">
+    <script type="application/ld+json">
 {
   "@context": "http://schema.org",
   "@type": "Organization",
@@ -55,7 +55,7 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
     "contactType": "sales"
   }]
 }
-</script>
+    </script>
 
 </head>
 
@@ -78,11 +78,11 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
             $.i18n.init({
                 fallbackLng: "en",
                 resGetPath: "../locales/__lng__/__ns__.json"
-            , debug: true
+                , debug: true
                 //,useLocalStorage: true | false
-              //,localStorageExpirationTime: 60000000 // in ms, default 1 week
+                //,localStorageExpirationTime: 60000000 // in ms, default 1 week
             },
-             function () { if (typeof translateAll != "undefined") translateAll(); }
+                function () { if (typeof translateAll != "undefined") translateAll(); }
             );
 
         });
@@ -106,7 +106,7 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
                 _vengage[b[c]] = a(b[c]);
             }
             var t = document.createElement('script'),
-            s = document.getElementsByTagName('script')[0];
+                s = document.getElementsByTagName('script')[0];
             t.async = true;
             t.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://s3.amazonaws.com/vetrack/init.min.js';
             s.parentNode.insertBefore(t, s);
@@ -131,10 +131,9 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
                 <!-- LOGO STARTS HERE -->
                 <div class="row">
                     <div class="col-xs-12 jasm-logo" data-scroll-reveal="wait 0.25s, then enter top and move 40px over 1s">
-<div class="i lj-text-center" style="color:white; font-size:24px; align:center; text-shadow: 1px 1px #005BBB;" data-i18n="Demo">Try it now!</div>
+                        <div class="i lj-text-center" style="color: white; font-size: 24px; align: center; text-shadow: 1px 1px #005BBB;" data-i18n="Demo">Try it now!</div>
                         <a href="https://seeyourtravel.com/" title="">
                             <img src="../img/See Your Travels-01.png" class="jasm-logo-1x" alt="">
-
                         </a>
                     </div>
                 </div>
@@ -142,7 +141,7 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
                 <!-- TITLE STARTS HERE -->
                 <div class="row">
                     <div class="col-xs-12 jasm-title" data-scroll-reveal="wait 0.5s, then enter left and move 40px over 1s" style="text-shadow: 1px 1px #005BBB;">
-                        <h1 class="jasm-text-center"><a class="i" style="font-size:52px; color:white" data-i18n="Corporate_SeeYourTravelCom" href="https://seeyourtravel.com">SeeYourTravel.com</a></h1>
+                        <h1 class="jasm-text-center"><a class="i" style="font-size: 52px; color: white" data-i18n="Corporate_SeeYourTravelCom" href="https://seeyourtravel.com">SeeYourTravel.com</a></h1>
                     </div>
                 </div>
                 <!-- /TITLE  ENDS HERE-->
@@ -156,8 +155,10 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
                 <!-- TITLE PARAGRAPH STARTS HERE -->
                 <div class="row">
                     <div class="col-xs-12 col-sm-8 col-sm-offset-2 jasm-title-paragraph" data-scroll-reveal="wait 1s, then enter right and move 40px over 1s">
-                        <p class="i lj-text-center" style="text-shadow: 1px 1px #005BBB;" data-i18n="[html]Corporate_Text1" >
-                            Experience the travels yourself from past, today and future! <br />We are eager to be with you. Our site is coming in...
+                        <p class="i lj-text-center" style="text-shadow: 1px 1px #005BBB;" data-i18n="[html]Corporate_Text1">
+                            Experience the travels yourself from past, today and future!
+                            <br />
+                            We are eager to be with you. Our site is coming in...
                         </p>
                     </div>
                 </div>
@@ -195,10 +196,10 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
             <div class="row">
                 <div class="col-sm-4 jasm-icon-container">
                     <span data-scroll-reveal="wait 0.25s, then enter top and move 40px over 1s"><i class="fa fa-support"></i></span>
-                    <h3  class="i jasm-text-uppercase" data-i18n="Corporate_Global">Global</h3>
+                    <h3 class="i jasm-text-uppercase" data-i18n="Corporate_Global">Global</h3>
                     <p class="i" data-i18n="Corporate_Global1">Global coverage with no extra effort</p>
                     <!--          <a href="#" title="">Read More</a>-->
-                    </div>
+                </div>
 
                 <div class="col-sm-4 jasm-icon-container">
                     <span data-scroll-reveal="wait 0.25s, then enter top and move 40px over 1s"><i class="fa fa-cogs"></i></span>
@@ -234,7 +235,7 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
                             <div class="jasm-recent-work-inner">
                                 <h3><a href="#" class="i" data-i18n="Corporate_Norway">Beautiful Norway</a></h3>
                                 <p class="i" data-i18n="Corporate_Norway1">Severe nature and open-heart people - paradise in the North</p>
-                                <a href="#" rel="prettyPhoto"><i class="fa fa-eye"></i> <span class="i" data-i18n="Corporate_View">View</span></a>
+                                <a href="#" rel="prettyPhoto"><i class="fa fa-eye"></i><span class="i" data-i18n="Corporate_View">View</span></a>
                             </div>
                         </div>
                     </div>
@@ -247,7 +248,7 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
                             <div class="jasm-recent-work-inner">
                                 <h3><a href="#" class="i" data-i18n="Corporate_Germany">Old good Germany</a></h3>
                                 <p class="i" data-i18n="Corporate_Germany1">Quiet and relaxing, busy and inspiring - the real Germany</p>
-                                <a href="#" rel="prettyPhoto"><i class="fa fa-eye"></i> <span class="i" data-i18n="Corporate_View">View</span></a>
+                                <a href="#" rel="prettyPhoto"><i class="fa fa-eye"></i><span class="i" data-i18n="Corporate_View">View</span></a>
                             </div>
                         </div>
                     </div>
@@ -260,7 +261,7 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
                             <div class="jasm-recent-work-inner">
                                 <h3><a href="#" class="i" data-i18n="Corporate_Ukraine">Exciting Ukraine</a></h3>
                                 <p class="i" data-i18n="Corporate_Ukraine1">Nature, people, food - all what you need to enjoy the life</p>
-                                <a href="#" rel="prettyPhoto"><i class="fa fa-eye"></i> <span class="i" data-i18n="Corporate_View">View</span></a>
+                                <a href="#" rel="prettyPhoto"><i class="fa fa-eye"></i><span class="i" data-i18n="Corporate_View">View</span></a>
                             </div>
                         </div>
                     </div>
@@ -273,7 +274,7 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
                             <div class="jasm-recent-work-inner">
                                 <h3><a href="#" class="i" data-i18n="Corporate_Italy">Hearty Italy</a></h3>
                                 <p class="i" data-i18n="Corporate_Italy1">See yourself the beauty of Italian life and history</p>
-                                <a href="#" rel="prettyPhoto"><i class="fa fa-eye"></i> <span class="i" data-i18n="Corporate_View">View</span></a>
+                                <a href="#" rel="prettyPhoto"><i class="fa fa-eye"></i><span class="i" data-i18n="Corporate_View">View</span></a>
                             </div>
                         </div>
                     </div>
@@ -281,7 +282,7 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
 
                 <div align="center">
                     <p>&nbsp;</p>
-<iframe src="https://www.youtube.com/embed/2bSKNKqO2Uo"  width="300" height="315" allowfullscreen style="align:center; display:block"></iframe>
+                    <iframe src="https://www.youtube.com/embed/2bSKNKqO2Uo" width="300" height="315" allowfullscreen style="align: center; display: block"></iframe>
                     <p>&nbsp;</p>
                     <div id="fb-root"></div>
                     <script>
@@ -294,7 +295,11 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
                         }(document, 'script', 'facebook-jssdk'));
                     </script>
 
-                    <div class="fb-page" data-href="https://www.facebook.com/seeyourtravel" data-width="300" data-small-header="false" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/seeyourtravel"><a href="https://www.facebook.com/seeyourtravel">Seeyourtravel.com</a></blockquote></div></div>
+                    <div class="fb-page" data-href="https://www.facebook.com/seeyourtravel" data-width="300" data-small-header="false" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="true" data-show-posts="false">
+                        <div class="fb-xfbml-parse-ignore">
+                            <blockquote cite="https://www.facebook.com/seeyourtravel"><a href="https://www.facebook.com/seeyourtravel">Seeyourtravel.com</a></blockquote>
+                        </div>
+                    </div>
                 </div>
                 <p>&nbsp;</p>
                 <p align="center">
@@ -305,8 +310,10 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
                     <g:plusone></g:plusone>
                 </p>
 
-            </div><!--/.container-->
-    </section><!--/recent-works-->
+            </div>
+            <!--/.container-->
+    </section>
+    <!--/recent-works-->
     <!-- /SUBSCRIBE FORM -->
     </div>
     </div>
@@ -345,7 +352,8 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
             </div>
         </div>
 
-    </footer><!--/CONTACTS-->
+    </footer>
+    <!--/CONTACTS-->
 
     <!--<script src="js/jquery.js"></script>-->
     <script src="js/bootstrap.min.js"></script>
@@ -388,5 +396,16 @@ _atrk_opts = { atrk_acct:"va3Jo1IWhe10mh", domain:"seeyourtravel.com",dynamic: t
 
     </script>
 
+<%--    <script type="text/javascript">
+        window._urq = window._urq || [];
+        _urq.push(['initSite', '74067c72-36c1-4bde-a189-72fdcd4f2a60']);
+        (function () {
+            var ur = document.createElement('script'); ur.type = 'text/javascript'; ur.async = true;
+            ur.src = ('https:' == document.location.protocol ? 'https://cdn.userreport.com/userreport.js' : 'http://cdn.userreport.com/userreport.js');
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s);
+        })();
+    </script>--%>
+
+<script>(function (e, t, o, n) { var c, s, i; e.SMCX = e.SMCX || [], t.getElementById(n) || (c = t.getElementsByTagName(o), s = c[c.length - 1], i = t.createElement(o), i.type = "text/javascript", i.async = !0, i.id = n, i.src = ["https:" === location.protocol ? "https://" : "http://", "widget.surveymonkey.com/collect/website/js/iG52UUUrFEhnXq1bZxRqTZkORidoOUGeZeNO2TdT3XUZjpoiRI2Vya76NMc4B_2FHq.js"].join(""), s.parentNode.insertBefore(i, s)) })(window, document, "script", "smcx-sdk");</script>
 </body>
 </html>

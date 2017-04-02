@@ -50,6 +50,49 @@ syt.api.searchWikiPlaces = function (request) {
     return deferred.promise();
 }
 
+syt.api.searchWeather = function (request) {
+    var deferred = $.Deferred();
+    var urlp = "services/get_weather.aspx?lat=" + request.location.lat() + "&lng=" + request.location.lng() + "&callback=?";
+
+    $.ajax({
+        dataType: "json",
+        url: urlp,
+        crossDomain: true,
+        success: function (data2) {
+            //console.log("get_places success");
+            var tf = Math.round(data2.currently.temperature);
+            var tc = Math.round((tf - 32) / 1.8);
+            if (tc < 0)
+            {
+                tc = tc.toString() + "°C";
+            }
+            else {
+                tc = "+" + tc.toString() + "°C";
+            }
+            if (tf < 0) {
+                tf = tf.toString() + "°F";
+            }
+            else {
+                tf = "+" + tf.toString() + "°F";
+            }
+            var result =
+                {
+                    temperature: tc + "/" + tf,
+                    lat: data2.latitude,
+                    lng: data2.longitude,
+                    icon: data2.currently.icon
+                };
+            deferred.resolve(result);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //console.log("get_places success");
+            deferred.resolve([]);
+        }
+    });
+
+    return deferred.promise();
+}
+
 syt.api.searchGooglePlaces = function (googlePlacesService, request) {
     var deferred = $.Deferred();
 

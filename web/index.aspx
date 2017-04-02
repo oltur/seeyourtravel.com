@@ -370,10 +370,12 @@
                                 var location = JSON.parse(parts[5]);
 
                                 var iconTrack = L.icon({
-                                    iconUrl: ('img/track.png'),
+                                    iconUrl: (parts[4] ? 'tracks/content/' + parts[4]:'img/track.png'),
                                     iconSize: [30, 30],
                                     iconAnchor: [15, 15],
-                                    //shadowUrl: null
+                                    shadowUrl: 'img/shadow.png',
+                                    shadowSize: [32, 32],
+                                    shadowAnchor: [16, 16]
                                 });
 
                                 var fileName = parts[0];

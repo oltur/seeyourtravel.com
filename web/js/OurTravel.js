@@ -1,5 +1,6 @@
 
 //#region Variables
+var ATTRIBUTION = 'SeeYourTravel.com &copy; Map data &copy; <a target="_blank" href= "http://openstreetmap.org" > OpenStreetMap</a >, <a target="_blank" href= "http://creativecommons.org/licenses/by-sa/2.0/" > CC - BY - SA</a >, Imagery © <a target="_blank" href= "http://flickr.com" > Flickr</a>; Powered by <a target="_blank" href="https://darksky.net/poweredby/">DarkSky</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png" />';
 var tracksFolder = 'tracks/';
 //        var url = 'http://{s}.tile.cloudmade.com/5bcd2fc5d5714bd48096c7478324e0fe/997/256/{z}/{x}/{y}.png';
 //        var url = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ';      
@@ -8,7 +9,7 @@ var mapTileUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_
 var flickrUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&bbox={0}%2C{1}%2C{2}%2C{3}&per_page={4}&format=json&nojsoncallback=1&api_key=2203a1e292f7b65958730b236c0756fa";
 
 var MAX_GOOGLE_PLACES = IS_MOBILE_LIGHTWEIGHT ? 3 : 5;
-var STEPS_PER_PIECE = IS_MOBILE_LIGHTWEIGHT? 10 : 20;
+var STEPS_PER_PIECE = IS_MOBILE_LIGHTWEIGHT ? 10 : 20;
 var PIECES_COUNT = 5;
 var MAX_HERE_PLACES = 50;
 var MAX_GOOGLE_RADIUS = 10000;
@@ -81,11 +82,11 @@ function translateTracksContentPath(path) {
 
 function loadTrackOnPageLoad() {
     //if (trackParam) {
-        init(trackParam,
-            function () {
-                toastr.warning("Let's go!", "", { timeOut: 3000, extendedTimeOut: 5000 });
-                setTimeout(doStartStop, 3000);
-            });
+    init(trackParam,
+        function () {
+            toastr.warning("Let's go!", "", { timeOut: 2000, extendedTimeOut: 3000 });
+            setTimeout(doStartStop, 2000);
+        });
     //}
 }
 function showHelpPanel(show) {
@@ -122,8 +123,7 @@ function clickMenu() {
     $('#menuPanel').toggle('slide', 500);
 }
 
-function search($input)
-{
+function search($input) {
     var service = new google.maps.Geocoder();
     service.geocode({ 'address': $input.val() }, function (results, status) {
         if (status === 'OK') {
@@ -159,7 +159,7 @@ function onBodyResize() {
 //#endregion
 
 function showLocation() {
-//    console.log("before getting location");
+    //    console.log("before getting location");
     if (navigator.geolocation) {
         var options = {
             enableHighAccuracy: true,
@@ -176,7 +176,7 @@ function errorPosition(err) {
     console.warn('Cannot get position(' + err.code + '): ' + err.message);
 };
 function showPosition(position) {
-//    console.log("position: " + position.coords.latitude + ", " + position.coords.longitude);
+    //    console.log("position: " + position.coords.latitude + ", " + position.coords.longitude);
     if ($("#map").length) {
         //x.innerHTML = "Latitude: " + position.coords.latitude +
         //"<br>Longitude: " + position.coords.longitude;
@@ -325,9 +325,11 @@ function showPhotos(track, p, tolerancy) {
     if (!tolerancy)
         tolerancy = 0.1;
 
-    Promise.all([syt.api.searchSYTImages(track, p, tolerancy), syt.api.searchFlickrImages(track, p, tolerancy)]).then(function (values) {
-        get_photos_success(values[0].photos.concat(values[1].photos), p, tolerancy);
-    });
+    Promise.all(
+        [syt.api.searchSYTImages(track, p, tolerancy),
+        syt.api.searchFlickrImages(track, p, tolerancy)]).then(function (values) {
+            get_photos_success(values[0].photos.concat(values[1].photos), p, tolerancy);
+        });
 }
 
 function get_photos_success(photos, p, tolerancy) {
@@ -423,7 +425,7 @@ function selectMapStyle() {
 
     map.removeLayer(tileLayer);
     tileLayer = L.tileLayer(mapTileUrl, {
-        attribution: 'SeeYourTravel.com &copy; Map data &copy; <a href="https://www.mapbox.com/">MapBox</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+        attribution: ATTRIBUTION,
         maxZoom: 18,
         id: id
     });
@@ -516,7 +518,7 @@ function init(filename, handler) {
     else {
         map = L.map('map', { zoomControl: false });
         tileLayer = L.tileLayer(mapTileUrl, {
-            attribution: 'SeeYourTravel.com &copy; Map data &copy; <a target-"_blank" href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a target-"_blank" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a target-"_blank" href="http://flickr.com">Flickr</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+            attribution: ATTRIBUTION,
             maxZoom: 20,
             id: "mapbox.streets"
         });
@@ -582,6 +584,7 @@ function init(filename, handler) {
 
                 var amOptions = {
                     distance: track.velocityMetersPerSec, // meters
+                    zIndexOffset: 1000,
                     interval: 1000, // milliseconds
                     icon: myIcon, // icon
                     autoStart: false,
@@ -625,7 +628,7 @@ function init(filename, handler) {
 
                             iconSize: [25, 25] // size of the icon
                             //    shadowSize:   [50, 64], // size of the shadow
-                                , iconAnchor: [13, 25] // point of the icon which will correspond to marker's location
+                            , iconAnchor: [13, 25] // point of the icon which will correspond to marker's location
                             //    shadowAnchor: [4, 62],  // the same for the shadow
                             //    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
                         });
@@ -707,7 +710,10 @@ function addMarkersNearAll(allData, types) {
         if (step == 0)
             step = 1;
         doSetTimeout(allData, types, from, to, step, i);
+
+        addWeatherMarkers(allData, from);
     }
+    addWeatherMarkers(allData, allData.length-1);
 }
 
 function doSetTimeout(allData, types, from, to, step, i) {
@@ -719,6 +725,28 @@ function addMarkersNearRange(allData, types, from1, to1, step1, odd) {
         var x = allData[i];
         addMarkersNear(x.lat, x.lng, types, odd);
     }
+}
+
+function addWeatherMarkers(allData, where) {
+        var x = allData[where];
+        addWeatherMarkersNear(x.lat, x.lng);
+}
+
+function addWeatherMarkersNear(nearLat, nearLng) {
+    var here = new google.maps.LatLng(nearLat, nearLng);
+
+    var request = {
+        location: here,
+        radius: MAX_GOOGLE_RADIUS,
+        types: null
+    };
+
+    Promise.all([
+        syt.api.searchWeather(request)
+    ]).then(
+        function (values) {
+            weather_success(values[0]);
+        });
 }
 
 function addMarkersNear(nearLat, nearLng, types, odd) {
@@ -747,17 +775,79 @@ function addMarkersNear(nearLat, nearLng, types, odd) {
     //else {
 
     var googlePlacesService = new google.maps.places.PlacesService(map2);
-    Promise.all([syt.api.searchSYTPlaces(request), syt.api.searchWikiPlaces(request), syt.api.searchGooglePlaces(googlePlacesService, request)]).then(
+
+    Promise.all([
+        syt.api.searchSYTPlaces(request),
+        syt.api.searchWikiPlaces(request),
+        syt.api.searchGooglePlaces(googlePlacesService, request)
+    ]).then(
         function (values) {
-        getplaces_success(values[0].concat(values[1]).concat(values[2]));
-    });
+            getplaces_success(values[0].concat(values[1]).concat(values[2]).concat(values[3]));
+        });
 
     //    }
 }
 
+function weather_success(place) {
+
+    var iconImg;
+        if(place.icon == "clear-day") {
+            iconImg = "001lighticons-02.png";
+        } else if (place.icon == "clear-night") {
+            iconImg = "001lighticons-03.png";
+        } else if (place.icon == "rain") {
+            iconImg = "001lighticons-18.png";
+        } else if (place.icon == "snow") {
+            iconImg = "001lighticons-21.png";
+        } else if (place.icon == "sleet") {
+            iconImg = "001lighticons-23.png";
+        } else if (place.icon == "wind") {
+            iconImg = "001lighticons-06.png";
+        } else if (place.icon == "fog") {
+            iconImg = "001lighticons-12.png";
+        } else if (place.icon == "cloudy") {
+            iconImg = "001lighticons-14.png";
+        } else if (place.icon == "partly-cloudy-day") {
+            iconImg = "001lighticons-08.png";
+        } else if (place.icon == "partly-cloudy-night") {
+            iconImg = "001lighticons-09.png";
+        } else {
+            iconImg = "001lighticons-90.png";
+        }
+
+        var icon = L.icon({
+            iconUrl: (
+                "img/weather/" + iconImg),
+            //,shadowUrl: 'img/shadow-white.png',
+
+        iconSize: [50, 50], // size of the icon
+            //shadowSize:   [50, 50], // size of the shadow
+            iconAnchor:   [25, 25] // point of the icon which will correspond to marker's location
+            //shadowAnchor: [25, 25],  // the same for the shadow
+        //    popupAnchor:  [25, 0] // point from which the popup should open relative to the iconAnchor
+    });
+
+    var domelem = document.createElement('a');
+    //domelem.href = place.name;
+    domelem.innerHTML = "<p>" + place.temperature + "</p>";//<img height='100px' width='100px' src='" + (isGoogle ? photos[0].getUrl({ 'maxWidth': 100, 'maxHeight': 100 }) : photos[0].raw_reference.fife_url) + "'/>";
+    domelem.alt = place.temperature;
+    domelem.onclick = function () {
+        window.open("https://darksky.net/forecast/" + place.lat + "," + place.lng, "_blank");
+        // do whatever else you want to do - open accordion etc
+    };
+    var marker = L.marker(new L.LatLng(
+        place.lat,
+        place.lng),
+        { icon: icon, zIndexOffset: 800 }).bindPopup(domelem);
+    myMarkers.push(marker);
+
+    markers.addLayer(marker);
+}
+
 function getplaces_success(data) {
     for (var i = 0; i < Math.min(data.length, MAX_GOOGLE_PLACES * 3); i++) {
-        createPhotoMarker(data[i]);
+        if (data[i])
+            createPhotoMarker(data[i]);
     }
 }
 
@@ -781,14 +871,14 @@ function createPhotoMarker(place) {
     var isPremium = Math.random() < 0.1;
     var icon = L.icon({
         iconUrl: (
-            place.types.indexOf("lodging") >= 0 ? (!isPremium? "img/lodging.png" : "img/lodgingplus.png") :
-            place.types.indexOf("restaurant") >= 0 ? "img/restaurant1.png" :
-            place.types.indexOf("museum") >= 0 ? "img/museum.png" :
-            place.types.indexOf("park") >= 0 ? "img/park.png" :
-            place.types.indexOf("bakery") >= 0 ? "img/bakery.png" :
-            place.types.indexOf("zoo") >= 0 ? "img/zoo.png" :
-            isWiki ? "img/wiki.png" :
-            "img/something.png"),
+            place.types.indexOf("lodging") >= 0 ? (!isPremium ? "img/lodging.png" : "img/lodgingplus.png") :
+                place.types.indexOf("restaurant") >= 0 ? "img/restaurant1.png" :
+                    place.types.indexOf("museum") >= 0 ? "img/museum.png" :
+                        place.types.indexOf("park") >= 0 ? "img/park.png" :
+                            place.types.indexOf("bakery") >= 0 ? "img/bakery.png" :
+                                place.types.indexOf("zoo") >= 0 ? "img/zoo.png" :
+                                    isWiki ? "img/wiki.png" :
+                                        "img/something.png"),
         //    shadowUrl: 'leaf-shadow.png',
 
         iconSize: isWiki ? [26, 26] : (!isPremium ? [26, 35] : [52, 70]) // size of the icon
@@ -902,7 +992,7 @@ function plotElevation(elevations) {
 
     for (var i = 0; i < elevations.length; i++) {
         var label =
-              (Math.round(elevations[i].location.lat() * 10000) / 10000).toString()
+            (Math.round(elevations[i].location.lat() * 10000) / 10000).toString()
             + ", "
             + (Math.round(elevations[i].location.lng() * 10000) / 10000).toString();
         data.labels.push(label);
@@ -1031,56 +1121,56 @@ var tourSteps = [{
     "selector": "#continuePauseButton ", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
     "position": "left", // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 }
-,
+    ,
 {
     "msg": "Here you can mute and unmute the sound", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#mute", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
     "position": "left", // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 }
-,
+    ,
 {
     "msg": "Here you can choose the language for the site", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#langList", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
     "position": "bottom", // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 }
-,
+    ,
 {
     "msg": "Sideseeings from where in a track you are now", // tour bubble / dialog text
-"actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
-"selector": "#imageDiv0", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-"position": "top", // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
+    "selector": "#imageDiv0", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
+    "position": "top", // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 }
-,
+    ,
 {
     "msg": "The main menu: login to edit and create your tracks", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#alogo", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
     "position": "right", // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 }
-,
+    ,
 {
     "msg": "Scale the map in our out. Drag or swap to move", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": ".leaflet-control-zoom-out", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
     "position": "left", // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 }
-,
+    ,
 {
     "msg": "Take this tour again, see track information, <br/>and discuss it with friends", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#imgComments", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
     "position": "left", // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 }
-,
+    ,
 {
     "msg": "Share and save the track in Facebook, Twitter or Google", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#twitter-widget-0", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
     "position": "top", // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 }
-,
+    ,
 {
     "msg": "Good luck!!", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
