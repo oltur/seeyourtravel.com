@@ -5,7 +5,7 @@
 var tracksFolder = 'tracks/';
 //        var url = 'http://{s}.tile.cloudmade.com/5bcd2fc5d5714bd48096c7478324e0fe/997/256/{z}/{x}/{y}.png';
 //        var url = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ';     
-var mapTileUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib2x0dXJ1YSIsImEiOiJlODQ4ZTI2MWI4OGZkZjUyNDRiNjY4MDFkZGI0ODc4NyJ9.iiCb_tZgs_ipvEv3s6Zx0A';
+var mapTileUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token=pk.eyJ1Ijoib2x0dXJ1YSIsImEiOiJlODQ4ZTI2MWI4OGZkZjUyNDRiNjY4MDFkZGI0ODc4NyJ9.iiCb_tZgs_ipvEv3s6Zx0A';
 //var panoramioUrl = "https://ssl.panoramio.com/map/get_panoramas.php?set=";
 var flickrUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&bbox={0}%2C{1}%2C{2}%2C{3}&per_page={4}&format=json&nojsoncallback=1&api_key=2203a1e292f7b65958730b236c0756fa";
 var MAX_GOOGLE_PLACES = 10;
@@ -175,9 +175,9 @@ function showPosition(position) {
         $.ajax({
             dataType: "jsonp",
             url: urlp,
-            success: function success(data) { },
+            success: function success(data) {},
             error: function error(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("senduserlocation error status: " + textStatus); console.log("Error: " + errorThrown);
+                console.log("senduserlocation error status: " + textStatus);console.log("Error: " + errorThrown);
             }
         });
 
@@ -195,7 +195,7 @@ function showPosition(position) {
                 }
             },
             error: function error(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("getfriendslocations error status: " + textStatus); console.log("Error: " + errorThrown);
+                console.log("getfriendslocations error status: " + textStatus);console.log("Error: " + errorThrown);
             }
         });
     }
@@ -415,7 +415,7 @@ function loadTrack(path, handler) {
         //async: false,
         dataType: 'json',
         error: function error(XMLHttpRequest, textStatus, errorThrown) {
-            console.log("loadTrack error: " + textStatus); console.log("Error: " + errorThrown);
+            console.log("loadTrack error: " + textStatus);console.log("Error: " + errorThrown);
         },
         success: function success(data) {
             var tempTrack = data;
@@ -434,8 +434,8 @@ function loadTrack(path, handler) {
                     // COMMENTED THE AUTOREADING
                     //get_id('textToReadArea', 'en', 'ml');
                 } else {
-                    textToReadArea.innerHTML = "";
-                }
+                        textToReadArea.innerHTML = "";
+                    }
             }
 
             handler(tempTrack);
@@ -473,24 +473,24 @@ function init(filename, handler) {
         //clearMap(map);
         //map = null;
     } else {
-        map = L.map('map', { zoomControl: false });
-        tileLayer = L.tileLayer(mapTileUrl, {
-            attribution: 'SeeYourTravel.com &copy; Map data &copy; <a target-"_blank" href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a target-"_blank" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a target-"_blank" href="http://flickr.com">Flickr</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
-            maxZoom: 20,
-            id: "mapbox.streets"
-        });
-        tileLayer.addTo(map);
-        L.control.scale({ position: 'bottomleft' }).addTo(map);
-        L.control.zoom({ position: 'topright' }).addTo(map);
+            map = L.map('map', { zoomControl: false });
+            tileLayer = L.tileLayer(mapTileUrl, {
+                attribution: 'SeeYourTravel.com &copy; Map data &copy; <a target-"_blank" href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a target-"_blank" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a target-"_blank" href="http://flickr.com">Flickr</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+                maxZoom: 20,
+                id: "mapbox.streets"
+            });
+            tileLayer.addTo(map);
+            L.control.scale({ position: 'bottomleft' }).addTo(map);
+            L.control.zoom({ position: 'topright' }).addTo(map);
 
-        //Routing example
-        //L.Routing.control({
-        //    waypoints: [
-        //      L.latLng(50.45, 30.52),
-        //      L.latLng(50.56, 30.31)
-        //    ]
-        //}).addTo(map);
-    }
+            //Routing example
+            //L.Routing.control({
+            //    waypoints: [
+            //      L.latLng(50.45, 30.52),
+            //      L.latLng(50.56, 30.31)
+            //    ]
+            //}).addTo(map);
+        }
 
     markers = new L.FeatureGroup();
     map.addLayer(markers);
@@ -520,7 +520,7 @@ function init(filename, handler) {
 
     showLocation();
 
-    if (!filename) { } else {
+    if (!filename) {} else {
         var path = translateTracksPath(filename + ".js");
         loadTrack(path, function (tempTrack) {
 
@@ -719,7 +719,7 @@ function getplaces_success(data) {
 
 function createPhotoMarker(place) {
 
-    if (allMarkers.indexOf(place.id) < 0) allMarkers.push(place.id); else return;
+    if (allMarkers.indexOf(place.id) < 0) allMarkers.push(place.id);else return;
 
     // console.log (place);
 
@@ -731,11 +731,12 @@ function createPhotoMarker(place) {
     var isGoogle = photos[0].getUrl ? true : false;
     var isWiki = place.types.indexOf("wiki") >= 0;
 
+    var isPremium = Math.random() < 0.1;
     var icon = L.icon({
-        iconUrl: place.types.indexOf("lodging") >= 0 ? "img/lodging.png" : place.types.indexOf("restaurant") >= 0 ? "img/restaurant1.png" : place.types.indexOf("museum") >= 0 ? "img/museum.png" : place.types.indexOf("park") >= 0 ? "img/park.png" : place.types.indexOf("bakery") >= 0 ? "img/bakery.png" : place.types.indexOf("zoo") >= 0 ? "img/zoo.png" : isWiki ? "img/wiki.png" : "img/something.png",
+        iconUrl: place.types.indexOf("lodging") >= 0 ? !isPremium ? "img/lodging.png" : "img/lodgingplus.png" : place.types.indexOf("restaurant") >= 0 ? "img/restaurant1.png" : place.types.indexOf("museum") >= 0 ? "img/museum.png" : place.types.indexOf("park") >= 0 ? "img/park.png" : place.types.indexOf("bakery") >= 0 ? "img/bakery.png" : place.types.indexOf("zoo") >= 0 ? "img/zoo.png" : isWiki ? "img/wiki.png" : "img/something.png",
         //    shadowUrl: 'leaf-shadow.png',
 
-        iconSize: isWiki ? [26, 26] : [26, 35] // size of the icon
+        iconSize: isWiki ? [26, 26] : !isPremium ? [26, 35] : [52, 70] // size of the icon
         //    shadowSize:   [50, 64], // size of the shadow
         //    iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
         //    shadowAnchor: [4, 62],  // the same for the shadow
@@ -897,7 +898,7 @@ $(function () {
             $hiddenInput.appendTo('form');
         },
         error: function error(XMLHttpRequest, textStatus, errorThrown) {
-            console.log("get version error: " + textStatus); console.log("Error: " + errorThrown);
+            console.log("get version error: " + textStatus);console.log("Error: " + errorThrown);
         }
     });
 
@@ -949,61 +950,51 @@ var tourSteps = [{
     "msg": "Choose your track", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#tracksList", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "bottom"
-}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "bottom" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Pause and resume the track, or press Space button", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#continuePauseButton ", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "left"
-}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "left" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Here you can mute and unmute the sound", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#mute", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "left"
-}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "left" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Here you can choose the language for the site", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#langList", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "bottom"
-}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "bottom" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Sideseeings from where in a track you are now", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#imageDiv0", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "top"
-}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "top" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "The main menu: login to edit and create your tracks", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#alogo", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "right"
-}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "right" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Scale the map in our out. Drag or swap to move", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": ".leaflet-control-zoom-out", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "left"
-}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "left" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Take this tour again, see track information, <br/>and discuss it with friends", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#imgComments", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "left"
-}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "left" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Share and save the track in Facebook, Twitter or Google", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#twitter-widget-0", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "top"
-}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "top" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Good luck!!", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "body", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "center"
-}];
+    "position": "center" }];
 // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 

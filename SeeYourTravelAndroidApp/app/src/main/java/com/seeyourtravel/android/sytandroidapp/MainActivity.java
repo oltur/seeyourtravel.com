@@ -3,11 +3,15 @@ package com.seeyourtravel.android.sytandroidapp;
 import java.io.IOException;
 import java.util.Locale;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -31,15 +35,19 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {
 
     /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * The {@link PagerAdapter} that will provide
      * fragments for each of the sections. We use a
      * {@link FragmentPagerAdapter} derivative, which will keep every
      * loaded fragment in memory. If this becomes too memory intensive, it
      * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     * {@link FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -47,6 +55,11 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +99,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
@@ -126,6 +142,46 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("https://seeyourtravel.com/index.aspx?trackname=53ff70b3-5e38-4073-9326-cb535fa640ac"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.seeyourtravel.android.sytandroidapp/track/=53ff70b3-5e38-4073-9326-cb535fa640ac")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("https://seeyourtravel.com/index.aspx?trackname=53ff70b3-5e38-4073-9326-cb535fa640ac"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.seeyourtravel.android.sytandroidapp/track/=53ff70b3-5e38-4073-9326-cb535fa640ac")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -140,10 +196,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            if(position==0) {
+            if (position == 0) {
                 return MapPlaceholderFragment.newInstance(position + 1);
-            }
-            else {
+            } else {
                 return EmptyPlaceholderFragment.newInstance(position + 1);
             }
         }
@@ -201,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-            /*
+
             rootView.setFocusableInTouchMode(true);
             rootView.requestFocus();
             rootView.setOnKeyListener(new View.OnKeyListener() {
@@ -214,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     return false;
                 }
             });
-*/
+
 
             webView1 = (WebView) rootView.findViewById(R.id.webView1);
 
@@ -232,15 +287,27 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             //settings.setAppCacheEnabled(true);
             settings.setDomStorageEnabled(true);
             settings.setSupportZoom(true);
+            settings.setSupportMultipleWindows(true);
 
-            settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+            //settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
             settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
-            settings.setPluginState(WebSettings.PluginState.ON);
+            //settings.setPluginState(WebSettings.PluginState.ON);
             //settings.setMediaPlaybackRequiresUserGesture(false);
-            settings.setGeolocationDatabasePath( getActivity().getFilesDir().getPath() );
+            settings.setGeolocationDatabasePath(getActivity().getFilesDir().getPath());
 
-            webView1.setWebChromeClient(new WebChromeClient());
+            webView1.setWebChromeClient(new WebChromeClient() {
+                @Override
+                public boolean onCreateWindow(WebView view, boolean dialog, boolean userGesture, android.os.Message resultMsg)
+                {
+                    WebView.HitTestResult result = view.getHitTestResult();
+                    String data = result.getExtra();
+                    Context context = view.getContext();
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(data));
+                    context.startActivity(browserIntent);
+                    return false;
+                }
+            });
 
             webView1.setWebViewClient(new WebViewClient() {
 
@@ -260,8 +327,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 //                            showMessage("I/O exception on " + url);
                         }
                         return true;
-                    }
-                    else {
+                    } else {
                         view.loadUrl(url);
                         return true;
                     }
@@ -277,7 +343,14 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                 }
             });
 
-            webView1.loadUrl("https://seeyourtravel.com/index.html");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                // chromium, enable hardware acceleration
+                webView1.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+            } else {
+                // older android version, disable hardware acceleration
+                webView1.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            }
+            webView1.loadUrl("https://seeyourtravel.com/index.aspx?trackname=53ff70b3-5e38-4073-9326-cb535fa640ac");
 
             return rootView;
         }
@@ -314,7 +387,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-             return rootView;
+            return rootView;
         }
     }
 
