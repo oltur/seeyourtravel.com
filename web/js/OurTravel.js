@@ -10,7 +10,7 @@ var flickrUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.sear
 
 var MAX_GOOGLE_PLACES = IS_MOBILE_LIGHTWEIGHT ? 3 : 5;
 var STEPS_PER_PIECE = IS_MOBILE_LIGHTWEIGHT ? 10 : 20;
-var PIECES_COUNT = 5;
+var PIECES_COUNT = IS_MOBILE_LIGHTWEIGHT ? 5 : 5;
 var MAX_HERE_PLACES = 50;
 var MAX_GOOGLE_RADIUS = 10000;
 var GOOGLE_TYPES = ['lodging', 'restaurant', 'museum', 'park', 'bakery', 'zoo']
@@ -713,7 +713,7 @@ function addMarkersNearAll(allData, types) {
 
         addWeatherMarkers(allData, from);
     }
-    addWeatherMarkers(allData, allData.length-1);
+    addWeatherMarkers(allData, allData.length - 1);
 }
 
 function doSetTimeout(allData, types, from, to, step, i) {
@@ -728,8 +728,8 @@ function addMarkersNearRange(allData, types, from1, to1, step1, odd) {
 }
 
 function addWeatherMarkers(allData, where) {
-        var x = allData[where];
-        addWeatherMarkersNear(x.lat, x.lng);
+    var x = allData[where];
+    addWeatherMarkersNear(x.lat, x.lng);
 }
 
 function addWeatherMarkersNear(nearLat, nearLng) {
@@ -791,45 +791,45 @@ function addMarkersNear(nearLat, nearLng, types, odd) {
 function weather_success(place) {
 
     var iconImg;
-        if(place.icon == "clear-day") {
-            iconImg = "001lighticons-02.png";
-        } else if (place.icon == "clear-night") {
-            iconImg = "001lighticons-03.png";
-        } else if (place.icon == "rain") {
-            iconImg = "001lighticons-18.png";
-        } else if (place.icon == "snow") {
-            iconImg = "001lighticons-21.png";
-        } else if (place.icon == "sleet") {
-            iconImg = "001lighticons-23.png";
-        } else if (place.icon == "wind") {
-            iconImg = "001lighticons-06.png";
-        } else if (place.icon == "fog") {
-            iconImg = "001lighticons-12.png";
-        } else if (place.icon == "cloudy") {
-            iconImg = "001lighticons-14.png";
-        } else if (place.icon == "partly-cloudy-day") {
-            iconImg = "001lighticons-08.png";
-        } else if (place.icon == "partly-cloudy-night") {
-            iconImg = "001lighticons-09.png";
-        } else {
-            iconImg = "001lighticons-90.png";
-        }
+    if (place.icon == "clear-day") {
+        iconImg = "001lighticons-02.png";
+    } else if (place.icon == "clear-night") {
+        iconImg = "001lighticons-03.png";
+    } else if (place.icon == "rain") {
+        iconImg = "001lighticons-18.png";
+    } else if (place.icon == "snow") {
+        iconImg = "001lighticons-21.png";
+    } else if (place.icon == "sleet") {
+        iconImg = "001lighticons-23.png";
+    } else if (place.icon == "wind") {
+        iconImg = "001lighticons-06.png";
+    } else if (place.icon == "fog") {
+        iconImg = "001lighticons-12.png";
+    } else if (place.icon == "cloudy") {
+        iconImg = "001lighticons-14.png";
+    } else if (place.icon == "partly-cloudy-day") {
+        iconImg = "001lighticons-08.png";
+    } else if (place.icon == "partly-cloudy-night") {
+        iconImg = "001lighticons-09.png";
+    } else {
+        iconImg = "001lighticons-90.png";
+    }
 
-        var icon = L.icon({
-            iconUrl: (
-                "img/weather/" + iconImg),
-            //,shadowUrl: 'img/shadow-white.png',
+    var icon = L.icon({
+        iconUrl: ("https://seeyourtravel.com/services/create_image.aspx?text=" + encodeURIComponent(place.temperature) + "&fontColor=White&backColor=Transparent&borderColor=Transparent&fontName=Arial&fontSize=10&fontStyle=Bold&height=30&width=100&imagePath=/img/weather/" + iconImg),
+        //"img/weather/" + iconImg),
+        //,shadowUrl: 'img/shadow-white.png',
 
-        iconSize: [50, 50], // size of the icon
-            //shadowSize:   [50, 50], // size of the shadow
-            iconAnchor:   [25, 25] // point of the icon which will correspond to marker's location
-            //shadowAnchor: [25, 25],  // the same for the shadow
+        iconSize: [100, 30], // size of the icon
+        //shadowSize:   [50, 50], // size of the shadow
+        iconAnchor: [50, 15] // point of the icon which will correspond to marker's location
+        //shadowAnchor: [25, 25],  // the same for the shadow
         //    popupAnchor:  [25, 0] // point from which the popup should open relative to the iconAnchor
     });
 
     var domelem = document.createElement('a');
     //domelem.href = place.name;
-    domelem.innerHTML = "<p>" + place.temperature + "</p>";//<img height='100px' width='100px' src='" + (isGoogle ? photos[0].getUrl({ 'maxWidth': 100, 'maxHeight': 100 }) : photos[0].raw_reference.fife_url) + "'/>";
+    domelem.innerHTML = "<p><img style='height:50px; wisth: 50px;' src='" + "img/weather/" + iconImg + "'/></p><p>" + place.temperature + "</p>";//<img height='100px' width='100px' src='" + (isGoogle ? photos[0].getUrl({ 'maxWidth': 100, 'maxHeight': 100 }) : photos[0].raw_reference.fife_url) + "'/>";
     domelem.alt = place.temperature;
     domelem.onclick = function () {
         window.open("https://darksky.net/forecast/" + place.lat + "," + place.lng, "_blank");
@@ -881,7 +881,7 @@ function createPhotoMarker(place) {
             "img/something.png"),
         //    shadowUrl: 'leaf-shadow.png',
 
-        iconSize: isWiki ? [26, 26] : (!isPremium ? [26, 35] : [52, 70]) // size of the icon
+        iconSize: isWiki ? [26, 26] : (!isPremium ? [26, 35] : [37, 52]) // size of the icon
         //    shadowSize:   [50, 64], // size of the shadow
         //    iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
         //    shadowAnchor: [4, 62],  // the same for the shadow
