@@ -3,23 +3,23 @@
  */
 
 L.AnimatedMarker = L.Marker.extend({
-    options:{
+    options: {
         // meters
-        distance:200,
+        distance: 400,
         // ms
-        interval:1000,
+        interval: 2000,
         // animate on add?
-        autoStart:true,
+        autoStart: true,
         // callback onend
-        onEnd:function () {
+        onEnd: function () {
         },
-        onStep:function (p) {
+        onStep: function (p) {
         },
-        clickable:false
+        clickable: false
     },
-
-    initialize:function (latlngs, options) {
-        if (L.DomUtil.TRANSITION) {
+    useTransition: true,
+    initialize: function (latlngs, options) {
+        if (this.useTransition && L.DomUtil.TRANSITION) {
             // No need to to check up the line if we can animate using CSS3
             this._latlngs = latlngs;
         } else {
@@ -34,7 +34,7 @@ L.AnimatedMarker = L.Marker.extend({
 
     // Breaks the line up into tiny chunks (see options) ONLY if CSS3 animations
     // are not supported.
-    _chunk:function (latlngs) {
+    _chunk: function (latlngs) {
         var i,
             len = latlngs.length,
             chunkedLatLngs = [];
@@ -61,8 +61,40 @@ L.AnimatedMarker = L.Marker.extend({
         return chunkedLatLngs;
     },
 
-    onAdd:function (map) {
+    onAdd: function (map) {
         L.Marker.prototype.onAdd.call(this, map);
+        var self = this;
+
+        map.on('zoomend', function () {
+            if (typeof (self._i) != "undefined") {
+                var t = self._latlngs[self._i];
+                var cssIconSentence;
+                var cssShadowSentence;
+                if (self.useTransition && L.DomUtil.TRANSITION) {
+                    if (self._icon) {
+                        cssIconSentence = self._icon.style[L.DomUtil.TRANSITION];
+                        self._icon.style[L.DomUtil.TRANSITION] = '';
+                    }
+                    if (self._shadow) {
+                        cssShadowSentence = self._shadow.style[L.DomUtil.TRANSITION];
+                        self._shadow.style[L.DomUtil.TRANSITION] = '';
+                    }
+                }
+
+                self.setLatLng(t);
+
+                setTimeout(function () {
+                    if (self.useTransition && L.DomUtil.TRANSITION) {
+                        if (self._icon) {
+                            self._icon.style[L.DomUtil.TRANSITION] = cssIconSentence;
+                        }
+                        if (self._shadow) {
+                            self._shadow.style[L.DomUtil.TRANSITION] = cssShadowSentence;
+                        }
+                    }
+                }, 1);
+            }
+        });
 
         // Start animating when added to the map
         if (this.options.autoStart) {
@@ -74,7 +106,7 @@ L.AnimatedMarker = L.Marker.extend({
         this._i = 0;
 
         var t = this._latlngs[0];
-        if (L.DomUtil.TRANSITION) {
+        if (this.useTransition && L.DomUtil.TRANSITION) {
             if (this._icon) {
                 this._icon.style[L.DomUtil.TRANSITION] = '';
             }
@@ -85,11 +117,11 @@ L.AnimatedMarker = L.Marker.extend({
         this.setLatLng(t);
     },
 
-    isFinished:function() {
+    isFinished: function () {
         return (this._i === this._latlngs.length);
     },
 
-    animate:function () {
+    animate: function () {
         var self = this,
             len = this._latlngs.length,
             speed = this.options.interval;
@@ -105,7 +137,7 @@ L.AnimatedMarker = L.Marker.extend({
         }
 
         // Only if CSS3 transitions are supported
-        if (L.DomUtil.TRANSITION) {
+        if (this.useTransition && L.DomUtil.TRANSITION) {
             if (this._icon) {
                 this._icon.style[L.DomUtil.TRANSITION] = ('all ' + speed + 'ms linear');
             }
@@ -136,7 +168,7 @@ L.AnimatedMarker = L.Marker.extend({
     },
 
     // Start the animation
-    start:function () {
+    start: function () {
         if (!this._i) {
             this._i = 1;
         }
@@ -156,14 +188,14 @@ L.AnimatedMarker = L.Marker.extend({
             this._i = 1;
         }
 
-        var mythis = this;
+        var self = this;
         setTimeout(function () {
-            mythis.animate();
+            self.animate();
         }, 10);
     },
 
     // Stop the animation in place
-    stop:function () {
+    stop: function () {
         if (this._tid) {
             clearTimeout(this._tid);
         }

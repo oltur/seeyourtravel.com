@@ -1,6 +1,6 @@
 {
-"name":"My Israel"
-,"isPublic":"Yes"
+"name":"--My Israel"
+,"isPublic":"No"
 ,"travelWith":"Car"
 ,"copyright":"(c)"
 ,"defaultScale":8

@@ -2,16 +2,22 @@ package com.seeyourtravel.android.sytandroidapp;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Random;
 
+import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -20,11 +26,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
@@ -33,38 +39,54 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.facebook.FacebookSdk;
 
-public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {
+public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, AboutFragment.OnFragmentInteractionListener, RecordingFragment.OnFragmentInteractionListener {
 
+    public MainActivity ()
+    {
+
+        instance = this;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
+    }
     /**
-     * The {@link PagerAdapter} that will provide
+     * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
      * {@link FragmentPagerAdapter} derivative, which will keep every
      * loaded fragment in memory. If this becomes too memory intensive, it
      * may be best to switch to a
-     * {@link FragmentStatePagerAdapter}.
+     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
+
+    public static MainActivity instance;
+
+    public static String userId = "";
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },
+                    LocationService.MY_PERMISSION_ACCESS_COARSE_LOCATION );
+        }
+        if ( ContextCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_FINE_LOCATION  },
+                    LocationService.MY_PERMISSION_ACCESS_FINE_LOCATION );
+        }
+
+        startService(new Intent(this, LocationService.class));
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -77,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOffscreenPageLimit(10);
 
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
@@ -99,9 +122,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
@@ -143,43 +163,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onFragmentInteraction(Uri uri) {
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("https://seeyourtravel.com/index.aspx?trackname=53ff70b3-5e38-4073-9326-cb535fa640ac"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.seeyourtravel.android.sytandroidapp/track/=53ff70b3-5e38-4073-9326-cb535fa640ac")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("https://seeyourtravel.com/index.aspx?trackname=53ff70b3-5e38-4073-9326-cb535fa640ac"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.seeyourtravel.android.sytandroidapp/track/=53ff70b3-5e38-4073-9326-cb535fa640ac")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
     }
 
     /**
@@ -196,10 +181,14 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            if (position == 0) {
+            if(position==0) {
                 return MapPlaceholderFragment.newInstance(position + 1);
-            } else {
-                return EmptyPlaceholderFragment.newInstance(position + 1);
+            }
+            else if(position==1) {
+                return RecordingFragment.newInstance(position + 1);
+            }
+            else {
+                return AboutFragment.newInstance(position + 1);
             }
         }
 
@@ -232,6 +221,11 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
          * The fragment argument representing the section number for this
          * fragment.
          */
+
+        public static MapPlaceholderFragment instance;
+        public ProgressDialog pd;
+
+
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         private WebView webView1;
@@ -249,6 +243,21 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         }
 
         public MapPlaceholderFragment() {
+            instance = this;
+        }
+
+        private Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message message) {
+                switch (message.what) {
+                    case 1:{
+                        webViewGoBack();
+                    }break;
+                }
+            }
+        };
+        private void webViewGoBack(){
+            webView1.goBack();
         }
 
         @Override
@@ -256,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-
+            /*
             rootView.setFocusableInTouchMode(true);
             rootView.requestFocus();
             rootView.setOnKeyListener(new View.OnKeyListener() {
@@ -269,7 +278,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     return false;
                 }
             });
+*/
 
+            pd = ProgressDialog.show(this.getActivity(), "", "Just a moment, the map is loading...", true);
 
             webView1 = (WebView) rootView.findViewById(R.id.webView1);
 
@@ -286,17 +297,27 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             settings.setDatabaseEnabled(true);
             //settings.setAppCacheEnabled(true);
             settings.setDomStorageEnabled(true);
-            settings.setSupportZoom(true);
+            settings.setSupportZoom(false);
+            settings.setBuiltInZoomControls(false);
+            settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+            settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
             settings.setSupportMultipleWindows(true);
 
-            //settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
-            settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-
-            //settings.setPluginState(WebSettings.PluginState.ON);
+            settings.setPluginState(WebSettings.PluginState.ON);
             //settings.setMediaPlaybackRequiresUserGesture(false);
-            settings.setGeolocationDatabasePath(getActivity().getFilesDir().getPath());
+            settings.setGeolocationDatabasePath( getActivity().getFilesDir().getPath() );
 
-            webView1.setWebChromeClient(new WebChromeClient() {
+            JavaScriptInterface jsInterface = new JavaScriptInterface((MainActivity) this.getActivity());
+            webView1.getSettings().setJavaScriptEnabled(true);
+            webView1.addJavascriptInterface(jsInterface, "JSInterface");
+
+            webView1.setWebChromeClient(new WebChromeClient()
+            {
+                @Override
+                public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+                    callback.invoke(origin, true, false);
+                }
+
                 @Override
                 public boolean onCreateWindow(WebView view, boolean dialog, boolean userGesture, android.os.Message resultMsg)
                 {
@@ -327,7 +348,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 //                            showMessage("I/O exception on " + url);
                         }
                         return true;
-                    } else {
+                    }
+                    else {
                         view.loadUrl(url);
                         return true;
                     }
@@ -341,54 +363,46 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                 public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
                     callback.invoke(origin, true, false);
                 }
+
+                @Override
+                public void onPageStarted(WebView view, String url, Bitmap favicon)
+                {
+                    pd.show();
+                }
+
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    if(pd.isShowing())
+                        pd.dismiss();
+
+//                    String webUrl = webView1.getUrl();
+
+                }
+
             });
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                // chromium, enable hardware acceleration
-                webView1.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-            } else {
-                // older android version, disable hardware acceleration
-                webView1.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-            }
-            webView1.loadUrl("https://seeyourtravel.com/index.aspx?trackname=53ff70b3-5e38-4073-9326-cb535fa640ac");
+            //Random rand = new Random();
+
+            //int  n = rand.nextInt(1000000) + 1;
+            webView1.loadUrl("https://seeyourtravel.com/index.aspx");
+
+            webView1.setOnKeyListener(new View.OnKeyListener(){
+
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK
+                            && event.getAction() == MotionEvent.ACTION_UP
+                            && webView1.canGoBack()) {
+                        handler.sendEmptyMessage(1);
+                        return true;
+                    }
+
+                    return false;
+                }
+
+            });
 
             return rootView;
         }
     }
-
-    /**
-     * A placeholder fragment containing a map view.
-     */
-    public static class EmptyPlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static EmptyPlaceholderFragment newInstance(int sectionNumber) {
-            EmptyPlaceholderFragment fragment = new EmptyPlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public EmptyPlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-            return rootView;
-        }
-    }
-
 }

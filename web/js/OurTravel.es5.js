@@ -175,9 +175,9 @@ function showPosition(position) {
         $.ajax({
             dataType: "jsonp",
             url: urlp,
-            success: function success(data) {},
+            success: function success(data) { },
             error: function error(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("senduserlocation error status: " + textStatus);console.log("Error: " + errorThrown);
+                console.log("senduserlocation error status: " + textStatus); console.log("Error: " + errorThrown);
             }
         });
 
@@ -195,7 +195,7 @@ function showPosition(position) {
                 }
             },
             error: function error(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("getfriendslocations error status: " + textStatus);console.log("Error: " + errorThrown);
+                console.log("getfriendslocations error status: " + textStatus); console.log("Error: " + errorThrown);
             }
         });
     }
@@ -415,7 +415,7 @@ function loadTrack(path, handler) {
         //async: false,
         dataType: 'json',
         error: function error(XMLHttpRequest, textStatus, errorThrown) {
-            console.log("loadTrack error: " + textStatus);console.log("Error: " + errorThrown);
+            console.log("loadTrack error: " + textStatus); console.log("Error: " + errorThrown);
         },
         success: function success(data) {
             var tempTrack = data;
@@ -434,8 +434,8 @@ function loadTrack(path, handler) {
                     // COMMENTED THE AUTOREADING
                     //get_id('textToReadArea', 'en', 'ml');
                 } else {
-                        textToReadArea.innerHTML = "";
-                    }
+                    textToReadArea.innerHTML = "";
+                }
             }
 
             handler(tempTrack);
@@ -473,24 +473,24 @@ function init(filename, handler) {
         //clearMap(map);
         //map = null;
     } else {
-            map = L.map('map', { zoomControl: false });
-            tileLayer = L.tileLayer(mapTileUrl, {
-                attribution: 'SeeYourTravel.com &copy; Map data &copy; <a target-"_blank" href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a target-"_blank" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a target-"_blank" href="http://flickr.com">Flickr</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
-                maxZoom: 20,
-                id: "mapbox.streets"
-            });
-            tileLayer.addTo(map);
-            L.control.scale({ position: 'bottomleft' }).addTo(map);
-            L.control.zoom({ position: 'topright' }).addTo(map);
+        map = L.map('map', { zoomControl: false });
+        tileLayer = L.tileLayer(mapTileUrl, {
+            attribution: 'SeeYourTravel.com &copy; Map data &copy; <a target-"_blank" href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a target-"_blank" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a target-"_blank" href="http://flickr.com">Flickr</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
+            maxZoom: 20,
+            id: "mapbox.streets"
+        });
+        tileLayer.addTo(map);
+        L.control.scale({ position: 'bottomleft' }).addTo(map);
+        L.control.zoom({ position: 'topright' }).addTo(map);
 
-            //Routing example
-            //L.Routing.control({
-            //    waypoints: [
-            //      L.latLng(50.45, 30.52),
-            //      L.latLng(50.56, 30.31)
-            //    ]
-            //}).addTo(map);
-        }
+        //Routing example
+        //L.Routing.control({
+        //    waypoints: [
+        //      L.latLng(50.45, 30.52),
+        //      L.latLng(50.56, 30.31)
+        //    ]
+        //}).addTo(map);
+    }
 
     markers = new L.FeatureGroup();
     map.addLayer(markers);
@@ -520,7 +520,7 @@ function init(filename, handler) {
 
     showLocation();
 
-    if (!filename) {} else {
+    if (!filename) { } else {
         var path = translateTracksPath(filename + ".js");
         loadTrack(path, function (tempTrack) {
 
@@ -719,7 +719,7 @@ function getplaces_success(data) {
 
 function createPhotoMarker(place) {
 
-    if (allMarkers.indexOf(place.id) < 0) allMarkers.push(place.id);else return;
+    if (allMarkers.indexOf(place.id) < 0) allMarkers.push(place.id); else return;
 
     // console.log (place);
 
@@ -898,7 +898,7 @@ $(function () {
             $hiddenInput.appendTo('form');
         },
         error: function error(XMLHttpRequest, textStatus, errorThrown) {
-            console.log("get version error: " + textStatus);console.log("Error: " + errorThrown);
+            console.log("get version error: " + textStatus); console.log("Error: " + errorThrown);
         }
     });
 
@@ -950,51 +950,61 @@ var tourSteps = [{
     "msg": "Choose your track", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#tracksList", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "bottom" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "bottom"
+}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Pause and resume the track, or press Space button", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#continuePauseButton ", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "left" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "left"
+}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Here you can mute and unmute the sound", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#mute", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "left" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "left"
+}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Here you can choose the language for the site", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#langList", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "bottom" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "bottom"
+}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Sideseeings from where in a track you are now", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#imageDiv0", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "top" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "top"
+}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "The main menu: login to edit and create your tracks", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#alogo", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "right" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "right"
+}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Scale the map in our out. Drag or swap to move", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": ".leaflet-control-zoom-out", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "left" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "left"
+}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Take this tour again, see track information, <br/>and discuss it with friends", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#imgComments", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "left" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "left"
+}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Share and save the track in Facebook, Twitter or Google", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "#twitter-widget-0", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "top" }, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
+    "position": "top"
+}, // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 {
     "msg": "Good luck!!", // tour bubble / dialog text
     "actionName": false, // name of Mixpanel event used for funnel analysis - spaces are fine, use friendly names. You'll need to setup MP yourself however and include the libs.
     "selector": "body", // selector for highlighted feature. Comma seperated list = (dialog target, additional items to pop above mask). Don't forget your '.' or '#'
-    "position": "center" }];
+    "position": "center"
+}];
 // dialog location in relation to target (selector). top, bottom, left, right, (or 'center' which centers to screen)
 

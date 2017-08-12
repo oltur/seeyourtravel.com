@@ -163,8 +163,24 @@
             </tr>
             <tr>
                 <td colspan="2" style="text-align:center">
-                    <fb:login-button data-size="xlarge" scope="public_profile,email" onlogin="checkLoginState();">
-                    </fb:login-button>
+                    <script>
+                        var fbButtonHtml = '<fb:login-button data-size="xlarge" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>';
+                        if (!IS_ANDROID_WEBVIEW) {
+                            document.writeln(fbButtonHtml);
+                        }
+                        else {
+                            if (window.JSInterface && window.JSInterface.getFacebookToken) {
+                                var token = window.JSInterface.getFacebookToken();
+                                var info = window.JSInterface.getFacebookInfo();
+                                if (info != "") {
+                                    document.getElementById("<%=Token.ClientID%>").value = token;
+                                    document.getElementById("<%=Data.ClientID%>").value = info;
+                                    document.getElementById("<%=LoginButton.ClientID%>").click();
+                                }
+                            }
+                        }
+                    </script>
+                    
                 </td>
             </tr>
             <tr>

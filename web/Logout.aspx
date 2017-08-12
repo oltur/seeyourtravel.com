@@ -5,6 +5,8 @@
         var returnURL = '<%=Request["ReturnURL"].ToString()%>';
         $(function () {
             fblogout();
+
+            setTimeout(function () { window.location = "login.aspx?ReturnURL=" + returnURL }, 3000)
         });
 </script>
 </asp:Content>

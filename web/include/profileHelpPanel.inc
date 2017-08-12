@@ -14,9 +14,10 @@
     <div id="tab-welcome" style="display: inline-block;">
       <img src="../img/See Your Travels-01.png" style="height:50px; display: inline; margin: 0 5px;" alt=""/>
       <button id="takeATour" style="width: 200px; height: 50px; font-size: large" type="button" onClick="javascript:jQuery.tour(tourSteps)">Take a tour!</button>
-      <div class="i" data-i18n="[html]help_content">
+      <div id="helpContext">
+	  <!-- class="i" data-i18n="[html]help_content"-->
       </div>
-      <input id="dontShowOnStartup" type="checkbox" title="Don't show on startup" onchange="$.cookie('visited',$('#dontShowOnStartup').prop('checked')?'yes':'no')"/>
+      <input id="dontShowOnStartup" type="checkbox" title="Don't show on startup" onchange="$.cookie('visited',$('#dontShowOnStartup').prop('checked')?'yes':'no');if(IS_MOBILE_LIGHTWEIGHT) { clickHelp(); }"/>
       <label for="dontShowOnStartup">
         <b>Don't show a tour and welcome message on startup</b>
       </label>
