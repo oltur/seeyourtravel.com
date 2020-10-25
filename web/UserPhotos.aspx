@@ -122,16 +122,7 @@
             init(null);
             map.setView([50.430981, 30.539267], 8);
 
-            //map = L.map('map', { zoomControl: false }).setView([50.430981, 30.539267], 8);
-            //L.control.zoom({ position: 'topright' }).addTo(map);
-            //L.control.scale({ position: 'bottomleft' }).addTo(map);
-            //tileLayer = L.tileLayer(mapTileUrl, {
-            //    attribution: 'SeeYourTravel.com &copy; Map data &copy; <a href="https://www.mapbox.com/">MapBox</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> <img src="img/poweredbygoolge/desktop/powered-by-google-on-white.png"/>',
-            //    maxZoom: 18,
-            //    id: "mapbox.streets"
-            //});
 
-            //tileLayer.addTo(map);
             markerPosition = L.marker(new L.LatLng(1000, 1000), { icon: icon }).addTo(map);
 
             //markers = new L.FeatureGroup();
